@@ -16,3 +16,5 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+//envaimos a guardar datos (end pint,controladador/)
+$router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
