@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Usuario extends Model
+{
+    //nombre de la tabla
+    protected $table="usuario";
+    //para saber si en la tabla usamos created_at y update_at
+    public $timestamp=true;
+    //lista blanca cmapos publicos
+    protected $filasTabla=[
+        "nombre",
+        "apellido",
+        "correo",
+        "contraseña",
+        "tipoUsuario",
+        "estado",
+        "external_us",
+        "created_at",
+        "updated_at"
+    ];
+    //lista negra campos que no queren que se encuentren facilmente
+    public function docente(){
+        return $this->hasOne('App\Models\docente','fk_usuario');
+    }
+}
