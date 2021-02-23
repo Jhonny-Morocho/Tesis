@@ -18,3 +18,5 @@ $router->get('/', function () use ($router) {
 });
 //envaimos a guardar datos (end pint,controladador/)
 $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
+$router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
+$router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');

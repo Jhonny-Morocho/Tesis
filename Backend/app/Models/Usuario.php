@@ -10,7 +10,7 @@ class Usuario extends Model{
     //para saber si en la tabla usamos created_at y update_at
     public $timestamp=true;
     //lista blanca cmapos publicos
-    protected $filasTabla=[
+    protected $fillable=[
         "nombre",
         "apellido",
         "correo",
