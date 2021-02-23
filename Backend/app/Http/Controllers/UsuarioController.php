@@ -26,14 +26,22 @@ class UsuarioController extends Controller
             $ObjUsuario->estado=$datos["estado"];
             $ObjUsuario->external_us=$datos["external_us"];
             $ObjUsuario->contraseña=$datos["contraseña"];
-            //$ObjUsuario->correo=$datos["nombre"];
             $ObjUsuario->save();
          
-
             //respuesta exitoso o no en la inserrccion
             return response()->json(["mensaje"=>"Operacion exitosa","siglas"=>"OE",200]);
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","siglas"=>"DNF",400]);
+        }
+    }
+
+    //Registrar docente
+    public function RegistrarDocente(Request $request,$externalId){
+        if($request->json()->all()){
+            $ObjUsuario=Usuario::where("external_us",$externalId)->first();
+            if($ObjUsuario->tipoUsuario==2){
+
+            }
         }
     }
 }

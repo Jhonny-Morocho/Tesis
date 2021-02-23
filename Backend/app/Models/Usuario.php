@@ -23,7 +23,7 @@ class Usuario extends Model
         "updated_at"
     ];
     //lista negra campos que no queren que se encuentren facilmente
-    //public function docente(){
-        //return $this->hasOne('App\Models\docente','fk_usuario');
-    //}
+    public function docente(){
+        return $this->hasOne('App\Models\docente','fk_usuario');
+    }
 }

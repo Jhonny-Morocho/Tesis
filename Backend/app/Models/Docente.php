@@ -19,9 +19,9 @@ class Docente extends Model
         "updated_at"
     ];
 
-    //public function usuario(){
+    public function usuario(){
         //esta tabla pertenece a usuario
         //relaciona al modelo con cual pertenece
-      //  return $this->belongsTo('App\Models\usuario','fk_usuario');
-    //}
+      return $this->belongsTo('App\Models\usuario','fk_usuario');
+    }
 }
