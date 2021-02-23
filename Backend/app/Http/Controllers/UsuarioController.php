@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 //llamar los modelos q voy a ocupar
 use App\Models\Usuario;
 use App\Models\Docente;
+use App\Models\Estudiante;
 
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 
+
+
 class UsuarioController extends Controller
 {
     //Registrar Usuario
+    
     public function RegistrarUsuario(Request $request){
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
@@ -24,7 +28,7 @@ class UsuarioController extends Controller
             $ObjUsuario->apellido=$datos["apellido"];
             $ObjUsuario->tipoUsuario=$datos["tipoUsuario"];
             $ObjUsuario->estado=$datos["estado"];
-            $ObjUsuario->external_us=$datos["external_us"];
+            $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
             $ObjUsuario->contraseña=$datos["contraseña"];
             $ObjUsuario->save();
          
