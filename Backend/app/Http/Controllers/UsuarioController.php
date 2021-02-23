@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //llamar los modelos q voy a ocupar
 use App\Models\Usuario;
 use App\Models\Docente;
+use App\Models\Empleador;
 use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
@@ -73,6 +74,36 @@ class UsuarioController extends Controller
                 $ObjEstudiante->observaciones=$datos["observaciones"];
                 $ObjEstudiante->external_us="Es".Utilidades\UUID::v4();
                 $ObjEstudiante->save();
+                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
+            }else{
+                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);
+            } 
+                
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+    public function RegistrarEmpleador(Request $request,$external_id){
+        if($request->json()){
+            $datos=$request->json()->all();
+            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+            // 5 es empleador
+            if($ObjUsuario->tipoUsuario==5){
+                //creo un objeto Docente para guardar el nuevo decente
+                $ObjEmpleador=new Empleador();
+                $ObjEmpleador->fk_usuario=$ObjUsuario->id;
+                $ObjEmpleador->razon_empresa=$datos["razon_empresa"];
+                $ObjEmpleador->tipo_empresa=$datos["tipo_empresa"];
+                $ObjEmpleador->actividad_ruc=$datos["actividad_ruc"];
+                $ObjEmpleador->num_ruc=$datos["num_ruc"];
+                $ObjEmpleador->cedula=$datos["cedula"];
+                $ObjEmpleador->ciudad=$datos["ciudad"];
+                $ObjEmpleador->provincia=$datos["provincia"];
+                $ObjEmpleador->telefono=$datos["telefono"];
+                $ObjEmpleador->direccion=$datos["direccion"];
+                $ObjEmpleador->observaciones=$datos["observaciones"];
+                $ObjEmpleador->external_us="Em".Utilidades\UUID::v4();
+                $ObjEmpleador->save();
                 return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
             }else{
                 return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);

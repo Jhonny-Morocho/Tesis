@@ -20,3 +20,4 @@ $router->get('/', function () use ($router) {
 $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
 $router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
 $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
+$router->post('/empleador/registro/{external_id}','UsuarioController@RegistrarEmpleador');
