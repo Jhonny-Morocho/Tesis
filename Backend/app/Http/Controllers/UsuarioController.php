@@ -16,7 +16,6 @@ class UsuarioController extends Controller
     //Registrar Usuario
     
     public function RegistrarUsuario(Request $request){
-
         //code...
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
@@ -26,7 +25,11 @@ class UsuarioController extends Controller
             $ObjUsuario->nombre=$datos["nombre"];
             $ObjUsuario->apellido=$datos["apellido"];
             $ObjUsuario->correo=$datos["correo"];
-            $ObjUsuario->password=$datos["password"];
+            //Encriptar Password
+            $opciones=array('cost'=>12);
+            $passwordCliente=$datos["password"];
+		    $password_hashed=password_hash($passwordCliente,PASSWORD_BCRYPT,$opciones);
+            $ObjUsuario->password=$password_hashed;
             $ObjUsuario->tipoUsuario=$datos["tipoUsuario"];
             $ObjUsuario->estado=$datos["estado"];
             $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
@@ -121,4 +124,58 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
+
+     //REGISTRO DE LOGIN
+     public function login(Request $request){
+        
+        global $respuestaUsuario;
+        if($request->json()){
+            $datos=$request->json()->all();
+       
+            $usuario=Usuario::where("correo",$datos['correo'])->first();
+            // ========= VALIDACION DEL USUARIO ANTES DE INICIAR EL LOGIN ====
+            //existe el usuario 
+            if($usuario){
+                if(password_verify($datos['password'],$usuario['password'])){
+                    // preguntamos que tipo de usuario es 
+                   switch ($usuario['tipoUsuario']) {
+                        //usuario inactivo
+                        case 0:
+                        # code...
+                        return response()->json(["mensaje"=>"Usuario no activo","Siglas"=>"UNA",400]);
+                        break;
+                       //gestor
+                       case 2:
+                        # code...
+                        break;
+                        
+                        //secretara
+                       case 3:
+                           # code...
+                           return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
+                           break;
+                        //encargado
+                       case 5:
+                        # code...
+                        break;
+                       
+                       default:
+                           # code...
+                           return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400]);
+                           break;
+                   }
+                }else{
+                    return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
+                }
+
+            }
+            // usuario no encontrado
+            else{
+                return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
+            }
+
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+     }
 }

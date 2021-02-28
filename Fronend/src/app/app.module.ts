@@ -17,6 +17,7 @@ import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { NavComponent } from './pages/nav/nav.component';
 import { PostulanteComponent } from './pages/postulante/postulante.component';
 import { EmpleadorComponent } from './pages/empleador/empleador.component';
+import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { EmpleadorComponent } from './pages/empleador/empleador.component';
     LoginAdminComponent,
     NavComponent,
     PostulanteComponent,
-    EmpleadorComponent
+    EmpleadorComponent,
+    PanelAdminComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 
-
 export class UsuarioModel{
     correo:string;
     nombre:string;
