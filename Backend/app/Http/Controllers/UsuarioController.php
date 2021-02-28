@@ -16,34 +16,41 @@ class UsuarioController extends Controller
     //Registrar Usuario
     
     public function RegistrarUsuario(Request $request){
+
+        //code...
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
             //creamos un objeto de tipo usuario para enviar los datos
             $ObjUsuario=new Usuario();
-            $ObjUsuario->correo=$datos["correo"];
             $ObjUsuario->nombre=$datos["nombre"];
             $ObjUsuario->apellido=$datos["apellido"];
+            $ObjUsuario->correo=$datos["correo"];
+            $ObjUsuario->password=$datos["password"];
             $ObjUsuario->tipoUsuario=$datos["tipoUsuario"];
             $ObjUsuario->estado=$datos["estado"];
             $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
-            $ObjUsuario->contraseña=$datos["contraseña"];
             $ObjUsuario->save();
             //respuesta exitoso o no en la inserrccion
             return response()->json(["mensaje"=>"Operacion exitosa","siglas"=>"OE",200]);
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","siglas"=>"DNF",400]);
         }
+ 
     }
 
     //Registrar docente
     //(obtengo todos los datos del formulario,el id a comparar)
     public function RegistrarDocente(Request $request,$external_id){
+  
         if($request->json()){
+   
             $datos=$request->json()->all();
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+
+           // die(json_encode($ObjUsuario));
             // tipo de usuario decente ==1
-            if($ObjUsuario->tipoUsuario==1){
+            if($ObjUsuario->tipoUsuario==1 && $ObjUsuario->tipoUsuario !=null){
                 //creo un objeto Docente para guardar el nuevo decente
                 $ObjDocente=new Docente();
                 $ObjDocente->fk_usuario=$ObjUsuario->id;
@@ -53,7 +60,7 @@ class UsuarioController extends Controller
            
                 return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
             }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE"]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa, el usuario no se encontro","Siglas"=>"ONE"]);
             }
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
@@ -86,6 +93,7 @@ class UsuarioController extends Controller
     public function RegistrarEmpleador(Request $request,$external_id){
         if($request->json()){
             $datos=$request->json()->all();
+            echo "external usuario es ".$external_id;
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             // 5 es empleador
             if($ObjUsuario->tipoUsuario==5){

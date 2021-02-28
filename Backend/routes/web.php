@@ -16,8 +16,20 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-//envaimos a guardar datos (end pint,controladador/)
-$router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
-$router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
-$router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
-$router->post('/empleador/registro/{external_id}','UsuarioController@RegistrarEmpleador');
+
+
+try {
+    //code...
+    
+    //$router->group(['middleware' => 'auth'], function () use ($router) {
+        //envaimos a guardar datos (end pint,controladador/)
+        $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
+        $router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
+        $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
+        $router->post('/empleador/registro/{external_id}','UsuarioController@RegistrarEmpleador');
+    
+   // });
+} catch (\Throwable $th) {
+    echo "PROBLEMAS CON LAS RUTAS PROTEGIDAS";
+    throw $th;
+}

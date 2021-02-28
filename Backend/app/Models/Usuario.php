@@ -14,7 +14,7 @@ class Usuario extends Model{
         "nombre",
         "apellido",
         "correo",
-        "contraseña",
+        "password",
         "tipoUsuario",
         "estado",
         "external_us",
