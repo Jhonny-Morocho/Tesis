@@ -1,9 +1,4 @@
-//  export class UsuarioModel{
-//     emanil:string;
-//     password:string;
-//     nombre:string;
 
-// }
 
 export class UsuarioModel{
     correo:string;

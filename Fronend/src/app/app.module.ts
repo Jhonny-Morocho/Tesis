@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
 import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -12,6 +13,10 @@ import { LoginComponent } from './pages/login/login.component';
 import {FormsModule} from '@angular/forms';
 // para hacer soliuctudes http necestio el siguiente moduo
 import {HttpClientModule} from '@angular/common/http';
+import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
+import { NavComponent } from './pages/nav/nav.component';
+import { PostulanteComponent } from './pages/postulante/postulante.component';
+import { EmpleadorComponent } from './pages/empleador/empleador.component';
 
 
 @NgModule({
@@ -19,10 +24,15 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     RegistroComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    LoginAdminComponent,
+    NavComponent,
+    PostulanteComponent,
+    EmpleadorComponent
   ],
   imports: [
     BrowserModule,
+    //importo mi moduilo de rutas de app-routing.module
     AppRoutingModule,
     FormsModule,
     HttpClientModule
