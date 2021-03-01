@@ -131,7 +131,6 @@ class UsuarioController extends Controller
         global $respuestaUsuario;
         if($request->json()){
             $datos=$request->json()->all();
-       
             $usuario=Usuario::where("correo",$datos['correo'])->first();
             // ========= VALIDACION DEL USUARIO ANTES DE INICIAR EL LOGIN ====
             //existe el usuario 
