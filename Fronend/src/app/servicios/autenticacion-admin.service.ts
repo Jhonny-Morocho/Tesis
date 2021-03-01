@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 export class AutenticacionAdminService {
   // el url de donde voy a solicitar el servicio
   private urlDominio_="http://localhost/Tesis";
+
+ 
   private urlBackend_="/Backend/public/index.php/usuario/login-admin";
 
   constructor(private _httCLiente:HttpClient) { }
@@ -33,7 +35,8 @@ export class AutenticacionAdminService {
       map(
         respuestaBackend=>{
           console.log("Entro en el mapa del RKJS");
-
+          this.guarUsuarioTempLocalSotarage(respuestaBackend['mensaje']);
+          console.log(respuestaBackend['mesaje']);
           console.log(respuestaBackend);
           return respuestaBackend;
         }
@@ -41,8 +44,21 @@ export class AutenticacionAdminService {
     );
 
   }
-
-
+  guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
+    console.log(respuestaBackend);
+    localStorage.setItem('nombe', respuestaBackend.nombre);
+    localStorage.setItem('apellido', respuestaBackend.apellido);
+    localStorage.setItem('correo', respuestaBackend.correo);
+    localStorage.setItem('tipoUsuario', (respuestaBackend.tipoUsuario).toString());
+    // la sesion de cierra en 1 hora
+     let hoy = new Date();
+     hoy.setSeconds( 3600 );
+    localStorage.setItem('expira',hoy.getTime().toString());
+  }
+  
+   cerrarSession(){
+     localStorage.clear();
+   }
 
 
 }

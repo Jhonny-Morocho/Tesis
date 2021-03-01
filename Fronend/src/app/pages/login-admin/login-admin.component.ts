@@ -23,7 +23,6 @@ export class LoginAdminComponent implements OnInit {
     // los inicializo solo para hacer pruebas despues los descomento
     // this.instanciaModeloUsuarioLogin.correo="jhonnymichaeldj2011@hotmail.com";
     // this.instanciaModeloUsuarioLogin.password="123456";
-
   }
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
@@ -55,7 +54,7 @@ export class LoginAdminComponent implements OnInit {
             'success'
           )
           //guardamos los datos temportalmente
-         this.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
+         //this.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
          //direcciono al panel de admistracion
          this.router_.navigateByUrl('/panel-admin');
         }else{
@@ -75,20 +74,7 @@ export class LoginAdminComponent implements OnInit {
         }); 
       }
     );
-  
   }
-
-   guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
-      console.log(respuestaBackend);
-      localStorage.setItem('nombe', respuestaBackend.nombre);
-      localStorage.setItem('apellido', respuestaBackend.apellido);
-      localStorage.setItem('correo', respuestaBackend.correo);
-      localStorage.setItem('tipoUsuario', (respuestaBackend.tipoUsuario).toString());
-      // la sesion de cierra en 1 hora
-       let hoy = new Date();
-       hoy.setSeconds( 3600 );
-      localStorage.setItem('expira',hoy.getTime().toString());
-  }
-
 
 }
+

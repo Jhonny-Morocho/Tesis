@@ -10,18 +10,18 @@ import { NgForm } from '@angular/forms';
 })
 export class PanelAdminComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
+
   constructor() { }
 
   ngOnInit() {
+
      if(localStorage.getItem('correo')){
        console.log(localStorage);
        this.instanciaUsuario.nombre = localStorage.getItem('nombe');
        this.instanciaUsuario.apellido = localStorage.getItem('apellido');
        this.instanciaUsuario.correo = localStorage.getItem('correo');
-      //  this.instanciaUsuario.nombre = localStorage.getItem('email');
-      //  this.instanciaUsuario.nombre = localStorage.getItem('email');
      }else{
-
+      // no existe session por lo cual debo direccionar al inicio
     }
   }
 

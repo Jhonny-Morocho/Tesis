@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Password</label><br>
-            <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors;">El password es obligatorio</span>
+            <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
             <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" id="inputPassword4" required minlength="6">
         </div>
 
