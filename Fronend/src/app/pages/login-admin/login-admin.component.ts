@@ -54,8 +54,10 @@ export class LoginAdminComponent implements OnInit {
             'Bienvenido',
             'success'
           )
-          //direcciono al panel de admistracion
-          this.router_.navigateByUrl('/panel-admin');
+          //guardamos los datos temportalmente
+         this.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
+         //direcciono al panel de admistracion
+         this.router_.navigateByUrl('/panel-admin');
         }else{
           Swal({
             title:'Error al autenticar',
@@ -73,8 +75,20 @@ export class LoginAdminComponent implements OnInit {
         }); 
       }
     );
-    
-
-    
+  
   }
+
+   guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
+      console.log(respuestaBackend);
+      localStorage.setItem('nombe', respuestaBackend.nombre);
+      localStorage.setItem('apellido', respuestaBackend.apellido);
+      localStorage.setItem('correo', respuestaBackend.correo);
+      localStorage.setItem('tipoUsuario', (respuestaBackend.tipoUsuario).toString());
+      // la sesion de cierra en 1 hora
+       let hoy = new Date();
+       hoy.setSeconds( 3600 );
+      localStorage.setItem('expira',hoy.getTime().toString());
+  }
+
+
 }

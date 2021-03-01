@@ -33,6 +33,7 @@ export class AutenticacionAdminService {
       map(
         respuestaBackend=>{
           console.log("Entro en el mapa del RKJS");
+
           console.log(respuestaBackend);
           return respuestaBackend;
         }
@@ -41,8 +42,7 @@ export class AutenticacionAdminService {
 
   }
 
-  private guardarDatosUsuarioLocalStorage(usurioModel:UsuarioModel){
-    console.log(usurioModel);
 
-  }
+
+
 }

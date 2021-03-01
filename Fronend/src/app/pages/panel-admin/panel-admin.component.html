@@ -26,21 +26,21 @@
                     <p>Mi perfil</p>
                     <hr>
                     <div class="container mt-5 ">
-                        <form class="row g-3">
+                        <form class="row g-3" #fPerfilAdmin="ngForm">
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="form-label">Nombre</label>
-                                <input type="email" class="form-control" id="inputEmail4">
+                                <input type="text" class="form-control" [(ngModel)]="instanciaUsuario.nombre" name="nombreAdmin" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Apellido</label>
-                                <input type="password" class="form-control" id="inputPassword4">
+                                <input type="text" class="form-control" name="apellidoAdmin" [(ngModel)]="instanciaUsuario.apellido" disabled>
                             </div>
                             <div class="col-12">
                                 <label for="inputAddress" class="form-label">Correo</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                <input type="email" class="form-control" id="inputAddress" name="correoAdmin" [(ngModel)]="instanciaUsuario.correo" disabled>
                             </div>
                             <div class="col-12">
-                                <label for="inputAddress2" class="form-label">Rol: <span class="badge rounded-pill bg-success">Secretaria</span></label>
+                                <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">Secretaria</span></label>
                             </div>
                         </form>
 
