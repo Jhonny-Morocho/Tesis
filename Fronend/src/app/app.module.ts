@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+//importo mi archivo de rutas
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -18,6 +18,9 @@ import { NavComponent } from './pages/nav/nav.component';
 import { PostulanteComponent } from './pages/postulante/postulante.component';
 import { EmpleadorComponent } from './pages/empleador/empleador.component';
 import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
+import { MiPerfilComponent } from './pages/panel-admin/tabs/mi-perfil/mi-perfil.component';
+import { TareasPendientesComponent } from './pages/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
+import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
     NavComponent,
     PostulanteComponent,
     EmpleadorComponent,
-    PanelAdminComponent
+    PanelAdminComponent,
+    MiPerfilComponent,
+    TareasPendientesComponent,
+    TareasRealizadasComponent
   ],
   imports: [
     BrowserModule,
