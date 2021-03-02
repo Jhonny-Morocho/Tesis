@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-registro-empleador',
-  templateUrl: './registro-empleador.component.html',
-  styleUrls: ['./registro-empleador.component.css']
+  templateUrl: './registro-empleador.component.html'
 })
 export class RegistroEmpleadorComponent implements OnInit {
 

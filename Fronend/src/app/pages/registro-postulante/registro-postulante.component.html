@@ -1,3 +1,77 @@
-<p>
-  registro-postulante works!
-</p>
+<div class="container mt-5 animated fadeIn">
+    <div class="card">
+        <article class="card-body">
+            <form class="row g-3" (ngSubmit)="loginAdmin(fLoginAdmin)" #fLoginAdmin="ngForm">
+                <h3>Registro de postulante</h3>
+                <div class="col-3">
+                    <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al login </a>
+                </div>
+
+                <hr>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Nombre Completos</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El Nombre es obligatorio</span>
+                    <input type="texto" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="nombre" class="form-control" required minlength="50">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Apellido Completos</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El Apellido es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="apellido" class="form-control" required minlength="50">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Correo Institucional</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El correo es obligatorio</span>
+                    <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" required email>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">La cedula es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="cedula" class="form-control" required minlength="10">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">La fecha es obligatorio</span>
+                    <input type="date" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="fechaNacimiento" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>
+                    <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El telefono es obligatorio</span>
+                    <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" id="inputEmail4" required minlength="10">
+                </div>
+                <div class="col-md-6">
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Genero</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="gridRadios1">
+                            Masculino
+                          </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                            Femenino
+                          </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Registrarme</button>
+                </div>
+            </form>
+
+        </article>
+    </div>
+
+</div>

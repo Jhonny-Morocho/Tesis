@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
-import { RegistroComponent } from './pages/registro/registro.component';
+import { RegistroPostulanteComponent } from './pages/registro-postulante/registro-postulante.component';
 import {LoginAdminComponent} from './pages/login-admin/login-admin.component';
 import {PostulanteComponent} from './pages/panel-postulante/postulante.component';
 import {EmpleadorComponent} from './pages/empleador/empleador.component';
@@ -12,13 +12,16 @@ import { MiPerfilComponent } from './pages/panel-admin/tabs/mi-perfil/mi-perfil.
 import { TareasPendientesComponent } from './pages/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
 import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 import {LoginPostulanteComponent} from './pages/login-postulante/login-postulante.component';
-
+import { LoginEmpleadorComponent } from './pages/login-empleador/login-empleador.component';
+import {RegistroEmpleadorComponent} from './pages/registro-empleador/registro-empleador.component';
 const routes: Routes = [
   //{ path: 'home'    , component: HomeComponent,canActivate:[AutentificacionGuard] },
   { path: 'home'    , component: HomeComponent },
-  { path: 'registro', component: RegistroComponent },
+  { path: 'registro-postulante', component: RegistroPostulanteComponent },
+  { path: 'registro-empleador', component: RegistroEmpleadorComponent },
    { path: 'login-postulante'   , component: LoginPostulanteComponent },
   { path: 'login-admin' , component: LoginAdminComponent },
+  { path: 'login-empleador' , component: LoginEmpleadorComponent },
   { path: 'postulante' , component: PostulanteComponent },
   { path: 'empleador' , component: EmpleadorComponent },
   // { path: 'panel-admin' , component: PanelAdminComponent },

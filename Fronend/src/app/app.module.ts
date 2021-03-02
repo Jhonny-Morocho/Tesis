@@ -24,6 +24,7 @@ import { TareasPendientesComponent } from './pages/panel-admin/tabs/tareas-pendi
 import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 import { RegistroPostulanteComponent } from './pages/registro-postulante/registro-postulante.component';
 import { RegistroEmpleadorComponent } from './pages/registro-empleador/registro-empleador.component';
+import { LoginEmpleadorComponent } from './pages/login-empleador/login-empleador.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { RegistroEmpleadorComponent } from './pages/registro-empleador/registro-
     TareasRealizadasComponent,
     LoginPostulanteComponent,
     RegistroPostulanteComponent,
-    RegistroEmpleadorComponent
+    RegistroEmpleadorComponent,
+    LoginEmpleadorComponent
   ],
   imports: [
     BrowserModule,
