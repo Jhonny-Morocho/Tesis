@@ -18,9 +18,6 @@ export class RegistroComponent implements OnInit {
   // cuando carga la pagina se llena el formulario
   ngOnInit() { 
     this.instanciaUsuario=new UsuarioModel();
-
-    this.instanciaUsuario.nombre="angular";
-    this.instanciaUsuario.apellido="angular";
      this.instanciaUsuario.correo="angular@hotmail.com";
      this.instanciaUsuario.password="miPassword";
      this.instanciaUsuario.tipoUsuario=1;

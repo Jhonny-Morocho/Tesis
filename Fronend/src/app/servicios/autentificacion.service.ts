@@ -51,12 +51,10 @@ export class AutentificacionService {
     //enviamos los datos 
     const autentificacionDatos={
       correo:_usuario.correo,
-      nombre:_usuario.nombre,
       password:_usuario.password,
       tipoUsuario:_usuario.tipoUsuario,
       estado:_usuario.estado,
       external_us:_usuario.external_us,
-      apellido:_usuario.apellido,
       returnSecureToek:true
     }
     console.log(this.url);

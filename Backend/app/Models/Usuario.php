@@ -11,8 +11,6 @@ class Usuario extends Model{
     public $timestamp=true;
     //lista blanca cmapos publicos
     protected $fillable=[
-        "nombre",
-        "apellido",
         "correo",
         "password",
         "tipoUsuario",

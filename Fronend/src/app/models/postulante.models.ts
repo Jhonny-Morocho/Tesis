@@ -1,10 +1,12 @@
 
-export class UsuarioModel{
-    correo:string;
+export class PostulanteModel{
     nombre:string;
-    password:string;
-    tipoUsuario:Number;
-    estado:Number;
-    external_us:string;
     apellido:string;
+    cedula:string;
+    telefono:string;
+    genero:Number;
+    observaciones:string;
+    fecha_nacimiento:string;
+    direccion_domicilio:string;
+    external_es:string
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {AutenticacionAdminService} from '../../servicios/autenticacion-admin.service';
+import {AutenticacionUserService} from '../../servicios/autenticacion-usuario.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import {AutenticacionAdminService} from '../../servicios/autenticacion-admin.ser
 })
 export class NavComponent implements OnInit {
 
-  constructor(private _servicioUsuario:AutenticacionAdminService ,private roter_:Router) { }
+  constructor(private _servicioUsuario:AutenticacionUserService ,private roter_:Router) { }
 
   ngOnInit() {
 

@@ -14,12 +14,15 @@ class Estudiante extends Model
         //lista blanca campos publicos
         protected $fillable=[
             "fk_usuario",
+            "nombre",
+            "apellido",
             "cedula",
             "telefono",
-            "genero",
             "fecha_nacimiento",
+            "direccion_domicilio",
+            "genero",
             "observaciones",
-            "external_us"
+            "external_es"
         ];
     public function usuario(){
         //esta tabla pertenece a usuario

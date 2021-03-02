@@ -22,8 +22,6 @@ class UsuarioController extends Controller
             $datos=$request->json()->all();
             //creamos un objeto de tipo usuario para enviar los datos
             $ObjUsuario=new Usuario();
-            $ObjUsuario->nombre=$datos["nombre"];
-            $ObjUsuario->apellido=$datos["apellido"];
             $ObjUsuario->correo=$datos["correo"];
             //Encriptar Password
             $opciones=array('cost'=>12);
@@ -35,7 +33,7 @@ class UsuarioController extends Controller
             $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
             $ObjUsuario->save();
             //respuesta exitoso o no en la inserrccion
-            return response()->json(["mensaje"=>"Operacion exitosa","siglas"=>"OE",200]);
+            return response()->json(["mensaje"=>"Operacion exitosa","siglas"=>"OE",200,]);
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","siglas"=>"DNF",400]);
         }
@@ -70,24 +68,41 @@ class UsuarioController extends Controller
         }
     }
     public function RegistrarEstudiante(Request $request,$external_id){
+        
         if($request->json()){
             $datos=$request->json()->all();
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            if($ObjUsuario->tipoUsuario==2){
-                //creo un objeto Docente para guardar el nuevo decente
-                $ObjEstudiante=new Estudiante();
-                $ObjEstudiante->fk_usuario=$ObjUsuario->id;
-                $ObjEstudiante->cedula=$datos["cedula"];
-                $ObjEstudiante->telefono=$datos["telefono"];
-                $ObjEstudiante->genero=$datos["genero"];
-                $ObjEstudiante->fecha_nacimiento=$datos["fecha_nacimiento"];
-                $ObjEstudiante->observaciones=$datos["observaciones"];
-                $ObjEstudiante->external_us="Es".Utilidades\UUID::v4();
-                $ObjEstudiante->save();
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
+            //verificar si el external user es igual
+            if($ObjUsuario['external_us']==$external_id){
+                //verificar si existe ese tipo o rol de usuario
+                if($ObjUsuario->tipoUsuario==2){
+                    //creo un objeto para guardar el estudiante
+                    try {
+                        //code...
+                        $ObjEstudiante=new Estudiante();
+                        $ObjEstudiante->fk_usuario=$ObjUsuario->id;
+                        $ObjEstudiante->nombre=$datos["nombre"];
+                        $ObjEstudiante->apellido=$datos["apellido"];
+                        $ObjEstudiante->cedula=$datos["cedula"];
+                        $ObjEstudiante->telefono=$datos["telefono"];
+                        $ObjEstudiante->genero=$datos["genero"];
+                        $ObjEstudiante->fecha_nacimiento=$datos["fecha_nacimiento"];
+                        $ObjEstudiante->direccion_domicilio=$datos["direccion_domicilio"];
+                        $ObjEstudiante->observaciones=$datos["observaciones"];
+                        $ObjEstudiante->external_es="Es".Utilidades\UUID::v4();
+                        $ObjEstudiante->save();
+                        return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
+                    } catch (\Throwable $th) {
+                        return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                    }
+                }else{
+                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el tipo de usuario","Siglas"=>"ONETU"]);
+                } 
+
             }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);
-            } 
+                return response()->json(["mensaje"=>"Operacion No Exitosa no coincide el external user","Siglas"=>"ONE"]);
+            }
+        
                 
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
@@ -143,17 +158,21 @@ class UsuarioController extends Controller
                         # code...
                         return response()->json(["mensaje"=>"Usuario no activo","Siglas"=>"UNA",400]);
                         break;
-                       //gestor
+                       //estudiante
                        case 2:
                         # code...
                         break;
-                        
+
                         //secretara
-                       case 3:
-                           # code...
-                           return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
-                           break;
-                        //encargado
+                        case 3:
+                            # code...
+                            return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
+                            break;
+                            //encargado
+                        //gestor
+                       case 2:
+                        # code...
+                        break;
                        case 5:
                         # code...
                         break;

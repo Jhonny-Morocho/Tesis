@@ -9,10 +9,11 @@ import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
-export class AutenticacionAdminService {
+export class AutenticacionUserService {
   // el url de donde voy a solicitar el servicio
   private urlDominio_="http://localhost/Tesis";
-  private urlBackend_="/Backend/public/index.php/usuario/login-admin";
+  private urlBackend_Login="/Backend/public/index.php/usuario/login-admin";
+  private urlBackend_CrearUsuario="/Backend/public/index.php/usuario/registro";
   private nombreUser:string;
   private correo:string;
   private apellido:string;
@@ -34,8 +35,8 @@ export class AutenticacionAdminService {
     console.log(objetoUsuario);
     console.log(usuioModel_);
     // apcimos el metodo post y la promesa
-    //console.log(`${this.urlDominio_}${this.urlBackend_}`);
-    return this._httCLiente.post(`${this.urlDominio_}${this.urlBackend_}`,
+    //console.log(`${this.urlDominio_}${this.urlBackend_Login}`);
+    return this._httCLiente.post(`${this.urlDominio_}${this.urlBackend_Login}`,
                                 objetoUsuario
     ).pipe(
       map(
@@ -52,12 +53,8 @@ export class AutenticacionAdminService {
   }
   guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
     console.log(respuestaBackend);
-    this.nombreUser=respuestaBackend.nombre;
-    this.apellido=respuestaBackend.apellido;
     this.correo=respuestaBackend.correo;
     this.tipoUsuario=Number(respuestaBackend.tipoUsuario);
-    localStorage.setItem('nombe', respuestaBackend.nombre);
-    localStorage.setItem('apellido', respuestaBackend.apellido);
     localStorage.setItem('correo', respuestaBackend.correo);
     localStorage.setItem('tipoUsuario', (respuestaBackend.tipoUsuario).toString());
     // la sesion de cierra en 1 hora
@@ -111,5 +108,28 @@ export class AutenticacionAdminService {
       }
    
     //return this.correo.length>2;
+  }
+  crearNuevoUsuario(modelUsuario:UsuarioModel){
+    //envio el json tal como esta en el backen
+    const autenficacionDatos={
+      correo:modelUsuario.correo,
+      passwor:modelUsuario.password,
+      tipoUsuario:modelUsuario.tipoUsuario,
+      estado:modelUsuario.estado,
+    }
+    //enviamos la peticion al servidor o al backen
+    return this._httCLiente.post(
+      `${this.urlDominio_}${this.urlBackend_CrearUsuario}`,autenficacionDatos
+    ).pipe(
+      map(
+        obtengoRespues=>{
+          console.log("Entro en el mapa del RKJS");
+          console.log(obtengoRespues);
+          //this.guardarToken(obtengoRespues['idToken']);
+          return obtengoRespues;
+        }
+      )
+    );
+
   }
 }

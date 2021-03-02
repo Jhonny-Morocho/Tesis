@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 // llamo la libreria de switch alert
 import Swal from 'sweetalert2';
 //importamos el servicio
-import {AutenticacionAdminService} from '../../servicios/autenticacion-admin.service';
+import {AutenticacionUserService} from '../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginPostulanteComponent implements OnInit {
   
   // Instancio mi modelo
   instanciaModeloUsuarioLogin:UsuarioModel=new UsuarioModel;
-  constructor(private _servicioAdmin:AutenticacionAdminService,private router_:Router) { }
+  constructor(private _servicioAdmin:AutenticacionUserService,private router_:Router) { }
 
   ngOnInit() {
     // los inicializo solo para hacer pruebas despues los descomento
