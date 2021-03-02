@@ -1,26 +1,31 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 //import { Observable } from 'rxjs';
-import {AutentificacionService} from '../servicios/autentificacion.service';
-
+import {AutenticacionAdminService} from '../servicios/autenticacion-admin.service';
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
 export class AutentificacionGuard implements CanActivate {
   
-      constructor(private authn_:AutentificacionService,
-        private router_:Router){}
+  constructor(private authnServicioAdmin_:AutenticacionAdminService,
+              private router_:Router){}
 
   canActivate( ): boolean{
-    console.log("GUARD");
-    console.log(this.authn_.estaAutenticado);
-    if(this.authn_.estaAutenticado()){
-        return true;
-    }else{
-        console.log(this.authn_.estaAutenticado());
-        this.router_.navigateByUrl('/login')
-       return false;
-    }
+    console.log("PROBANDO CAN ACTIVARE O RESTRICION DE RUTAS");
+    console.log(this.authnServicioAdmin_.estaAutenticado());
+     if(this.authnServicioAdmin_.estaAutenticado()){
+         return true;
+     }else{
+        Swal({
+          title:'Error al autenticar',
+          type:'error',
+          text:'La session ha expirado '
+        }); 
+         console.log(this.authnServicioAdmin_.estaAutenticado());
+         this.router_.navigateByUrl('/home')
+        return false; 
+     }
   }
   
 }

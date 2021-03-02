@@ -24,10 +24,9 @@ const routes: Routes = [
   { path: 'login-empleador' , component: LoginEmpleadorComponent },
   { path: 'postulante' , component: PostulanteComponent },
   { path: 'empleador' , component: EmpleadorComponent },
-  // { path: 'panel-admin' , component: PanelAdminComponent },
-  { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent },
-  { path: 'panel-admin/tareas-pendientes' , component: TareasPendientesComponent },
-  { path: 'panel-admin/tareas-realizadas' , component: TareasRealizadasComponent },
+  { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-admin/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   { path: '**', redirectTo: 'home' }
 ];
 

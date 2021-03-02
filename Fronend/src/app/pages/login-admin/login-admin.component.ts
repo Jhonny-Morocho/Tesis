@@ -47,16 +47,8 @@ export class LoginAdminComponent implements OnInit {
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
         if(siHacesBien['Siglas']=="OE"){
-          Swal.close();
-          Swal(
-            '',
-            'Bienvenido',
-            'success'
-          )
-          //guardamos los datos temportalmente
-         //this.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
-         //direcciono al panel de admistracion
-         this.router_.navigateByUrl('/panel-admin');
+           Swal.close();
+         this.router_.navigateByUrl('/panel-admin/mi-perfil');
         }else{
           Swal({
             title:'Error al autenticar',
