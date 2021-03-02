@@ -15,12 +15,15 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { NavComponent } from './pages/nav/nav.component';
-import { PostulanteComponent } from './pages/postulante/postulante.component';
+import { PostulanteComponent } from './pages/panel-postulante/postulante.component';
 import { EmpleadorComponent } from './pages/empleador/empleador.component';
-import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
+import { PanelAdminComponent } from './pages/panel-admin/nav/navTab-admin.component';
+import { LoginPostulanteComponent } from './pages/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/panel-admin/tabs/mi-perfil/mi-perfil.component';
 import { TareasPendientesComponent } from './pages/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
 import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
+import { RegistroPostulanteComponent } from './pages/registro-postulante/registro-postulante.component';
+import { RegistroEmpleadorComponent } from './pages/registro-empleador/registro-empleador.component';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-reali
     PanelAdminComponent,
     MiPerfilComponent,
     TareasPendientesComponent,
-    TareasRealizadasComponent
+    TareasRealizadasComponent,
+    LoginPostulanteComponent,
+    RegistroPostulanteComponent,
+    RegistroEmpleadorComponent
   ],
   imports: [
     BrowserModule,

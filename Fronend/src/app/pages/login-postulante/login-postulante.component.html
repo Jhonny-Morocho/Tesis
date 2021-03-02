@@ -2,10 +2,14 @@
     <div class="card">
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="loginAdmin(fLoginAdmin)" #fLoginAdmin="ngForm">
-                <h3>Login Administrador</h3>
+                <h3>Login Postulante</h3>
                 <div class="col-3">
                     <a [routerLink]="['/home']" class="float-right btn btn-outline-primary">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Home </a>
+                </div>
+                <div class="col-3">
+                    <a [routerLink]="['/home']" class="float-right btn btn-outline-primary">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i> Registrarme </a>
                 </div>
                 <hr>
                 <div class="col-md-6">
@@ -18,13 +22,6 @@
                     <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
                     <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" id="inputPassword4" required minlength="6">
                 </div>
-
-                <!-- <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">Recordarme</label>
-                    </div>
-                </div> -->
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Ingresar</button>
                 </div>
