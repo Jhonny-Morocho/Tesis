@@ -15,7 +15,9 @@ import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import {RegistroEmpleadorComponent} from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel de admistracion del postulante
+import {PanelPostulanteComponent}from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component'; 
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/mi-perfil/mi-perfil.component';
+import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/formulario-info-postulante/formulario-info-postulante.component';
 
 const routes: Routes = [
   //{ path: 'home'    , component: HomeComponent,canActivate:[AutentificacionGuard] },
@@ -32,7 +34,10 @@ const routes: Routes = [
   { path: 'panel-admin/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   //rutas del postulante
-  { path: 'panel-postulante/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
+ // { path: 'panel-postulante/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-postulante/mi-perfil' , component: MiPerfilPostulanteComponent },
+  { path: 'panel-postulante/form-info-postulante' , component: FormularioInfoPostulanteComponent },
+  { path: 'panel-postulante/mi-perfil' , component: PanelPostulanteComponent },
   // { path: 'panel-postulante/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
   // { path: 'panel-postulante/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   { path: '**', redirectTo: 'home' }

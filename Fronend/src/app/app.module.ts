@@ -25,7 +25,10 @@ import { LoginPostulanteComponent } from './pages/form-registro-login/form-login
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/tabs/mi-perfil/mi-perfil.component';
 import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
 import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
-
+import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
+import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/mi-perfil/mi-perfil.component';
+import { from } from 'rxjs';
+import { FormularioInfoPostulanteComponent } from './pages/paneles-administracion/panel-postulante/tabs/formulario-info-postulante/formulario-info-postulante.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-
     LoginPostulanteComponent,
     RegistroPostulanteComponent,
     RegistroEmpleadorComponent,
-    LoginEmpleadorComponent
+    LoginEmpleadorComponent,
+    PanelPostulanteComponent,
+    MiPerfilPostulanteComponent,
+    FormularioInfoPostulanteComponent
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,22 @@
-<navTab-admin></navTab-admin>
+<navTab-postulante></navTab-postulante>
 <div class="container">
     <div class="row ">
         <div class="col-3">
-            <img src="../../../assets/images/secretaria.png" class="img-thumbnail" alt="...">
+            <img src="../../../assets/images/postulante.png" class="img-thumbnail" alt="...">
         </div>
         <div class="col-9 mt-2">
-            <p>Mi perfil</p>
+            <p>Mi perfil Postulante</p>
             <hr>
             <div class="container mt-5 ">
-                <a [routerLink]="['/home']" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
+                <div class="row">
+                    <div class="col-3 ">
+                        <a [routerLink]="['/home']" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
+                    </div>
+                    <div class="col-6 ">
+                        <a [routerLink]="['/panel-postulante/form-info-postulante']" class="float-right btn btn-outline-success mb-4"><i class="fa fa-arrow-right" aria-hidden="true"></i> Formulario de postulacion</a>
+                    </div>
+
+                </div>
                 <form class="row g-3" #fPerfilAdmin="ngForm">
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Nombre</label>
@@ -23,7 +31,7 @@
                         <input type="email" class="form-control" id="inputAddress" name="correoAdmin" [(ngModel)]="instanciaUsuario.correo" disabled>
                     </div>
                     <div class="col-12">
-                        <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">Secretaria</span></label>
+                        <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">Postulante/Estudiante/Graduado</span></label>
                     </div>
                 </form>
 
