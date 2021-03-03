@@ -13,18 +13,18 @@ import { LoginComponent } from './pages/login/login.component';
 import {FormsModule} from '@angular/forms';
 // para hacer soliuctudes http necestio el siguiente moduo
 import {HttpClientModule} from '@angular/common/http';
-import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
+import { LoginAdminComponent } from './pages/form-registro-login/form-logins/login-admin/login-admin.component';
+import { RegistroPostulanteComponent } from './pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
+import { RegistroEmpleadorComponent } from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
+import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import { NavComponent } from './pages/nav/nav.component';
-import { PostulanteComponent } from './pages/panel-postulante/postulante.component';
+
 import { EmpleadorComponent } from './pages/empleador/empleador.component';
-import { PanelAdminComponent } from './pages/panel-admin/nav/navTab-admin.component';
-import { LoginPostulanteComponent } from './pages/login-postulante/login-postulante.component';
-import { MiPerfilComponent } from './pages/panel-admin/tabs/mi-perfil/mi-perfil.component';
-import { TareasPendientesComponent } from './pages/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
-import { TareasRealizadasComponent } from './pages/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
-import { RegistroPostulanteComponent } from './pages/registro-postulante/registro-postulante.component';
-import { RegistroEmpleadorComponent } from './pages/registro-empleador/registro-empleador.component';
-import { LoginEmpleadorComponent } from './pages/login-empleador/login-empleador.component';
+import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
+import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
+import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/tabs/mi-perfil/mi-perfil.component';
+import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
+import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 
 
 @NgModule({
@@ -35,7 +35,6 @@ import { LoginEmpleadorComponent } from './pages/login-empleador/login-empleador
     LoginComponent,
     LoginAdminComponent,
     NavComponent,
-    PostulanteComponent,
     EmpleadorComponent,
     PanelAdminComponent,
     MiPerfilComponent,

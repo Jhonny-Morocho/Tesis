@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 // importo mi modelo 
-import {UsuarioModel} from '../../models/usuario.model';
+import {UsuarioModel} from '../../../../models/usuario.model';
 // importa utomaticamente el ingForm
 import { NgForm } from '@angular/forms';
 // llamo la libreria de switch alert
 import Swal from 'sweetalert2';
 //importamos el servicio
-import {AutenticacionUserService} from '../../servicios/autenticacion-usuario.service';
+import {AutenticacionUserService} from '../../../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -46,8 +46,8 @@ export class LoginAdminComponent implements OnInit {
         console.log("siHacesBien");
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
+        Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-           Swal.close();
          this.router_.navigateByUrl('/panel-admin/mi-perfil');
         }else{
           Swal({

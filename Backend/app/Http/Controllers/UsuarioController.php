@@ -21,21 +21,26 @@ class UsuarioController extends Controller
             //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
             //creamos un objeto de tipo usuario para enviar los datos
-            $ObjUsuario=new Usuario();
-            $ObjUsuario->correo=$datos["correo"];
-            //Encriptar Password
-            $opciones=array('cost'=>12);
-            $passwordCliente=$datos["password"];
-		    $password_hashed=password_hash($passwordCliente,PASSWORD_BCRYPT,$opciones);
-            $ObjUsuario->password=$password_hashed;
-            $ObjUsuario->tipoUsuario=$datos["tipoUsuario"];
-            $ObjUsuario->estado=$datos["estado"];
-            $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
-            $ObjUsuario->save();
-            //respuesta exitoso o no en la inserrccion
-            return response()->json(["mensaje"=>"Operacion exitosa","siglas"=>"OE",200,]);
+            try {
+                //code...
+                $ObjUsuario=new Usuario();
+                $ObjUsuario->correo=$datos["correo"];
+                //Encriptar Password
+                $opciones=array('cost'=>12);
+                $passwordCliente=$datos["password"];
+                $password_hashed=password_hash($passwordCliente,PASSWORD_BCRYPT,$opciones);
+                $ObjUsuario->password=$password_hashed;
+                $ObjUsuario->tipoUsuario=$datos["tipoUsuario"];
+                $ObjUsuario->estado=$datos["estado"];
+                $ObjUsuario->external_us="UuA".Utilidades\UUID::v4();
+                $ObjUsuario->save();
+                //respuesta exitoso o no en la inserrccion
+                return response()->json(["mensaje"=>$ObjUsuario,"Siglas"=>"OE",200,]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th]);
+            }
         }else{
-            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","siglas"=>"DNF",400]);
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
  
     }
@@ -130,7 +135,7 @@ class UsuarioController extends Controller
                 $ObjEmpleador->observaciones=$datos["observaciones"];
                 $ObjEmpleador->external_us="Em".Utilidades\UUID::v4();
                 $ObjEmpleador->save();
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
+                return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE"]);
             }else{
                 return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);
             } 

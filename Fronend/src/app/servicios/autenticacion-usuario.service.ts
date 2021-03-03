@@ -57,6 +57,8 @@ export class AutenticacionUserService {
     this.tipoUsuario=Number(respuestaBackend.tipoUsuario);
     localStorage.setItem('correo', respuestaBackend.correo);
     localStorage.setItem('tipoUsuario', (respuestaBackend.tipoUsuario).toString());
+    localStorage.setItem('external_us', respuestaBackend.external_us);
+    localStorage.setItem('estado', (respuestaBackend.estado).toString());
     // la sesion de cierra en 1 hora
      let hoy = new Date();
      hoy.setSeconds( 36000 );
@@ -98,12 +100,8 @@ export class AutenticacionUserService {
      const tiempoHoy=new Date();
 
       if(expiraDate>tiempoHoy){
-        console.log("xxxxxx"+expiraDate);
-        console.log("xxxxxx"+tiempoHoy);
         return true;
       }else{
-        console.log("xxxxxx"+expiraDate);
-        console.log("xxxxxx"+tiempoHoy);
         return false;
       }
    
@@ -113,23 +111,28 @@ export class AutenticacionUserService {
     //envio el json tal como esta en el backen
     const autenficacionDatos={
       correo:modelUsuario.correo,
-      passwor:modelUsuario.password,
+      password:modelUsuario.password,
       tipoUsuario:modelUsuario.tipoUsuario,
       estado:modelUsuario.estado,
     }
     //enviamos la peticion al servidor o al backen
+
     return this._httCLiente.post(
       `${this.urlDominio_}${this.urlBackend_CrearUsuario}`,autenficacionDatos
     ).pipe(
       map(
-        obtengoRespues=>{
+        obtengoRespuesBackend=>{
           console.log("Entro en el mapa del RKJS");
-          console.log(obtengoRespues);
-          //this.guardarToken(obtengoRespues['idToken']);
-          return obtengoRespues;
+          console.log(obtengoRespuesBackend);
+          console.log(obtengoRespuesBackend['mesaje']);
+          //this.guarUsuarioTempLocalSotarage();
+          //this.guardarToken(obtengoRespuesBackend['idToken']);
+          return obtengoRespuesBackend;
         }
       )
     );
+
+   
 
   }
 }
