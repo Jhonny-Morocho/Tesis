@@ -87,7 +87,7 @@ export class AutenticacionUserService {
     //pregunta si existe correo osea un usuario
     
     console.log(this.correo.length);
-    if(this.correo.length<2){
+    if(this.correo.length<5){
       return false;
     }
     // pregutnar si le session a expirado del local starge

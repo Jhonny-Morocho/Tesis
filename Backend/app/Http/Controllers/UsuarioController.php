@@ -205,10 +205,14 @@ class UsuarioController extends Controller
      public function listarPostulanteFormulario(Request $request){
          if($request->json()){
              //validar si el usuario existe
-             $ObjUsuario = usuario::where("external_us","UuAd5c4b46d-3d91-4cf9-897c-65b2ce260d66")->first();
+             $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
              if($ObjUsuario!=null){
-                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->get();
-                 return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
+                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
+                 if($ObjEstudiante !=null){
+                     return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
+                 }else{
+                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                 }
     
             }else{
                 return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);

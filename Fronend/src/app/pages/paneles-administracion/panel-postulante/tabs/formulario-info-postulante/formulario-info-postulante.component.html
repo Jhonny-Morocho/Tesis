@@ -4,7 +4,11 @@
     <div class="card">
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
-                <h3>Registro de postulacion en proceso de validación de informacion</h3>
+                <h3>
+                    <div class="alert alert-warning" role="alert">
+                        Registro de postulacion en proceso de validación, en 48 horas se notificara
+                    </div>
+                </h3>
                 <div class="col-3">
                     <a [routerLink]="['/panel-postulante/mi-perfil']" class="float-right btn btn-outline-success">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>

@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import { Router } from '@angular/router';
+import { single } from 'rxjs/operators';
+import { empty } from 'rxjs';
 @Component({
   selector: 'app-formulario-info-postulante',
   templateUrl: './formulario-info-postulante.component.html'
@@ -14,36 +16,41 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
-
-    //pregunto si existe el extern:us, esto siginifca que ya completo el formulario
-    //y esta en el procesod de validacion de datos de postulante
+    //consultar si el postulante ha llenado el formulario
     this.instanciaPostulante=new PostulanteModel();
-    if(localStorage.getItem("external_es")){
-      //significa que el formulario no se ha completado
-      this.booleanFormularioCompletado=true;
-      //llena el formulario por primera ves
-      this.instanciaPostulante.nombre=localStorage.getItem("nombre");
-      this.instanciaPostulante.apellido=localStorage.getItem("apellido");
-      this.instanciaPostulante.cedula=localStorage.getItem("cedula");
-      this.instanciaPostulante.telefono=localStorage.getItem("telefono");
-      this.instanciaPostulante.genero=Number(localStorage.getItem("genero"));
-      this.instanciaPostulante.fecha_nacimiento=localStorage.getItem("fecha_nacimiento");
-      this.instanciaPostulante.direccion_domicilio=localStorage.getItem("direccion_domicilio");
-
-    }else{
-      //significa que el formulario no se ha completado
-      this.booleanFormularioCompletado=false;
-      //llena el formulario por primera ves
-      this.instanciaPostulante.nombre="";
-      this.instanciaPostulante.apellido="";
-      this.instanciaPostulante.cedula="";
-      this.instanciaPostulante.telefono="";
-      this.instanciaPostulante.genero=0;
-      const fecha = new Date();
-      console.log(fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay());
-      this.instanciaPostulante.fecha_nacimiento=fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
-      this.instanciaPostulante.direccion_domicilio="";
-    }
+    this.servicioPostulante_.listarFormPostulante().subscribe(
+      siHacesBien=>{
+          console.warn("TODO BIEN");
+          console.log(siHacesBien['mensaje'][0]['nombre']);
+           // si esta registradoo en la BD el formulario completo entonces presento los datos
+          if(siHacesBien['Siglas']=="OE"){
+            // por lo tanto formulario completo ==true
+            this.booleanFormularioCompletado=true;
+            //llena el formulario por primera ves
+            this.instanciaPostulante.nombre=siHacesBien['mensaje'][0]['nombre'];
+            this.instanciaPostulante.apellido=siHacesBien['mensaje'][0]['apellido'];
+            this.instanciaPostulante.cedula=siHacesBien['mensaje'][0]['cedula'];
+            this.instanciaPostulante.telefono=siHacesBien['mensaje'][0]['telefono'];
+            this.instanciaPostulante.genero=siHacesBien['mensaje'][0]['genero'];
+            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje'][0]['fecha_nacimiento'];
+            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje'][0]['direccion_domicilio'];
+           }else{
+            this.booleanFormularioCompletado=false;
+            //llena el formulario por primera ves
+             this.instanciaPostulante.nombre="";
+             this.instanciaPostulante.apellido="";
+             this.instanciaPostulante.cedula="";
+             this.instanciaPostulante.telefono="";
+             this.instanciaPostulante.genero=0;
+             const fecha = new Date();
+             console.log(fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay());
+             this.instanciaPostulante.fecha_nacimiento=fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
+             this.instanciaPostulante.direccion_domicilio="";
+           }
+      },(peroSiTenemosErro)=>{
+        console.log(peroSiTenemosErro);
+        console.warn("TODO MAL");
+    });
   }
 
   onSubmitFormularioPostulante(formRegistroPostulanteDatosCompletos:NgForm){

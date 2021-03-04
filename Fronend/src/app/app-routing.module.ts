@@ -35,9 +35,9 @@ const routes: Routes = [
   { path: 'panel-admin/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   //rutas del postulante
  // { path: 'panel-postulante/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
-  { path: 'panel-postulante/mi-perfil' , component: MiPerfilPostulanteComponent },
-  { path: 'panel-postulante/form-info-postulante' , component: FormularioInfoPostulanteComponent },
-  { path: 'panel-postulante/mi-perfil' , component: PanelPostulanteComponent },
+  { path: 'panel-postulante/mi-perfil' , component: MiPerfilPostulanteComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-postulante/form-info-postulante' , component: FormularioInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
+  //{ path: 'panel-postulante/mi-perfil' , component: PanelPostulanteComponent},
   // { path: 'panel-postulante/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
   // { path: 'panel-postulante/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   { path: '**', redirectTo: 'home' }
