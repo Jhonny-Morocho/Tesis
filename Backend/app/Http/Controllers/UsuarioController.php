@@ -73,12 +73,11 @@ class UsuarioController extends Controller
         }
     }
     public function RegistrarEstudiante(Request $request,$external_id){
-        
         if($request->json()){
             $datos=$request->json()->all();
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //verificar si el external user es igual
-            if($ObjUsuario['external_us']==$external_id){
+            if($ObjUsuario['external_us']===$external_id){
                 //verificar si existe ese tipo o rol de usuario
                 if($ObjUsuario->tipoUsuario==2){
                     //creo un objeto para guardar el estudiante
@@ -95,16 +94,18 @@ class UsuarioController extends Controller
                         $ObjEstudiante->direccion_domicilio=$datos["direccion_domicilio"];
                         $ObjEstudiante->observaciones=$datos["observaciones"];
                         $ObjEstudiante->external_es="Es".Utilidades\UUID::v4();
+                        $ObjEstudiante->estado=$datos["estado"];
                         $ObjEstudiante->save();
-                        return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
+                        return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE"]);
                     } catch (\Throwable $th) {
-                        return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                        return response()->json(["mensaje"=>"Operacion No Exitosa, El usuario ya existe","Siglas"=>"ONE","error"=>$th]);
                     }
                 }else{
                     return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el tipo de usuario","Siglas"=>"ONETU"]);
                 } 
 
             }else{
+            
                 return response()->json(["mensaje"=>"Operacion No Exitosa no coincide el external user","Siglas"=>"ONE"]);
             }
         

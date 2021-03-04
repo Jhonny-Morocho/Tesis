@@ -4,6 +4,7 @@ export class PostulanteModel{
     apellido:string;
     cedula:string;
     telefono:string;
+    estado:Number;
     genero:Number;
     observaciones:string;
     fecha_nacimiento:string;

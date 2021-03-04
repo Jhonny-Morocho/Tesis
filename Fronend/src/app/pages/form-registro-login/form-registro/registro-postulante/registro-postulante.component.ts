@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
   templateUrl: './registro-postulante.component.html'
 })
 export class RegistroPostulanteComponent implements OnInit {
-  constructor(private servicio_:AutenticacionUserService, 
-                        servicioUsuario_:AutenticacionUserService,
-                        private router_:Router) { }
+  constructor(private servicioUsuario_:AutenticacionUserService,
+              private router_:Router) { }
   usuarioModel:UsuarioModel;
 
   ngOnInit() {
@@ -39,13 +38,13 @@ export class RegistroPostulanteComponent implements OnInit {
       Swal.showLoading();
     //envio la informacion a mi servicio - consumo el servicio
 
-    this.servicio_.crearNuevoUsuario(this.usuarioModel).subscribe(
+    this.servicioUsuario_.crearNuevoUsuario(this.usuarioModel).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          this.router_.navigateByUrl('/panel-admin/mi-perfil');
+          this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
          }else{
            Swal({
              title:'Error al autenticar',

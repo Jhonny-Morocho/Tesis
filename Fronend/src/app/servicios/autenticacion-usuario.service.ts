@@ -127,12 +127,10 @@ export class AutenticacionUserService {
           console.log(obtengoRespuesBackend['mesaje']);
           //this.guarUsuarioTempLocalSotarage();
           //this.guardarToken(obtengoRespuesBackend['idToken']);
+          this.guarUsuarioTempLocalSotarage(obtengoRespuesBackend['mensaje']);
           return obtengoRespuesBackend;
         }
       )
     );
-
-   
-
   }
 }
