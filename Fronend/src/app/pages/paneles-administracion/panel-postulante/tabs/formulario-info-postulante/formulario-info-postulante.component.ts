@@ -14,6 +14,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
+
     //pregunto si existe el extern:us, esto siginifca que ya completo el formulario
     //y esta en el procesod de validacion de datos de postulante
     this.instanciaPostulante=new PostulanteModel();
@@ -28,6 +29,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       this.instanciaPostulante.genero=Number(localStorage.getItem("genero"));
       this.instanciaPostulante.fecha_nacimiento=localStorage.getItem("fecha_nacimiento");
       this.instanciaPostulante.direccion_domicilio=localStorage.getItem("direccion_domicilio");
+
     }else{
       //significa que el formulario no se ha completado
       this.booleanFormularioCompletado=false;

@@ -20,14 +20,11 @@ export class LoginAdminComponent implements OnInit {
   constructor(private _servicioAdmin:AutenticacionUserService,private router_:Router) { }
 
   ngOnInit() {
-    // los inicializo solo para hacer pruebas despues los descomento
-    // this.instanciaModeloUsuarioLogin.correo="jhonnymichaeldj2011@hotmail.com";
-    // this.instanciaModeloUsuarioLogin.password="123456";
+
   }
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
     console.log(this.instanciaModeloUsuarioLogin);
-    //console.log(formularioAdministrador);
     if(formularioAdministrador.invalid){
       return;
     }
@@ -47,8 +44,26 @@ export class LoginAdminComponent implements OnInit {
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
         Swal.close();
+        //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
-         this.router_.navigateByUrl('/panel-admin/mi-perfil');
+          //vrificar si es un usuario postulante 2== postulante
+          if(siHacesBien['mensaje']['tipoUsuario']===3){
+            Swal({
+              position: 'center',
+              type: 'success',
+              title: 'Bienvenido',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router_.navigateByUrl('/panel-admin/mi-perfil');
+          }else{
+            Swal({
+              title:'Error al autenticar',
+              type:'error',
+              text:"Este usuario no se encuentra registrado como Administrador"
+            }); 
+          }
+          console.log("pase al url");
         }else{
           Swal({
             title:'Error al autenticar',

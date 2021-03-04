@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
+
 // vamos a importar la clase de modulos para poder opcuar el ngmodel en los formulkario
 // modulos siempre van en los import
 import {FormsModule} from '@angular/forms';
@@ -35,7 +35,6 @@ import { FormularioInfoPostulanteComponent } from './pages/paneles-administracio
     AppComponent,
     RegistroComponent,
     HomeComponent,
-    LoginComponent,
     LoginAdminComponent,
     NavComponent,
     EmpleadorComponent,

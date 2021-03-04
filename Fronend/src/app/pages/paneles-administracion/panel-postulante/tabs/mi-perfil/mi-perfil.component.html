@@ -10,7 +10,7 @@
             <div class="container mt-5 ">
                 <div class="row">
                     <div class="col-3 ">
-                        <a [routerLink]="['/home']" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
+                        <a (click)="salirSession()" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
                     </div>
                     <div class="col-6 ">
                         <a [routerLink]="['/panel-postulante/form-info-postulante']" class="float-right btn btn-outline-success mb-4"><i class="fa fa-arrow-right" aria-hidden="true"></i> Formulario de postulacion</a>

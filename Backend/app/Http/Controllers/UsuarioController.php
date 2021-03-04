@@ -10,6 +10,7 @@ use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
 
 class UsuarioController extends Controller
 {
@@ -161,12 +162,14 @@ class UsuarioController extends Controller
                    switch ($usuario['tipoUsuario']) {
                         //usuario inactivo
                         case 0:
-                        # code...
-                        return response()->json(["mensaje"=>"Usuario no activo","Siglas"=>"UNA",400]);
+                        # inactivo
+                        return response()->json(["mensaje"=>$usuario,"Siglas"=>"UNA",400]);
                         break;
+
                        //estudiante
                        case 2:
                         # code...
+                        return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
                         break;
 
                         //secretara
@@ -175,10 +178,6 @@ class UsuarioController extends Controller
                             return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
                             break;
                             //encargado
-                        //gestor
-                       case 2:
-                        # code...
-                        break;
                        case 5:
                         # code...
                         break;
@@ -201,5 +200,22 @@ class UsuarioController extends Controller
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
+     }
+
+     public function listarPostulanteFormulario(Request $request){
+         if($request->json()){
+             //validar si el usuario existe
+             $ObjUsuario = usuario::where("external_us","UuAd5c4b46d-3d91-4cf9-897c-65b2ce260d66")->first();
+             if($ObjUsuario!=null){
+                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->get();
+                 return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
+    
+            }else{
+                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+            }
+
+         }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+         }
      }
 }

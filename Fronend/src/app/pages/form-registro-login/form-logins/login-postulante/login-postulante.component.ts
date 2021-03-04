@@ -21,12 +21,11 @@ export class LoginPostulanteComponent implements OnInit {
 
   ngOnInit() {
     // los inicializo solo para hacer pruebas despues los descomento
-    // this.instanciaModeloUsuarioLogin.correo="jhonnymichaeldj2011@hotmail.com";
+    // this.instanciaModeloUsuarioLogin.correo="jhonny9@hotmail.com";
     // this.instanciaModeloUsuarioLogin.password="123456";
   }
   // Login del formulario del admistrador
-  loginAdmin(formularioAdministrador:NgForm){
-    console.log(this.instanciaModeloUsuarioLogin);
+  loginPostulante(formularioAdministrador:NgForm){
     //console.log(formularioAdministrador);
     if(formularioAdministrador.invalid){
       return;
@@ -46,26 +45,36 @@ export class LoginPostulanteComponent implements OnInit {
         console.log("siHacesBien");
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
-        if(siHacesBien['Siglas']=="OE"){
-          Swal.close();
-          Swal(
-            '',
-            'Bienvenido',
-            'success'
-          )
-          //guardamos los datos temportalmente
-         //this.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
-         //direcciono al panel de admistracion
-         this.router_.navigateByUrl('/panel-admin');
+        Swal.close();
+        //verifico si encontro el usurio
+        if((siHacesBien['Siglas']=="OE")){
+          //vrificar si es un usuario postulante 2== postulante
+          if(siHacesBien['mensaje']['tipoUsuario']===2){
+            Swal({
+              position: 'center',
+              type: 'success',
+              title: 'Bienvenido',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router_.navigateByUrl('/panel-postulante/mi-perfil');
+          }else{
+            Swal({
+              title:'Error al autenticar',
+              type:'error',
+              text:"Este usuario no se encuentra registrado como postulante"
+            }); 
+          }
         }else{
+         //usuario no activo o no encontrado
           Swal({
             title:'Error al autenticar',
             type:'error',
-            text:siHacesBien['mensaje']
+            text:"Usuario no encontrado o no activo"
           }); 
         }
         console.log(siHacesBien);
-      },(peroSiTenemosErro)=>{
+      },peroSiTenemosErro=>{
         console.log(peroSiTenemosErro);
         Swal({
           title:'Error al autenticar',

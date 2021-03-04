@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class AutenticacionUserService {
   // el url de donde voy a solicitar el servicio
   private urlDominio_="http://localhost/Tesis";
-  private urlBackend_Login="/Backend/public/index.php/usuario/login-admin";
+  private urlBackend_Login="/Backend/public/index.php/usuario/login";
   private urlBackend_CrearUsuario="/Backend/public/index.php/usuario/registro";
   private nombreUser:string;
   private correo:string;
@@ -43,8 +43,6 @@ export class AutenticacionUserService {
         respuestaBackend=>{
           console.log("Entro en el mapa del RKJS");
           this.guarUsuarioTempLocalSotarage(respuestaBackend['mensaje']);
-          console.log(respuestaBackend['mesaje']);
-          console.log(respuestaBackend);
           return respuestaBackend;
         }
       )
@@ -52,7 +50,6 @@ export class AutenticacionUserService {
 
   }
   guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
-    console.log(respuestaBackend);
     this.correo=respuestaBackend.correo;
     this.tipoUsuario=Number(respuestaBackend.tipoUsuario);
     localStorage.setItem('correo', respuestaBackend.correo);
@@ -124,7 +121,7 @@ export class AutenticacionUserService {
         obtengoRespuesBackend=>{
           console.log("Entro en el mapa del RKJS");
           console.log(obtengoRespuesBackend);
-          console.log(obtengoRespuesBackend['mesaje']);
+          console.log(obtengoRespuesBackend['mensaje']);
           //this.guarUsuarioTempLocalSotarage();
           //this.guardarToken(obtengoRespuesBackend['idToken']);
           this.guarUsuarioTempLocalSotarage(obtengoRespuesBackend['mensaje']);

@@ -20,6 +20,8 @@ export class RegistroPostulanteComponent implements OnInit {
      this.usuarioModel.password="123456";
      this.usuarioModel.tipoUsuario=2;
      this.usuarioModel.estado=1;
+
+    
   }
 
    onSubMitRegistroPostulante(formularioRegistroPostulante:NgForm){
@@ -44,20 +46,26 @@ export class RegistroPostulanteComponent implements OnInit {
         console.log(siHacesBien['Siglas']);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
+          Swal({
+            position: 'center',
+            type: 'success',
+            title: 'Su cuenta ha sido creado exitosamente',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
          }else{
            Swal({
-             title:'Error al autenticar',
+             title:'Error, no se puede ejecutar su peticion',
              type:'error',
              text:siHacesBien['mensaje']
            }); 
          }
      
-      },(peroSiTenemosErro)=>{
+      },peroSiTenemosErro=>{
         console.log(peroSiTenemosErro);
-        console.log(this.usuarioModel);
         Swal({
-          title:'Error al autenticar',
+          title:'Error, el usuario ya existe',
           type:'error',
           text:peroSiTenemosErro['mensaje']
         }); 
