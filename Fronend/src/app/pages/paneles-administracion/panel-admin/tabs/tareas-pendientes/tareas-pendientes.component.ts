@@ -9,6 +9,9 @@ export class TareasPendientesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // this.dataTable = $(this.table.nativeElement);
+    // this.dataTable.DataTable();
+
   }
 
 }
