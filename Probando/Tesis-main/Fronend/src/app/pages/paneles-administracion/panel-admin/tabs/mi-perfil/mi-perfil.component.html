@@ -1,0 +1,28 @@
+<navTab-admin></navTab-admin>
+<div class="container">
+    <div class="row ">
+        <div class="col-3">
+            <img src="../../../assets/images/secretaria.png" class="img-thumbnail" alt="...">
+        </div>
+        <div class="col-9 mt-2">
+            <p>Mi perfil</p>
+            <hr>
+            <div class="container mt-5 ">
+                <a (click)="salirSession()" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
+                <form class="row g-3" #fPerfilAdmin="ngForm">
+
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputAddress" name="correoAdmin" [(ngModel)]="instanciaUsuario.correo" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">Secretaria</span></label>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

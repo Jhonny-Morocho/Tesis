@@ -5,10 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './tareas-pendientes.component.html'
 })
 export class TareasPendientesComponent implements OnInit {
-
+  dtOptions: DataTables.Settings = {};
   constructor() { }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers'
+    };
   }
 
 }

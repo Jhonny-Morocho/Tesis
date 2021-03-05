@@ -29,7 +29,8 @@ import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-pos
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/mi-perfil/mi-perfil.component';
 import { from } from 'rxjs';
 import { FormularioInfoPostulanteComponent } from './pages/paneles-administracion/panel-postulante/tabs/formulario-info-postulante/formulario-info-postulante.component';
-
+//===================== DATA TABLE ============================//
+import { DataTablesModule } from "angular-datatables";
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,9 @@ import { FormularioInfoPostulanteComponent } from './pages/paneles-administracio
     //importo mi moduilo de rutas de app-routing.module
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // DATA TABLE
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
