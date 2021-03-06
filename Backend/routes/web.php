@@ -29,7 +29,7 @@ try {
         $router->post('/empleador/registro/{external_id}','UsuarioController@RegistrarEmpleador');
         $router->post('/usuario/login','UsuarioController@login');
         // consultar formulario registrado
-        $router->post('/usuario/listar-formulario-postulante','UsuarioController@listarPostulanteFormulario');
+        $router->post('/estudiante/FormEstudiante','EstudianteController@FormEstudiante');
         //consular todos los postulante que tienen formularior registrado
         $router->get('/postulante/listarAllPostulante','EstudianteController@listarAllPostulantesFormulario');
     

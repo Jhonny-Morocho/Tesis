@@ -10,7 +10,7 @@ export class SerivicioPostulanteService {
   //el url del servicio o del backend
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearPostulante="/Backend/public/index.php/estudiante/registro/";
-  private urlListarFormPostulante="/Backend/public/index.php/usuario/listar-formulario-postulante";
+  private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
   constructor(private _httCliente:HttpClient) { }
 
   crearPostulante(modeloPostulante:PostulanteModel){

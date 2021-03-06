@@ -224,9 +224,11 @@ class UsuarioController extends Controller
      }
      // Listar todos los postulante con sus datos de formulario
      public function listarAllPostulantesFormulario(){
-            //validar si el usuario existe
-            $ObjUsuario = usuario::all();
-            die(json_encode($ObjUsuario));
+            //listamos todos los postulantes
+            $ObjeEstudiante=Estudiante::get();
+            print_r($ObjeEstudiante);
+            // $ObjUsuario = usuario::all();
+            // die(json_encode($ObjUsuario));
       return true;
         //     if($ObjUsuario!=null){
         //         $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();

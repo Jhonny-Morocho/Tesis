@@ -16,7 +16,7 @@ use function PHPUnit\Framework\isEmpty;
 class EstudianteController extends Controller
 {
 
-     public function listarPostulanteFormulario(Request $request){
+     public function FormEstudiante(Request $request){
          if($request->json()){
              //validar si el usuario existe
              $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
@@ -39,18 +39,20 @@ class EstudianteController extends Controller
      // Listar todos los postulante con sus datos de formulario
      public function listarAllPostulantesFormulario(){
         //obtener todos los usuarios que sean postulante
-        $ObjUsuario=Usuario::where('tipoUsuario',"=","2")
-                                ->where('estado', '0')
-                                ->get();
-        $datos = array();
-        foreach ($ObjUsuario as $key) {
-            $datos [] = [
-                "correo" => $key->correo,
-                "externalUsuario" => $key->external_us,
-                "nombreEstudiante" => self::getNombreEstudiante($key->external_us),
-            ];
+        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
+        print_r($ObjeEstudiante);
+        // $ObjUsuario=Usuario::where('tipoUsuario',"=","2")
+        //                         ->where('estado', '0')
+        //                         ->get();
+        // $datos = array();
+        // foreach ($ObjUsuario as $key) {
+        //     $datos [] = [
+        //         "correo" => $key->correo,
+        //         "externalUsuario" => $key->external_us,
+        //         "nombreEstudiante" => self::getNombreEstudiante($key->external_us),
+        //     ];
       
-            }
+        //     }
        
         //     echo "<pre";
         // var_dump($ObjUsuario);

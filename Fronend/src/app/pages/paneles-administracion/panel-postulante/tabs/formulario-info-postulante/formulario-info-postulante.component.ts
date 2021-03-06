@@ -16,24 +16,24 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
-    //consultar si el postulante ha llenado el formulario
     this.instanciaPostulante=new PostulanteModel();
+    //consultar si el postulante ha llenado el formulario
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
           console.warn("TODO BIEN");
-          console.log(siHacesBien['mensaje'][0]['nombre']);
+          console.log(siHacesBien['mensaje']['nombre']);
            // si esta registradoo en la BD el formulario completo entonces presento los datos
           if(siHacesBien['Siglas']=="OE"){
             // por lo tanto formulario completo ==true
             this.booleanFormularioCompletado=true;
             //llena el formulario por primera ves
-            this.instanciaPostulante.nombre=siHacesBien['mensaje'][0]['nombre'];
-            this.instanciaPostulante.apellido=siHacesBien['mensaje'][0]['apellido'];
-            this.instanciaPostulante.cedula=siHacesBien['mensaje'][0]['cedula'];
-            this.instanciaPostulante.telefono=siHacesBien['mensaje'][0]['telefono'];
-            this.instanciaPostulante.genero=siHacesBien['mensaje'][0]['genero'];
-            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje'][0]['fecha_nacimiento'];
-            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje'][0]['direccion_domicilio'];
+            this.instanciaPostulante.nombre=siHacesBien['mensaje']['nombre'];
+            this.instanciaPostulante.apellido=siHacesBien['mensaje']['apellido'];
+            this.instanciaPostulante.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaPostulante.telefono=siHacesBien['mensaje']['telefono'];
+            this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
+            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
+            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
            }else{
             this.booleanFormularioCompletado=false;
             //llena el formulario por primera ves
