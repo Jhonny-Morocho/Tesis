@@ -1,5 +1,5 @@
 <navTab-admin></navTab-admin>
-<div class="container">
+<div class="container ">
 
     <p>Tareas pendientes</p>
 
@@ -21,7 +21,7 @@
                 <td>{{ estudiantes.apellido }}</td>
                 <td>{{ estudiantes.cedula }}</td>
                 <td *ngIf="estado(estudiantes.estado)==true"><span class="badge badge-danger">No validado</span></td>
-                <td *ngIf="estado(estudiantes.estado)==false"><span class="badge badge-success">Si validado</span></td>
+                <td *ngIf="estado(estudiantes.estado)==false"><span class="badge badge-success">Validado</span></td>
                 <td>
                     <button type="button" class="btn btn-primary" [routerLink]="['/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
                 </td>

@@ -41,11 +41,11 @@ class EstudianteController extends Controller
      public function actulizarAprobacionEstudiante(Request $request,$external_id){
          if($request->json()){
              try {
-                 $ObjEstudiante = estudiante::where("external_es","=",$external_id)->update(array( 'estado'=>1, 'observaciones'=>$request['observaciones']));
+                 $ObjEstudiante = estudiante::where("external_es","=",$external_id)->update(array( 'estado'=>$request['estado'], 'observaciones'=>$request['observaciones']));
                  return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
                  
              } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
              }
 
          }else{

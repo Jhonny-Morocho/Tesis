@@ -1,9 +1,12 @@
-<div class="container mt-5 animated fadeIn" style="padding-bottom: 100px;">
-    <div class="alert alert-warning" role="alert" *ngIf="encontrado==false">
-        Estudiante no encontrado
-    </div>
+<div class="container mt-5 animate__animated    animate__slideInLeft" style="padding-bottom: 100px;">
     <div class="card">
-        <article class="card-body">
+        <div class="alert alert-warning" role="alert" *ngIf="encontrado==false">
+            <a [routerLink]="['/panel-admin/tareas/']" class="float-right btn btn-outline-success">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil</a>
+            <p> Estudiante no encontrado</p>
+
+        </div>
+        <article class="card-body" *ngIf="encontrado==true">
             <form class="row g-3" (ngSubmit)="onSubmitForPostulanteAprobacion(fPostulante)" #fPostulante="ngForm">
                 <h3>Registro de postulante</h3>
                 <div class="col-3">
@@ -65,20 +68,21 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Observaciones</label><br>
-                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['observaciones'].errors">La direccion es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaPostulante.observaciones" name="observaciones" rows="3"></textarea>
+
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['observaciones'].errors">Debe poner un comentario</span>
+                        <textarea class="form-control" [(ngModel)]="instanciaPostulante.observaciones" name="observaciones" rows="3" required></textarea>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Estado de validación</label><br>
-                        <button type="button" class="btn btn-outline-danger" *ngIf="estadoAprobado(instanciaPostulante.estado)==false" (click)="estadoAprobado(1)"><i class="fas fa-times-circle"></i>No Aprobado</button>
-                        <button type="button" class="btn btn-outline-success" *ngIf="estadoAprobado(instanciaPostulante.estado)==true" (click)="estadoAprobado(0)"><i class="fas fa-check"></i>  Aprobado</button>
+                <div class=" col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
+                        <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaPostulante.estado)==false " (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i>No Aprobado</button>
+                        <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaPostulante.estado)==true " (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
                     </div>
                 </div>
 
-                <div class="col-12 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary ">Guardar</button>
+                <div class="col-12 d-flex justify-content-center ">
+                    <button type="submit " class="btn btn-primary ">Guardar</button>
                 </div>
 
 
