@@ -33,6 +33,7 @@ try {
         //consular todos los postulante que tienen formularior registrado
         $router->post('/estudiante/listarEstudiantes','EstudianteController@listarEstudiantes');
         $router->post('/estudiante/obtenerPostulanteExternal_es','EstudianteController@obtenerPostulanteExternal_es');
+        $router->post('/estudiante/actulizarAprobacionEstudiante/{external_id}','EstudianteController@actulizarAprobacionEstudiante');
     
    // });
 } catch (\Throwable $th) {

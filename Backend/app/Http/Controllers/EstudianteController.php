@@ -10,12 +10,13 @@ use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Foreach_;
+use PhpParser\Node\Stmt\TryCatch;
 
 use function PHPUnit\Framework\isEmpty;
 
 class EstudianteController extends Controller
 {
-    //formulario de estudiante comparando el external_us y externarl_es
+    //formulario de estudiante comparando el external_us y externarl_es//creamos un estudiante
      public function FormEstudiante(Request $request){
          if($request->json()){
              //validar si el usuario existe
@@ -36,6 +37,22 @@ class EstudianteController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
      }
+     //actulizar dato de postulante//estudainte
+     public function actulizarAprobacionEstudiante(Request $request,$external_id){
+         if($request->json()){
+             try {
+                 $ObjEstudiante = estudiante::where("external_es","=",$external_id)->update(array( 'estado'=>1, 'observaciones'=>$request['observaciones']));
+                 return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+                 
+             } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+             }
+
+         }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+         }
+
+    }
      // Listar todos los postulante con sus datos de formulario
      public function listarEstudiantes(Request $request){
         //obtener todos los usuarios que sean postulante

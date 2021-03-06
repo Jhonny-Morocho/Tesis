@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
+import Swal from 'sweetalert2';
 // obtener el parametro q viene x la url
 const estadoPostulante=0;
 
 import  {ActivatedRoute} from '@angular/router';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-form-info-postulante',
   templateUrl: './form-validacion-postulante.component.html'
@@ -50,35 +52,47 @@ export class FormInfoPostulanteComponent implements OnInit {
   ngOnInit() {
 
   }
-  onSubmitFormularioPostulante(){
-    this.instanciaPostulante=new PostulanteModel();
-    //consultar si el postulante ha llenado el formulario
-    this.servicioPostulante_.listarFormPostulante().subscribe(
+  onSubmitForPostulanteAprobacion(formularioAprobacion:NgForm){
+    if(formularioAprobacion.invalid){
+      return;
+    }
+    console.log(formularioAprobacion.invalid);
+    Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    Swal.showLoading();
+    this.servicioPostulante_.crearPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
-           // si esta registradoo en la BD el formulario completo entonces presento los datos
-          if(siHacesBien['Siglas']=="OE"){
-            //llena el formulario por primera ves
-            this.instanciaPostulante.nombre=siHacesBien['mensaje']['nombre'];
-            this.instanciaPostulante.apellido=siHacesBien['mensaje']['apellido'];
-            this.instanciaPostulante.cedula=siHacesBien['mensaje']['cedula'];
-            this.instanciaPostulante.telefono=siHacesBien['mensaje']['telefono'];
-            this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
-            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
-            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
-           }else{
-            //llena el formulario por primera ves
-             this.instanciaPostulante.nombre="";
-             this.instanciaPostulante.apellido="";
-             this.instanciaPostulante.cedula="";
-             this.instanciaPostulante.telefono="";
-             this.instanciaPostulante.genero=0;
-             const fecha = new Date();
-             this.instanciaPostulante.fecha_nacimiento=fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
-             this.instanciaPostulante.direccion_domicilio="";
-           }
+        console.log(siHacesBien);
+        console.log(siHacesBien['Siglas']);
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          console.log(siHacesBien['Siglas']=="OE");
+          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+          localStorage.setItem("nombre", this.instanciaPostulante.nombre);
+          localStorage.setItem("apellido", this.instanciaPostulante.apellido);
+          localStorage.setItem("cedula",this.instanciaPostulante.cedula);
+          localStorage.setItem("telefono",this.instanciaPostulante.telefono);
+          localStorage.setItem("genero",(this.instanciaPostulante.genero).toString());
+          localStorage.setItem("direccion_domicilio",this.instanciaPostulante.direccion_domicilio);
+          localStorage.setItem("fecha_nacimiento",this.instanciaPostulante.fecha_nacimiento);
+          localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
+          this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
+          }else{
+            console.log(siHacesBien);
+            Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+          }
+      
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
+        console.log(this.instanciaPostulante);
+        Swal({
+          title:'Error al registrar informacion',
+          type:'error',
+          text:peroSiTenemosErro['mensaje']
+        }); 
     });
   }
   estadoAprobado(estado:Number){
