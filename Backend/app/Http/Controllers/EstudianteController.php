@@ -15,7 +15,7 @@ use function PHPUnit\Framework\isEmpty;
 
 class EstudianteController extends Controller
 {
-
+    //formulario de estudiante comparando el external_us y externarl_es
      public function FormEstudiante(Request $request){
          if($request->json()){
              //validar si el usuario existe
@@ -67,22 +67,46 @@ class EstudianteController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
+    //obtener postulante por url //external_us
+    public function obtenerPostulanteExternal_es(Request $request){
 
-    private function getNombreEstudiante($externalUsuario)
-    {
-        $usuario = Usuario::where("external_us", $externalUsuario)->first();   
+        if($request->json()){
+            try {
+                $ObjeEstudiante=null;
+                switch ($request['estado']) {
+                    case 0:
+                        # USUARIO NO APROBADOS
+                        
+                        $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->where("estado","=",0)->first();
+                        return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
+                         break;
+                     case 1:
+                         # USUARIOS SI APROBADOS
+                         $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->where("estado","=",1)->first();
+                         return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
+                         
+                         break;
+                     default:
+                         # code...
+                         return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion no exitosa, estudiante no encontrado"]);
+                         break;
+                 }
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el estudiante "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
+            }
 
-        $estudiante = Estudiante::where("fk_usuario","=",$usuario->id)->first();
-          
-        
-            $info[] = [
-                "nombre" => $estudiante->nombre
-            ];
-        // if ($estudiante) {
-        //     $info= true;
-        // }else{
-        //     $info = false;
-        // }
-        return $info;
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+
+    private function retornarRespuestaEstudianteEncontrado($ObjetoEstudiante){
+
+        if($ObjetoEstudiante!=null){
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+        }else{
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el estudiante xxx"]);
+        }
+
     }
 }

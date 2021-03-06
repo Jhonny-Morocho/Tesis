@@ -20,8 +20,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     //consultar si el postulante ha llenado el formulario
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
-          console.warn("TODO BIEN");
-          console.log(siHacesBien['mensaje']['nombre']);
            // si esta registradoo en la BD el formulario completo entonces presento los datos
           if(siHacesBien['Siglas']=="OE"){
             // por lo tanto formulario completo ==true

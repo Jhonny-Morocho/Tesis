@@ -6,9 +6,9 @@ const estudianteNoAprobado:Number = 0;
 
 @Component({
   selector: 'app-tareas-pendientes',
-  templateUrl: './tareas-pendientes.component.html'
+  templateUrl: './tareas-admin.component.html'
 })
-export class TareasPendientesComponent implements OnInit {
+export class TareasAdminComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   //persons: Person[] = [];
@@ -17,9 +17,7 @@ export class TareasPendientesComponent implements OnInit {
   constructor(private servicioPostulante_:SerivicioPostulanteService ) { }
 
   ngOnInit():void {
-    // this.dataTable = $(this.table.nativeElement);
-    // this.dataTable.DataTable();
-    this.servicioPostulante_.listarPostulantesNoActivos(estudianteNoAprobado).subscribe(
+    this.servicioPostulante_.listarPostulantes(estudianteNoAprobado).subscribe(
       siHacesBien=>{
           console.warn("TODO BIEN");
           //data table

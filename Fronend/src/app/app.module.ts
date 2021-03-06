@@ -23,7 +23,8 @@ import { EmpleadorComponent } from './pages/empleador/empleador.component';
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/tabs/mi-perfil/mi-perfil.component';
-import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-pendientes/tareas-pendientes.component';
+import {TareasAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
+//import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/mi-perfil/mi-perfil.component';
@@ -31,6 +32,7 @@ import { from } from 'rxjs';
 import { FormularioInfoPostulanteComponent } from './pages/paneles-administracion/panel-postulante/tabs/formulario-info-postulante/formulario-info-postulante.component';
 //===================== DATA TABLE ============================//
 import { DataTablesModule } from "angular-datatables";
+import { FormInfoPostulanteComponent } from './pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,6 @@ import { DataTablesModule } from "angular-datatables";
     EmpleadorComponent,
     PanelAdminComponent,
     MiPerfilComponent,
-    TareasPendientesComponent,
     TareasRealizadasComponent,
     LoginPostulanteComponent,
     RegistroPostulanteComponent,
@@ -49,7 +50,9 @@ import { DataTablesModule } from "angular-datatables";
     LoginEmpleadorComponent,
     PanelPostulanteComponent,
     MiPerfilPostulanteComponent,
-    FormularioInfoPostulanteComponent
+    FormularioInfoPostulanteComponent,
+    FormInfoPostulanteComponent,
+    TareasAdminComponent
   ],
   imports: [
     BrowserModule,

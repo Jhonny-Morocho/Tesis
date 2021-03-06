@@ -11,7 +11,8 @@ export class SerivicioPostulanteService {
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearPostulante="/Backend/public/index.php/estudiante/registro/";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
-  private urlListarPostulantes="/Backend/public/index.php/postulante/listarEstudiantes";
+  private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
+  private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   constructor(private _httCliente:HttpClient) { }
 
   crearPostulante(modeloPostulante:PostulanteModel){
@@ -34,10 +35,6 @@ export class SerivicioPostulanteService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log("Entro en el map del RKJS");
-          //guardo los datos del registro de postulante en el localsorage
-        
-          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );
@@ -54,13 +51,12 @@ export class SerivicioPostulanteService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log("Entro en el map del RKJS LISTAR POSTULANTES");
-          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );
   }
-  listarPostulantesNoActivos(estado:Number){
+  //listammos postulantes activos /no activos / depende del estado
+  listarPostulantes(estado:Number){
     const autenficacionDatos={
       estado:estado
     }
@@ -71,9 +67,6 @@ export class SerivicioPostulanteService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log("Entro en el map del RKJS LISTAR POSTULANTES");
-          console.log(respuestaBackend['mensaje']);
-          
           return this.crearArregloEstudiantes(respuestaBackend['mensaje']);
         })
     );
@@ -81,19 +74,34 @@ export class SerivicioPostulanteService {
 
   private crearArregloEstudiantes(ObjEstudiante:object){
     const estudiantex:PostulanteModel[]=[];
-    console.log(ObjEstudiante );
     //validamos si el objeto tiene informaicon
     if(ObjEstudiante===null){
         return [];
     }else{
       Object.keys(ObjEstudiante).forEach(key=>{
-        // console.log(ObjEstudiante[key]);
         const estudiante:PostulanteModel=ObjEstudiante[key];
-        // estudiante.external_es=key;
         estudiantex.push(estudiante);
       })
       return estudiantex;
     }
+  }
+
+  //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
+  obtenerPostulanteExternal_es(estado:Number,external_es:string){
+    const autenficacionDatos={
+      estado:estado,
+      external_es:external_es
+    }
+    return this._httCliente.post(
+      `${this.urlDominio_}${this.urlObtenerPostulanteExternal_es}`,autenficacionDatos
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          return respuestaBackend;
+        })
+    );
+ 
+
   }
 
 }
