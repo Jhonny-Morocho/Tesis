@@ -11,11 +11,10 @@ export class SerivicioPostulanteService {
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearPostulante="/Backend/public/index.php/estudiante/registro/";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
+  private urlListarPostulantes="/Backend/public/index.php/postulante/listarEstudiantes";
   constructor(private _httCliente:HttpClient) { }
 
   crearPostulante(modeloPostulante:PostulanteModel){
-    console.log("soy crear un postulante del servicio");
-    console.log(modeloPostulante);
     const autenficacionDatos={
       cedula:modeloPostulante.cedula,
       telefono:modeloPostulante.telefono,
@@ -61,5 +60,41 @@ export class SerivicioPostulanteService {
         })
     );
   }
+  listarPostulantesNoActivos(estado:Number){
+    const autenficacionDatos={
+      estado:estado
+    }
+    //retorna la respuesata
+    console.log( `${this.urlDominio_}${this.urlListarPostulantes}`,autenficacionDatos);
+    return this._httCliente.post(
+      `${this.urlDominio_}${this.urlListarPostulantes}`,autenficacionDatos
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log("Entro en el map del RKJS LISTAR POSTULANTES");
+          console.log(respuestaBackend['mensaje']);
+          
+          return this.crearArregloEstudiantes(respuestaBackend['mensaje']);
+        })
+    );
+  }
+
+  private crearArregloEstudiantes(ObjEstudiante:object){
+    const estudiantex:PostulanteModel[]=[];
+    console.log(ObjEstudiante );
+    //validamos si el objeto tiene informaicon
+    if(ObjEstudiante===null){
+        return [];
+    }else{
+      Object.keys(ObjEstudiante).forEach(key=>{
+        // console.log(ObjEstudiante[key]);
+        const estudiante:PostulanteModel=ObjEstudiante[key];
+        // estudiante.external_es=key;
+        estudiantex.push(estudiante);
+      })
+      return estudiantex;
+    }
+  }
 
 }
+

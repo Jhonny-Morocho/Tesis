@@ -31,7 +31,7 @@ try {
         // consultar formulario registrado
         $router->post('/estudiante/FormEstudiante','EstudianteController@FormEstudiante');
         //consular todos los postulante que tienen formularior registrado
-        $router->get('/postulante/listarAllPostulante','EstudianteController@listarAllPostulantesFormulario');
+        $router->post('/postulante/listarEstudiantes','EstudianteController@listarEstudiantes');
     
    // });
 } catch (\Throwable $th) {

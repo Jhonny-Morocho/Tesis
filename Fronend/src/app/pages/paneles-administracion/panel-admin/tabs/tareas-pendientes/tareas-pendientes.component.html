@@ -1,34 +1,46 @@
 <navTab-admin></navTab-admin>
 <div class="container">
+
     <p>Tareas pendientes</p>
-    <table datatable class="row-border hover">
+    <!-- <table datatable class="row-border hover">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido </th>
                 <th>Cedula</th>
-                <th>Ver mas</th>
+                <th>Ver mas..</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Foo</td>
-                <td>Bar</td>
-                <td>Foo</td>
-                <td>Bar</td>
+            <tr *ngFor="let Estudiantes of estudiantes;let i=index">
+                <td>{{ i+1 }}</td>
+                <td>{{ Estudiantes.nombre }}</td>
+                <td>{{ Estudiantes.apellido }}</td>
+                <td>{{ Estudiantes.cedula }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary"><i class="fas fa-chevron-right"></i></button>
+                </td>
             </tr>
         </tbody>
-    </table>
-
+    </table> -->
 </div>
 
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-<!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    });
-</script> -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let person of persons;let i=index">
+            <td>{{ i+1 }}</td>
+            <td>{{ person.nombre }}</td>
+            <td>{{ person.apellido }}</td>
+            <!-- <td>{{ person.cedula }}</td>
+            <td>{{ person.cedula }}</td> -->
+        </tr>
+    </tbody>
+</table>

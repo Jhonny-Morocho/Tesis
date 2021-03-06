@@ -32,6 +32,7 @@ const routes: Routes = [
   //rutas del admistrador
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-admin/tareas-pendientes/postulante/:external_es' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   //rutas del postulante
  // { path: 'panel-postulante/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},

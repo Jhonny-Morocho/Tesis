@@ -1,17 +1,54 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import {PostulanteModel} from 'src/app/models/postulante.models';
+import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
+const estudianteNoAprobado:Number = 0;
 
 @Component({
   selector: 'app-tareas-pendientes',
   templateUrl: './tareas-pendientes.component.html'
 })
 export class TareasPendientesComponent implements OnInit {
+  //data table
+  dtOptions: DataTables.Settings = {};
+  //persons: Person[] = [];
+  persons:PostulanteModel[]=[];
+  dtTrigger: Subject<any> = new Subject<any>();
+  constructor(private servicioPostulante_:SerivicioPostulanteService ) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit():void {
     // this.dataTable = $(this.table.nativeElement);
     // this.dataTable.DataTable();
+    this.servicioPostulante_.listarPostulantesNoActivos(estudianteNoAprobado).subscribe(
+      siHacesBien=>{
+          console.warn("TODO BIEN");
+          //data table
+          this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 2
+          };
+   
+            this.persons =siHacesBien;
+            // Calling the DT trigger to manually render the table
+            this.dtTrigger.next();
+        
+
+          //this.estudiantes=siHacesBien;
+        console.log(siHacesBien);
+
+
+      },(peroSiTenemosErro)=>{
+        console.log(peroSiTenemosErro);
+        console.warn("TODO MAL");
+    });
 
   }
 
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
 }
+
+

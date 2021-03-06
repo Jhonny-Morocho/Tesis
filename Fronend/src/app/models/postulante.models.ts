@@ -9,5 +9,6 @@ export class PostulanteModel{
     observaciones:string;
     fecha_nacimiento:string;
     direccion_domicilio:string;
-    external_es:string
+    external_es:string;
+    id?:Number;
 }

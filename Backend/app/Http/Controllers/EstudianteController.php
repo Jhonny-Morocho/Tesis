@@ -37,48 +37,35 @@ class EstudianteController extends Controller
          }
      }
      // Listar todos los postulante con sus datos de formulario
-     public function listarAllPostulantesFormulario(){
+     public function listarEstudiantes(Request $request){
         //obtener todos los usuarios que sean postulante
-        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
-        print_r($ObjeEstudiante);
-        // $ObjUsuario=Usuario::where('tipoUsuario',"=","2")
-        //                         ->where('estado', '0')
-        //                         ->get();
-        // $datos = array();
-        // foreach ($ObjUsuario as $key) {
-        //     $datos [] = [
-        //         "correo" => $key->correo,
-        //         "externalUsuario" => $key->external_us,
-        //         "nombreEstudiante" => self::getNombreEstudiante($key->external_us),
-        //     ];
-      
-        //     }
-       
-        //     echo "<pre";
-        // var_dump($ObjUsuario);
-        // echo "</pre";
-        //die(json_encode($$ObjUsuario->id));
-            //print_r($ObjUsuario);
-            //die(json_encode($ObjUsuario));
-            // $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-            // foreach ($ObjUsuario as $key => $value) {
-            //     echo $value['id']."---";
-                
-            // }
-            //$ObjEstudiante = estudiante::where($value['id'],"=", $ObjUsuario->id)->first();
-      return response()->json(["resultado" => $datos]);
-        //     if($ObjUsuario!=null){
-        //         $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-        //         if($ObjEstudiante !=null){
-        //             return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
-        //         }else{
-        //            return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
-        //         }
-   
-        //    }else{
-        //        return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
-        //    }
+        if($request->json()){
+            try {
+                $ObjeEstudiante=null;
+                switch ($request['estado']) {
+                    case 0:
+                        # USUARIO NO APROBADOS
+                        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
+                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+                        break;
+                    case 1:
+                        # USUARIOS SI APROBADOS
+                        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
+                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+                        break;
+                    
+                    default:
+                        # code...
+                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion no exitosa"]);
+                        break;
+                }
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+            }
 
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
     }
 
     private function getNombreEstudiante($externalUsuario)

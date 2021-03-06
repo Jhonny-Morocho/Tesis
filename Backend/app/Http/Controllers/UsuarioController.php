@@ -202,45 +202,6 @@ class UsuarioController extends Controller
         }
      }
 
-     public function listarPostulanteFormulario(Request $request){
-         if($request->json()){
-             //validar si el usuario existe
-             $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
-             if($ObjUsuario!=null){
-                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-                 if($ObjEstudiante !=null){
-                     return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
-                 }else{
-                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
-                 }
-    
-            }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
-            }
+  
 
-         }else{
-            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
-         }
-     }
-     // Listar todos los postulante con sus datos de formulario
-     public function listarAllPostulantesFormulario(){
-            //listamos todos los postulantes
-            $ObjeEstudiante=Estudiante::get();
-            print_r($ObjeEstudiante);
-            // $ObjUsuario = usuario::all();
-            // die(json_encode($ObjUsuario));
-      return true;
-        //     if($ObjUsuario!=null){
-        //         $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-        //         if($ObjEstudiante !=null){
-        //             return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
-        //         }else{
-        //            return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
-        //         }
-   
-        //    }else{
-        //        return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
-        //    }
-
-    }
 }
