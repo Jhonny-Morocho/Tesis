@@ -30,6 +30,8 @@ try {
         $router->post('/usuario/login','UsuarioController@login');
         // consultar formulario registrado
         $router->post('/usuario/listar-formulario-postulante','UsuarioController@listarPostulanteFormulario');
+        //consular todos los postulante que tienen formularior registrado
+        $router->get('/postulante/listarAllPostulante','EstudianteController@listarAllPostulantesFormulario');
     
    // });
 } catch (\Throwable $th) {
