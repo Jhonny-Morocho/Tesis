@@ -12,7 +12,7 @@ export class TareasPendientesComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   //persons: Person[] = [];
-  persons:PostulanteModel[]=[];
+  estudiante:PostulanteModel[]=[];
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioPostulante_:SerivicioPostulanteService ) { }
 
@@ -28,7 +28,7 @@ export class TareasPendientesComponent implements OnInit {
             pageLength: 2
           };
    
-            this.persons =siHacesBien;
+            this.estudiante =siHacesBien;
             // Calling the DT trigger to manually render the table
             this.dtTrigger.next();
         
@@ -47,6 +47,15 @@ export class TareasPendientesComponent implements OnInit {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  estado(estado:string){
+    //si regresa true es que no esta validado
+    if(Number(estado)==0){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
