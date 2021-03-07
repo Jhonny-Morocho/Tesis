@@ -14,6 +14,7 @@ export class SerivicioPostulanteService {
   private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
+  private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
 
   crearPostulante(modeloPostulante:PostulanteModel){
@@ -120,6 +121,27 @@ export class SerivicioPostulanteService {
         })
     );
   }
-
+    //actulizar estado de validacion del postulante//aprobado y no aprobado
+  actulizarDatosPostulante(modeloPostulante:PostulanteModel){
+      const autenficacionDatos={
+        cedula:modeloPostulante.cedula,
+        telefono:modeloPostulante.telefono,
+        nombre:modeloPostulante.nombre,
+        apellido:modeloPostulante.apellido,
+        genero:modeloPostulante.genero,
+        fecha_nacimiento:modeloPostulante.fecha_nacimiento,
+        direccion_domicilio:modeloPostulante.direccion_domicilio,
+        observaciones:modeloPostulante.observaciones,
+      }
+    //retorna la respuesata
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+  }
 }
 

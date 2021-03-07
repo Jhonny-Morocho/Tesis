@@ -13,6 +13,12 @@ import { empty } from 'rxjs';
 export class FormularioInfoPostulanteComponent implements OnInit {
   instanciaPostulante:PostulanteModel;
    booleanFormularioCompletado=false;
+   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
+   obervaciones=false;
+   //validacion de formulario true/false
+   formValidado=false;
+   
+
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
@@ -32,8 +38,12 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
             this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
             this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
+            this.instanciaPostulante.observaciones=siHacesBien['mensaje']['observaciones'];
+            this.instanciaPostulante.estado=siHacesBien['mensaje']['estado'];
+            //si es mayor a cero es q si ha revisado y si ha visto el formulario
+            this.obervaciones = ( this.instanciaPostulante.observaciones.length>0)?true:false;
+            this.formValidado = ( this.instanciaPostulante.estado==1)?true:false;
            }else{
-            this.booleanFormularioCompletado=false;
             //llena el formulario por primera ves
              this.instanciaPostulante.nombre="";
              this.instanciaPostulante.apellido="";
@@ -50,7 +60,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         console.warn("TODO MAL");
     });
   }
-
+  //crreacion
   onSubmitFormularioPostulante(formRegistroPostulanteDatosCompletos:NgForm){
     console.log(formRegistroPostulanteDatosCompletos);
     console.log("on submit Formulario Registro datos postulante postular");
@@ -95,6 +105,43 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           text:peroSiTenemosErro['mensaje']
         }); 
     });
+  }
 
+  //editar
+  onSubmitFormularioPostulanteEditar(formRegistroPostulanteDatosCompletos:NgForm){
+    if(formRegistroPostulanteDatosCompletos.invalid){
+      return;
+     }
+     
+     Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
+    this.instanciaPostulante.observaciones="";
+    this.servicioPostulante_.actulizarDatosPostulante(this.instanciaPostulante).subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        console.log(siHacesBien['Siglas']);
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          Swal('Actualizado', 'Informacion Registrada con Exito', 'success');
+          //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
+          this.obervaciones=false;
+          //si el usuario esta el estado en 1// estado cero
+          this.formValidado=false;
+          }else{
+            console.log(siHacesBien);
+             Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+          }
+      },(peroSiTenemosErro)=>{
+         Swal({
+          title:'Error al registrar informacion',
+          type:'error',
+          text:peroSiTenemosErro['mensaje']
+         }); 
+    });
+ 
   }
 }

@@ -53,6 +53,46 @@ class EstudianteController extends Controller
          }
 
     }
+    public function actulizarFormEstudiante(Request $request,$external_id){
+
+        if($request->json()){
+            try {
+
+                $ObjUsuario = usuario::where("external_us",$external_id)->first();
+                if($ObjUsuario!=null){
+                    $ObjEstudiante = 
+                        estudiante::where("fk_usuario","=", $ObjUsuario->id)->update(
+                                                                                    array( 'cedula'=>$request['cedula'], 
+                                                                                    'telefono'=>$request['telefono'],
+                                                                                    'nombre'=>$request['nombre'],
+                                                                                    'apellido'=>$request['apellido'],
+                                                                                    'genero'=>$request['genero'],
+                                                                                    'fecha_nacimiento'=>$request['fecha_nacimiento'],
+                                                                                    'direccion_domicilio'=>$request['direccion_domicilio'],
+                                                                                    'observaciones'=>$request['observaciones']
+                                                                               ));
+                    //debe exitir un usuario y a la vez la respuesta de al consulta sea true 
+                    if($ObjEstudiante !=null || $ObjEstudiante==true){
+                        return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
+                    }else{
+                       return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                    }
+       
+               }else{
+                   return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+               }
+
+             
+                
+            } catch (\Throwable $th) {
+               return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
+            }
+
+        }else{
+           return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+
+   }
      // Listar todos los postulante con sus datos de formulario
      public function listarEstudiantes(Request $request){
         //obtener todos los usuarios que sean postulante
