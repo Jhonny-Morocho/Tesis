@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 
-import { RegistroComponent } from './pages/registro/registro.component';
 import { HomeComponent } from './pages/home/home.component';
 
 // vamos a importar la clase de modulos para poder opcuar el ngmodel en los formulkario
@@ -36,7 +35,6 @@ import { FormInfoPostulanteComponent } from './pages/paneles-administracion/pane
 @NgModule({
   declarations: [
     AppComponent,
-    RegistroComponent,
     HomeComponent,
     LoginAdminComponent,
     NavComponent,

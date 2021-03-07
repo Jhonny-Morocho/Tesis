@@ -13,4 +13,8 @@ instanciaModeloUsuarioLogin:UsuarioModel=new UsuarioModel;
   ngOnInit() {
   }
 
+  loginEmpleador(){
+    
+  }
+
 }

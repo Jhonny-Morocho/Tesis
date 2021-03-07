@@ -179,8 +179,12 @@ class UsuarioController extends Controller
                             # code...
                             return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
                             break;
-                            //encargado
-                       case 5:
+                        //DECANO
+                       case 4:
+                        # code...
+                        break;
+                        //ENCARGADO
+                       case 4:
                         # code...
                         break;
                        
