@@ -31,7 +31,7 @@ try {
         // consultar formulario registrado
         $router->post('/estudiante/FormEstudiante','EstudianteController@FormEstudiante');
         //consular todos los postulante que tienen formularior registrado
-        $router->post('/estudiante/listarEstudiantes','EstudianteController@listarEstudiantes');
+        $router->get('/estudiante/listarEstudiantes','EstudianteController@listarEstudiantes');
         $router->post('/estudiante/obtenerPostulanteExternal_es','EstudianteController@obtenerPostulanteExternal_es');
         $router->post('/estudiante/actulizarAprobacionEstudiante/{external_id}','EstudianteController@actulizarAprobacionEstudiante');
         $router->post('/estudiante/actulizarFormEstudiante/{external_id}','EstudianteController@actulizarFormEstudiante');

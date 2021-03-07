@@ -59,13 +59,11 @@ export class SerivicioPostulanteService {
     );
   }
   //listammos postulantes activos /no activos / depende del estado
-  listarPostulantes(estado:Number){
-    const autenficacionDatos={
-      estado:estado
-    }
+  listarPostulantes(){
+
     //retorna la respuesata
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlListarPostulantes}`,autenficacionDatos
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlListarPostulantes}`
     ).pipe(
       map(
         respuestaBackend=>{
@@ -89,9 +87,8 @@ export class SerivicioPostulanteService {
   }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerPostulanteExternal_es(estado:Number,external_es:string){
+  obtenerPostulanteExternal_es(external_es:string){
     const autenficacionDatos={
-      estado:estado,
       external_es:external_es
     }
     return this._httCliente.post(

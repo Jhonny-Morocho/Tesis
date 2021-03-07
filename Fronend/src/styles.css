@@ -51,3 +51,9 @@
     color: #fff;
     background-color: #28a745;
 }
+
+.badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}

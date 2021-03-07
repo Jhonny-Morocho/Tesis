@@ -3,7 +3,7 @@ import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import Swal from 'sweetalert2';
 // obtener el parametro q viene x la url
-const estadoPostulante=0;
+
 
 import  {ActivatedRoute} from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -22,7 +22,7 @@ export class FormInfoPostulanteComponent implements OnInit {
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.externalEst=params['external_es'];
-      this.servicioPostulante_.obtenerPostulanteExternal_es(estadoPostulante,params['external_es']).subscribe(
+      this.servicioPostulante_.obtenerPostulanteExternal_es(params['external_es']).subscribe(
         suHacesBien=>{
           console.log(suHacesBien);
           //encontro estudiante estado==0

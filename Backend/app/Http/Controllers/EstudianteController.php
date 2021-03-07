@@ -93,36 +93,18 @@ class EstudianteController extends Controller
         }
 
    }
-     // Listar todos los postulante con sus datos de formulario
-     public function listarEstudiantes(Request $request){
+     // Listar todos los postulante estado cero y no cero//con sus datos de formulario
+     public function listarEstudiantes(){
         //obtener todos los usuarios que sean postulante
-        if($request->json()){
-            try {
-                $ObjeEstudiante=null;
-                switch ($request['estado']) {
-                    case 0:
-                        # USUARIO NO APROBADOS
-                        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
-                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
-                        break;
-                    case 1:
-                        # USUARIOS SI APROBADOS
-                        $ObjeEstudiante=Estudiante::where("estado","=",0)->get();
-                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
-                        break;
-                    
-                    default:
-                        # code...
-                        return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion no exitosa"]);
-                        break;
-                }
-            } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
-            }
-
-        }else{
-            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        try {
+            $ObjeEstudiante=null;
+            $ObjeEstudiante=Estudiante::get();
+            return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
         }
+
+  
     }
     //obtener postulante por url //external_us
     public function obtenerPostulanteExternal_es(Request $request){
@@ -130,24 +112,9 @@ class EstudianteController extends Controller
         if($request->json()){
             try {
                 $ObjeEstudiante=null;
-                switch ($request['estado']) {
-                    case 0:
-                        # USUARIO NO APROBADOS
-                        
-                        $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->where("estado","=",0)->first();
-                        return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
-                         break;
-                     case 1:
-                         # USUARIOS SI APROBADOS
-                         $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->where("estado","=",1)->first();
-                         return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
-                         
-                         break;
-                     default:
-                         # code...
-                         return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion no exitosa, estudiante no encontrado"]);
-                         break;
-                 }
+                $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->first();
+                return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
+                 
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el estudiante "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
             }
