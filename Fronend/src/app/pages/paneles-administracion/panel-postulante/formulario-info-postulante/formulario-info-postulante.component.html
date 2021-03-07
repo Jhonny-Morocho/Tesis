@@ -1,7 +1,7 @@
 <navTab-postulante></navTab-postulante>
 <!-- si se completo el refistro del formulario imprimo los datos solo de manera visual -->
 <div class="container mt-5">
-    <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false">
+    <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
         Registro de postulacion en proceso de validación, en 48 horas se notificara
     </div>
 </div>
@@ -114,12 +114,12 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">La cedula es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required>
+                    <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required maxlength="10">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors">La fecha es obligatorio</span>
-                    <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento | date:"yyyy-MM-dd" ' name="fechaNacimiento" class="form-control" required>
+                    <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento' name="fechaNacimiento" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>

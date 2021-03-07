@@ -22,6 +22,7 @@ class EstudianteController extends Controller
              //validar si el usuario existe
              $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
              if($ObjUsuario!=null){
+                 
                  $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
                  if($ObjEstudiante !=null){
                      return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);

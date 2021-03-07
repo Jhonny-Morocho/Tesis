@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Empleador;
 use App\Models\Estudiante;
+use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 
@@ -97,9 +98,10 @@ class UsuarioController extends Controller
                         $ObjEstudiante->external_es="Es".Utilidades\UUID::v4();
                         $ObjEstudiante->estado=$datos["estado"];
                         $ObjEstudiante->save();
+                
                         return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE"]);
                     } catch (\Throwable $th) {
-                        return response()->json(["mensaje"=>"Operacion No Exitosa, El usuario ya existe","Siglas"=>"ONE","error"=>$th]);
+                        return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
                     }
                 }else{
                     return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el tipo de usuario","Siglas"=>"ONETU"]);

@@ -11,6 +11,7 @@
                 <th>Apellido </th>
                 <th>Cedula</th>
                 <th>Estado Validacion</th>
+                <th>Observaciones</th>
                 <th>Detalles</th>
             </tr>
         </thead>
@@ -20,9 +21,10 @@
                 <td>{{ estudiantes.nombre }}</td>
                 <td>{{ estudiantes.apellido }}</td>
                 <td>{{ estudiantes.cedula }}</td>
-                <td *ngIf="estadoConversion(estudiantes.estado)==true && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
-                <td *ngIf="estadoConversion(estudiantes.estado)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
+                <td *ngIf="estadoRevision(estudiantes.observaciones)==false && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
+                <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
                 <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==false "><span class="badge badge-warning">Revisado</span></td>
+                <td>{{ estudiantes.observaciones }}</td>
                 <td>
                     <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
                 </td>

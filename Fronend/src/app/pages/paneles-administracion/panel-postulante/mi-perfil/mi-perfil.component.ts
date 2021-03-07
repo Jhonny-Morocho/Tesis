@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {UsuarioModel} from '../../../../../models/usuario.model';
-import {AutenticacionUserService} from '../../../../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
+import {UsuarioModel} from '../../../../models/usuario.model';
+import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
 })
-export class MiPerfilComponent implements OnInit {
+export class MiPerfilPostulanteComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
-  constructor(private servicioAuthenAdmin_:AutenticacionUserService,
-              private _routert:Router) { }
+  constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
     if(localStorage.getItem('correo')){
@@ -32,8 +32,8 @@ export class MiPerfilComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.value) {
-        this.servicioAuthenAdmin_.cerrarSession();
-        this._routert.navigateByUrl('/home');
+        this.servicioUsuario.cerrarSession();
+        this._router.navigateByUrl('/home');
       }
     })
   }

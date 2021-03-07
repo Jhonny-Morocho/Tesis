@@ -8,8 +8,8 @@ import {LoginAdminComponent} from './pages/form-registro-login/form-logins/login
 import {EmpleadorComponent} from './pages/empleador/empleador.component';
 //import {PanelAdminComponent} from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
-import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/tabs/mi-perfil/mi-perfil.component';
-import { TareasAdminComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
+import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
+import { TareasAdminComponent } from './pages/paneles-administracion/panel-admin/tareas/tareas-admin.component';
 //import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
@@ -19,8 +19,8 @@ import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/
 import {PanelAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 //panel de admistracion del postulante
 import {PanelPostulanteComponent}from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component'; 
-import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/mi-perfil/mi-perfil.component';
-import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/tabs/formulario-info-postulante/formulario-info-postulante.component';
+import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
+import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 
 const routes: Routes = [
   //{ path: 'home'    , component: HomeComponent,canActivate:[AutentificacionGuard] },

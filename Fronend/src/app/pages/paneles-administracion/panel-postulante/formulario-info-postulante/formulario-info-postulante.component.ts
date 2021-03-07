@@ -17,12 +17,15 @@ export class FormularioInfoPostulanteComponent implements OnInit {
    obervaciones=false;
    //validacion de formulario true/false
    formValidado=false;
+   today: string;
    
 
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
     this.instanciaPostulante=new PostulanteModel();
+    this.today = new Date().toISOString().split('T')[0];
+    console.log(this.today);
     //consultar si el postulante ha llenado el formulario
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
@@ -50,9 +53,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
              this.instanciaPostulante.cedula="";
              this.instanciaPostulante.telefono="";
              this.instanciaPostulante.genero=0;
-             const fecha = new Date();
-             console.log(fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay());
-             this.instanciaPostulante.fecha_nacimiento=fecha.getFullYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
+             this.instanciaPostulante.fecha_nacimiento=this.today;
              this.instanciaPostulante.direccion_domicilio="";
            }
       },(peroSiTenemosErro)=>{
@@ -76,11 +77,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     //envio la informacion a mi servicio - consumo el servici
     this.servicioPostulante_.crearPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
-        console.log(siHacesBien['Siglas']);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          console.log(siHacesBien['Siglas']=="OE");
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
           localStorage.setItem("nombre", this.instanciaPostulante.nombre);
           localStorage.setItem("apellido", this.instanciaPostulante.apellido);
@@ -92,12 +90,12 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
           this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
-            console.log(siHacesBien);
-            Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+            console.warn(siHacesBien);
+            Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
           }
       
       },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
+        console.log(peroSiTenemosErro['error']);
         console.log(this.instanciaPostulante);
         Swal({
           title:'Error al registrar informacion',
