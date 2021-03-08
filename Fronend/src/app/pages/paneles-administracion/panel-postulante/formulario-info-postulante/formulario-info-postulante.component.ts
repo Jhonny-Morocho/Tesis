@@ -25,7 +25,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   ngOnInit() {
     this.instanciaPostulante=new PostulanteModel();
     this.today = new Date().toISOString().split('T')[0];
-    console.log(this.today);
     //consultar si el postulante ha llenado el formulario
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{

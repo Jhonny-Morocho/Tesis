@@ -24,7 +24,7 @@ class Empleador extends Model
         "telefono",
         "direccion",
         "observaciones",
-        "external_us"
+        "external_em"
     ];
      public function usuario(){
          //esta tabla pertenece a usuario
