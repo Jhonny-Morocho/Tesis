@@ -5,6 +5,7 @@ export class EmpleadorModel{
     actividadRuc:string;
     numeroRuc:string;
     cedula:string;
+    nomRepresentaLegal:string;
     ciudad:string;
     provincia:string;
     telefono:string;

@@ -50,7 +50,7 @@ export class RegistroEmpleadorComponent implements OnInit {
           timer: 1500
         })
         console.log("direccional al panel");
-        //this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
+        this.router_.navigateByUrl('/panel-empleador/form-info-empleador');
        }else{
          Swal({
            title:'Error, no se puede ejecutar su peticion',

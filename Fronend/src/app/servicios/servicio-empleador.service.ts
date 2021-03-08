@@ -10,7 +10,7 @@ export class SerivicioEmpleadorService {
   //el url del servicio o del backend
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearEmpleador="/Backend/public/index.php/empleador/registro/";
-  private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
+  private urlListarFormEmpleador="/Backend/public/index.php/estudiante/formEmpleador";
   private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
@@ -19,19 +19,18 @@ export class SerivicioEmpleadorService {
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
     const autenficacionDatos={
-    razonEmpresa:modeloEmpleador.razonEmpresa,
-    tiposEmpresa:modeloEmpleador.tiposEmpresa,
-    actividadRuc:modeloEmpleador.actividadRuc,
-    numeroRuc:modeloEmpleador.numeroRuc,
-    cedula:modeloEmpleador.cedula,
-    ciudad:modeloEmpleador.ciudad,
-    provincia:modeloEmpleador.provincia,
-    telefono:modeloEmpleador.provincia,
-    direccion:modeloEmpleador.provincia,
-    observaciones:modeloEmpleador.provincia,
-    external_us:modeloEmpleador.provincia,
-    estado:0
-      //external_es:localStorage.getItem("external_us")
+      razon_empresa:modeloEmpleador.razonEmpresa,
+      tipo_empresa:modeloEmpleador.tiposEmpresa,
+      actividad_ruc:modeloEmpleador.actividadRuc,
+      num_ruc:modeloEmpleador.numeroRuc,
+      cedula:modeloEmpleador.cedula,
+      nom_representante_legal:modeloEmpleador.nomRepresentaLegal,
+      ciudad:modeloEmpleador.ciudad,
+      provincia:modeloEmpleador.provincia,
+      telefono:modeloEmpleador.provincia,
+      direccion:modeloEmpleador.provincia,
+      observaciones:modeloEmpleador.observaciones,
+      estado:0
     }
     //retorna la respuesata
     console.log(`${this.urlDominio_}${this.urlBackendCrearEmpleador}${localStorage.getItem("external_us")}`);
@@ -46,12 +45,10 @@ export class SerivicioEmpleadorService {
   }
   
   //el postulante en su session puede ver sus datos registrados
-  listarFormPostulante(){
+  listarFormEmpleador(){
     const autenficacionDatos={
       external_us:localStorage.getItem("external_us")
     }
-    //retorna la respuesata
-    //console.log(`${this.urlDominio_}${this.urlListarFormPostulante}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlListarFormPostulante}`,autenficacionDatos
     ).pipe(
@@ -123,25 +120,25 @@ export class SerivicioEmpleadorService {
   }
     //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarDatosPostulante(modeloPostulante:EmpleadorModel){
-      const autenficacionDatos={
-        cedula:modeloPostulante.cedula,
-        telefono:modeloPostulante.telefono,
-        nombre:modeloPostulante.nombre,
-        apellido:modeloPostulante.apellido,
-        genero:modeloPostulante.genero,
-        fecha_nacimiento:modeloPostulante.fecha_nacimiento,
-        direccion_domicilio:modeloPostulante.direccion_domicilio,
-        observaciones:modeloPostulante.observaciones,
-      }
-    //retorna la respuesata
-      return this._httCliente.post(
-        `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
-      ).pipe(
-        map(
-          respuestaBackend=>{
-            return respuestaBackend;
-          })
-      );
+    //   const autenficacionDatos={
+    //     cedula:modeloPostulante.cedula,
+    //     telefono:modeloPostulante.telefono,
+    //     nombre:modeloPostulante.nombre,
+    //     apellido:modeloPostulante.apellido,
+    //     genero:modeloPostulante.genero,
+    //     fecha_nacimiento:modeloPostulante.fecha_nacimiento,
+    //     direccion_domicilio:modeloPostulante.direccion_domicilio,
+    //     observaciones:modeloPostulante.observaciones,
+    //   }
+    // //retorna la respuesata
+    //   return this._httCliente.post(
+    //     `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
+    //   ).pipe(
+    //     map(
+    //       respuestaBackend=>{
+    //         return respuestaBackend;
+    //       })
+    //   );
   }
 }
 

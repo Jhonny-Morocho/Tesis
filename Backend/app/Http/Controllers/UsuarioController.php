@@ -138,7 +138,9 @@ class UsuarioController extends Controller
                     $ObjEmpleador->provincia=$datos["provincia"];
                     $ObjEmpleador->telefono=$datos["telefono"];
                     $ObjEmpleador->direccion=$datos["direccion"];
+                    $ObjEmpleador->nom_representante_legal=$datos['nom_representante_legal'];
                     $ObjEmpleador->observaciones=$datos["observaciones"];
+                    $ObjEmpleador->estado=$datos["estado"];
                     $ObjEmpleador->external_em="Em".Utilidades\UUID::v4();
                     $ObjEmpleador->save();
                     return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE"]);

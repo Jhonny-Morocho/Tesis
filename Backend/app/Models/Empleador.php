@@ -19,9 +19,11 @@ class Empleador extends Model
         "actividad_ruc",
         "num_ruc",
         "cedula",
+        "nom_representante_legal",
         "ciudad",
         "provincia",
         "telefono",
+        "estado",
         "direccion",
         "observaciones",
         "external_em"

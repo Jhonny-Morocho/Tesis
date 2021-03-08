@@ -30,6 +30,7 @@ try {
         $router->post('/usuario/login','UsuarioController@login');
         // consultar formulario registrado
         $router->post('/estudiante/FormEstudiante','EstudianteController@FormEstudiante');
+        $router->post('/empleador/formEmpleador','EmpleadorController@FormEmpleador');
         //consular todos los postulante que tienen formularior registrado
         $router->get('/estudiante/listarEstudiantes','EstudianteController@listarEstudiantes');
         $router->post('/estudiante/obtenerPostulanteExternal_es','EstudianteController@obtenerPostulanteExternal_es');

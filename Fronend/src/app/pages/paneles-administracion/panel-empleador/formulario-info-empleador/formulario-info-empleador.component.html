@@ -2,12 +2,12 @@
 </navTab-empleador>
 
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
-
 <div class="container mt-5 animated fadeIn" style="padding-bottom: 100px;" *ngIf="booleanFormularioCompletado==false">
     <div class="card">
         <article class="card-body">
-            <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
-                <h3>Registro de postulante</h3>
+            <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpledor(fPostulante)" #fPostulante="ngForm">
+                <h3>Registro de Empleador</h3>
+
                 <div class="col-3">
                     <a [routerLink]="['/panel-postulante/mi-perfil']" class="float-right btn btn-outline-success">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>
@@ -15,57 +15,62 @@
 
                 <hr>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Nombre Completos</label><br>
-                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['nombre'].errors">El Nombre es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaPostulante.nombre" name="nombre" class="form-control" required minlength="3">
+                    <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
+                    <input type="texto" [(ngModel)]="instanciaEmpleador.razonEmpresa" name="razonSocial" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Apellido Completos</label><br>
-                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['apellido'].errors">El Apellido es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.apellido" name="apellido" class="form-control" required minlength="3">
+                    <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['tipoEmpresa'].errors">El tipo de institución o empresa es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.tiposEmpresa" name="tipoEmpresa" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
-                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">La cedula es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required maxlength="10">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividadRuc" name="actividadRuc" rows="3" required></textarea>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
-                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors">La fecha es obligatorio</span>
-                    <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento' name="fechaNacimiento" class="form-control" required>
+                    <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.numeroRuc" name="numeroRuc" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>
-                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">El telefono es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required minlength="10">
+                    <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">El numero de cedula es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10">
                 </div>
                 <div class="col-md-6">
-                    <fieldset class="form-group">
-                        <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Genero</legend>
-                            <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors">El genero es obligatorio</span>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="0" required [(ngModel)]="instanciaPostulante.genero">
-                                    <label class="form-check-label" for="gridRadios1"> Masculino</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="1" required [(ngModel)]="instanciaPostulante.genero">
-                                    <label class="form-check-label" for="gridRadios2">Femenino</label>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.nomRepresentaLegal" name="nomRepresentanteLegal" class="form-control" required>
                 </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Provincia</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['provincia'].errors">La provinicia es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Ciudad</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['ciudad'].errors">La ciudad es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Telefono de Nacimiento</label><br>
+                    <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">La fecha es obligatorio</span>
+                    <input type="text" [ngModel]='instanciaEmpleador.telefono' name="telefono" class="form-control" required>
+                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaPostulante.direccion_domicilio" name="direcionDomicilio" rows="3" required minlength="5"></textarea>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.direccion" name="direcionDomicilio" required></textarea>
                     </div>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Postular</button>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
                 </div>
             </form>
 
