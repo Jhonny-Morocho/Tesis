@@ -6,9 +6,9 @@ import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante
 
 @Component({
   selector: 'app-tareas-pendientes',
-  templateUrl: './tareas-admin.component.html'
+  templateUrl: './tareas-validar-postulante.component.html'
 })
-export class TareasAdminComponent implements OnInit {
+export class TareaValiarPostulanteComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   estudiante:PostulanteModel[]=[];

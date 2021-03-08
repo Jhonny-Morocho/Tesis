@@ -9,7 +9,7 @@ import {EmpleadorComponent} from './pages/empleador/empleador.component';
 //import {PanelAdminComponent} from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
-import { TareasAdminComponent } from './pages/paneles-administracion/panel-admin/tareas/tareas-admin.component';
+import { TareaValiarPostulanteComponent } from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-postulantes/tareas-validar-postulante.component';
 //import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas-realizadas/tareas-realizadas.component';
 import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent },
   //rutas del admistrador
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
-  { path: 'panel-admin/tareas' , component: TareasAdminComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-admin/tareas' , component: TareaValiarPostulanteComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   
   //rutas del postulante

@@ -22,7 +22,7 @@ import { EmpleadorComponent } from './pages/empleador/empleador.component';
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
-import {TareasAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/tareas-admin.component';
+import {TareaValiarPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-postulantes/tareas-validar-postulante.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tareas-realizadas/tareas-realizadas.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
@@ -54,7 +54,7 @@ import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion
     MiPerfilPostulanteComponent,
     FormularioInfoPostulanteComponent,
     FormInfoPostulanteComponent,
-    TareasAdminComponent,
+    TareaValiarPostulanteComponent,
     MiPerfilComponentEmpleador,
     NabPanelEmpleador,
     FormularioInfoEmpleadorComponent
