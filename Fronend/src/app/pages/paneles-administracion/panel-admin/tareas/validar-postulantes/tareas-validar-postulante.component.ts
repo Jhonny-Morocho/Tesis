@@ -13,10 +13,14 @@ export class TareaValiarPostulanteComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   estudiante:PostulanteModel[]=[];
   dtTrigger: Subject<any> = new Subject<any>();
+  tipoUsuarioSecretaria:boolean=false;
 
   constructor(private servicioPostulante_:SerivicioPostulanteService ) { }
 
   ngOnInit():void {
+    if(Number(localStorage.getItem('tipoUsuario'))==3){
+       this.tipoUsuarioSecretaria=true;
+    }
     this.servicioPostulante_.listarPostulantes().subscribe(
       siHacesBien=>{
           console.warn("TODO BIEN");

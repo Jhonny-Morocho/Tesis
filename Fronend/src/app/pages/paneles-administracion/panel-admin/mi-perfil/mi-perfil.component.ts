@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 })
 export class MiPerfilComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
+  nombreUsuario:string;
+
   constructor(private servicioAuthenAdmin_:AutenticacionUserService,
               private _routert:Router) { }
 
@@ -16,6 +18,25 @@ export class MiPerfilComponent implements OnInit {
     if(localStorage.getItem('correo')){
       console.log(localStorage);
       this.instanciaUsuario.correo = localStorage.getItem('correo');
+      //tipo de usuario o tipo de administrador
+      switch (Number(localStorage.getItem('tipoUsuario'))) {
+        //secretaria
+        case 3:
+          this.nombreUsuario="Secretaria";
+          break;
+        //Decano
+        case 4:
+          this.nombreUsuario="Decano";
+          break;
+        //Encargado
+        case 5:
+          this.nombreUsuario="Encargado";
+          break;
+        default:
+          this.nombreUsuario="defaund";
+          alert("USUARIO ADMIN NO ENCONTRADO");
+          break;
+      }
     }else{
      // no existe session por lo cual debo direccionar al inicio
    }

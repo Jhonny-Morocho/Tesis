@@ -24,7 +24,6 @@ import { LoginPostulanteComponent } from './pages/form-registro-login/form-login
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
 import {TareaValiarPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-postulantes/tareas-validar-postulante.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
-import { TareasRealizadasComponent } from './pages/paneles-administracion/panel-admin/tareas-realizadas/tareas-realizadas.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import { from } from 'rxjs';
@@ -45,7 +44,6 @@ import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion
     EmpleadorComponent,
     PanelAdminComponent,
     MiPerfilComponent,
-    TareasRealizadasComponent,
     LoginPostulanteComponent,
     RegistroPostulanteComponent,
     RegistroEmpleadorComponent,
