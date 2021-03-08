@@ -1,34 +1,63 @@
 <navTab-admin></navTab-admin>
 <div class="container">
-    <p>Tareas pendientes</p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
+    <form class="row g-3" (ngSubmit)="registroEmpleador(fRegistroEmpleador)" #fRegistroEmpleador="ngForm">
+        <h3>Registro de empleador</h3>
+        <div class="col-3">
+            <a [routerLink]="['/login-empleador']" class="float-right btn btn-outline-primary">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al login </a>
+        </div>
+
+        <hr>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El Nombre es obligatorio</span>
+            <input type="texto" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="nombre" class="form-control" required minlength="50">
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Actividad Economica inscrita en el RUC</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El Apellido es obligatorio</span>
+            <input type="text" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="apellido" class="form-control" required minlength="50">
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El correo es obligatorio</span>
+            <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" required email>
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">La cedula es obligatoria</span>
+            <input type="text" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="cedula" class="form-control" required minlength="10">
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Ciudad</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">La fecha es obligatorio</span>
+            <input type="date" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="fechaNacimiento" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Provincia</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El telefono es obligatorio</span>
+            <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" id="inputEmail4" required minlength="10">
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Correo electronico</label><br>
+            <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El telefono es obligatorio</span>
+            <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" id="inputEmail4" required minlength="10">
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Dirección</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Registrarme</button>
+        </div>
+    </form>
 
 </div>

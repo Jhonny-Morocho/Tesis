@@ -3,9 +3,9 @@ import {UsuarioModel} from '../../../../../models/usuario.model';
 
 @Component({
   selector: 'app-mi-perfil',
-  templateUrl: './mi-perfil.component.html',
+  templateUrl: './mi-perfil-empleador.component.html',
 })
-export class MiPerfilComponent implements OnInit {
+export class MiPerfilComponentEmpleador implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   constructor() { }
 

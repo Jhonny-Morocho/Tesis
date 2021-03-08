@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'navTab-admin',
-  templateUrl: './navTab-admin.component.html'
+  selector: 'navTab-empleador',
+  templateUrl: './navTab-empleador.component.html'
 })
-export class PanelAdminComponent implements OnInit {
+export class NabPanelEmpleador implements OnInit {
   
   constructor() { }
 
