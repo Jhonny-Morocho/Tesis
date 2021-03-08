@@ -24,7 +24,6 @@ class EmpleadorController extends Controller
              if($ObjUsuario!=null){
                  $ObjEstudiante = Empleador::where("fk_usuario","=", $ObjUsuario->id)->first();
                  if($ObjEstudiante !=null){
-                     die(json_encode($ObjEstudiante));
                      return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
                  }else{
                     return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);

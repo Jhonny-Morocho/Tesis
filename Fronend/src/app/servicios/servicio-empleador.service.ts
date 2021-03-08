@@ -10,7 +10,7 @@ export class SerivicioEmpleadorService {
   //el url del servicio o del backend
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearEmpleador="/Backend/public/index.php/empleador/registro/";
-  private urlListarFormEmpleador="/Backend/public/index.php/estudiante/formEmpleador";
+  private urlListarFormEmpleador="/Backend/public/index.php/empleador/formEmpleador";
   private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
@@ -39,6 +39,7 @@ export class SerivicioEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
+
           return respuestaBackend;
         })
     );
@@ -50,7 +51,7 @@ export class SerivicioEmpleadorService {
       external_us:localStorage.getItem("external_us")
     }
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlListarFormPostulante}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlListarFormEmpleador}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{

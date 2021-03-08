@@ -18,19 +18,6 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
 
   ngOnInit() {
     this.instanciaEmpleador=new EmpleadorModel();
-    //datos solo para pruebas
-    // this.instanciaEmpleador.razonEmpresa="Sociedad iberca de construcciones electricas S.A (SICE)";
-    // this.instanciaEmpleador.tiposEmpresa="Economica";
-    // this.instanciaEmpleador.actividadRuc="4100 Construccion de software";
-    // this.instanciaEmpleador.numeroRuc="20504006861";
-    // this.instanciaEmpleador.cedula="1105116899";
-    // this.instanciaEmpleador.provincia="Loja";
-    // this.instanciaEmpleador.ciudad="Catamayo";
-    // this.instanciaEmpleador.nomRepresentaLegal="Ing. Luis López";
-    // this.instanciaEmpleador.telefono="058151581";
-    // this.instanciaEmpleador.direccion="Universitari juan de arena Nro 151 a la esquina";
-    // this.instanciaEmpleador.observaciones="";
-    //================= cuando incie el formulario se cargue los datos por defecto ===============//
     //consultar si el postulante ha llenado el formulario
     this.servicioEmpleador_.listarFormEmpleador().subscribe(
       siHacesBien=>{
@@ -38,28 +25,31 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
           if(siHacesBien['Siglas']=="OE"){
             // por lo tanto formulario completo ==true
             this.booleanFormularioCompletado=true;
+            console.log(siHacesBien);
             //llena el formulario por primera ves
-            this.instanciaPostulante.nombre=siHacesBien['mensaje']['nombre'];
-            this.instanciaPostulante.apellido=siHacesBien['mensaje']['apellido'];
-            this.instanciaPostulante.cedula=siHacesBien['mensaje']['cedula'];
-            this.instanciaPostulante.telefono=siHacesBien['mensaje']['telefono'];
-            this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
-            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
-            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
-            this.instanciaPostulante.observaciones=siHacesBien['mensaje']['observaciones'];
-            this.instanciaPostulante.estado=siHacesBien['mensaje']['estado'];
+            this.instanciaEmpleador.actividadRuc=siHacesBien['mensaje']['actividad_ruc'];
+            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaEmpleador.ciudad=siHacesBien['mensaje']['ciudad'];
+            this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
+            this.instanciaEmpleador.nomRepresentaLegal=siHacesBien['mensaje']['nom_representante_legal'];
+            this.instanciaEmpleador.numeroRuc=siHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleador.provincia=siHacesBien['mensaje']['provincia'];
+            this.instanciaEmpleador.razonEmpresa=siHacesBien['mensaje']['razon_empresa'];
+            this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
+            this.instanciaEmpleador.tiposEmpresa=siHacesBien['mensaje']['tipo_empresa'];
+            this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
             //si es mayor a cero es q si ha revisado y si ha visto el formulario
-            this.obervaciones = ( this.instanciaPostulante.observaciones.length>0)?true:false;
-            this.formValidado = ( this.instanciaPostulante.estado==1)?true:false;
+             this.obervaciones = ( this.instanciaEmpleador.observaciones.length>0)?true:false;
+             this.formValidado = ( this.instanciaEmpleador.estado==1)?true:false;
             }else{
             //llena el formulario por primera ves
-              this.instanciaPostulante.nombre="";
-              this.instanciaPostulante.apellido="";
-              this.instanciaPostulante.cedula="";
-              this.instanciaPostulante.telefono="";
-              this.instanciaPostulante.genero=0;
-              this.instanciaPostulante.fecha_nacimiento=this.today;
-              this.instanciaPostulante.direccion_domicilio="";
+              // this.instanciaPostulante.nombre="";
+              // this.instanciaPostulante.apellido="";
+              // this.instanciaPostulante.cedula="";
+              // this.instanciaPostulante.telefono="";
+              // this.instanciaPostulante.genero=0;
+              // this.instanciaPostulante.fecha_nacimiento=this.today;
+              // this.instanciaPostulante.direccion_domicilio="";
             }
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
@@ -111,6 +101,13 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         }); 
     });
 
+  }
+
+  onSubmitFormularioEmpleadorEditar(formRegistroEmpleadorEditar:NgForm){
+    console.log("Editar formRegistroEmpleadorEditar");
+    if(formRegistroEmpleadorEditar.invalid){
+      return;
+     }
   }
 
 }

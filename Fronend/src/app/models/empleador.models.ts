@@ -13,5 +13,5 @@ export class EmpleadorModel{
     observaciones:string;
     external_us:string;
     id?:Number;
-    estado:0
+    estado:Number
 }
