@@ -16,23 +16,23 @@ import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins
 import {RegistroEmpleadorComponent} from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
 import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
-import {PanelAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
+//import {PanelAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 //panel de admistracion del postulante
-import {PanelPostulanteComponent}from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component'; 
+//import {PanelPostulanteComponent}from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component'; 
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
+//import {TareaValiarEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-empleadores/tareas-validar-empleador.component';
 import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {FormularioInfoEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
+import {ValidarEmpleadorComponent } from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-empleador/validar-empleador.component';
 const routes: Routes = [
-  //{ path: 'home'    , component: HomeComponent,canActivate:[AutentificacionGuard] },
   { path: 'home'    , component: HomeComponent },
   { path: 'registro-postulante', component: RegistroPostulanteComponent },
   { path: 'registro-empleador', component: RegistroEmpleadorComponent },
-   { path: 'login-postulante'   , component: LoginPostulanteComponent },
+  { path: 'login-postulante'   , component: LoginPostulanteComponent },
   { path: 'login-admin' , component: LoginAdminComponent },
   { path: 'login-empleador' , component: LoginEmpleadorComponent },
-  //{ path: 'postulante' , component: PostulanteComponent },
   //rutas del empleador
   { path: 'empleador' , component: EmpleadorComponent },
   { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador },
@@ -40,15 +40,11 @@ const routes: Routes = [
   //rutas del admistrador
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiarPostulanteComponent,canActivate:[AutentificacionGuard] },
-  { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   
+  { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   //rutas del postulante
- // { path: 'panel-postulante/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-postulante/mi-perfil' , component: MiPerfilPostulanteComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-postulante/form-info-postulante' , component: FormularioInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
-  //{ path: 'panel-postulante/mi-perfil' , component: PanelPostulanteComponent},
-  // { path: 'panel-postulante/tareas-pendientes' , component: TareasPendientesComponent,canActivate:[AutentificacionGuard] },
-  // { path: 'panel-postulante/tareas-realizadas' , component: TareasRealizadasComponent ,canActivate:[AutentificacionGuard]},
   { path: '**', redirectTo: 'home' }
 ];
 

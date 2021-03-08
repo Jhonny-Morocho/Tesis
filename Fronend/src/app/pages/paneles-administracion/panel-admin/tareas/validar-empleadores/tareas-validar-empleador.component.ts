@@ -5,21 +5,21 @@ import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante
 
 
 @Component({
-  selector: 'app-tareas-pendientes-secretaria',
-  templateUrl: './tareas-validar-postulante.component.html'
+  selector: 'app-tareas-pendientes-empleador',
+  templateUrl: './tareas-validar-empleador.component.html'
 })
-export class TareaValiarPostulanteComponent implements OnInit {
+export class TareaValiarEmpleadorComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   estudiante:PostulanteModel[]=[];
   dtTrigger: Subject<any> = new Subject<any>();
-  tipoUsuarioSecretaria:boolean=false;
+  tipoUsuarioEncargado:boolean=false;
 
   constructor(private servicioPostulante_:SerivicioPostulanteService ) { }
 
   ngOnInit():void {
-    if(Number(localStorage.getItem('tipoUsuario'))==3){
-       this.tipoUsuarioSecretaria=true;
+    if(Number(localStorage.getItem('tipoUsuario'))===5){
+       this.tipoUsuarioEncargado=true;
     }
     this.servicioPostulante_.listarPostulantes().subscribe(
       siHacesBien=>{

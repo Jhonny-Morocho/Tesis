@@ -46,8 +46,9 @@ export class LoginAdminComponent implements OnInit {
         Swal.close();
         //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
-          //vrificar si es un usuario postulante 2== postulante
-          if(siHacesBien['mensaje']['tipoUsuario']===3){
+          //vrificar si es un usuario 3==secretaria,4==gestor, 5==encargado
+          let tipoUsuarioBD=siHacesBien['mensaje']['tipoUsuario'];
+          if(tipoUsuarioBD===3 || tipoUsuarioBD===4 || tipoUsuarioBD===5 ){
             Swal({
               position: 'center',
               type: 'success',
