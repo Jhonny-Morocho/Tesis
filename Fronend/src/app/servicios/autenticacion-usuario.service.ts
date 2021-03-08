@@ -26,22 +26,18 @@ export class AutenticacionUserService {
   //funciones de login 
   //recibo el modelo del usuario model con los datos
   login(usuioModel_:UsuarioModel){
-
     //estos parametros deben ser igual a los de la tabla del BD
      const objetoUsuario={
        correo:usuioModel_.correo,
        password:usuioModel_.password,
      }
-    console.log(objetoUsuario);
-    console.log(usuioModel_);
-    // apcimos el metodo post y la promesa
-    //console.log(`${this.urlDominio_}${this.urlBackend_Login}`);
     return this._httCLiente.post(`${this.urlDominio_}${this.urlBackend_Login}`,
                                 objetoUsuario
     ).pipe(
       map(
         respuestaBackend=>{
           console.log("Entro en el mapa del RKJS");
+          console.log(respuestaBackend);
           this.guarUsuarioTempLocalSotarage(respuestaBackend['mensaje']);
           return respuestaBackend;
         }

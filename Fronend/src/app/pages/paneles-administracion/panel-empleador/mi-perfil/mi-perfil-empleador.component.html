@@ -9,16 +9,9 @@
             <p>Mi perfil Empleador</p>
             <hr>
             <div class="container mt-5 ">
-                <a [routerLink]="['/home']" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
+                <a (click)="salirSession()" class="float-right btn btn-outline-danger mb-4"><i class="fa fa-arrow-left" aria-hidden="true"></i> Salir</a>
                 <form class="row g-3" #fPerfilAdmin="ngForm">
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" [(ngModel)]="instanciaUsuario.nombre" name="nombreAdmin" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" name="apellidoAdmin" [(ngModel)]="instanciaUsuario.apellido" disabled>
-                    </div>
+
                     <div class="col-12">
                         <label for="inputAddress" class="form-label">Correo</label>
                         <input type="email" class="form-control" id="inputAddress" name="correoAdmin" [(ngModel)]="instanciaUsuario.correo" disabled>

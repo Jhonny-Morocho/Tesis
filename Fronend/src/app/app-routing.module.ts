@@ -22,7 +22,7 @@ import {PanelPostulanteComponent}from './pages/paneles-administracion/panel-post
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
-import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/tabs/mi-perfil/mi-perfil.component';
+import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {FormularioInfoEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
 const routes: Routes = [
   //{ path: 'home'    , component: HomeComponent,canActivate:[AutentificacionGuard] },

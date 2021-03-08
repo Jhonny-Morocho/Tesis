@@ -33,7 +33,7 @@ import { FormularioInfoPostulanteComponent } from './pages/paneles-administracio
 import { DataTablesModule } from "angular-datatables";
 import { FormInfoPostulanteComponent } from './pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
 //empleador
-import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/tabs/mi-perfil/mi-perfil.component';
+import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {NabPanelEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/nav/navTab-empleador.component';
 import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
 @NgModule({

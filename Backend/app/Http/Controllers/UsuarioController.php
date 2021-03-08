@@ -169,38 +169,12 @@ class UsuarioController extends Controller
             if($usuario){
                 if(password_verify($datos['password'],$usuario['password'])){
                     // preguntamos que tipo de usuario es 
-                   switch ($usuario['tipoUsuario']) {
-                        //usuario inactivo
-                        case 0:
-                        # inactivo
-                        return response()->json(["mensaje"=>$usuario,"Siglas"=>"UNA",400]);
-                        break;
-
-                       //estudiante
-                       case 2:
-                        # code...
+                    try {
                         return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
-                        break;
-
-                        //secretara
-                        case 3:
-                            # code...
-                            return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
-                            break;
-                        //DECANO
-                       case 4:
-                        # code...
-                        break;
-                        //ENCARGADO
-                       case 4:
-                        # code...
-                        break;
-                       
-                       default:
-                           # code...
-                           return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400]);
-                           break;
-                   }
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"request"=>$th]);
+                    }
                 }else{
                     return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
                 }

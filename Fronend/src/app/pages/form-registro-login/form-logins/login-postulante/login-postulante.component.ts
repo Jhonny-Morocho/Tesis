@@ -20,9 +20,6 @@ export class LoginPostulanteComponent implements OnInit {
   constructor(private _servicioAdmin:AutenticacionUserService,private router_:Router) { }
 
   ngOnInit() {
-    // los inicializo solo para hacer pruebas despues los descomento
-    // this.instanciaModeloUsuarioLogin.correo="jhonny9@hotmail.com";
-    // this.instanciaModeloUsuarioLogin.password="123456";
   }
   // Login del formulario del admistrador
   loginPostulante(formularioAdministrador:NgForm){
