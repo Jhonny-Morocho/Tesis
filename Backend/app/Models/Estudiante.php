@@ -33,4 +33,10 @@ class Estudiante extends Model
     public function titulosacademicos(){
         return $this->hasMany('App\Models\titulosacademicos','fk_estudiante');
     }
+    //
+    public function cursoscapacitaciones(){
+        return $this->hasMany('App\Models\cursoscapacitaciones','fk_estudiante');
+    }
+   
+    
 }
