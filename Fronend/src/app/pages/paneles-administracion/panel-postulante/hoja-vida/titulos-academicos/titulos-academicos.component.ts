@@ -11,5 +11,7 @@ export class TitulosAcademicosComponent implements OnInit {
   ngOnInit() {
   
   }
+  onSubMitRegistroTitulo(){
 
+  }
 }
