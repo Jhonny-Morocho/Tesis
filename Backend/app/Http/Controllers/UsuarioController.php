@@ -122,7 +122,6 @@ class UsuarioController extends Controller
      //REGISTRO DE LOGIN
      public function login(Request $request){
         
-        global $respuestaUsuario;
         if($request->json()){
             $datos=$request->json()->all();
             $usuario=Usuario::where("correo",$datos['correo'])->first();

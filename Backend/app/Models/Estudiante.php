@@ -30,4 +30,7 @@ class Estudiante extends Model
         //relaciona al modelo con cual pertenece
         return $this->belongsTo('App\Models\usuario','fk_usuario');
     }
+    public function titulosacademicos(){
+        return $this->hasMany('App\Models\titulosacademicos','fk_estudiante');
+    }
 }
