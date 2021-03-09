@@ -10,19 +10,19 @@ import Swal from 'sweetalert2';
 export class MiPerfilComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   nombreUsuario:string;
-
+  imgAdmin:string;
   constructor(private servicioAuthenAdmin_:AutenticacionUserService,
               private _routert:Router) { }
 
   ngOnInit() {
     if(localStorage.getItem('correo')){
-      console.log(localStorage);
       this.instanciaUsuario.correo = localStorage.getItem('correo');
       //tipo de usuario o tipo de administrador
       switch (Number(localStorage.getItem('tipoUsuario'))) {
         //secretaria
         case 3:
           this.nombreUsuario="Secretaria";
+          this.imgAdmin='../../../assets/images/secretaria.png';
           break;
         //Decano
         case 4:
@@ -31,6 +31,7 @@ export class MiPerfilComponent implements OnInit {
         //Encargado
         case 5:
           this.nombreUsuario="Encargado";
+          this.imgAdmin='../../../assets/images/encargado.png';
           break;
         default:
           this.nombreUsuario="defaund";

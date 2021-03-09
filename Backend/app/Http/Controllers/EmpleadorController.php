@@ -52,39 +52,46 @@ class EmpleadorController extends Controller
          }
 
     }
-    public function actulizarFormEstudiante(Request $request,$external_id){
-
+    public function actulizarFormEmpleador(Request $request,$external_id){
+        //die(json_encode($request->json()->all()));
         if($request->json()){
             try {
 
                 $ObjUsuario = usuario::where("external_us",$external_id)->first();
                 if($ObjUsuario!=null){
                     $ObjEstudiante = 
-                        estudiante::where("fk_usuario","=", $ObjUsuario->id)->update(
-                                                                                    array( 'cedula'=>$request['cedula'], 
+                        Empleador::where("fk_usuario","=", $ObjUsuario->id)->update(
+                                                                                    array( 
+                                                                                        
+                                                                                    'razon_empresa'=>$request['razon_empresa'], 
+                                                                                    'tipo_empresa'=>$request['tipo_empresa'],
+                                                                                    'actividad_ruc'=>$request['actividad_ruc'],
+                                                                                    'num_ruc'=>$request['num_ruc'],
+                                                                                    'cedula'=>$request['cedula'],
+                                                                                    'nom_representante_legal'=>$request['nom_representante_legal'],
+                                                                                    'ciudad'=>$request['ciudad'],
+                                                                                    'provincia'=>$request['provincia'],
                                                                                     'telefono'=>$request['telefono'],
-                                                                                    'nombre'=>$request['nombre'],
-                                                                                    'apellido'=>$request['apellido'],
-                                                                                    'genero'=>$request['genero'],
-                                                                                    'fecha_nacimiento'=>$request['fecha_nacimiento'],
-                                                                                    'direccion_domicilio'=>$request['direccion_domicilio'],
+                                                                                    'provincia'=>$request['provincia'],
+                                                                                    'direccion'=>$request['direccion'],
                                                                                     'observaciones'=>$request['observaciones']
+                                                                            
                                                                                ));
                     //debe exitir un usuario y a la vez la respuesta de al consulta sea true 
                     if($ObjEstudiante !=null || $ObjEstudiante==true){
                         return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
                     }else{
-                       return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                       return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
                     }
        
                }else{
-                   return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+                   return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_em","Siglas"=>"ONE"]);
                }
 
              
                 
             } catch (\Throwable $th) {
-               return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
+               return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el empleador","Siglas"=>"ONE","error"=>$th]);
             }
 
         }else{

@@ -39,7 +39,7 @@ try {
         $router->post('/estudiante/actulizarAprobacionEstudiante/{external_id}','EstudianteController@actulizarAprobacionEstudiante');
         $router->post('/empleador/actulizarAprobacionEmpleador/{external_id}','EmpleadorController@actulizarAprobacionEmpleador');
         $router->post('/estudiante/actulizarFormEstudiante/{external_id}','EstudianteController@actulizarFormEstudiante');
-    
+        $router->post('/empleador/actulizarFormEmpleador/{external_id}','EmpleadorController@actulizarFormEmpleador');
    // });
 } catch (\Throwable $th) {
     echo "PROBLEMAS CON LAS RUTAS PROTEGIDAS";

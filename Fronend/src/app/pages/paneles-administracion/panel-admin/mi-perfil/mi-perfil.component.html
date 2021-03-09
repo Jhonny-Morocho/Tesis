@@ -2,8 +2,9 @@
 <div class="container">
     <div class="row ">
         <div class="col-3">
-            <img src="../../../assets/images/secretaria.png" class="img-thumbnail" alt="...">
+            <img src="{{ imgAdmin }}" class="img-thumbnail" alt="...">
         </div>
+
         <div class="col-9 mt-2">
             <p>Mi perfil</p>
             <hr>
@@ -16,7 +17,7 @@
                         <input type="email" class="form-control" id="inputAddress" name="correoAdmin" [(ngModel)]="instanciaUsuario.correo" disabled>
                     </div>
                     <div class="col-12">
-                        <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">{{ tipoUsuario }}</span></label>
+                        <label for="inputAddress2" class="form-label"><span class="badge rounded-pill bg-success">{{ this.nombreUsuario }}</span></label>
                     </div>
                 </form>
 

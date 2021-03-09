@@ -12,7 +12,7 @@
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                 <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
                     <h4 class="alert-heading">Validacion exitosa </h4>
-                    <p>Tu validacion ha sido exitosa, por lo cual ya puedes potular a las ofertas laborales disponible en la plataformas</p>
+                    <p>Tu validacion ha sido exitosa, por lo cual ya puedes publicar las ofertas laborales en la plataformas</p>
                     <hr>
                     <p class="mb-0">Obersvaciones: {{ instanciaEmpleador.observaciones }}</p>
                 </div>
@@ -33,29 +33,29 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaEmpleador.razon_empresa" name="razonSocial" class="form-control" required [disabled]="obervaciones==false">
+                    <input type="texto" [(ngModel)]="instanciaEmpleador.razon_empresa" name="razonSocial" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['tipoEmpresa'].errors">El tipo de institución o empresa es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.tiposEmpresa" name="tipoEmpresa" class="form-control" required [disabled]="obervaciones==false">
+                    <input type="text" [(ngModel)]="instanciaEmpleador.tiposEmpresa" name="tipoEmpresa" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividad_ruc" name="actividadRuc" rows="3" required [disabled]="obervaciones==false"></textarea>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividad_ruc" name="actividadRuc" rows="3" required [disabled]="obervaciones==false || formValidado==true"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false">
+                    <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">El numero de cedula es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10" [disabled]="obervaciones==false">
+                    <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10" [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>

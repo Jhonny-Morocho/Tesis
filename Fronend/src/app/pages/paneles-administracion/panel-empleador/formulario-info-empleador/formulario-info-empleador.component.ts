@@ -26,8 +26,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
           if(siHacesBien['Siglas']=="OE"){
             // por lo tanto formulario completo ==true
             this.booleanFormularioCompletado=true;
-            console.log(siHacesBien);
-            //llena el formulario por primera ves
+            //registro de empleador encontrado, ya esta creado el empleador en el BD
             this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
             this.instanciaEmpleador.ciudad=siHacesBien['mensaje']['ciudad'];
@@ -39,9 +38,10 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
             this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
             this.instanciaEmpleador.tiposEmpresa=siHacesBien['mensaje']['tipo_empresa'];
             this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
+            this.instanciaEmpleador.estado=siHacesBien['mensaje']['estado'];
             //si es mayor a cero es q si ha revisado y si ha visto el formulario
-             this.obervaciones = ( this.instanciaEmpleador.observaciones.length>0)?true:false;
-             this.formValidado = ( this.instanciaEmpleador.estado==1)?true:false;
+            this.obervaciones = ( this.instanciaEmpleador.observaciones.length>0)?true:false;
+            this.formValidado = ( this.instanciaEmpleador.estado==1)?true:false;
             }else{
             //llena el formulario por primera ves
               // this.instanciaPostulante.nombre="";
@@ -110,7 +110,36 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     console.log("Editar formRegistroEmpleadorEditar");
     if(formRegistroEmpleadorEditar.invalid){
       return;
-     }
+    }
+    Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
+    this.instanciaEmpleador.observaciones="";
+    this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleador).subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        console.log(siHacesBien['Siglas']);
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          Swal('Actualizado', 'Informacion Registrada con Exito', 'success');
+          //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
+          this.obervaciones=false;
+          //si el usuario esta el estado en 1// estado cero
+          this.formValidado=false;
+          }else{
+            console.log(siHacesBien);
+             Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+          }
+      },(peroSiTenemosErro)=>{
+         Swal({
+          title:'Error al registrar informacion',
+          type:'error',
+          text:peroSiTenemosErro['mensaje']
+         }); 
+    });
   }
 
 }

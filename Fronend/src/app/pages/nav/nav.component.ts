@@ -5,8 +5,7 @@ import {AutenticacionUserService} from '../../servicios/autenticacion-usuario.se
 
 @Component({
   selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  templateUrl: './nav.component.html'
 })
 export class NavComponent implements OnInit {
 

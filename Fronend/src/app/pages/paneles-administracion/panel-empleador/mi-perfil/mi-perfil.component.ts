@@ -13,7 +13,6 @@ export class MiPerfilComponentEmpleador implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem('correo')){
-      console.log(localStorage);
       this.instanciaUsuario.correo = localStorage.getItem('correo');
     }else{
      // no existe session por lo cual debo direccionar al inicio

@@ -32,14 +32,11 @@ export class TareaValiar implements OnInit {
               pagingType: 'full_numbers',
               pageLength: 2
             };
-          this.dtTrigger.next();
           this.estudiante =siHacesBien;
-          console.log(siHacesBien);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
         (peroSiTenemosErro)=>{
-           console.log(peroSiTenemosErro);
            console.warn("TODO MAL");
          }
       );
@@ -55,13 +52,10 @@ export class TareaValiar implements OnInit {
             pageLength: 2
           };
           this.empleador =siHacesBien;
-          console.log(siHacesBien);
-          console.log( this.empleador);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
         (peroSiTenemosErro)=>{
-          console.log(peroSiTenemosErro);
           console.warn("TODO MAL");
         }
       );

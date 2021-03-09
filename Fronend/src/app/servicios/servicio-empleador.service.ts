@@ -14,7 +14,7 @@ export class SerivicioEmpleadorService {
   private urlListarEmpleadores="/Backend/public/index.php/empleador/listarEmpleadores";
   private urlObtenerEmpleadorExternal_em="/Backend/public/index.php/empleador/obtenerEmpleadorExternal_em";
   private urlValidarEmpleador="/Backend/public/index.php/empleador/actulizarAprobacionEmpleador/";
-  private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
+  private urlEditarFormEmpleador="/Backend/public/index.php/empleador/actulizarFormEmpleador/";
   constructor(private _httCliente:HttpClient) { }
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
@@ -120,26 +120,29 @@ export class SerivicioEmpleadorService {
     );
   }
     //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarDatosPostulante(modeloPostulante:EmpleadorModel){
-    //   const autenficacionDatos={
-    //     cedula:modeloPostulante.cedula,
-    //     telefono:modeloPostulante.telefono,
-    //     nombre:modeloPostulante.nombre,
-    //     apellido:modeloPostulante.apellido,
-    //     genero:modeloPostulante.genero,
-    //     fecha_nacimiento:modeloPostulante.fecha_nacimiento,
-    //     direccion_domicilio:modeloPostulante.direccion_domicilio,
-    //     observaciones:modeloPostulante.observaciones,
-    //   }
-    // //retorna la respuesata
-    //   return this._httCliente.post(
-    //     `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
-    //   ).pipe(
-    //     map(
-    //       respuestaBackend=>{
-    //         return respuestaBackend;
-    //       })
-    //   );
+  actulizarDatosEmpleador(modeloEmpleador:EmpleadorModel){
+      const autenficacionDatos={
+        razon_empresa:modeloEmpleador.razon_empresa,
+        tipo_empresa:modeloEmpleador.tiposEmpresa,
+        actividad_ruc:modeloEmpleador.actividad_ruc,
+        num_ruc:modeloEmpleador.num_ruc,
+        cedula:modeloEmpleador.cedula,
+        nom_representante_legal:modeloEmpleador.nom_representante_legal,
+        ciudad:modeloEmpleador.ciudad,
+        provincia:modeloEmpleador.provincia,
+        telefono:modeloEmpleador.provincia,
+        direccion:modeloEmpleador.provincia,
+        observaciones:modeloEmpleador.observaciones
+      }
+    //retorna la respuesata
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlEditarFormEmpleador}${localStorage.getItem("external_us")}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
   }
 }
 
