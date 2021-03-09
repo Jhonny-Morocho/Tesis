@@ -18,6 +18,7 @@ export class SerivicioEmpleadorService {
   constructor(private _httCliente:HttpClient) { }
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
+    console.log(modeloEmpleador);
     const autenficacionDatos={
       razon_empresa:modeloEmpleador.razon_empresa,
       tipo_empresa:modeloEmpleador.tiposEmpresa,
@@ -29,9 +30,10 @@ export class SerivicioEmpleadorService {
       provincia:modeloEmpleador.provincia,
       telefono:modeloEmpleador.provincia,
       direccion:modeloEmpleador.provincia,
-      observaciones:modeloEmpleador.observaciones,
+      observaciones:'',
       estado:0
     }
+    console.log(autenficacionDatos);
     //retorna la respuesata
     console.log(`${this.urlDominio_}${this.urlBackendCrearEmpleador}${localStorage.getItem("external_us")}`);
     return this._httCliente.post(
@@ -39,7 +41,7 @@ export class SerivicioEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
-
+          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );

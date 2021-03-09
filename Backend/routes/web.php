@@ -26,7 +26,7 @@ try {
         $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
         $router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
         $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
-        $router->post('/empleador/registro/{external_id}','UsuarioController@RegistrarEmpleador');
+        $router->post('/empleador/registro/{external_id}','EmpleadorController@RegistrarEmpleador');
         $router->post('/usuario/login','UsuarioController@login');
         // consultar formulario registrado
         $router->post('/estudiante/FormEstudiante','EstudianteController@FormEstudiante');

@@ -16,8 +16,8 @@ export class RegistroPostulanteComponent implements OnInit {
 
   ngOnInit() {
     this.usuarioModel=new UsuarioModel();
-     this.usuarioModel.correo="jhonny@hotmail.com";
-     this.usuarioModel.password="123456";
+    //  this.usuarioModel.correo="jhonny@hotmail.com";
+    //  this.usuarioModel.password="123456";
      this.usuarioModel.tipoUsuario=2;
      this.usuarioModel.estado=1;
 
@@ -53,6 +53,7 @@ export class RegistroPostulanteComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
+   
           this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
          }else{
            Swal({

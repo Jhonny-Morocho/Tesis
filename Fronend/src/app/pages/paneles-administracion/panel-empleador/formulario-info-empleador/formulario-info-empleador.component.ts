@@ -72,6 +72,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     });
     Swal.showLoading();
     //envio la informacion a mi servicio - consumo el servici
+    console.log(this.instanciaEmpleador);
     this.servicioEmpleador_.crearEmpleador(this.instanciaEmpleador).subscribe(
       siHacesBien=>{
         Swal.close();

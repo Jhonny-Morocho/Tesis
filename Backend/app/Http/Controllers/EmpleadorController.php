@@ -138,4 +138,43 @@ class EmpleadorController extends Controller
         }
 
     }
+    public function RegistrarEmpleador(Request $request,$external_id){
+
+        if($request->json()){
+            $datos=$request->json()->all();
+            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+            //empleador es tipo de usuariuo 6
+            if($ObjUsuario->tipoUsuario==6){
+                //creo un objeto Docente para guardar el nuevo decente
+                try {
+                    //code...
+                    $ObjEmpleador=new Empleador();
+                    $ObjEmpleador->fk_usuario=$ObjUsuario->id;
+                    $ObjEmpleador->razon_empresa=$datos["razon_empresa"];
+                    $ObjEmpleador->tipo_empresa=$datos["tipo_empresa"];
+                    $ObjEmpleador->actividad_ruc=$datos["actividad_ruc"];
+                    $ObjEmpleador->num_ruc=$datos["num_ruc"];
+                    $ObjEmpleador->cedula=$datos["cedula"];
+                    $ObjEmpleador->ciudad=$datos["ciudad"];
+                    $ObjEmpleador->provincia=$datos["provincia"];
+                    $ObjEmpleador->telefono=$datos["telefono"];
+                    $ObjEmpleador->direccion=$datos["direccion"];
+                    $ObjEmpleador->nom_representante_legal=$datos['nom_representante_legal'];
+                    $ObjEmpleador->observaciones=$datos["observaciones"];
+                    $ObjEmpleador->estado=$datos["estado"];
+                    $ObjEmpleador->external_em="Em".Utilidades\UUID::v4();
+                    $ObjEmpleador->save();
+                    return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE"]);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                }
+            }else{
+                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);
+            } 
+                
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
 }

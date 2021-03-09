@@ -26,7 +26,7 @@
                     <input type="text" [(ngModel)]="instanciaPostulante.apellido" name="apellido" class="form-control" required minlength="3" disabled>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
+                    <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">La cedula es obligatoria</span>
                     <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required disabled>
                 </div>
@@ -36,7 +36,7 @@
                     <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento | date:"yyyy-MM-dd" ' name="fechaNacimiento" class="form-control" required disabled>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>
+                    <label for="inputEmail4" class="form-label">Teléfono fijo o móvil</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">El telefono es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required minlength="10" disabled>
                 </div>

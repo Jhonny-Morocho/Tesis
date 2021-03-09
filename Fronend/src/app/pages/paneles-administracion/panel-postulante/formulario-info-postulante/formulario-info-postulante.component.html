@@ -1,5 +1,6 @@
 <navTab-postulante></navTab-postulante>
 <!-- si se completo el refistro del formulario imprimo los datos solo de manera visual -->
+
 <div class="container mt-5">
     <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
         Registro de postulacion en proceso de validación, en 48 horas se notificara
@@ -95,6 +96,9 @@
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
                 <h3>Registro de postulante</h3>
+                <div class="alert alert-primary" role="alert">
+                    Porfavor , complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
+                </div>
                 <div class="col-3">
                     <a [routerLink]="['/panel-postulante/mi-perfil']" class="float-right btn btn-outline-success">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>
@@ -112,7 +116,7 @@
                     <input type="text" [(ngModel)]="instanciaPostulante.apellido" name="apellido" class="form-control" required minlength="3">
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
+                    <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">La cedula es obligatoria</span>
                     <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required maxlength="10">
                 </div>
@@ -122,14 +126,14 @@
                     <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento' name="fechaNacimiento" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>
+                    <label for="inputEmail4" class="form-label">Teléfono fijo o móvil</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">El telefono es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required minlength="10">
                 </div>
                 <div class="col-md-6">
                     <fieldset class="form-group">
                         <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Genero</legend>
+                            <legend class="col-form-label col-sm-2 pt-0">Género</legend>
                             <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors">El genero es obligatorio</span>
                             <div class="col-sm-10">
                                 <div class="form-check">
