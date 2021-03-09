@@ -1,17 +1,17 @@
 
 export class EmpleadorModel{
-    razonEmpresa:string;
+    razon_empresa:string;
     tiposEmpresa:string;
-    actividadRuc:string;
-    numeroRuc:string;
+    actividad_ruc:string;
+    num_ruc:string;
     cedula:string;
-    nomRepresentaLegal:string;
+    nom_representante_legal:string;
     ciudad:string;
     provincia:string;
     telefono:string;
     direccion:string;
     observaciones:string;
-    external_us:string;
+    external_em:string;
     id?:Number;
     estado:Number
 }

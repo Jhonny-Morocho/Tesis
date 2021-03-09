@@ -27,14 +27,14 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
             this.booleanFormularioCompletado=true;
             console.log(siHacesBien);
             //llena el formulario por primera ves
-            this.instanciaEmpleador.actividadRuc=siHacesBien['mensaje']['actividad_ruc'];
+            this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
             this.instanciaEmpleador.ciudad=siHacesBien['mensaje']['ciudad'];
             this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
-            this.instanciaEmpleador.nomRepresentaLegal=siHacesBien['mensaje']['nom_representante_legal'];
-            this.instanciaEmpleador.numeroRuc=siHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
+            this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
             this.instanciaEmpleador.provincia=siHacesBien['mensaje']['provincia'];
-            this.instanciaEmpleador.razonEmpresa=siHacesBien['mensaje']['razon_empresa'];
+            this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
             this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
             this.instanciaEmpleador.tiposEmpresa=siHacesBien['mensaje']['tipo_empresa'];
             this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];

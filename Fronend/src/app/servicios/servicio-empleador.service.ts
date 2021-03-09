@@ -11,7 +11,7 @@ export class SerivicioEmpleadorService {
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearEmpleador="/Backend/public/index.php/empleador/registro/";
   private urlListarFormEmpleador="/Backend/public/index.php/empleador/formEmpleador";
-  private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
+  private urlListarEmpleadores="/Backend/public/index.php/empleador/listarEmpleadores";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
@@ -19,12 +19,12 @@ export class SerivicioEmpleadorService {
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
     const autenficacionDatos={
-      razon_empresa:modeloEmpleador.razonEmpresa,
+      razon_empresa:modeloEmpleador.razon_empresa,
       tipo_empresa:modeloEmpleador.tiposEmpresa,
-      actividad_ruc:modeloEmpleador.actividadRuc,
-      num_ruc:modeloEmpleador.numeroRuc,
+      actividad_ruc:modeloEmpleador.actividad_ruc,
+      num_ruc:modeloEmpleador.num_ruc,
       cedula:modeloEmpleador.cedula,
-      nom_representante_legal:modeloEmpleador.nomRepresentaLegal,
+      nom_representante_legal:modeloEmpleador.nom_representante_legal,
       ciudad:modeloEmpleador.ciudad,
       provincia:modeloEmpleador.provincia,
       telefono:modeloEmpleador.provincia,
@@ -60,11 +60,11 @@ export class SerivicioEmpleadorService {
     );
   }
   //listammos postulantes activos /no activos / depende del estado
-  listarPostulantes(){
+  listarEmpleadores(){
 
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarPostulantes}`
+      `${this.urlDominio_}${this.urlListarEmpleadores}`
     ).pipe(
       map(
         respuestaBackend=>{

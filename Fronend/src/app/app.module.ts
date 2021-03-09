@@ -22,7 +22,7 @@ import { EmpleadorComponent } from './pages/empleador/empleador.component';
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
-import {TareaValiarPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-postulantes/tareas-validar-postulante.component';
+import {TareaValiar} from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion/tablas-validar.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
@@ -35,8 +35,7 @@ import { FormInfoPostulanteComponent } from './pages/paneles-administracion/pane
 import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {NabPanelEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/nav/navTab-empleador.component';
 import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
-import {TareaValiarEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tareas/validar-empleadores/tareas-validar-empleador.component';
-import { ValidarEmpleadorComponent } from './pages/paneles-administracion/panel-admin/tareas/validar-empleador/validar-empleador.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,12 +53,10 @@ import { ValidarEmpleadorComponent } from './pages/paneles-administracion/panel-
     MiPerfilPostulanteComponent,
     FormularioInfoPostulanteComponent,
     FormInfoPostulanteComponent,
-    TareaValiarPostulanteComponent,
+    TareaValiar,
     MiPerfilComponentEmpleador,
     NabPanelEmpleador,
-    FormularioInfoEmpleadorComponent,
-    TareaValiarEmpleadorComponent,
-    ValidarEmpleadorComponent
+    FormularioInfoEmpleadorComponent
   ],
   imports: [
     BrowserModule,

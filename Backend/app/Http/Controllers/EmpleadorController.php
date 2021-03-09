@@ -94,11 +94,11 @@ class EmpleadorController extends Controller
 
    }
      // Listar todos los postulante estado cero y no cero//con sus datos de formulario
-     public function listarEstudiantes(){
+     public function listarEmpleadores(){
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEstudiante=null;
-            $ObjeEstudiante=Estudiante::get();
+            $ObjeEstudiante=Empleador::get();
             return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);

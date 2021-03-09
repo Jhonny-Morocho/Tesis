@@ -33,6 +33,7 @@ try {
         $router->post('/empleador/formEmpleador','EmpleadorController@FormEmpleador');
         //consular todos los postulante que tienen formularior registrado
         $router->get('/estudiante/listarEstudiantes','EstudianteController@listarEstudiantes');
+        $router->get('/empleador/listarEmpleadores','EmpleadorController@listarEmpleadores');
         $router->post('/estudiante/obtenerPostulanteExternal_es','EstudianteController@obtenerPostulanteExternal_es');
         $router->post('/estudiante/actulizarAprobacionEstudiante/{external_id}','EstudianteController@actulizarAprobacionEstudiante');
         $router->post('/estudiante/actulizarFormEstudiante/{external_id}','EstudianteController@actulizarFormEstudiante');
