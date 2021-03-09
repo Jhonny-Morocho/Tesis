@@ -38,12 +38,11 @@ class EmpleadorController extends Controller
          }
      }
      //actulizar dato de postulante//estudainte
-     public function actulizarAprobacionEstudiante(Request $request,$external_id){
+     public function actulizarAprobacionEmpleador(Request $request,$external_id){
          if($request->json()){
              try {
-                 $ObjEstudiante = estudiante::where("external_es","=",$external_id)->update(array( 'estado'=>$request['estado'], 'observaciones'=>$request['observaciones']));
+                 $ObjEstudiante = Empleador::where("external_em","=",$external_id)->update(array( 'estado'=>$request['estado'], 'observaciones'=>$request['observaciones']));
                  return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
-                 
              } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
              }
@@ -107,16 +106,15 @@ class EmpleadorController extends Controller
   
     }
     //obtener postulante por url //external_us
-    public function obtenerPostulanteExternal_es(Request $request){
-
+    public function obtenerEmpleadorExternal_em(Request $request){
         if($request->json()){
             try {
                 $ObjeEstudiante=null;
-                $ObjeEstudiante=Estudiante::where("external_es","=",$request['external_es'])->first();
+                $ObjeEstudiante=Empleador::where("external_em","=",$request['external_em'])->first();
                 return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
                  
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el estudiante "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el empleador "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
             }
 
         }else{
@@ -129,7 +127,7 @@ class EmpleadorController extends Controller
         if($ObjetoEstudiante!=null){
             return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el estudiante xxx"]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el estudiante "]);
         }
 
     }

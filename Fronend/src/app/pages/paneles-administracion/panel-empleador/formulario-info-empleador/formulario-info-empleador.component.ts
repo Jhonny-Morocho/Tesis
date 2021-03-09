@@ -3,6 +3,7 @@ import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-formulario-info-empleador',
   templateUrl: './formulario-info-empleador.component.html'
@@ -14,7 +15,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   obervaciones=false;
   //validacion de formulario true/false
   formValidado=false;
-  constructor(private servicioEmpleador_:SerivicioEmpleadorService) { }
+  constructor(private servicioEmpleador_:SerivicioEmpleadorService,private ruta_:Router) { }
 
   ngOnInit() {
     this.instanciaEmpleador=new EmpleadorModel();
@@ -57,6 +58,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     });
 
   }
+  //creacion del empleador
   onSubmitFormularioEmpledor(formRegistroEmpleador:NgForm){
     console.log(formRegistroEmpleador);
     console.log("on submit Formulario Registro datos postulante postular");
@@ -102,7 +104,8 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     });
 
   }
-
+  
+  //editar form de empleador
   onSubmitFormularioEmpleadorEditar(formRegistroEmpleadorEditar:NgForm){
     console.log("Editar formRegistroEmpleadorEditar");
     if(formRegistroEmpleadorEditar.invalid){

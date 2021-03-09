@@ -1,0 +1,96 @@
+<div class="container mt-5 animate__animated    animate__slideInLeft" style="padding-bottom: 100px;">
+    <div class="card">
+        <div class="alert alert-warning" role="alert" *ngIf="encontrado==false">
+            <a [routerLink]="['/panel-admin/tareas/']" class="float-right btn btn-outline-success">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil</a>
+            <p> Estudiante no encontrado</p>
+
+        </div>
+        <article class="card-body">
+            <form class="row g-3" (ngSubmit)="onSubmitForEmpleadorAprobacion(fEmpleador)" #fEmpleador="ngForm">
+                <h3>Validar Empleador</h3>
+
+                <div class="col-3">
+                    <a [routerLink]="['/panel-admin/tareas/']" class="float-right btn btn-outline-success">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>
+                </div>
+
+                <hr>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
+                    <input type="texto" [(ngModel)]="instanciaEmpleador.razon_empresa" name="razonSocial" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['tipoEmpresa'].errors">El tipo de institución o empresa es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.tiposEmpresa" name="tipoEmpresa" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividad_ruc" name="actividadRuc" rows="3" required disabled></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Provincia</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincia'].errors">La provinicia es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Ciudad</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Telefono</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['telefono'].errors">El Telefono es obligatorio</span>
+                    <input type="text" [ngModel]='instanciaEmpleador.telefono' name="telefono" class="form-control" required disabled>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.direccion" name="direcionDomicilio" required disabled></textarea>
+                    </div>
+                </div>
+                <div class=" col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
+                        <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaEmpleador.estado)==false " (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i>No Aprobado</button>
+                        <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaEmpleador.estado)==true " (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Observaciones</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['observaciones'].errors">Debe poner un comentario</span>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.observaciones" name="observaciones" required></textarea>
+                    </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+
+        </article>
+    </div>
+</div>
+<p>d</p>

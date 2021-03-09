@@ -35,6 +35,7 @@ import { FormInfoPostulanteComponent } from './pages/paneles-administracion/pane
 import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {NabPanelEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/nav/navTab-empleador.component';
 import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
+import { FormValidacionEmpleadorComponent } from './pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { FormularioInfoEmpleadorComponent } from './pages/paneles-administracion
     TareaValiar,
     MiPerfilComponentEmpleador,
     NabPanelEmpleador,
-    FormularioInfoEmpleadorComponent
+    FormularioInfoEmpleadorComponent,
+    FormValidacionEmpleadorComponent
   ],
   imports: [
     BrowserModule,

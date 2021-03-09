@@ -12,8 +12,8 @@ export class SerivicioEmpleadorService {
   private urlBackendCrearEmpleador="/Backend/public/index.php/empleador/registro/";
   private urlListarFormEmpleador="/Backend/public/index.php/empleador/formEmpleador";
   private urlListarEmpleadores="/Backend/public/index.php/empleador/listarEmpleadores";
-  private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
-  private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
+  private urlObtenerEmpleadorExternal_em="/Backend/public/index.php/empleador/obtenerEmpleadorExternal_em";
+  private urlValidarEmpleador="/Backend/public/index.php/empleador/actulizarAprobacionEmpleador/";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
 
@@ -88,12 +88,12 @@ export class SerivicioEmpleadorService {
   }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerPostulanteExternal_es(external_es:string){
+  obtenerEmpleadorExternal_em(external_em:string){
     const autenficacionDatos={
-      external_es:external_es
+      external_em:external_em
     }
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlObtenerPostulanteExternal_es}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlObtenerEmpleadorExternal_em}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{
@@ -103,14 +103,14 @@ export class SerivicioEmpleadorService {
  
   }
   //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarAprobacionPostulante(estado:Number,external_es:string,observaciones:string){
+  actulizarAprobacionEmpleador(estado:Number,external_es:string,observaciones:string){
     console.log("Xxx");
     const autenficacionDatos={
       estado:estado,
       observaciones:observaciones
     }
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlValidarPostulante}${external_es}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlValidarEmpleador}${external_es}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{

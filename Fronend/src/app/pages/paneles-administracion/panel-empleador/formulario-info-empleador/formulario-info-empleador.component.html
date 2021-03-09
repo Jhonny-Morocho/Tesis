@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaEmpleador.razonEmpresa" name="razonSocial" class="form-control" required [disabled]="obervaciones==false">
+                    <input type="texto" [(ngModel)]="instanciaEmpleador.razon_empresa" name="razonSocial" class="form-control" required [disabled]="obervaciones==false">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
@@ -44,13 +44,13 @@
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividadRuc" name="actividadRuc" rows="3" required [disabled]="obervaciones==false"></textarea>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividad_ruc" name="actividadRuc" rows="3" required [disabled]="obervaciones==false"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.numeroRuc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false">
+                    <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
@@ -60,7 +60,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.nomRepresentaLegal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                    <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Provincia</label><br>
@@ -108,7 +108,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaEmpleador.razonEmpresa" name="razonSocial" class="form-control" required>
+                    <input type="texto" [(ngModel)]="instanciaEmpleador.razon_empresa" name="razonSocial" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
@@ -119,13 +119,13 @@
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividadRuc" name="actividadRuc" rows="3" required></textarea>
+                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.actividad_ruc" name="actividadRuc" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.numeroRuc" name="numeroRuc" class="form-control" required>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
@@ -135,7 +135,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.nomRepresentaLegal" name="nomRepresentanteLegal" class="form-control" required>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Provincia</label><br>

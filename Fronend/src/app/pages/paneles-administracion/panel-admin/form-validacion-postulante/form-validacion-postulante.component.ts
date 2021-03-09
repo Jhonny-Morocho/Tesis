@@ -50,7 +50,6 @@ export class FormInfoPostulanteComponent implements OnInit {
       );
     });
    }
-
   ngOnInit() {
 
   }
