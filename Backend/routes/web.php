@@ -40,9 +40,11 @@ try {
         $router->post('/empleador/actulizarAprobacionEmpleador/{external_id}','EmpleadorController@actulizarAprobacionEmpleador');
         $router->post('/estudiante/actulizarFormEstudiante/{external_id}','EstudianteController@actulizarFormEstudiante');
         $router->post('/empleador/actulizarFormEmpleador/{external_id}','EmpleadorController@actulizarFormEmpleador');
-        //titulos-academicos
+        //titulos-academicos//verifico el external_us, para saber cual el id del postulante
         $router->post('/titulos-academicos/registro/{external_id}','TitulosAcademicosController@RegistrarTitulo');
-        //cursos-capacitaciones
+        $router->post('/titulos-academicos/actulizarTitulo/{external_id}','TitulosAcademicosController@actulizarTitulo');
+        $router->get('/titulos-academicos/listarTitulos','TitulosAcademicosController@listarTitulos');
+        //cursos-capacitaciones//verifico el external_us, para saber cual el id del postulante
         $router->post('/cursos-capacitaciones/registro/{external_id}','CursosCapacitacionesController@RegistrarCursoCapacitaciones');
    // });
 } catch (\Throwable $th) {

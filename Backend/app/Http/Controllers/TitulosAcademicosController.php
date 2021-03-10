@@ -48,4 +48,67 @@ class TitulosAcademicosController extends Controller
         }
  
     }
+
+    public function actulizarTitulo(Request $request,$external_id){
+        if($request->json()){
+            try {
+                //code...
+                //die(json_encode($datos));
+                $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                                                                        array(
+                                                                        'titulo_obtenido'=>$request['titulo_obtenido'], 
+                                                                        'numero_registro'=>$request['numero_registro'],
+                                                                        'estado'=>$request['estado'],
+                                                                        'tipo_titulo'=>$request['tipo_titulo'],
+                                                                        'nivel_instruccion'=>$request['nivel_instruccion'],
+                                                                        'detalles_adiciones'=>$request['detalles_adiciones'],
+                                                                        'evidencias_url'=>$request['evidencias_url']
+                                                                ));
+                //respuesta exitoso o no en la inserrccion
+                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            }
+        }else{
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+
+    //terminar de hacer
+    public function eliminarTitulo(Request $request,$external_id){
+        if($request->json()){
+            try {
+                //code...
+                //die(json_encode($datos));
+                $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                                                                        array(
+                                                                        'titulo_obtenido'=>$request['titulo_obtenido'], 
+                                                                        'numero_registro'=>$request['numero_registro'],
+                                                                        'estado'=>$request['estado'],
+                                                                        'tipo_titulo'=>$request['tipo_titulo'],
+                                                                        'nivel_instruccion'=>$request['nivel_instruccion'],
+                                                                        'detalles_adiciones'=>$request['detalles_adiciones'],
+                                                                        'evidencias_url'=>$request['evidencias_url']
+                                                                ));
+                //respuesta exitoso o no en la inserrccion
+                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            }
+        }else{
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+        // Listar todos los postulante estado cero y no cero//con sus datos de formulario
+    public function listarTitulos(){
+        //obtener todos los usuarios que sean postulante
+        try {
+            $ObjeTitulo=null;
+            $ObjeTitulo=TitulosAcademicos::get();
+            return response()->json(["mensaje"=>$ObjeTitulo,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+        }
+
+    }
 }

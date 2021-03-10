@@ -105,7 +105,6 @@ class EstudianteController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
         }
 
-  
     }
     //obtener postulante por url //external_us
     public function obtenerPostulanteExternal_es(Request $request){
