@@ -3,7 +3,7 @@
     <div class="card">
         <article class="card-body animated fadeIn">
             ttulos academicos
-            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistroPostulante)" #fRegistroPostulante="ngForm">
+            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm">
                 <h3>Registro de postulante</h3>
                 <div class="col-3">
                     <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
@@ -11,17 +11,34 @@
                 </div>
                 <hr>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Email </label><br>
-                    <span class="text-danger " *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['correo'].errors">El correo es obligatorio</span>
-                    <input type="email" [(ngModel)]="usuarioModel.correo" name="correo" class="form-control" required email>
+                    <label for="inputTituloObtenido" class="form-label">Titulo obtenido </label><br>
+                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaTituloAcademico.titulo_obtenido" name="titulo_obtenido" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputPassword4" class="form-label">Password</label><br>
-                    <span class="text-danger" *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['password'].errors">El password es obligatorio</span>
-                    <input type="password" [(ngModel)]="usuarioModel.password" name="password" class="form-control" required minlength="6">
+                    <label for="inputEmail4" class="form-label">Numero de registro</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaTituloAcademico.numero_registro" name="numero_registro" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Nivel de instrucción</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['nivel_instruccion'].errors">Nivel de instrucción es obligatorio</span>
+                    <select class="form-control" name="nivel_instruccion" [(ngModel)]="instanciaTituloAcademico.nivel_instruccion" required>
+                        <option [value]="i+1"*ngFor="let item of listaNivelInsturccion;let i=index">{{item}}</option>
+                      </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['detalles_adiciones'].errors">Los Detalles adicionales son obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Evidencias</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['evidencias_url'].errors">Debe subir Evidencias: Formato PDF</span>
+                    <input type="text" [(ngModel)]="instanciaTituloAcademico.evidencias_url" name="evidencias_url" class="form-control" required>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Registrarme</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
 
