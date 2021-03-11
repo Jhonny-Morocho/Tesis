@@ -120,7 +120,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     this.servicioPostulante_.actulizarDatosPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
-        console.log(siHacesBien['Siglas']);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
           Swal('Actualizado', 'Informacion Registrada con Exito', 'success');

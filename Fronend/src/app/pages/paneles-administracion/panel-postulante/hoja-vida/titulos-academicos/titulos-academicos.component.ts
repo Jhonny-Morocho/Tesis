@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import {TituloService} from 'src/app/servicios/titulos.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-titulos-academicos',
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class TitulosAcademicosComponent implements OnInit {
   file;
+  validarInputFile:boolean=true;
   instanciaTituloAcademico:TituloModel;
   listaNivelInsturccion:string[]=["Tercer Nivel","Cuarto Nivel"];
   constructor(private servicioTitulo:TituloService,private ruta_:Router) { }
@@ -26,7 +28,6 @@ export class TitulosAcademicosComponent implements OnInit {
    this.instanciaTituloAcademico.external_ti="External/dsgdfgf";
    this.instanciaTituloAcademico.numero_registro="1b-12fc";
    this.instanciaTituloAcademico.tipo_titulo=2;
-   this.instanciaTituloAcademico.evidencias_url="/cc/";
    this.instanciaTituloAcademico.titulo_obtenido="Ing Comercial";
   }
   // =================== archivo ======================
@@ -39,9 +40,17 @@ export class TitulosAcademicosComponent implements OnInit {
   onSubMitRegistroTitulo(formRegistroTitulo:NgForm ){
     //prepara el archivo para enviar
     let form=new FormData();
+    //falta llenar el input file//valdiar si tenemos archivo 
+    if(this.file==null){
+      this.validarInputFile=false;
+      return;
+    }
+    this.validarInputFile=true;
     form.append('file',this.file);
     //reviso si los datos del formulario han sido llenados
+    console.log(formRegistroTitulo);
     if(formRegistroTitulo.invalid){
+     
       return;
      }
      Swal({
@@ -49,38 +58,46 @@ export class TitulosAcademicosComponent implements OnInit {
       type:'info',
       text:'Espere por favor'
     });
+ 
     Swal.showLoading();
+
     //tengo que guardar dos datos 1=== texto plano; 2== archivo
-    //1.guardamos la data
-    // this.servicioTitulo.crearTitulo(this.instanciaTituloAcademico).subscribe(
-    //   siHacesBienJson=>{
-    //     console.log(siHacesBienJson);
-        //como ultimo paso subir el archivo
-        this.servicioTitulo.subirArchivoPDF(form).subscribe(
-          siHacesBienFormData=>{
-             Swal.close();
-             if(siHacesBienFormData['Siglas']=="OE"){
-              console.assert(siHacesBienFormData);
-               }else{
-                 console.warn(siHacesBienFormData);
-                 Swal('Ups, No se puede realizar el registro', siHacesBienFormData['error'], 'info')
-              }
-          },(erroSubirFormData)=>{
-            console.log(erroSubirFormData);
-             Swal({
-               title:'Error al registrar informacion',
-               type:'error',
-               text:erroSubirFormData['mensaje']
-             }); 
-        });
-    //   },(erroSubirJson)=>{
-    //     console.log(erroSubirJson);
-    //      Swal({
-    //        title:'Error al registrar informacion',
-    //        type:'error',
-    //        text:erroSubirJson['mensaje']
-    //      }); 
-    // });
+    this.servicioTitulo.subirArchivoPDF(form).subscribe(
+      siHacesBienFormData=>{
+         if(siHacesBienFormData['Siglas']=="OE"){
+          console.assert(siHacesBienFormData);
+          //recupero el nombre del documento subido al host
+          this.instanciaTituloAcademico.evidencias_url=siHacesBienFormData['nombreArchivo'];
+                  this.servicioTitulo.crearTitulo(this.instanciaTituloAcademico).subscribe(
+                    siHacesBienJson=>{
+                      Swal.close();
+                      console.log(siHacesBienJson);
+                      if(siHacesBienJson['Siglas']=="OE"){
+                        console.assert(siHacesBienJson);
+                        Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+                      }else{
+                        console.warn(siHacesBienJson);
+                        Swal('Ups, No se puede realizar el registro'+siHacesBienJson['mensaje'], 'info')
+                      }
+                    },(erroSubirJson)=>{
+                      console.error(erroSubirJson);
+                      console.log(mensaje);
+                       Swal({
+                         title:'Error al registrar informacion',
+                         type:'error',
+                         text:erroSubirJson['archivoSubido']
+                       }); 
+                  });
+           }else{
+             console.warn(siHacesBienFormData);
+             console.warn(siHacesBienFormData['archivoSubido']);
+             Swal('Ups, No se puede subir el  el registro','Debe subir en formato PDF', 'info')
+          }
+      },(erroSubirFormData)=>{
+        console.error(erroSubirFormData);
+    });
+    //2.guardamos la data
+    
 
   }
 }

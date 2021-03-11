@@ -17,7 +17,7 @@ class TitulosAcademicosController extends Controller
 {
     //ssubir achivo
     public  function subirArchivo(Request $request){
-        $ruta= '../../titulos';
+        $ruta= '../../Archivos/Titulos';
         $archivoSubido=false;
         try {
             //code...
