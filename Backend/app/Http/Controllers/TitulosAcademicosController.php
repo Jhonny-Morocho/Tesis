@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TitulosAcademicos;
 use App\Models\Estudiante;
+use App\Models\Usuario;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
@@ -14,18 +15,40 @@ use function PHPUnit\Framework\isEmpty;
 
 class TitulosAcademicosController extends Controller
 {
-    //Registrar Usuario
+    //ssubir achivo
+    public  function subirArchivo(Request $request){
+        $ruta= '../../titulos';
+        $archivoSubido=false;
+        try {
+            //code...
+            $file = $request->file('file');
+            $archivoNombre = time().$file->getClientOriginalName();
+            if($file->move($ruta, $archivoNombre)){
+                 $archivoSubido=true;
+            }
+            return response()->json([   "nombreArchivo"=> $archivoNombre,
+                                        "estadoArchivo"=>$archivoSubido,
+                                        "mensaje"=>"Operacion existosa",
+                                        "Siglas"=>"OE"], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                                        "archivoSubido"=>$archivoSubido,
+                                        "mensaje"=>"Operacion No Exitosa",
+                                        "Siglas"=>"ONE","error"=>$th]);
+        }
+    }
     
     public function RegistrarTitulo(Request $request,$external_id){
-        //code...
+
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
-            //pregunto si el extern_us es del usuario que realiza la peticion
-            $Objestudiante=Estudiante::where("external_es",$external_id)->first();
             //creamos un objeto de tipo usuario para enviar los datos
             try {
-                //code...
+                //buscar si existe el usuario que realiza la peticion
+                $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+                //busco si ese usuario es un estudiante 
+                $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
                 //die(json_encode($datos));
                 $ObjTituloAcademico=new TitulosAcademicos();
                 $ObjTituloAcademico->fk_estudiante=$Objestudiante->id;
@@ -48,7 +71,6 @@ class TitulosAcademicosController extends Controller
         }
  
     }
-
     public function actulizarTitulo(Request $request,$external_id){
         if($request->json()){
             try {

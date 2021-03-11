@@ -3,7 +3,7 @@
     <div class="card">
         <article class="card-body animated fadeIn">
             ttulos academicos
-            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm">
+            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm" enctype="multipart/form-data">
                 <h3>Registro de postulante</h3>
                 <div class="col-3">
                     <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
@@ -34,14 +34,12 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Evidencias</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['evidencias_url'].errors">Debe subir Evidencias: Formato PDF</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.evidencias_url" name="evidencias_url" class="form-control" required>
+                    <input type="file" (change)="fileEvent($event)" class="form-control" required>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-
         </article>
     </div>
 

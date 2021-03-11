@@ -73,7 +73,9 @@ import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracio
     // DATA TABLE
     DataTablesModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
