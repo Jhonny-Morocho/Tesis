@@ -122,15 +122,17 @@ class TitulosAcademicosController extends Controller
         }
     }
         // Listar todos los postulante estado cero y no cero//con sus datos de formulario
-    public function listarTitulos(){
+    public function listarTituloEstudiante( $external_id){
         //obtener todos los usuarios que sean postulante
         try {
-            $ObjeTitulo=null;
-            $ObjeTitulo=TitulosAcademicos::get();
-            return response()->json(["mensaje"=>$ObjeTitulo,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+            //buscar si existe el usuario que realiza la peticion
+            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+            //busco si ese usuario es un estudiante 
+            $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
+            $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->get();
+            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
         }
-
     }
 }

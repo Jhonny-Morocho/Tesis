@@ -5,6 +5,7 @@ import {TituloService} from 'src/app/servicios/titulos.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { isEmpty } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-titulos-academicos',
@@ -15,10 +16,36 @@ export class TitulosAcademicosComponent implements OnInit {
   validarInputFile:boolean=true;
   instanciaTituloAcademico:TituloModel;
   listaNivelInsturccion:string[]=["Tercer Nivel","Cuarto Nivel"];
+  tituloAcademicos:TituloModel[]=[];
+  //data table
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioTitulo:TituloService,private ruta_:Router) { }
   ngOnInit() {
-    this.instanciaTituloAcademico=new TituloModel();
-
+    this.servicioTitulo.listarTitulos().subscribe(
+      siHacesBien=>{
+        console.warn("TODO BIEN");
+          //data table
+          this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 2
+          };
+        this.estudiante =siHacesBien;
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+      },
+      (peroSiTenemosErro)=>{
+         console.warn("TODO MAL");
+       }
+    );
+    //data table
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+   this.dtTrigger.next();
+   //instancia de titulomodel
+   this.instanciaTituloAcademico=new TituloModel();
    this.instanciaTituloAcademico.detalles_adiciones="El titulo lo tub een ";
    this.instanciaTituloAcademico.estado=1;
 

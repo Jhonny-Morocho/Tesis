@@ -43,7 +43,7 @@ try {
         //titulos-academicos//verifico el external_us, para saber cual el id del postulante
         $router->post('/titulos-academicos/registro/{external_id}','TitulosAcademicosController@RegistrarTitulo');
         $router->post('/titulos-academicos/actulizarTitulo/{external_id}','TitulosAcademicosController@actulizarTitulo');
-        $router->get('/titulos-academicos/listarTitulos','TitulosAcademicosController@listarTitulos');
+        $router->get('/titulos-academicos/listarTitulosEstudiante/{external_id}','TitulosAcademicosController@listarTituloEstudiante');
         $router->post('/titulos-academicos/subirArchivo','TitulosAcademicosController@subirArchivo');
         //cursos-capacitaciones//verifico el external_us, para saber cual el id del postulante
         $router->post('/cursos-capacitaciones/registro/{external_id}','CursosCapacitacionesController@RegistrarCursoCapacitaciones');

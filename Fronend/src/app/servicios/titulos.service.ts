@@ -12,7 +12,7 @@ export class TituloService {
   private urlBackendCrearTitulo="/Backend/public/index.php/titulos-academicos/registro/";
   private urlSubirArchivo="/Backend/public/index.php/titulos-academicos/subirArchivo";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
-  private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
+  private urlListarTitulos="/Backend/public/index.php/titulos-academicos/listarTitulos";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
@@ -57,11 +57,11 @@ export class TituloService {
     );
   }
   //listammos postulantes activos /no activos / depende del estado
-  listarPostulantes(){
+  listarTitulos(){
 
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarPostulantes}`
+      `${this.urlDominio_}${this.urlListarTitulos}`
     ).pipe(
       map(
         respuestaBackend=>{
