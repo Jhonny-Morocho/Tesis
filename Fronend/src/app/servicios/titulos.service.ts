@@ -14,7 +14,7 @@ export class TituloService {
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
   private urlListarTitulo="/Backend/public/index.php/titulos-academicos/listarTitulosEstudiante/";
   private urlObtenerTitUloExternal_ti="/Backend/public/index.php/titulos-academicos/obtenerTituloExternal_ti/";
-  private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
+  private urlEditarTitulo="/Backend/public/index.php/titulos-academicos/actulizarTitulo/";
   constructor(private _httCliente:HttpClient) { }
 
   subirArchivoPDF(FormDataPDF){
@@ -98,26 +98,21 @@ export class TituloService {
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
-//   actulizarDatosPostulante(modeloPostulante:PostulanteModel){
-//       const autenficacionDatos={
-//         cedula:modeloPostulante.cedula,
-//         telefono:modeloPostulante.telefono,
-//         nombre:modeloPostulante.nombre,
-//         apellido:modeloPostulante.apellido,
-//         genero:modeloPostulante.genero,
-//         fecha_nacimiento:modeloPostulante.fecha_nacimiento,
-//         direccion_domicilio:modeloPostulante.direccion_domicilio,
-//         observaciones:modeloPostulante.observaciones,
-//       }
-//     //retorna la respuesata
-//       return this._httCliente.post(
-//         `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
-//       ).pipe(
-//         map(
-//           respuestaBackend=>{
-//             return respuestaBackend;
-//           })
-//       );
-//   }
+  actulizarDatosTitulo(modeloTitulo:TituloModel){
+      const autenficacionDatos={
+        ...modeloTitulo
+      }
+      console.log(autenficacionDatos);
+    //retorna la respuesata
+        console.log(`${this.urlDominio_}${this.urlEditarTitulo}${modeloTitulo.external_ti}`);
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlEditarTitulo}${autenficacionDatos.external_ti}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+  }
 }
 

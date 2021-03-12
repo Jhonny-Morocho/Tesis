@@ -16,7 +16,6 @@
                 <th>Numero de registro</th>
                 <th>Tipo de titulo</th>
                 <th>Detalles adicionales</th>
-                <th>Evidencias</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,10 +29,11 @@
                 <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='1' ">Nacional</td>
                 <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='2' ">Extranjero</td>
                 <td>{{ titulosAcademicos.detalles_adiciones }}</td>
+                <!-- <td>
+                    <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
+                </td> -->
                 <td>
                     <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
-                </td>
-                <td>
                     <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a>
                     <a class="btn btn-light "><i class="fas fa-trash-alt "></i></a>
                 </td>

@@ -74,20 +74,32 @@ class TitulosAcademicosController extends Controller
     public function actulizarTitulo(Request $request,$external_id){
         if($request->json()){
             try {
-                //code...
-                //die(json_encode($datos));
-                $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
-                                                                        array(
-                                                                        'titulo_obtenido'=>$request['titulo_obtenido'], 
-                                                                        'numero_registro'=>$request['numero_registro'],
-                                                                        'estado'=>$request['estado'],
-                                                                        'tipo_titulo'=>$request['tipo_titulo'],
-                                                                        'nivel_instruccion'=>$request['nivel_instruccion'],
-                                                                        'detalles_adiciones'=>$request['detalles_adiciones'],
-                                                                        'evidencias_url'=>$request['evidencias_url']
-                                                                ));
+                //actulizo el archivo , por lo cual actulizo la evidencias_url
+                if($request['evidencias_url']){
+                    $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                                                                            array(
+                                                                            'titulo_obtenido'=>$request['titulo_obtenido'], 
+                                                                            'numero_registro'=>$request['numero_registro'],
+                                                                            'tipo_titulo'=>$request['tipo_titulo'],
+                                                                            'nivel_instruccion'=>$request['nivel_instruccion'],
+                                                                            'detalles_adiciones'=>$request['detalles_adiciones'],
+                                                                            'evidencias_url'=>$request['evidencias_url']
+                                                                    ));
+                }
+                //solo actualizo la data 
+                else{
+                    $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                        array(
+                        'titulo_obtenido'=>$request['titulo_obtenido'], 
+                        'numero_registro'=>$request['numero_registro'],
+                        'tipo_titulo'=>$request['tipo_titulo'],
+                        'nivel_instruccion'=>$request['nivel_instruccion'],
+                        'detalles_adiciones'=>$request['detalles_adiciones']
+                    ));
+                }
+                
+                return response()->json(["mensaje"=>"Operacion Exitosa","respuesta"=>$ObjTituloAcademico,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200]);
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
             }
@@ -102,16 +114,31 @@ class TitulosAcademicosController extends Controller
             try {
                 //code...
                 //die(json_encode($datos));
-                $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
-                                                                        array(
-                                                                        'titulo_obtenido'=>$request['titulo_obtenido'], 
-                                                                        'numero_registro'=>$request['numero_registro'],
-                                                                        'estado'=>$request['estado'],
-                                                                        'tipo_titulo'=>$request['tipo_titulo'],
-                                                                        'nivel_instruccion'=>$request['nivel_instruccion'],
-                                                                        'detalles_adiciones'=>$request['detalles_adiciones'],
-                                                                        'evidencias_url'=>$request['evidencias_url']
-                                                                ));
+                // si viene null siginfica que no actualizo el arrchivo
+                if(is_null($request['evidencias_url'])){
+                    // $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                    //                                                         array(
+                    //                                                         'titulo_obtenido'=>$request['titulo_obtenido'], 
+                    //                                                         'numero_registro'=>$request['numero_registro'],
+                    //                                                         'estado'=>$request['estado'],
+                    //                                                         'tipo_titulo'=>$request['tipo_titulo'],
+                    //                                                         'nivel_instruccion'=>$request['nivel_instruccion'],
+                    //                                                         'detalles_adiciones'=>$request['detalles_adiciones']
+                                                                           
+                    //                                                 ));
+
+                }else{
+                    // $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
+                    //     array(
+                    //     'titulo_obtenido'=>$request['titulo_obtenido'], 
+                    //     'numero_registro'=>$request['numero_registro'],
+                    //     'estado'=>$request['estado'],
+                    //     'tipo_titulo'=>$request['tipo_titulo'],
+                    //     'nivel_instruccion'=>$request['nivel_instruccion'],
+                    //     'detalles_adiciones'=>$request['detalles_adiciones'],
+                    //     'evidencias_url'=>$request['evidencias_url']
+                    // ));
+                }
                 //respuesta exitoso o no en la inserrccion
                 return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200]);
             } catch (\Throwable $th) {

@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
-            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm" enctype="multipart/form-data">
+            <form class="row g-3" (ngSubmit)="onSubMitActualizarTitulo(fEditarTitulo)" #fEditarTitulo="ngForm" enctype="multipart/form-data">
                 <h3>Editar titulo academicos</h3>
 
                 <div class="col-3">
@@ -12,17 +12,17 @@
                 <hr>
                 <div class="col-md-6">
                     <label for="inputTituloObtenido" class="form-label">Titulo obtenido </label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
+                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaTituloAcademico.titulo_obtenido" name="titulo_obtenido" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Numero de registro</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
+                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaTituloAcademico.numero_registro" name="numero_registro" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nivel de instrucción</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['nivel_instruccion'].errors">Nivel de instrucción es obligatorio</span>
+                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['nivel_instruccion'].errors">Nivel de instrucción es obligatorio</span>
                     <select class="form-control" name="nivel_instruccion" [(ngModel)]="instanciaTituloAcademico.nivel_instruccion" required>
                       <option [value]="i+1"*ngFor="let item of listaNivelInsturccion;let i=index">{{item}}</option>
                     </select>
@@ -31,11 +31,10 @@
                     <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
                     <textarea class="form-control" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones"></textarea>
                 </div>
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Evidencias</label><br>
-                    <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
-                    <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
-                </div> -->
+                    <input type="file" (change)="fileEvent($event)" class="form-control" accept="application/pdf">
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
