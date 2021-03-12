@@ -12,8 +12,8 @@ export class TituloService {
   private urlBackendCrearTitulo="/Backend/public/index.php/titulos-academicos/registro/";
   private urlSubirArchivo="/Backend/public/index.php/titulos-academicos/subirArchivo";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
-  private urlListarTitulos="/Backend/public/index.php/titulos-academicos/listarTitulos";
-  private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
+  private urlListarTitulo="/Backend/public/index.php/titulos-academicos/listarTitulosEstudiante/";
+  private urlObtenerTitUloExternal_ti="/Backend/public/index.php/titulos-academicos/obtenerTituloExternal_ti/";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
 
@@ -61,7 +61,7 @@ export class TituloService {
 
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarTitulos}`
+      `${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`
     ).pipe(
       map(
         respuestaBackend=>{
@@ -70,27 +70,24 @@ export class TituloService {
     );
   }
 
-  private crearArregloEstudiantes(ObjEstudiante:object){
-    // const estudiantex:PostulanteModel[]=[];
-    // //validamos si el objeto tiene informaicon
-    // if(ObjEstudiante===null){
-    //     return [];
-    // }else{
-    //   Object.keys(ObjEstudiante).forEach(key=>{
-    //     const estudiante:PostulanteModel=ObjEstudiante[key];
-    //     estudiantex.push(estudiante);
-    //   })
-    //   return estudiantex;
-    // }
+  private crearArregloEstudiantes(ObjTitulos:object){
+     const titulos:TituloModel[]=[];
+     //validamos si el objeto tiene informaicon
+     if(ObjTitulos===null){
+         return [];
+     }else{
+       Object.keys(ObjTitulos).forEach(key=>{
+         const titulo:TituloModel=ObjTitulos[key];
+         titulos.push(titulo);
+       })
+       return titulos;
+     }
   }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerPostulanteExternal_es(external_es:string){
-    const autenficacionDatos={
-      external_es:external_es
-    }
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlObtenerPostulanteExternal_es}`,autenficacionDatos
+  obtenerTituloExternal_es(external_es:string){
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlObtenerTitUloExternal_ti}${external_es}`,
     ).pipe(
       map(
         respuestaBackend=>{

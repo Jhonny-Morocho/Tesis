@@ -12,8 +12,8 @@ export class AutentificacionGuard implements CanActivate {
               private router_:Router){}
 
   canActivate( ): boolean{
-    console.log("PROBANDO CAN ACTIVARE O RESTRICION DE RUTAS");
-    console.log(this.authnServicioAdmin_.estaAutenticado());
+    // console.log("PROBANDO CAN ACTIVARE O RESTRICION DE RUTAS");
+    // console.log(this.authnServicioAdmin_.estaAutenticado());
      if(this.authnServicioAdmin_.estaAutenticado()){
          return true;
      }else{

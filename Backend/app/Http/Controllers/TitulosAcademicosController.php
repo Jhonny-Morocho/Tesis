@@ -64,7 +64,7 @@ class TitulosAcademicosController extends Controller
                 //respuesta exitoso o no en la inserrccion
                 return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$datos,"Siglas"=>"ONE","error"=>$th]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -129,10 +129,31 @@ class TitulosAcademicosController extends Controller
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //busco si ese usuario es un estudiante 
             $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
-            $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->get();
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+            $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->orderBy('id', 'DESC')->get();
+            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
+    //obtener tutlo por url //external_ti
+    public function obtenerTituloExternal_ti($external_id ){
+        try {
+            $ObjTitulo=null;
+            $ObjTitulo=TitulosAcademicos::where("external_ti","=",$external_id)->first();
+            return $this->retornarTituloEncontrado($ObjTitulo);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el registro "+$external_id,"Siglas"=>"ONE","error"=>$th]);
+        }
+
+     
+    }
+
+    private function retornarTituloEncontrado($ObjTitulo){
+        if($ObjTitulo!=null){
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+        }else{
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el titulo"]);
+        }
+    }
+    
 }

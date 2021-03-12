@@ -39,6 +39,13 @@ import { FormValidacionEmpleadorComponent } from './pages/paneles-administracion
 //postulante
 import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
 import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
+import { FormAddTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-add-titulo/form-add-titulo.component';
+import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-editar-titulo/form-editar-titulo.component';
+//import { ModalModule } from 'ngx-bootstrap/modal';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,8 +69,11 @@ import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracio
     FormularioInfoEmpleadorComponent,
     FormValidacionEmpleadorComponent,
     TitulosAcademicosComponent,
-    CursosCapacitacionesComponent
+    CursosCapacitacionesComponent,
+    FormAddTituloComponent,
+    FormEditarTituloComponent
   ],
+
   imports: [
     BrowserModule,
     //importo mi moduilo de rutas de app-routing.module
@@ -72,6 +82,8 @@ import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracio
     HttpClientModule,
     // DATA TABLE
     DataTablesModule
+    // boostrap
+    //ModalModule.forRoot()
   ],
   providers: [
 

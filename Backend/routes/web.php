@@ -41,6 +41,7 @@ try {
         $router->post('/estudiante/actulizarFormEstudiante/{external_id}','EstudianteController@actulizarFormEstudiante');
         $router->post('/empleador/actulizarFormEmpleador/{external_id}','EmpleadorController@actulizarFormEmpleador');
         //titulos-academicos//verifico el external_us, para saber cual el id del postulante
+        $router->get('/titulos-academicos/obtenerTituloExternal_ti/{external_id}','TitulosAcademicosController@obtenerTituloExternal_ti');
         $router->post('/titulos-academicos/registro/{external_id}','TitulosAcademicosController@RegistrarTitulo');
         $router->post('/titulos-academicos/actulizarTitulo/{external_id}','TitulosAcademicosController@actulizarTitulo');
         $router->get('/titulos-academicos/listarTitulosEstudiante/{external_id}','TitulosAcademicosController@listarTituloEstudiante');

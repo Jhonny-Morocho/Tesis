@@ -1,75 +1,46 @@
 <navTab-postulante></navTab-postulante>
-<div class="container mt-5  ">
-    <div class="card">
-        <article class="card-body animated fadeIn">
-            <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm" enctype="multipart/form-data">
-                <h3>Registrar titulos academicos</h3>
-                <div class="col-3">
-                    <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a Login Postulante</a>
-                </div>
-                <hr>
-                <div class="col-md-6">
-                    <label for="inputTituloObtenido" class="form-label">Titulo obtenido </label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.titulo_obtenido" name="titulo_obtenido" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Numero de registro</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.numero_registro" name="numero_registro" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Nivel de instrucción</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['nivel_instruccion'].errors">Nivel de instrucción es obligatorio</span>
-                    <select class="form-control" name="nivel_instruccion" [(ngModel)]="instanciaTituloAcademico.nivel_instruccion" required>
-                        <option [value]="i+1"*ngFor="let item of listaNivelInsturccion;let i=index">{{item}}</option>
-                      </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['detalles_adiciones'].errors">Los Detalles adicionales son obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Evidencias</label><br>
-                    <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
-                    <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </article>
-    </div>
 
+<div class="container mt-5  ">
+    <div class="col-3">
+        <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-titulo']">
+            <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+    </div>
 </div>
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido </th>
-                <th>Cédula</th>
-                <th>Estado Validacion</th>
-                <th>Observaciones</th>
-                <th>Detalles</th>
+                <th>Titulo obtenido</th>
+                <th>Nivel de instrucción </th>
+                <th>Numero de registro</th>
+                <th>Tipo de titulo</th>
+                <th>Detalles adicionales</th>
+                <th>Evidencias</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let estudiantes of estudiante;let i=index">
+            <tr *ngFor="let titulosAcademicos of tituloAcademico;let i=index">
                 <td>{{ i+1 }}</td>
-                <td>{{ estudiantes.nombre }}</td>
-                <td>{{ estudiantes.apellido }}</td>
-                <td>{{ estudiantes.cedula }}</td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==false && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==false "><span class="badge badge-warning">Revisado</span></td>
-                <td>{{ estudiantes.observaciones }}</td>
+                <td>{{ titulosAcademicos.titulo_obtenido }}</td>
+                <td>{{ titulosAcademicos.nivel_instruccion }}</td>
+                <td>{{ titulosAcademicos.numero_registro }}</td>
+                <td>{{ titulosAcademicos.tipo_titulo }}</td>
+                <td>{{ titulosAcademicos.detalles_adiciones }}</td>
                 <td>
-                    <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
+                    <a class=" btn btn-light "><i class="far fa-file-pdf"></i></a>
                 </td>
+                <td>
+                    <a class="btn btn-light " [routerLink]="['/panel-postulante/edit-titulo',titulosAcademicos.external_ti]"><i class="fas fa-pencil-alt " ></i></a>
+                    <a class="btn btn-light "><i class="fas fa-trash-alt "></i></a>
+                </td>
+                <!-- <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==false && estadoConversion(titulosAcademicos.estado)==false "><span class=" badge badge-danger ">No validado</span></td>
+                <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==true && estadoConversion(titulosAcademicos.estado)==true "><span class="badge badge-success ">Validado</span></td>
+                <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==true && estadoConversion(titulosAcademicos.estado)==false "><span class="badge badge-warning ">Revisado</span></td> -->
+                <!-- <td>
+                    <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
+                </td> -->
             </tr>
         </tbody>
     </table>
