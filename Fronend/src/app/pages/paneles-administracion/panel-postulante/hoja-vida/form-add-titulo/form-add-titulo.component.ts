@@ -14,7 +14,7 @@ export class FormAddTituloComponent implements OnInit {
   validarInputFile:boolean=true;
   instanciaTituloAcademico:TituloModel;
   listaNivelInsturccion:string[]=["Tercer Nivel","Cuarto Nivel"];
-  tipoTitulo:string[]=["Extranjero","Nacional"];
+  tipoTitulo:string[]=["Nacional","Extranjero"];
   tituloAcademico:TituloModel[]=[];
   //data table
 
@@ -23,10 +23,7 @@ export class FormAddTituloComponent implements OnInit {
   ngOnInit() {
     this.instanciaTituloAcademico=new TituloModel();
     this.instanciaTituloAcademico.estado=1;
-    // this.instanciaTituloAcademico.tipo_titulo=0;
-    // this.instanciaTituloAcademico.numero_registro="";
-    // this.instanciaTituloAcademico.titulo_obtenido="";
-    // this.instanciaTituloAcademico.detalles_adiciones="";
+    this.instanciaTituloAcademico.detalles_adiciones="";
   }
     // =================== subir archivo ======================
     fileEvent(fileInput:Event){

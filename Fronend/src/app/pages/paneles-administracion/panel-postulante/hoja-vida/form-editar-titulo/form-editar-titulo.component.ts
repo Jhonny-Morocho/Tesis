@@ -21,12 +21,12 @@ export class FormEditarTituloComponent implements OnInit {
             console.log(suHacesBien);
             //encontro estudiante estado==0
             if(suHacesBien["Siglas"]=="OE"){
-              // console.log( suHacesBien['Siglas']);
               this.instanciaTituloAcademico.estado=1;
               this.instanciaTituloAcademico.tipo_titulo=suHacesBien["mensaje"]['tipo_titulo'];
-              this.instanciaTituloAcademico.numero_registro="";
-              this.instanciaTituloAcademico.titulo_obtenido="";
-              this.instanciaTituloAcademico.detalles_adiciones="";
+              this.instanciaTituloAcademico.numero_registro=suHacesBien["mensaje"]['numero_registro'];
+              this.instanciaTituloAcademico.titulo_obtenido=suHacesBien["mensaje"]['titulo_obtenido'];
+              this.instanciaTituloAcademico.detalles_adiciones=suHacesBien["mensaje"]['detalles_adiciones'];
+              this.instanciaTituloAcademico.nivel_instruccion=suHacesBien["mensaje"]['nivel_instruccion'];
             }else{
               console.log("no encontrado");
               //this.encontrado=false;

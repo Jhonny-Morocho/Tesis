@@ -41,6 +41,7 @@ import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/p
 import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
 import { FormAddTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-add-titulo/form-add-titulo.component';
 import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-editar-titulo/form-editar-titulo.component';
+
 //import { ModalModule } from 'ngx-bootstrap/modal';
 
 

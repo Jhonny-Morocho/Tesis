@@ -29,14 +29,13 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarTitulo.submitted && fRegistrarTitulo.controls['detalles_adiciones'].errors">Los Detalles adicionales son obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones" class="form-control" required>
+                    <textarea class="form-control" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones"></textarea>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Evidencias</label><br>
                     <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
                     <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
-                </div>
+                </div> -->
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>

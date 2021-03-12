@@ -24,15 +24,17 @@
             <tr *ngFor="let titulosAcademicos of tituloAcademico;let i=index">
                 <td>{{ i+1 }}</td>
                 <td>{{ titulosAcademicos.titulo_obtenido }}</td>
-                <td>{{ titulosAcademicos.nivel_instruccion }}</td>
+                <td *ngIf="(titulosAcademicos.nivel_instruccion).toString()=='1' ">Tercer Nivel</td>
+                <td *ngIf="(titulosAcademicos.nivel_instruccion).toString()=='2' ">Cuarto Nivel</td>
                 <td>{{ titulosAcademicos.numero_registro }}</td>
-                <td>{{ titulosAcademicos.tipo_titulo }}</td>
+                <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='1' ">Nacional</td>
+                <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='2' ">Extranjero</td>
                 <td>{{ titulosAcademicos.detalles_adiciones }}</td>
                 <td>
-                    <a class=" btn btn-light "><i class="far fa-file-pdf"></i></a>
+                    <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
                 </td>
                 <td>
-                    <a class="btn btn-light " [routerLink]="['/panel-postulante/edit-titulo',titulosAcademicos.external_ti]"><i class="fas fa-pencil-alt " ></i></a>
+                    <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a>
                     <a class="btn btn-light "><i class="fas fa-trash-alt "></i></a>
                 </td>
                 <!-- <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==false && estadoConversion(titulosAcademicos.estado)==false "><span class=" badge badge-danger ">No validado</span></td>

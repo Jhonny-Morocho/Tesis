@@ -18,12 +18,14 @@ export class TitulosAcademicosComponent implements OnInit {
 
   instanciaTituloAcademico:TituloModel;
   tituloAcademico:TituloModel[]=[];
+  urlEvidencias:string;
   //data table
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioTitulo:TituloService,private ruta_:Router) { }
 
   ngOnInit() {
+
     this.cargarTabla();
    //instancia de titulomodel //debo inicializarlos//si no coloco esto no me inserta en la bd
   }
