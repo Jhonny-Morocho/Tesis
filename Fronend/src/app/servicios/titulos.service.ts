@@ -11,8 +11,8 @@ export class TituloService {
   private urlDominio_="http://localhost/Tesis";
   private urlBackendCrearTitulo="/Backend/public/index.php/titulos-academicos/registro/";
   private urlSubirArchivo="/Backend/public/index.php/titulos-academicos/subirArchivo";
-  private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
   private urlListarTitulo="/Backend/public/index.php/titulos-academicos/listarTitulosEstudiante/";
+  private urlELiminarTitulo="/Backend/public/index.php/titulos-academicos/eliminarTitulo";
   private urlObtenerTitUloExternal_ti="/Backend/public/index.php/titulos-academicos/obtenerTituloExternal_ti/";
   private urlEditarTitulo="/Backend/public/index.php/titulos-academicos/actulizarTitulo/";
   constructor(private _httCliente:HttpClient) { }
@@ -40,22 +40,7 @@ export class TituloService {
          })
      );
   }
-  //el postulante en su session puede ver sus datos registrados
-  listarFormPostulante(){
-    const autenficacionDatos={
-      external_us:localStorage.getItem("external_us")
-    }
-    //retorna la respuesata
-    //console.log(`${this.urlDominio_}${this.urlListarFormPostulante}`);
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlListarFormPostulante}`,autenficacionDatos
-    ).pipe(
-      map(
-        respuestaBackend=>{
-          return respuestaBackend;
-        })
-    );
-  }
+
   //listammos postulantes activos /no activos / depende del estado
   listarTitulos(){
 
@@ -65,12 +50,12 @@ export class TituloService {
     ).pipe(
       map(
         respuestaBackend=>{
-          return this.crearArregloEstudiantes(respuestaBackend['mensaje']);
+          return this.crearArregloTitulo(respuestaBackend['mensaje']);
         })
     );
   }
 
-  private crearArregloEstudiantes(ObjTitulos:object){
+  private crearArregloTitulo(ObjTitulos:object){
      const titulos:TituloModel[]=[];
      //validamos si el objeto tiene informaicon
      if(ObjTitulos===null){
@@ -99,14 +84,33 @@ export class TituloService {
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarDatosTitulo(modeloTitulo:TituloModel){
-      const autenficacionDatos={
-        ...modeloTitulo
-      }
-      console.log(autenficacionDatos);
+    const autenficacionDatos={
+      ...modeloTitulo
+    }
+    console.log(modeloTitulo);
+      console.log(modeloTitulo.external_ti);
     //retorna la respuesata
         console.log(`${this.urlDominio_}${this.urlEditarTitulo}${modeloTitulo.external_ti}`);
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlEditarTitulo}${autenficacionDatos.external_ti}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+  }
+
+  //actulizar estado de validacion del postulante//aprobado y no aprobado
+  eliminarTitulo(modeloTitulo:TituloModel){
+    const autenficacionDatos={
+      ...modeloTitulo
+    }
+      console.log(modeloTitulo);
+    //retorna la respuesata
+    console.log(`${this.urlDominio_}${this.urlELiminarTitulo}`);
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlELiminarTitulo}`,autenficacionDatos
       ).pipe(
         map(
           respuestaBackend=>{
