@@ -95,7 +95,7 @@ export class FormAddCursoComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        //console.log(siHacesBien);
+        console.log(siHacesBien);
         console.warn("TODO BIEN");
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;

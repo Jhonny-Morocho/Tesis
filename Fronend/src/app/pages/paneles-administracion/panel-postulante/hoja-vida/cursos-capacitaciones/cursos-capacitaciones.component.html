@@ -13,9 +13,10 @@
                         <th>Nombre del evento</th>
                         <th>Auspiciante</th>
                         <th>Horas</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Culminación</th>
-                        <th>Tipo Evento</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Evento</th>
+                        <th>País</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -29,16 +30,11 @@
                         <td>{{cursoCapatiacionesArray.fecha_culminacion }}</td>
                         <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='1' ">Curso</td>
                         <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='2' ">Capacitacion</td>
-                        <!-- <td *ngIf="(titulosAcademicos.nivel_instruccion).toString()=='1' ">Tercer Nivel</td>
-                        <td *ngIf="(titulosAcademicos.nivel_instruccion).toString()=='2' ">Cuarto Nivel</td>
-                        <td>{{ titulosAcademicos.numero_registro }}</td>
-                        <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='1' ">Nacional</td>
-                        <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='2' ">Extranjero</td>
-                        <td>{{ titulosAcademicos.detalles_adiciones }}</td> -->
+                        <td>{{ paises[cursoCapatiacionesArray.fk_pais]?.nombre}}</td>
                         <td>
                             <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Cursos/{{ cursoCapatiacionesArray.evidencia_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
-                            <!-- <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a> -->
-                            <!-- <a class="btn btn-light " (click)="eliminarCapacitacion(titulosAcademicos.external_ti,titulosAcademicos.titulo_obtenido,titulosAcademicos.evidencias_url,i)"><i class="fas fa-trash-alt "></i></a> -->
+                            <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-curso-capacitacion',cursoCapatiacionesArray.external_cu] "><i class="fas fa-pencil-alt " ></i></a>
+                            <a class="btn btn-light " (click)="eliminarCursosCapacitaciones(cursoCapatiacionesArray.external_cu,cursoCapatiacionesArray.nom_evento,cursoCapatiacionesArray.evidencia_url,i)"><i class="fas fa-trash-alt "></i></a>
                         </td>
                     </tr>
                 </tbody>

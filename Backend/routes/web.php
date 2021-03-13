@@ -49,8 +49,12 @@ try {
         $router->post('/titulos-academicos/subirArchivo','TitulosAcademicosController@subirArchivo');
         //cursos-capacitaciones//verifico el external_us, para saber cual el id del postulante
         $router->post('/cursos-capacitaciones/registro/{external_id}','CursosCapacitacionesController@RegistrarCursoCapacitaciones');
+        $router->get('/cursos-capacitaciones/obtenerCursoCapacitacionExternal_cu/{external_id}','CursosCapacitacionesController@obtenerCursoCapacitacionExternal_cu');
         $router->get('/cursos-capacitaciones/listarCursosCapacitaciones/{external_id}','CursosCapacitacionesController@listarCursosCapacitaciones');
         $router->post('/cursos-capacitaciones/subirArchivo','CursosCapacitacionesController@subirArchivo');
+        $router->post('/cursos-capacitaciones/actulizarCursoCapacitaciones/{external_id}','CursosCapacitacionesController@actulizarCursoCapacitaciones');
+        $router->post('/cursos-capacitaciones/eliminarCursoCapicitacion','CursosCapacitacionesController@eliminarCursoCapicitacion');
+   
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
    // });

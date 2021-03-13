@@ -37,7 +37,6 @@ export class FormEditarTituloComponent implements OnInit {
               this.instanciaTituloAcademico.detalles_adiciones=suHacesBien["mensaje"]['detalles_adiciones'];
               this.instanciaTituloAcademico.nivel_instruccion=suHacesBien["mensaje"]['nivel_instruccion'];
               this.instanciaTituloAcademico.external_ti=suHacesBien["mensaje"]['external_ti'];
-              //console.warn(this.instanciaTituloAcademico.external_ti);
             }else{
               console.log("no encontrado");
               //this.encontrado=false;
