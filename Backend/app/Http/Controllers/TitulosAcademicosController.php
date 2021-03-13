@@ -132,7 +132,7 @@ class TitulosAcademicosController extends Controller
         }
      
     }
-        // Listar todos los postulante estado cero y no cero//con sus datos de formulario
+    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarTituloEstudiante( $external_id){
         //obtener todos los usuarios que sean postulante
         try {

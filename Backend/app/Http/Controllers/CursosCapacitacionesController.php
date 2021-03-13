@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CursosCapacitaciones;
 use App\Models\Estudiante;
+use App\Models\Usuario;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
@@ -50,4 +51,19 @@ class CursosCapacitacionesController extends Controller
         }
  
     }
+    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    public function listarCursosCapacitaciones( $external_id){
+        //obtener todos los usuarios que sean postulante
+        try {
+            //buscar si existe el usuario que realiza la peticion
+            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+            //busco si ese usuario es un estudiante 
+            $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
+            $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
+            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
+        }
+    }
+    
 }

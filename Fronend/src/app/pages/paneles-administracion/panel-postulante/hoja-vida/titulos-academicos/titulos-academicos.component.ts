@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {TituloModel} from 'src/app/models/titulo.models';
-import { NgForm } from '@angular/forms';
+//import { NgForm } from '@angular/forms';
 import {TituloService} from 'src/app/servicios/titulos.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { isEmpty } from 'rxjs/operators';
+//import { isEmpty } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+//import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //import {} from '';
 
@@ -18,6 +18,7 @@ export class TitulosAcademicosComponent implements OnInit {
 
 
   instanciaTituloAcademico:TituloModel;
+  //para imprimir la tabla
   tituloAcademico:TituloModel[]=[];
   urlEvidencias:string;
   //data table

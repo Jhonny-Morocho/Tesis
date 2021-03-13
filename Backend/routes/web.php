@@ -49,6 +49,7 @@ try {
         $router->post('/titulos-academicos/subirArchivo','TitulosAcademicosController@subirArchivo');
         //cursos-capacitaciones//verifico el external_us, para saber cual el id del postulante
         $router->post('/cursos-capacitaciones/registro/{external_id}','CursosCapacitacionesController@RegistrarCursoCapacitaciones');
+        $router->get('/cursos-capacitaciones/listarCursosCapacitaciones/{external_id}','CursosCapacitacionesController@listarCursosCapacitaciones');
    // });
 } catch (\Throwable $th) {
     echo "PROBLEMAS CON LAS RUTAS PROTEGIDAS";
