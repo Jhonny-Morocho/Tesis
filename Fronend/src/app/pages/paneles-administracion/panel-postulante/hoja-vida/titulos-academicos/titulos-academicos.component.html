@@ -29,20 +29,11 @@
                         <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='1' ">Nacional</td>
                         <td *ngIf="(titulosAcademicos.tipo_titulo).toString()=='2' ">Extranjero</td>
                         <td>{{ titulosAcademicos.detalles_adiciones }}</td>
-                        <!-- <td>
-                                <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
-                            </td> -->
                         <td>
                             <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
                             <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a>
                             <a class="btn btn-light " (click)="eliminarTitulo(titulosAcademicos.external_ti,titulosAcademicos.titulo_obtenido,titulosAcademicos.evidencias_url,i)"><i class="fas fa-trash-alt "></i></a>
                         </td>
-                        <!-- <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==false && estadoConversion(titulosAcademicos.estado)==false "><span class=" badge badge-danger ">No validado</span></td>
-                            <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==true && estadoConversion(titulosAcademicos.estado)==true "><span class="badge badge-success ">Validado</span></td>
-                            <td *ngIf="estadoRevision(titulosAcademicos.observaciones)==true && estadoConversion(titulosAcademicos.estado)==false "><span class="badge badge-warning ">Revisado</span></td> -->
-                        <!-- <td>
-                                <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
-                            </td> -->
                     </tr>
                 </tbody>
             </table>

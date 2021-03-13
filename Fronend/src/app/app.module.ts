@@ -39,8 +39,10 @@ import { FormValidacionEmpleadorComponent } from './pages/paneles-administracion
 //postulante
 import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
 import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
-import { FormAddTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-add-titulo/form-add-titulo.component';
-import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/form-editar-titulo/form-editar-titulo.component';
+import { FormAddTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
+import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
+import { FormAddCursoComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
+import { FormEditarCursoComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
 
 //import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -72,7 +74,9 @@ import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-
     TitulosAcademicosComponent,
     CursosCapacitacionesComponent,
     FormAddTituloComponent,
-    FormEditarTituloComponent
+    FormEditarTituloComponent,
+    FormAddCursoComponent,
+    FormEditarCursoComponent
   ],
 
   imports: [
