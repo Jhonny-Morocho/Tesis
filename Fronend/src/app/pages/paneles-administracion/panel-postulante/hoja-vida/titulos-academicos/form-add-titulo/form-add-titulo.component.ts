@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TituloService} from 'src/app/servicios/titulos.service';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import {TituloModel} from 'src/app/models/titulo.models';
 import { NgForm } from '@angular/forms';

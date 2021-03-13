@@ -9,8 +9,8 @@ import {  map } from 'rxjs/operators';
 export class CursosCapacitacionesService {
   //el url del servicio o del backend
   private urlDominio_="http://localhost/Tesis";
-  private urlBackendCrearTitulo="/Backend/public/index.php/titulos-academicos/registro/";
-  private urlSubirArchivo="/Backend/public/index.php/titulos-academicos/subirArchivo";
+  private urlBackendCrearCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/registro/";
+  private urlSubirArchivo="/Backend/public/index.php/cursos-capacitaciones/subirArchivo";
   private urlListarCursosCapacitaciones="/Backend/public/index.php/cursos-capacitaciones/listarCursosCapacitaciones/";
   private urlELiminarTitulo="/Backend/public/index.php/titulos-academicos/eliminarTitulo";
   private urlObtenerTitUloExternal_ti="/Backend/public/index.php/titulos-academicos/obtenerTituloExternal_ti/";
@@ -27,11 +27,11 @@ export class CursosCapacitacionesService {
          })
      );
   }
-  crearTitulo(modeloTitulo:TituloModel){
+  crearCursoCapacitaciones(modeloCursosCapacitaciones:CursosCapacitacionesModel){
     const autenficacionDatos={
-       ...modeloTitulo
+       ...modeloCursosCapacitaciones
      }
-     return this._httCliente.post(`${this.urlDominio_}${this.urlBackendCrearTitulo}${localStorage.getItem("external_us")}`,autenficacionDatos
+     return this._httCliente.post(`${this.urlDominio_}${this.urlBackendCrearCursoCapacitacion}${localStorage.getItem("external_us")}`,autenficacionDatos
      ).pipe(
        map(
          respuestaBackend=>{
@@ -82,30 +82,30 @@ export class CursosCapacitacionesService {
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarDatosTitulo(modeloTitulo:TituloModel){
-    const autenficacionDatos={
-      ...modeloTitulo
-    }
-    console.log(modeloTitulo);
-      console.log(modeloTitulo.external_ti);
-    //retorna la respuesata
-        console.log(`${this.urlDominio_}${this.urlEditarTitulo}${modeloTitulo.external_ti}`);
-      return this._httCliente.post(
-        `${this.urlDominio_}${this.urlEditarTitulo}${autenficacionDatos.external_ti}`,autenficacionDatos
-      ).pipe(
-        map(
-          respuestaBackend=>{
-            return respuestaBackend;
-          })
-      );
-  }
+  // actulizarDatosTitulo(modeloCursosCapacitaciones:CursosCapacitacionesModel){
+  //   const autenficacionDatos={
+  //     ...modeloCursosCapacitaciones
+  //   }
+  //   console.log(modeloCursosCapacitaciones);
+  //     console.log(modeloCursosCapacitaciones.external_ti);
+  //   //retorna la respuesata
+  //       console.log(`${this.urlDominio_}${this.urlEditarTitulo}${modeloCursosCapacitaciones.external_ti}`);
+  //     return this._httCliente.post(
+  //       `${this.urlDominio_}${this.urlEditarTitulo}${autenficacionDatos.external_ti}`,autenficacionDatos
+  //     ).pipe(
+  //       map(
+  //         respuestaBackend=>{
+  //           return respuestaBackend;
+  //         })
+  //     );
+  // }
 
   //actulizar estado de validacion del postulante//aprobado y no aprobado
-  eliminarTitulo(modeloTitulo:TituloModel){
+  eliminarTitulo(modeloCursosCapacitaciones:CursosCapacitacionesModel){
     const autenficacionDatos={
-      ...modeloTitulo
+      ...modeloCursosCapacitaciones
     }
-      console.log(modeloTitulo);
+      console.log(modeloCursosCapacitaciones);
     //retorna la respuesata
     console.log(`${this.urlDominio_}${this.urlELiminarTitulo}`);
       return this._httCliente.post(

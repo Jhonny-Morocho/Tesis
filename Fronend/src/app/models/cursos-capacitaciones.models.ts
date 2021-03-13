@@ -1,6 +1,7 @@
 
 export class CursosCapacitacionesModel{
     nom_evento:string;
+    fk_pais:Number;
     tipo_evento:Number;
     auspiciante:string;
     horas:Number;

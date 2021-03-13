@@ -23,7 +23,8 @@ import {FormEditarTituloComponent} from 'src/app/pages/paneles-administracion/pa
 import {FormAddTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
 import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
 import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
-
+//cursos-capacitaciones
+import {FormAddCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent },
   { path: 'registro-postulante', component: RegistroPostulanteComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'panel-postulante/edit-titulo/:external_ti' , component: FormEditarTituloComponent,canActivate:[AutentificacionGuard] },
   //cursos-capacitaciones
   { path: 'panel-postulante/cursos-capacitaciones' , component: CursosCapacitacionesComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-postulante/add-curso-capacitacion' , component: FormAddCursoComponent,canActivate:[AutentificacionGuard] },
   //{ path: 'panel-postulante/cursos-capacitaciones' , component: CursosCapacitacionesComponent,canActivate:[AutentificacionGuard] },
   { path: '**', redirectTo: 'home' }
   

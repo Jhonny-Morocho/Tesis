@@ -15,21 +15,46 @@ use function PHPUnit\Framework\isEmpty;
 
 class CursosCapacitacionesController extends Controller
 {
-    //Registrar Usuario
-    
+  
+    //ssubir achivo
+    private  $ruta= '../../Archivos/Cursos';
+    public  function subirArchivo(Request $request){
+       
+        $archivoSubido=false;
+        try {
+            //code...
+            $file = $request->file('file');
+            $archivoNombre = time().$file->getClientOriginalName();
+            if($file->move($this->ruta, $archivoNombre)){
+                 $archivoSubido=true;
+            }
+            return response()->json([   "nombreArchivo"=> $archivoNombre,
+                                        "estadoArchivo"=>$archivoSubido,
+                                        "mensaje"=>"Operacion existosa",
+                                        "Siglas"=>"OE"], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                                        "archivoSubido"=>$archivoSubido,
+                                        "mensaje"=>"Operacion No Exitosa",
+                                        "Siglas"=>"ONE","error"=>$th]);
+        }
+    }
+    //registrar curso y capacitaciones
     public function RegistrarCursoCapacitaciones(Request $request,$external_id){
         //code...
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
+            //buscar si existe el usuario que realiza la peticion
+             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //pregunto si el extern_us es del usuario que realiza la peticion
-            $Objestudiante=Estudiante::where("external_es",$external_id)->first();
+            $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
             //creamos un objeto de tipo usuario para enviar los datos
             try {
                 //code...
                 $ObjCusosCapacitaciones=new CursosCapacitaciones();
                 $ObjCusosCapacitaciones->fk_estudiante=$Objestudiante->id;
-                $ObjCusosCapacitaciones->fk_pais=$datos["fk_pais"];
+                $ObjCusosCapacitaciones->fk_pais=1;
                 $ObjCusosCapacitaciones->nom_evento=$datos["nom_evento"];
                 $ObjCusosCapacitaciones->tipo_evento=$datos["tipo_evento"];
                 $ObjCusosCapacitaciones->auspiciante=$datos["auspiciante"];
@@ -42,12 +67,12 @@ class CursosCapacitacionesController extends Controller
                 $ObjCusosCapacitaciones->save();
                 //die(json_encode($ObjCusosCapacitaciones));
                 //respuesta exitoso o no en la inserrccion
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200,]);
+                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE","Objeto"=>$ObjCusosCapacitaciones,200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th]);
             }
         }else{
-            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
         }
  
     }

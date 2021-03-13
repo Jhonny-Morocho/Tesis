@@ -1,3 +1,64 @@
-<p>
-  form-add-curso works!
-</p>
+<div class="container mt-5">
+    <div class="card">
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <form class="row g-3" (ngSubmit)="onSubMitRegistrarCursoCapacitacion(fRegistrarCursoCapacitacion)" #fRegistrarCursoCapacitacion="ngForm" enctype="multipart/form-data">
+                <h3>Registrar curso o capacitacion</h3>
+
+                <div class="col-3">
+                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/titulos-academicos']">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+                </div>
+                <hr>
+                <div class="col-md-6">
+                    <label for="inputNombre del evento" class="form-label">Nombre del evento</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['nom_evento'].errors">El Nombre del evento es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.nom_evento" name="nom_evento" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['auspiciante'].errors">El Auspiciante es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.auspiciante" name="auspiciante" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputNumeroHoras" class="form-label">Numero de horas</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors">El Numero de horas es obligatorio</span>
+                    <input type="number" [(ngModel)]="instanciaCursosCapacitaciones.horas" name="horas" class="form-control" min="1" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputFechaInicio" class="form-label">Fecha Inicio</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_inicio'].errors">La Fecha Inicio es obligatorio</span>
+                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_inicio" name="fecha_inicio" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminacion</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors">La Fecha de culminacion es obligatorio</span>
+                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_culminacion" name="fecha_culminacion" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['tipo_evento'].errors">El Tipo de evento es obligatorio</span>
+                    <select class="form-control" name="tipo_evento" [(ngModel)]="instanciaCursosCapacitaciones.tipo_evento" required>
+                      <option [value]="i+1"*ngFor="let item of tipoCursoCapcitacion;let i=index">{{item}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPais" class="form-label">País</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['pais'].errors">El País es obligatorio</span>
+                    <select class="form-control" name="pais" [(ngModel)]="instanciaCursosCapacitaciones.fk_pais" required>
+                    <option [value]="i+1"*ngFor="let item of paises;let i=index">{{item.nombre}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEvidencias" class="form-label">Evidencias</label><br>
+                    <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
+                    <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+
+</div>
