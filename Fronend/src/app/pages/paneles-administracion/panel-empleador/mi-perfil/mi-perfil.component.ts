@@ -9,6 +9,7 @@ import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.
 })
 export class MiPerfilComponentEmpleador implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
+
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {

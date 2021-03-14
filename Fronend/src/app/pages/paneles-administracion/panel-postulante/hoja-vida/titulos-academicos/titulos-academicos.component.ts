@@ -29,6 +29,7 @@ export class TitulosAcademicosComponent implements OnInit {
   ngOnInit() {
 
     this.cargarTabla();
+
    //instancia de titulomodel //debo inicializarlos//si no coloco esto no me inserta en la bd
   }
 

@@ -18,6 +18,7 @@ class OfertasLaborales extends Model
         "descripcion",
         "lugar",
         "obervaciones",
+        "requisitos",
         "estado",
         "external_of",
         "created_at",

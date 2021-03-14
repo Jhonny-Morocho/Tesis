@@ -36,6 +36,7 @@ class OfertaLaboralController extends Controller
                 $ObjOfertasLaborales->descripcion=$datos["descripcion"];
                 $ObjOfertasLaborales->lugar=$datos["lugar"];
                 $ObjOfertasLaborales->obervaciones=$datos["obervaciones"];
+                $ObjOfertasLaborales->requisitos=$datos["requisitos"];
                 $ObjOfertasLaborales->estado=$datos["estado"];
                 $ObjOfertasLaborales->external_of="Cu".Utilidades\UUID::v4();
                 $ObjOfertasLaborales->save();
@@ -49,14 +50,14 @@ class OfertaLaboralController extends Controller
  
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
-    public function listarCursosCapacitaciones( $external_id){
+    public function listarOfertasLaboralesExternal_us( $external_id){
         //obtener todos los usuarios que sean postulante
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //busco si ese usuario es un estudiante 
-            $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
-            $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
+            $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
+            $titulosAcademicos=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);

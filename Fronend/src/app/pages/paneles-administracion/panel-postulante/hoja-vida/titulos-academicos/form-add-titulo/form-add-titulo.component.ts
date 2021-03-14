@@ -21,9 +21,11 @@ export class FormAddTituloComponent implements OnInit {
   constructor(private servicioTitulo:TituloService) { }
 
   ngOnInit() {
+
     this.instanciaTituloAcademico=new TituloModel();
     this.instanciaTituloAcademico.estado=1;
     this.instanciaTituloAcademico.detalles_adiciones="";
+
   }
     // =================== subir archivo ======================
     fileEvent(fileInput:Event){
@@ -70,6 +72,7 @@ export class FormAddTituloComponent implements OnInit {
                         if(siHacesBienJson['Siglas']=="OE"){
                           console.log(siHacesBienJson);
                           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+                       
                          
                         }else{
                           console.warn(siHacesBienJson);

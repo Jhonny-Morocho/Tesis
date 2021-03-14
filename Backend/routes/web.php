@@ -59,6 +59,7 @@ try {
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
         //ofertas-laborales
         $router->post('/ofertas-laborales/registro/{external_id}','OfertaLaboralController@RegistrarOfertaLaboral');
+        $router->get('/ofertas-laborales/listarOfertasLaboralesExternal_us/{external_id}','OfertaLaboralController@listarOfertasLaboralesExternal_us');
    // });
 } catch (\Throwable $th) {
     echo "PROBLEMAS CON LAS RUTAS PROTEGIDAS";
