@@ -94,6 +94,7 @@ export class SerivicioEmpleadorService {
     const autenficacionDatos={
       external_em:external_em
     }
+    console.log(autenficacionDatos);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlObtenerEmpleadorExternal_em}`,autenficacionDatos
     ).pipe(

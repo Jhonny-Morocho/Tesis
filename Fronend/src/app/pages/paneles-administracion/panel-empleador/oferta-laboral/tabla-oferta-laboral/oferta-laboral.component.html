@@ -89,22 +89,24 @@
                                 <h4>Empleador</h4>
                                 <div class="post">
                                     <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                        <img class="img-circle img-bordered-sm" src="../../../assets/images/empresa.png" alt="user image">
                                         <span class="username">
-                                    <a href="#">Jonathan Burke Jr.</a>
+                                    <a href="#">{{ instanciaEmpleadorModelVer.razon_empresa }}</a>
                                   </span>
-                                        <span class="description">Shared publicly - 7:45 PM today</span>
+
                                     </div>
                                     <!-- /.user-block -->
+                                    <p class="post">Descripcion de la oferta laboral</p>
+                                    <br>
                                     <p>
-                                        Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore.
+                                        {{instanciaOfertaVer.descripcion}}
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary"><i class="fab fa-black-tie"></i> {{ instanciaOfertaVer.puesto }}</h3>
+                        <h3 class="text-primary">Puesto <i class="fab fa-black-tie"></i> {{ instanciaOfertaVer.puesto }}</h3>
                         <br>
                         <h5 class="mt-5 text-muted">Requisitos</h5>
                         <div id="itemRequisitos">

@@ -22,11 +22,11 @@ class EmpleadorController extends Controller
              //validar si el usuario existe
              $ObjUsuario = Usuario::where("external_us",$request['external_us'])->first();
              if($ObjUsuario!=null){
-                 $ObjEstudiante = Empleador::where("fk_usuario","=", $ObjUsuario->id)->first();
-                 if($ObjEstudiante !=null){
-                     return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
+                 $ObjEmpleador = Empleador::where("fk_usuario","=", $ObjUsuario->id)->first();
+                 if($ObjEmpleador !=null){
+                     return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE",200]);
                  }else{
-                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
                  }
     
             }else{
@@ -103,9 +103,9 @@ class EmpleadorController extends Controller
      public function listarEmpleadores(){
         //obtener todos los usuarios que sean postulante
         try {
-            $ObjeEstudiante=null;
-            $ObjeEstudiante=Empleador::get();
-            return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
+            $ObjeEmpleador=null;
+            $ObjeEmpleador=Empleador::get();
+            return response()->json(["mensaje"=>$ObjeEmpleador,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
         }
@@ -116,9 +116,9 @@ class EmpleadorController extends Controller
     public function obtenerEmpleadorExternal_em(Request $request){
         if($request->json()){
             try {
-                $ObjeEstudiante=null;
-                $ObjeEstudiante=Empleador::where("external_em","=",$request['external_em'])->first();
-                return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
+                $ObjeEmpleador=null;
+                $ObjeEmpleador=Empleador::where("external_em","=",$request['external_em'])->first();
+                return $this->retornarRespuestaEstudianteEncontrado($ObjeEmpleador);
                  
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el empleador "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
@@ -134,7 +134,7 @@ class EmpleadorController extends Controller
         if($ObjetoEstudiante!=null){
             return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el estudiante "]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el empleador "]);
         }
 
     }

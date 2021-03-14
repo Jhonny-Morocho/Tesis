@@ -58,7 +58,7 @@ class OfertaLaboralController extends Controller
             //busco si ese usuario es un estudiante 
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
             $titulosAcademicos=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->orderBy('id', 'DESC')->get();
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
+            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
         }

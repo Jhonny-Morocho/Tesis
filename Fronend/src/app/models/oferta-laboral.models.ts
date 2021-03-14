@@ -8,5 +8,6 @@ export class OfertaLaboralModel{
     requisitos:string;
     estado:Number;
     external_of:string;
+    created_at?:string;
     id?:Number;
 }
