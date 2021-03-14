@@ -21,6 +21,27 @@ body.iframe-mode-fullscreen {
   height: 100%;
 
   &.iframe-mode {
+    .btn-iframe-close {
+      color: $danger;
+      position: absolute;
+      line-height: 1;
+      right: .125rem;
+      top: .125rem;
+      z-index: 10;
+      visibility: hidden;
+
+      &:hover,
+      &:focus {
+        animation-name: fadeIn;
+        animation-duration: $transition-speed;
+        animation-fill-mode: both;
+        visibility: visible;
+      }
+
+      @include on-touch-device () {
+        visibility: visible;
+      }
+    }
     .navbar-nav {
       overflow-y: auto;
       width: 100%;
@@ -28,9 +49,29 @@ body.iframe-mode-fullscreen {
       .nav-link {
         white-space: nowrap;
       }
+      .nav-item {
+        position: relative;
+
+        &:hover,
+        &:focus {
+          .btn-iframe-close {
+            animation-name: fadeIn;
+            animation-duration: $transition-speed;
+            animation-fill-mode: both;
+            visibility: visible;
+
+            @include on-touch-device () {
+              visibility: visible;
+            }
+          }
+        }
+      }
     }
     .tab-content {
       position: relative;
+    }
+    .tab-pane + .tab-empty {
+      display: none;
     }
     .tab-empty {
       width: 100%;
@@ -59,6 +100,7 @@ body.iframe-mode-fullscreen {
       border: 0;
       width: 100%;
       height: 100%;
+      margin-bottom: -8px;
 
       .content-wrapper {
         padding-bottom: 0 !important;

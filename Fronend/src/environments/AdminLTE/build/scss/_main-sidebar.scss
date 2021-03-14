@@ -19,11 +19,13 @@
 
 .sidebar {
   height: calc(100% - (#{$main-header-height-inner} + #{$main-header-bottom-border-width}));
+  overflow-x: none;
   overflow-y: initial;
   padding-bottom: $sidebar-padding-y;
   padding-left: $sidebar-padding-x;
   padding-right: $sidebar-padding-x;
   padding-top: $sidebar-padding-y;
+  @include scrollbar-width-thin();
 }
 
 // Sidebar user panel
@@ -179,16 +181,13 @@
 
   .nav-header {
     font-size: .9rem;
-    padding: $nav-link-padding-y;
-
-    &:not(:first-of-type) {
-      padding: 1.7rem 1rem .5rem;
-    }
+    padding: $nav-link-padding-y ($nav-link-padding-y * 1.5);
   }
 
   .nav-link p {
-    display: inline-block;
+    display: inline;
     margin: 0;
+    white-space: normal;
   }
 }
 
@@ -303,6 +302,12 @@
     > .nav-item {
       > .nav-link {
         color: $sidebar-light-submenu-color;
+
+        &:hover,
+        &:focus {
+          background-color: $sidebar-light-submenu-hover-bg;
+          color: $sidebar-light-submenu-hover-color;
+        }
       }
 
       > .nav-link.active {
@@ -484,10 +489,13 @@
 
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini-md .main-sidebar:not(.sidebar-no-expand),
+.sidebar-mini-xs .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand):hover,
 .sidebar-mini-md .main-sidebar:not(.sidebar-no-expand):hover,
+.sidebar-mini-xs .main-sidebar:not(.sidebar-no-expand):hover,
 .sidebar-mini .main-sidebar.sidebar-focused,
-.sidebar-mini-md .main-sidebar.sidebar-focused {
+.sidebar-mini-md .main-sidebar.sidebar-focused,
+.sidebar-mini-xs .main-sidebar.sidebar-focused {
   .nav-compact.nav-sidebar.nav-child-indent:not(.nav-flat) .nav-treeview {
     padding-left: 1rem;
     margin-left: -.5rem;
@@ -595,8 +603,10 @@
 
   .sidebar-mini .main-sidebar:not(.sidebar-no-expand):hover &,
   .sidebar-mini-md .main-sidebar:not(.sidebar-no-expand):hover &,
+  .sidebar-mini-xs .main-sidebar:not(.sidebar-no-expand):hover &,
   .sidebar-mini .main-sidebar.sidebar-focused &,
-  .sidebar-mini-md .main-sidebar.sidebar-focused & {
+  .sidebar-mini-md .main-sidebar.sidebar-focused &,
+  .sidebar-mini-xs .main-sidebar.sidebar-focused & {
     &.nav-compact.nav-sidebar .nav-treeview {
       .nav-icon {
         margin-left: .4rem;
@@ -705,11 +715,13 @@
   }
 
   .sidebar-mini &,
-  .sidebar-mini-md & {
+  .sidebar-mini-md &,
+  .sidebar-mini-xs & {
     > .nav-item .nav-link {
       .nav-icon {
         @include transition(margin-left $transition-fn $transition-speed);
-        margin-left: .75rem;
+        margin-left: .6rem;
+
       }
     }
   }
@@ -717,7 +729,9 @@
   .sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused &.nav-child-indent,
   .sidebar-mini.sidebar-collapse .main-sidebar:hover &.nav-child-indent,
   .sidebar-mini-md.sidebar-collapse .main-sidebar.sidebar-focused &.nav-child-indent,
-  .sidebar-mini-md.sidebar-collapse .main-sidebar:hover &.nav-child-indent {
+  .sidebar-mini-md.sidebar-collapse .main-sidebar:hover &.nav-child-indent,
+  .sidebar-mini-xs.sidebar-collapse .main-sidebar.sidebar-focused &.nav-child-indent,
+  .sidebar-mini-xs.sidebar-collapse .main-sidebar:hover &.nav-child-indent {
     .nav-treeview {
       padding-left: 1rem;
 
@@ -731,7 +745,9 @@
   .sidebar-mini.sidebar-collapse.text-sm .main-sidebar.sidebar-focused &.nav-child-indent,
   .sidebar-mini.sidebar-collapse.text-sm .main-sidebar:hover &.nav-child-indent,
   .sidebar-mini-md.sidebar-collapse.text-sm .main-sidebar.sidebar-focused &.nav-child-indent,
-  .sidebar-mini-md.sidebar-collapse.text-sm .main-sidebar:hover &.nav-child-indent {
+  .sidebar-mini-md.sidebar-collapse.text-sm .main-sidebar:hover &.nav-child-indent,
+  .sidebar-mini-xs.sidebar-collapse.text-sm .main-sidebar.sidebar-focused &.nav-child-indent,
+  .sidebar-mini-xs.sidebar-collapse.text-sm .main-sidebar:hover &.nav-child-indent {
     .nav-treeview {
       padding-left: .5rem;
 
@@ -743,7 +759,8 @@
   }
 
   .sidebar-mini.sidebar-collapse &,
-  .sidebar-mini-md.sidebar-collapse & {
+  .sidebar-mini-md.sidebar-collapse &,
+  .sidebar-mini-xs.sidebar-collapse & {
     > .nav-item > .nav-link {
       .nav-icon {
         margin-left: .55rem;
@@ -768,7 +785,8 @@
 
 
   .sidebar-mini.sidebar-collapse.text-sm &,
-  .sidebar-mini-md.sidebar-collapse.text-sm & {
+  .sidebar-mini-md.sidebar-collapse.text-sm &,
+  .sidebar-mini-xs.sidebar-collapse.text-sm & {
     > .nav-item > .nav-link {
       .nav-icon {
         margin-left: .75rem;
@@ -848,7 +866,9 @@
   .sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused &,
   .sidebar-mini.sidebar-collapse .main-sidebar:not(.sidebar-no-expand):hover &,
   .sidebar-mini-md.sidebar-collapse .main-sidebar.sidebar-focused &,
-  .sidebar-mini-md.sidebar-collapse .main-sidebar:not(.sidebar-no-expand):hover & {
+  .sidebar-mini-md.sidebar-collapse .main-sidebar:not(.sidebar-no-expand):hover &,
+  .sidebar-mini-xs.sidebar-collapse .main-sidebar.sidebar-focused &,
+  .sidebar-mini-xs.sidebar-collapse .main-sidebar:not(.sidebar-no-expand):hover & {
     .menu-open > .nav-treeview {
       max-height: min-content;
       animation-name: fadeIn;
@@ -966,13 +986,14 @@
 // Sidebar inline input-group fix
 .sidebar .form-inline .input-group {
   width: 100%;
+  flex-wrap: nowrap;
 }
 .sidebar nav .form-inline {
   margin-bottom: .2rem;
 }
 
 // Sidebar Collapse on Layout Boxed
-.layout-boxed:not(.sidebar-mini):not(.sidebar-mini-md) {
+.layout-boxed:not(.sidebar-mini):not(.sidebar-mini-md):not(.sidebar-mini-xs) {
   &.sidebar-collapse .main-sidebar {
     margin-left: 0;
   }
@@ -1123,3 +1144,21 @@
     }
   }
 }
+
+.dark-mode {
+  @each $name, $color in $theme-colors-alt {
+    .sidebar-dark-#{$name},
+    .sidebar-light-#{$name} {
+      @include sidebar-color($color);
+    }
+  }
+
+  @each $name, $color in $colors-alt {
+    .sidebar-dark-#{$name},
+    .sidebar-light-#{$name} {
+      @include sidebar-color($color);
+    }
+  }
+}
+
+//
