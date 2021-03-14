@@ -15,9 +15,11 @@ import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
+import {AddOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';
 import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
 import {FormularioInfoEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
+import {OfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 //postulante
 import {FormEditarTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
 import {FormAddTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
@@ -26,6 +28,8 @@ import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracio
 //cursos-capacitaciones
 import {FormEditarCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
 import {FormAddCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
+//publicar ofertas
+
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent },
   { path: 'registro-postulante', component: RegistroPostulanteComponent },
@@ -37,6 +41,8 @@ const routes: Routes = [
   { path: 'empleador' , component: EmpleadorComponent },
   { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador },
   { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent },
+  { path: 'panel-empleador/oferta-laboral' , component: OfertaLaboralComponent },
+  { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent },
   //rutas del admistrador
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiar,canActivate:[AutentificacionGuard] },

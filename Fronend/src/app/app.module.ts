@@ -43,6 +43,9 @@ import { FormAddTituloComponent } from './pages/paneles-administracion/panel-pos
 import { FormEditarTituloComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
 import { FormAddCursoComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
 import { FormEditarCursoComponent } from './pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
+import { OfertaLaboralComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
+import { AddOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
+import { EditOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
 //cursos-capacitacines
 
 //import { ModalModule } from 'ngx-bootstrap/modal';
@@ -77,7 +80,10 @@ import { FormEditarCursoComponent } from './pages/paneles-administracion/panel-p
     FormAddTituloComponent,
     FormEditarTituloComponent,
     FormAddCursoComponent,
-    FormEditarCursoComponent
+    FormEditarCursoComponent,
+    OfertaLaboralComponent,
+    AddOfertaComponent,
+    EditOfertaComponent
   ],
 
   imports: [
