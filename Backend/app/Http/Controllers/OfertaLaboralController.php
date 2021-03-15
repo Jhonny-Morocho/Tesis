@@ -38,7 +38,7 @@ class OfertaLaboralController extends Controller
                 $ObjOfertasLaborales->obervaciones=$datos["obervaciones"];
                 $ObjOfertasLaborales->requisitos=$datos["requisitos"];
                 $ObjOfertasLaborales->estado=$datos["estado"];
-                $ObjOfertasLaborales->external_of="Cu".Utilidades\UUID::v4();
+                $ObjOfertasLaborales->external_of="Of".Utilidades\UUID::v4();
                 $ObjOfertasLaborales->save();
                 return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE","Objeto"=>$ObjOfertasLaborales,200,]);
             } catch (\Throwable $th) {
@@ -109,18 +109,18 @@ class OfertaLaboralController extends Controller
         }
     }
 
-    //obtener curos-capacitacion por url //external_ti
-    public function obtenerCursoCapacitacionExternal_cu($external_id ){
+    //obtener oferta-laboral por url //external_ti
+    public function obtenerOfertaLaboralExternal_of($external_id ){
         try {
-            $ObjTitulo=null;
-            $ObjTitulo=CursosCapacitaciones::where("external_cu","=",$external_id)->first();
-            return $this->retornarTituloEncontrado($ObjTitulo);
+            $ObjOfertaLaboral=null;
+            $ObjOfertaLaboral=OfertasLaborales::where("external_of","=",$external_id)->first();
+            return $this->retornarOfertaLaboralEncontrado($ObjOfertaLaboral);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el registro "+$external_id,"Siglas"=>"ONE","error"=>$th]);
         }
     }
 
-    private function retornarTituloEncontrado($ObjTitulo){
+    private function retornarOfertaLaboralEncontrado($ObjTitulo){
         if($ObjTitulo!=null){
             return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
         }else{

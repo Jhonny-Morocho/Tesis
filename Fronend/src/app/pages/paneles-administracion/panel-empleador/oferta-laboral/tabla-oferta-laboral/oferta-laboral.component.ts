@@ -17,6 +17,7 @@ export class OfertaLaboralComponent implements OnInit {
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
   ofertasLaborales:OfertaLaboralModel[]=[];
+
   instanciaOfertaVer:OfertaLaboralModel;
     //data table
     dtOptions: DataTables.Settings = {};
@@ -65,11 +66,11 @@ export class OfertaLaboralComponent implements OnInit {
 
   verOfertaModal(id:Number){
     console.log("click");
-    console.log(this.ofertasLaborales[id]['puesto']);
-
-    this.instanciaOfertaVer.puesto=this.ofertasLaborales[id]['puesto'];
-    this.instanciaOfertaVer.requisitos=this.ofertasLaborales[id]['requisitos'];
-    this.instanciaOfertaVer.descripcion=this.ofertasLaborales[id]['descripcion'];
+    //necesito converitr o typescrip me da error
+    var index=parseInt((id).toString(), 10);  
+    this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
+    this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
+    this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
     //consultamos los datos del empleador para presentarlos o imprimirlos
     this.servicioEmpleador.listarFormEmpleador().subscribe(
       siHaceBien=>{

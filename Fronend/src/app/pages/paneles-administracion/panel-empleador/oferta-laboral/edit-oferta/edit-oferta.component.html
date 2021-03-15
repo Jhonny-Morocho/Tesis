@@ -1,3 +1,42 @@
-<p>
-  edit-oferta works!
-</p>
+<div class="container mt-5">
+    <div class="card">
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <form class="row g-3" (ngSubmit)="onSubMitEditarOfertaLaboral(fEditarOfertaLaboral)" #fEditarOfertaLaboral="ngForm" enctype="multipart/form-data">
+                <h3>Editar Oferta Laboral</h3>
+
+                <div class="col-2">
+                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+                </div>
+
+                <hr>
+                <div class="col-md-12">
+                    <label for="inputPuesto" class="form-label">Puesto</label><br>
+                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors">El Puesto es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputDescripcion" class="form-label">Descripcion </label><br>
+                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
+                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required></textarea>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputLugar" class="form-label">Lugar</label><br>
+                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['lugar'].errors">El Lugar es obligatorio</span>
+                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required></textarea>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="inputEmail4" class="form-label">Requisitos </label><br>
+                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['requisitos'].errors">El Numero de registro es obligatorio</span>
+                    <textarea id="compose-textarea" class="form-control " style="height: 300px" name="requisitos" [(ngModel)]="instanciaOfertaLaboral.requisitos"></textarea>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+
+</div>

@@ -10,10 +10,9 @@ export class OfertasLaboralesService {
   //el url del servicio o del backend
   private urlDominio_="http://localhost/Tesis";
   private urlCrearOfertaLaboral="/Backend/public/index.php/ofertas-laborales/registro/";
-  private urlSubirArchivo="/Backend/public/index.php/cursos-capacitaciones/subirArchivo";
   private urlListarOfertasLaborales="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesExternal_us/";
   private urlELiminarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/eliminarCursoCapicitacion";
-  private urlObtenerCursoCapacitacionExternal_ti="/Backend/public/index.php/cursos-capacitaciones/obtenerCursoCapacitacionExternal_of/";
+  private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
   private urlEditarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/actulizarCursoCapacitaciones/";
   constructor(private _httCliente:HttpClient) { }
 
@@ -61,9 +60,9 @@ export class OfertasLaboralesService {
   }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerCursoCapacitacionExternal_es(external_of:string){
+  obtenerOfertaLaboralExternal_of(external_of:string){
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlObtenerCursoCapacitacionExternal_ti}${external_of}`,
+      `${this.urlDominio_}${this.urlObtenerOfertaLaboralExternal_of}${external_of}`,
     ).pipe(
       map(
         respuestaBackend=>{

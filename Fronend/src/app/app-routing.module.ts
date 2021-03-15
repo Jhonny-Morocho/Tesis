@@ -15,6 +15,7 @@ import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
+import {EditOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
 import {AddOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';
 import {MiPerfilComponentEmpleador} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil/mi-perfil.component';
@@ -39,10 +40,11 @@ const routes: Routes = [
   { path: 'login-empleador' , component: LoginEmpleadorComponent },
   //rutas del empleador
   { path: 'empleador' , component: EmpleadorComponent },
-  { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador },
-  { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent },
-  { path: 'panel-empleador/oferta-laboral' , component: OfertaLaboralComponent },
-  { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent },
+  { path: 'panel-empleador/edit-oferta-laboral/:external_of' , component: EditOfertaComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador,canActivate:[AutentificacionGuard] },
+  { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-empleador/oferta-laboral' , component: OfertaLaboralComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiar,canActivate:[AutentificacionGuard] },
