@@ -1,75 +1,97 @@
 <navTab-admin></navTab-admin>
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
-<div class="container " *ngIf="tipoUsuarioSecretaria==true">
-    <div class="jumbotron animate__animated animate__slideInRight">
-        <h1 class="display-6">Tareas secretaria</h1>
-        <hr>
+<div class="content-wrapper">
+    <div class="card">
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <div class="container " *ngIf="tipoUsuarioSecretaria==true">
+                <h1 class="display-6">Tareas secretaria</h1>
+                <hr>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido </th>
+                            <th>Cédula</th>
+                            <th>Estado Validacion</th>
+                            <th>Observaciones</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let estudiantes of estudiante;let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ estudiantes.nombre }}</td>
+                            <td>{{ estudiantes.apellido }}</td>
+                            <td>{{ estudiantes.cedula }}</td>
+                            <td *ngIf="estadoRevision(estudiantes.observaciones)==false && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
+                            <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
+                            <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==false "><span class="badge badge-warning">Revisado</span></td>
+                            <td>{{ estudiantes.observaciones }}</td>
+                            <td>
+                                <button type="button " class="btn btn-light " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
     </div>
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido </th>
-                <th>Cédula</th>
-                <th>Estado Validacion</th>
-                <th>Observaciones</th>
-                <th>Detalles</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let estudiantes of estudiante;let i=index">
-                <td>{{ i+1 }}</td>
-                <td>{{ estudiantes.nombre }}</td>
-                <td>{{ estudiantes.apellido }}</td>
-                <td>{{ estudiantes.cedula }}</td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==false && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
-                <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==false "><span class="badge badge-warning">Revisado</span></td>
-                <td>{{ estudiantes.observaciones }}</td>
-                <td>
-                    <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>
-<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
-<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
 
-<div class="container " *ngIf="tipoUsuarioEncargado==true">
-    <div class="jumbotron animate__animated animate__slideInRight">
-        <h1 class="display-6">Tareas Encargado</h1>
-        <hr>
-        <div class="container ">
-        </div>
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th title="Empresa">Empresa</th>
-                    <th title="Numero de RUC ">RUC</th>
-                    <th title="Nombre del representante legal">Representante Legal</th>
-                    <th>Estado de validación</th>
-                    <th>Observaciones</th>
-                    <th>Detalles</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let empleadores of empleador;let i=index">
-                    <td>{{ i+1 }}</td>
-                    <td>{{ empleadores.razon_empresa }}</td>
-                    <td>{{ empleadores.num_ruc }}</td>
-                    <td>{{ empleadores.nom_representante_legal }}</td>
-                    <td *ngIf="estadoRevision(empleadores.observaciones)==false && estadoConversion(empleadores.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
-                    <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==true "><span class="badge badge-success ">Validado</span></td>
-                    <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==false "><span class="badge badge-warning">Revisado</span></td>
-                    <td>{{ empleadores.observaciones }}</td>
-                    <td>
-                        <button type="button " class="btn btn-primary " [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
+<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
+<div class="content-wrapper">
+    <div class="card">
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <div class="container " *ngIf="tipoUsuarioEncargado==true">
+                <h1 class="display-6">Tareas usuario Encargado</h1>
+                <hr>
+                <div class="container ">
+                </div>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th title="Empresa">Empresa</th>
+                            <th title="Numero de RUC ">RUC</th>
+                            <th title="Nombre del representante legal">Representante Legal</th>
+                            <th>Estado de validación</th>
+                            <th>Observaciones</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empleadores of empleador;let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ empleadores.razon_empresa }}</td>
+                            <td>{{ empleadores.num_ruc }}</td>
+                            <td>{{ empleadores.nom_representante_legal }}</td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==false && estadoConversion(empleadores.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==true "><span class="badge badge-success ">Validado</span></td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==false "><span class="badge badge-warning">Revisado</span></td>
+                            <td>{{ empleadores.observaciones }}</td>
+                            <td>
+                                <button type="button " class="btn btn-light" [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
     </div>
+</div>
+<!-- ====================== TEMPLATE PARA VALIDAR===================== -->
+<!-- <div class="content-wrapper">
+    <div class="card">
+        <div class="col-2 mt-2">
+            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/add-ferta-laboral']">
+                <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+        </div>
+        <article class="card-body animated animate__animated animate__slideInRight">
+
+
+        </article>
+    </div>
+</div> -->

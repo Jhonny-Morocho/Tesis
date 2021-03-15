@@ -58,6 +58,7 @@ try {
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
         //ofertas-laborales
+        $router->post('/ofertas-laborales/eliminarOfertaLaboral','OfertaLaboralController@eliminarOfertaLaboral');
         $router->post('/ofertas-laborales/actulizarOfertaLaboral/{external_id}','OfertaLaboralController@actulizarOfertaLaboral');
         $router->get('/ofertas-laborales/obtenerOfertaLaboralExternal_of/{external_id}','OfertaLaboralController@obtenerOfertaLaboralExternal_of');
         $router->post('/ofertas-laborales/registro/{external_id}','OfertaLaboralController@RegistrarOfertaLaboral');

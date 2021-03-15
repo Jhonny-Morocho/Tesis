@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
@@ -14,6 +15,7 @@ declare var $:any;
 export class OfertaLaboralComponent implements OnInit {
   //visualizar informacion de empleador
   instanciaEmpleadorModelVer:EmpleadorModel;
+  instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
   ofertasLaborales:OfertaLaboralModel[]=[];
@@ -30,6 +32,7 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
+    this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.cargarTabla();
 
   }
@@ -94,5 +97,41 @@ export class OfertaLaboralComponent implements OnInit {
   }
   cerrarModal(){
     $('#exampleModal').modal('hide');
+  }
+  eliminarOfertaLaboral(external_of:string,nombreTitulo:string,index:number){
+
+    console.log(external_of);
+    // ocupo el servicio
+
+     Swal({
+       title: 'Are you sure?',
+       text: "Esta seguro que desea borrar el Titulo "+nombreTitulo,
+       type: 'warning',
+       showCancelButton: true,
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Yes'
+     }).then((result) => {
+       if (result.value) {
+         this.instanciaOfertaLaboralActualizar.estado=0;
+         this.instanciaOfertaLaboralActualizar.external_of=external_of;
+         this.servicioOferta.eliminarOfertaLaboral(this.instanciaOfertaLaboralActualizar).subscribe(
+           siHaceBien=>{
+             console.log("tpdp bnien");
+             console.log(index);
+             //elimino visualmente 
+             this.ofertasLaborales.splice(index,1); //desde la posición 2, eliminamos 1 elemento
+             Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
+             console.log(siHaceBien);
+           },(peroSiTenemosErro)=>{
+             console.warn("TODO MAL");
+             console.log(peroSiTenemosErro);
+             Swal('Ups, No se puede realizar el registro'+peroSiTenemosErro['mensaje'], 'info')
+           }
+         );
+       }
+     })
+    //alert("estoy eliminado");
+
   }
 }

@@ -57,7 +57,8 @@ class OfertaLaboralController extends Controller
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //busco si ese usuario es un estudiante 
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
-            $titulosAcademicos=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->orderBy('id', 'DESC')->get();
+            //4 estado //0== eliminado,1==activo,2==aprobado,3==rechazado
+            $titulosAcademicos=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->where("estado","!=","0")->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
@@ -104,19 +105,12 @@ class OfertaLaboralController extends Controller
         }
     }
      //terminar de hacer
-     public function eliminarCursoCapicitacion(Request $request){
+     public function eliminarOfertaLaboral(Request $request){
         try {
             //actualizo el texto plano 
-            $ObjTituloAcademico=CursosCapacitaciones::where("external_cu","=", $request['external_cu'])->update(array('estado'=>$request['estado']));
-            //borro el archivo
-            $bandera_borrar=false;
-            $UbicacionArchivo=$this->ruta."/".$request['evidencia_url'];
-            if(file_exists($UbicacionArchivo)){ 
-                if(unlink($UbicacionArchivo)) 
-                $bandera_borrar=true; 
-            }
+            $ObjTituloAcademico=OfertasLaborales::where("external_of","=", $request['external_of'])->update(array('estado'=>$request['estado']));
+
             return response()->json(["mensaje"=>"Operacion Exitosa",
-                                     "Siglas"=>"OE","banderaBorrar"=>$bandera_borrar,
                                      "Respuesta"=>$ObjTituloAcademico,200]);
         
         } catch (\Throwable $th) {
