@@ -63,43 +63,19 @@ class OfertaLaboralController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
-    public function actulizarCursoCapacitaciones(Request $request,$external_id){
-        //die(json_encode($request->json()->all()));
+    public function actulizarOfertaLaboral(Request $request,$external_id){
         if($request->json()){
-            $actulizoArchivo=false;
-            try {
-                //actulizo el archivo , por lo cual actulizo la evidencias_url
-                if($request['evidencias_url']!=null){
-                    $actulizoArchivo=true;
-                    $ObjCursosCapacitaciones=CursosCapacitaciones::where("external_cu","=", $external_id)->update(
-                                                                            array(
-                                                                            'nom_evento'=>$request['nom_evento'], 
-                                                                            'tipo_evento'=>$request['tipo_evento'],
-                                                                            'auspiciante'=>$request['auspiciante'],
-                                                                            'horas'=>$request['horas'],
-                                                                            'fk_pais'=>$request['fk_pais'],
-                                                                            'fecha_inicio'=>$request['fecha_inicio'],
-                                                                            'fecha_culminacion'=>$request['fecha_culminacion'],
-                                                                            'evidencia_url'=>$request['evidencia_url']
 
-                                                                            
-                                                                    ));
-                }
-                //solo actualizo la data 
-                else{
-       
-                    $ObjCursosCapacitaciones=CursosCapacitaciones::where("external_cu","=", $external_id)->update(
-                        array(
-                            'nom_evento'=>$request['nom_evento'], 
-                            'tipo_evento'=>$request['tipo_evento'],
-                            'auspiciante'=>$request['auspiciante'],
-                            'horas'=>$request['horas'],
-                            'fk_pais'=>$request['fk_pais'],
-                            'fecha_inicio'=>$request['fecha_inicio'],
-                            'fecha_culminacion'=>$request['fecha_culminacion']
+            try {           
+                $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)->update(
+                    array(
+                        'puesto'=>$request['puesto'], 
+                        'descripcion'=>$request['descripcion'],
+                        'lugar'=>$request['lugar'],
+                        'requisitos'=>$request['requisitos']
                     ));
-                }
-                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjCursosCapacitaciones,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjCursosCapacitaciones,"Siglas"=>"OE",200]);
+                
+                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjOfertaLaboral,"resques"=>$request->json()->all(),"respuesta"=>$ObjOfertaLaboral,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);

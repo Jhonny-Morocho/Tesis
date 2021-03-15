@@ -13,7 +13,7 @@ export class OfertasLaboralesService {
   private urlListarOfertasLaborales="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesExternal_us/";
   private urlELiminarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/eliminarCursoCapicitacion";
   private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
-  private urlEditarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/actulizarCursoCapacitaciones/";
+  private urlEditarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/actulizarOfertaLaboral/";
   constructor(private _httCliente:HttpClient) { }
 
 
@@ -73,16 +73,16 @@ export class OfertasLaboralesService {
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarDatosCursosCapacitaciones(modeloOfertasLaborales:OfertaLaboralModel){
+  actulizarDatosOfertaLaboral(modeloOfertasLaborales:OfertaLaboralModel){
     const autenficacionDatos={
       ...modeloOfertasLaborales
     }
     console.log(modeloOfertasLaborales);
     console.log(modeloOfertasLaborales.external_of);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlEditarCursoCapacitacion}${modeloOfertasLaborales.external_of}`);
+    console.log(`${this.urlDominio_}${this.urlEditarOfertaLaboral}${modeloOfertasLaborales.external_of}`);
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlEditarCursoCapacitacion}${autenficacionDatos.external_of}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlEditarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{

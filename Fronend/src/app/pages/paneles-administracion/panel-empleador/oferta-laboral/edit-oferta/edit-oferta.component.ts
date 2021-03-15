@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
+import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 declare var JQuery:any;
 declare var $:any;
@@ -35,6 +36,7 @@ export class EditOfertaComponent implements OnInit {
               this.instanciaOfertaLaboral.descripcion=suHacesBien["mensaje"]['descripcion'];
               this.instanciaOfertaLaboral.lugar=suHacesBien["mensaje"]['lugar'];
               this.instanciaOfertaLaboral.requisitos=suHacesBien["mensaje"]['requisitos'];
+              this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
               $(function() {
                 //Add text editor
                 $('#compose-textarea').summernote({
@@ -65,9 +67,31 @@ export class EditOfertaComponent implements OnInit {
   }
   onSubMitEditarOfertaLaboral(formEditarOfertaLaboral:NgForm){
     console.log(formEditarOfertaLaboral);
-    if(formEditarOfertaLaboral.valid){
+    if(formEditarOfertaLaboral.invalid){
       return;
     }
+    Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    Swal.showLoading();
+    this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
+    this.servicioOfertaLaboral.actulizarDatosOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+        }else{
+          Swal('Ups, No se puede realizar el registro'+siHacesBien['mensaje'], 'info')
+        }
+
+      },error=>{
+        console.log(error);
+      }
+
+    );
     
 
   }
