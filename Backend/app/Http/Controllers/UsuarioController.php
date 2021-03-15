@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //llamar los modelos q voy a ocupar
 use App\Models\Usuario;
 use App\Models\Docente;
+
 use App\Models\Empleador;
 use App\Models\Estudiante;
 use Error;
@@ -117,8 +118,6 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
-   
-
      //REGISTRO DE LOGIN
      public function login(Request $request){
         
@@ -130,8 +129,10 @@ class UsuarioController extends Controller
             if($usuario){
                 if(password_verify($datos['password'],$usuario['password'])){
                     // preguntamos que tipo de usuario es 
-                    try {
+                 try {
+              
                         return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
+
                     } catch (\Throwable $th) {
                         //throw $th;
                         return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"request"=>$th]);

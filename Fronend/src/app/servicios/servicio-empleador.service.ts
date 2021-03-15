@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class SerivicioEmpleadorService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlBackendCrearEmpleador="/Backend/public/index.php/empleador/registro/";
   private urlListarFormEmpleador="/Backend/public/index.php/empleador/formEmpleador";
   private urlListarEmpleadores="/Backend/public/index.php/empleador/listarEmpleadores";

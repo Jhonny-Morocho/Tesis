@@ -6,12 +6,16 @@ import {UsuarioModel} from '../models/usuario.model';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
+import {environment} from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacionUserService {
   // el url de donde voy a solicitar el servicio
-  private urlDominio_="http://localhost/Tesis";
+  //InstanciaDominio:DominioWeb;
+  
+  private urlDominio_=environment.dominio;
   private urlBackend_Login="/Backend/public/index.php/usuario/login";
   private urlBackend_CrearUsuario="/Backend/public/index.php/usuario/registro";
   private nombreUser:string;
@@ -26,7 +30,9 @@ export class AutenticacionUserService {
   //funciones de login 
   //recibo el modelo del usuario model con los datos
   login(usuioModel_:UsuarioModel){
+    console.log(this.urlDominio_);
     //estos parametros deben ser igual a los de la tabla del BD
+    //this.InstanciaDominio=new DominioWeb();
      const objetoUsuario={
        correo:usuioModel_.correo,
        password:usuioModel_.password,

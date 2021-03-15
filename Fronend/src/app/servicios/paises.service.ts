@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {PaisesModel} from '../models/paises.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class PaisesService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlListarPaises="/Backend/public/index.php/paises/listarPaises";
 
   constructor(private _httCliente:HttpClient) { }

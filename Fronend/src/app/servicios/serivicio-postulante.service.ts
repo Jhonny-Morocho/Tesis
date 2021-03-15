@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {PostulanteModel} from '../models/postulante.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class SerivicioPostulanteService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlBackendCrearPostulante="/Backend/public/index.php/estudiante/registro/";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
   private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";

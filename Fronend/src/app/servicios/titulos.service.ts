@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {TituloModel} from '../models/titulo.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class TituloService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlBackendCrearTitulo="/Backend/public/index.php/titulos-academicos/registro/";
   private urlSubirArchivo="/Backend/public/index.php/titulos-academicos/subirArchivo";
   private urlListarTitulo="/Backend/public/index.php/titulos-academicos/listarTitulosEstudiante/";

@@ -1,7 +1,7 @@
 <navTab-admin></navTab-admin>
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
-<div class="content-wrapper">
+<div class="content-wrapper" *ngIf="tipoUsuarioSecretaria==true">
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <div class="container " *ngIf="tipoUsuarioSecretaria==true">
@@ -42,10 +42,10 @@
 
 <!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
 <!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
-<div class="content-wrapper">
+<div class="content-wrapper" *ngIf="tipoUsuarioEncargado==true">
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
-            <div class="container " *ngIf="tipoUsuarioEncargado==true">
+            <div class="container ">
                 <h1 class="display-6">Tareas usuario Encargado</h1>
                 <hr>
                 <div class="container ">

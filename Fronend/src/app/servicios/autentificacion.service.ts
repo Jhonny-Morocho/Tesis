@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {UsuarioModel} from '../models/usuario.model';
 // importmaos el mamp para poder usar el token y gaurdar en el local storage
 import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {CursosCapacitacionesModel} from '../models/cursos-capacitaciones.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class CursosCapacitacionesService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlBackendCrearCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/registro/";
   private urlSubirArchivo="/Backend/public/index.php/cursos-capacitaciones/subirArchivo";
   private urlListarCursosCapacitaciones="/Backend/public/index.php/cursos-capacitaciones/listarCursosCapacitaciones/";

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {OfertaLaboralModel} from '../models/oferta-laboral.models';
 import {  map } from 'rxjs/operators';
-
+import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class OfertasLaboralesService {
   //el url del servicio o del backend
-  private urlDominio_="http://localhost/Tesis";
+  private urlDominio_=environment.dominio;
   private urlCrearOfertaLaboral="/Backend/public/index.php/ofertas-laborales/registro/";
   private urlListarOfertasLaborales="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesExternal_us/";
   private urlELiminarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/eliminarOfertaLaboral";

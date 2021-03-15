@@ -68,7 +68,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes,{useHash:true}) ],
   // si quiero exportar estas rutas para usarlas en otro modulo entonces coloco esto 
   exports: [ RouterModule ]
 }) 
