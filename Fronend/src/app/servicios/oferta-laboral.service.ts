@@ -32,8 +32,20 @@ export class OfertasLaboralesService {
      );
   }
 
-  //listammos postulantes activos /no activos / depende del estado
+  //listammos ofertas por empleador/individual 
   listarOfertasLaboralesExternal_us(){
+    //retorna la respuesata
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlListarOfertasLaborales}${localStorage.getItem("external_us")}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
+        })
+    );
+  }
+  //listammos postulantes activos /no activos / depende del estado
+  listarTodasLasOfertas(){
     //retorna la respuesata
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarOfertasLaborales}${localStorage.getItem("external_us")}`

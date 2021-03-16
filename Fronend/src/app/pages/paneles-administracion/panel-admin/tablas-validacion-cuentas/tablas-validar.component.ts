@@ -7,8 +7,8 @@ import { EmpleadorModel } from 'src/app/models/empleador.models';
 
 
 @Component({
-  selector: 'app-tareas-pendientes-secretaria',
-  templateUrl: './tablas-validar.component.html'
+  selector: 'app-validar-cuentas',
+  templateUrl: './tablas-validar-cuentas.component.html'
 })
 export class TareaValiar implements OnInit {
   //data table

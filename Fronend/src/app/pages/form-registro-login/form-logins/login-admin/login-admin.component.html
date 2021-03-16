@@ -16,12 +16,12 @@
                         </div>
                         <hr>
                         <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Email </label><br>
+                            <label for="inputEmailAdmin" class="form-label">Email </label><br>
                             <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El correo es obligatorio</span>
                             <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" id="inputEmail4" required email>
                         </div>
                         <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Password</label><br>
+                            <label for="inputPasswordAdmin" class="form-label">Password</label><br>
                             <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
                             <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" id="inputPassword4" required minlength="6">
                         </div>

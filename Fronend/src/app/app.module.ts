@@ -22,7 +22,7 @@ import { EmpleadorComponent } from './pages/empleador/empleador.component';
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
-import {TareaValiar} from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion/tablas-validar.component';
+import {TareaValiar} from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
@@ -46,6 +46,7 @@ import { FormEditarCursoComponent } from './pages/paneles-administracion/panel-p
 import { OfertaLaboralComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 import { AddOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import { EditOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
+import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administracion/panel-admin/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
 //cursos-capacitacines
 
 //import { ModalModule } from 'ngx-bootstrap/modal';
@@ -83,7 +84,8 @@ import { EditOfertaComponent } from './pages/paneles-administracion/panel-emplea
     FormEditarCursoComponent,
     OfertaLaboralComponent,
     AddOfertaComponent,
-    EditOfertaComponent
+    EditOfertaComponent,
+    TablaValidarOfertasLaboralesComponent
   ],
 
   imports: [
