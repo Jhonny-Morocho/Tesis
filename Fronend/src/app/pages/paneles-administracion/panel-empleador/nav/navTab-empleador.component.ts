@@ -22,6 +22,7 @@ export class NabPanelEmpleador implements OnInit {
      // no existe session por lo cual debo direccionar al inicio
    }
 
+
   }
   salirSession(){
     // ocupo el servicio
