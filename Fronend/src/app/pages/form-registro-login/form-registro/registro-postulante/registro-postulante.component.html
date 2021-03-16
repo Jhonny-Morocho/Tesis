@@ -1,8 +1,11 @@
-<div class="container mt-5  animate__animated    animate__slideInLeft">
-    <div class="card">
+<div class="centrarFormularioLoginRegistro animate__animated    animate__slideInLeft">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="index.html" class="h1"><b>Registro </b>Postulante</a>
+        </div>
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="onSubMitRegistroPostulante(fRegistroPostulante)" #fRegistroPostulante="ngForm">
-                <h3>Registro de postulante</h3>
+
                 <div class="col-3">
                     <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a Login Postulante</a>
@@ -22,7 +25,6 @@
                     <button type="submit" class="btn btn-primary">Registrarme</button>
                 </div>
             </form>
-
         </article>
     </div>
 

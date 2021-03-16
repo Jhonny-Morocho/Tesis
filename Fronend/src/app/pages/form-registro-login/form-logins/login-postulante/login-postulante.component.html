@@ -1,11 +1,13 @@
-<div class="container mt-5  animate__animated  animate__slideInLeft">
-    <div class="card">
+<div class="centrarFormularioLoginRegistro   animate__animated  animate__slideInLeft">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="index.html" class="h1"><b>Login </b>Postulante</a>
+        </div>
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="loginPostulante(fLoginAdmin)" #fLoginAdmin="ngForm">
-                <h3>Login Postulante </h3>
                 <div class="col-3">
                     <a [routerLink]="['/home']" class="float-right btn btn-outline-primary">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Home </a>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Home </a>
                 </div>
                 <div class="col-3">
                     <a [routerLink]="['/registro-postulante']" class="float-right btn btn-outline-primary">
@@ -22,7 +24,7 @@
                     <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
                     <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" id="inputPassword4" required minlength="6">
                 </div>
-                <div class="col-12">
+                <div class="col-6">
                     <button type="submit" class="btn btn-primary">Ingresar</button>
                 </div>
             </form>
