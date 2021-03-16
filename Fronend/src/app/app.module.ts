@@ -50,6 +50,7 @@ import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administr
 import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
 import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
+import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/panel-postulante/postular-oferta-laboral/postular-oferta-laboral.component';
 
 //cursos-capacitacines
 
@@ -92,7 +93,8 @@ import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracio
     TablaValidarOfertasLaboralesComponent,
     FormValidarOfertaLaboralComponent,
     TablaPublicarOfertGestorComponent,
-    FormPublicarOfertaGestorComponent
+    FormPublicarOfertaGestorComponent,
+    PostularOfertaLaboralComponent
   ],
 
   imports: [

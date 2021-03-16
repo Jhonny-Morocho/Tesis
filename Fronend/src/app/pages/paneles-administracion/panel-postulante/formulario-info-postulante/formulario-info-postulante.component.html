@@ -1,14 +1,14 @@
 <navTab-postulante></navTab-postulante>
 <!-- si se completo el refistro del formulario imprimo los datos solo de manera visual -->
 
-<div class="content-wrapper">
-    <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
-        Registro de postulacion en proceso de validación, en 48 horas se notificara
-    </div>
-</div>
 
 
 <div class="content-wrapper" *ngIf="booleanFormularioCompletado==true">
+    <div class="container">
+        <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
+            Registro de postulacion en proceso de validación, en 48 horas se notificara
+        </div>
+    </div>
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
 

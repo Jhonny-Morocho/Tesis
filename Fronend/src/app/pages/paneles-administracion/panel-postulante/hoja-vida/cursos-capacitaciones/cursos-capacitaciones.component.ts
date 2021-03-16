@@ -31,6 +31,7 @@ export class CursosCapacitacionesComponent implements OnInit {
     this.servicioCursosCapacitacione.listarCursosCapacitaciones().subscribe(
       siHacesBien=>{
         this.cursosCapacitaciones =siHacesBien;
+        console.log(this.cursosCapacitaciones);
 
         this.dtOptions = {
           pagingType: 'full_numbers',

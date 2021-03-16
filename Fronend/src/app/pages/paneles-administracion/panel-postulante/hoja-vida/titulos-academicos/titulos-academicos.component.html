@@ -1,11 +1,12 @@
 <navTab-postulante></navTab-postulante>
 
-<div class="container mt-5">
-    <div class="col-3 mb-3">
-        <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-titulo']">
-            <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
-    </div>
+
+<div class="content-wrapper">
     <div class="card">
+        <div class="col-2 mt-2">
+            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-titulo']">
+                <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+        </div>
         <article class="card-body animated animate__animated animate__slideInRight">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
@@ -37,8 +38,7 @@
                     </tr>
                 </tbody>
             </table>
-
         </article>
-    </div>
 
+    </div>
 </div>

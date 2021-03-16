@@ -140,10 +140,11 @@ class TitulosAcademicosController extends Controller
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //busco si ese usuario es un estudiante 
             $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
-            $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
+            $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=",1)->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los titulos",
+                                                "Siglas"=>"ONE","error"=>$th,"external"=>$external_id,400]);
         }
     }
     //obtener tutlo por url //external_ti

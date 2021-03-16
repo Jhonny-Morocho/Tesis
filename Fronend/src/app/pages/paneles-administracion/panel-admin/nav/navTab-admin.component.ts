@@ -40,7 +40,7 @@ export class PanelAdminComponent implements OnInit {
       
     }else{
      // no existe session por lo cual debo direccionar al inicio
-   }
+    }
 
   }
 

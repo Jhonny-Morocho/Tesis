@@ -45,11 +45,13 @@ export class TituloService {
   listarTitulos(){
 
     //retorna la respuesata
+    console.log(`${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`);
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`
     ).pipe(
       map(
         respuestaBackend=>{
+          console.log(respuestaBackend);
           return this.crearArregloTitulo(respuestaBackend['mensaje']);
         })
     );
