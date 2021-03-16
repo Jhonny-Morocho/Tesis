@@ -30,7 +30,7 @@ export class PanelAdminComponent implements OnInit {
         case 3:
           this.tipoUsuarioSecretaria=true;
           break;       
-        case 6:
+        case 4:
           this.tipoUsuarioGestor=true;
           break;
         default:

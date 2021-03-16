@@ -11,6 +11,8 @@ import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import {RegistroEmpleadorComponent} from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
+import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
+import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
 import {TablaValidarOfertasLaboralesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
 import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
@@ -48,12 +50,15 @@ const routes: Routes = [
   { path: 'panel-empleador/oferta-laboral' , component: OfertaLaboralComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
+  
+  { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-validar-ofertaLaboral/:external_of' , component: FormValidarOfertaLaboralComponent,canActivate:[AutentificacionGuard] },
+  { path: 'panel-admin/form-publicar-ofertaLaboral/:external_of' , component: FormPublicarOfertaGestorComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/validar-oferta-laboral' , component: TablaValidarOfertasLaboralesComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiar,canActivate:[AutentificacionGuard] },
   //{ path: 'panel-admin/tareas' , component: TareaValiarEmpleadorComponent,canActivate:[AutentificacionGuard] },
-  
+ 
   { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas/empleador/:external_em' , component: FormValidacionEmpleadorComponent,canActivate:[AutentificacionGuard] },
   //rutas del postulante

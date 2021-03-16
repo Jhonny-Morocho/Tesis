@@ -58,6 +58,12 @@
     border-color: #ffc107;
 }
 
+.badge-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
 .centrarFormularioLoginRegistro {
     display: flex;
     align-items: center;

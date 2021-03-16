@@ -74,6 +74,17 @@ class OfertaLaboralController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
+    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    public function listarOfertasLaboralesValidadasEncargado(){
+        //obtener todos los usuarios que sean postulante
+        try {
+            //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
+            $ObjOfertasLaborales=OfertasLaborales::where("estado", ">=", 2)->get();
+            return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
+        }
+    }
     public function actulizarOfertaLaboral(Request $request,$external_id){
         if($request->json()){
 

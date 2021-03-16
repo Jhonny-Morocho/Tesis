@@ -12,6 +12,7 @@ export class OfertasLaboralesService {
   private urlCrearOfertaLaboral="/Backend/public/index.php/ofertas-laborales/registro/";
   private urlListarOfertasLaborales="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesExternal_us/";
   private urlListarTodasLasOferta="/Backend/public/index.php/ofertas-laborales/listarTodasLasOfertasLaborales";
+  private urlListarOfertasValidadasEncargado="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesValidadasEncargado";
   private urlELiminarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/eliminarOfertaLaboral";
   private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
   private urlEditarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/actulizarOfertaLaboral/";
@@ -50,6 +51,19 @@ export class OfertasLaboralesService {
     //retorna la respuesata
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarTodasLasOferta}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
+        })
+    );
+  }
+  //listammos postulantes activos /no activos / depende del estado
+  listarOfertasValidadasEncargado(){
+    //retorna la respuesata
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlListarOfertasValidadasEncargado}`
     ).pipe(
       map(
         respuestaBackend=>{

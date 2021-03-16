@@ -24,12 +24,18 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
                         <td>{{ ofertaLaboral.lugar}}</td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && estadoConversion(ofertaLaboral.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==true "><span class="badge badge-success ">Validado</span></td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false "><span class="badge badge-warning">Revisado</span></td>
-                        <!-- <td *ngIf="(ofertaLaboral.estado).toString()=='1' " title="Se informara la publicacion de su oferta en 72 horas"><span class="badge badge-warning">Pendiente <i class="far fa-clock"></i> 72h </span></td>
-                        <td *ngIf="(ofertaLaboral.estado).toString()=='2' "><span class="badge badge-success">Aprobado</span></td>
-                        <td *ngIf="(ofertaLaboral.estado).toString()=='3' "><span class="badge badge-danger">Denegado</span></td> -->
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && (ofertaLaboral.estado).toString()=='1'">
+                            <span class=" badge badge-danger ">No validado</span>
+                        </td>
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='2' ">
+                            <span class="badge badge-success ">Validado</span>
+                        </td>
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='1' ">
+                            <span class="badge badge-warning">Revisado</span>
+                        </td>
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='3' ">
+                            <span class="badge badge-primary">Publicada</span>
+                        </td>
                         <td>{{ ofertaLaboral.obervaciones }}</td>
                         <td>
                             <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>

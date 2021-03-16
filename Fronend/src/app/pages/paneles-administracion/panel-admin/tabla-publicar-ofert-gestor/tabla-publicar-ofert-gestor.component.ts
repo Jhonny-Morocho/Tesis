@@ -8,13 +8,13 @@ import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.se
 import { Subject } from 'rxjs';
 declare var JQuery:any;
 declare var $:any;
+
 @Component({
-  selector: 'app-tabla-validar-ofertas-laborales',
-  templateUrl: './tabla-validar-ofertas-laborales.component.html'
+  selector: 'app-tabla-publicar-ofert-gestor',
+  templateUrl: './tabla-publicar-ofert-gestor.component.html'
 })
-export class TablaValidarOfertasLaboralesComponent implements OnInit {
-    //visualizar informacion de empleador
-    instanciaEmpleadorModelVer:EmpleadorModel;
+export class TablaPublicarOfertGestorComponent implements OnInit {
+  instanciaEmpleadorModelVer:EmpleadorModel;
     booleanGestor:boolean=false;
     instanciaOfertaLaboralActualizar:OfertaLaboralModel;
     intanciaOfertaLaboral:OfertaLaboralModel;
@@ -25,6 +25,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     //data table
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
+
   constructor(private servicioOferta:OfertasLaboralesService,
     private servicioEmpleador:SerivicioEmpleadorService,
     private ruta_:Router) { }
@@ -38,7 +39,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
   }
   cargarTabla(){
     //listamos los titulos academicos
-    this.servicioOferta.listarTodasLasOfertas().subscribe(
+    this.servicioOferta.listarOfertasValidadasEncargado().subscribe(
       siHacesBien=>{
         console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
@@ -109,12 +110,12 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     cerrarModal(){
       $('#exampleModal').modal('hide');
     }
-    //conversion de estado
+    //conversion de estado//3 es publicado
     estadoConversion(numeroEstado:Number):boolean{
-      if(numeroEstado==1){
+      if(numeroEstado==2){
           return false;
       }
-      if(numeroEstado==2){
+      if(numeroEstado==3){
         return true;
       }
     }
@@ -127,6 +128,4 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
         return false;
       }
     }
-    //si el tipo de usuario es un gestor entonces el puede solo ver los validados
- 
-  }
+}

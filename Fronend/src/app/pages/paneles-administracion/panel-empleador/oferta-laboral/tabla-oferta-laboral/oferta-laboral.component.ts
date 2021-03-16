@@ -142,6 +142,7 @@ export class OfertaLaboralComponent implements OnInit {
     if(numeroEstado==2){
       return true;
     }
+    
   }
   //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
   estadoRevision(observacion:String):boolean{
