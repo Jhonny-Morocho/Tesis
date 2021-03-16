@@ -1,14 +1,17 @@
 <navTab-postulante></navTab-postulante>
 <!-- si se completo el refistro del formulario imprimo los datos solo de manera visual -->
 
-<div class="container mt-5">
+<div class="content-wrapper">
     <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
         Registro de postulacion en proceso de validación, en 48 horas se notificara
     </div>
 </div>
-<div class="container mt-5 animated fadeIn" style="padding-bottom: 100px;" *ngIf="booleanFormularioCompletado==true">
+
+
+<div class="content-wrapper" *ngIf="booleanFormularioCompletado==true">
     <div class="card">
-        <article class="card-body">
+        <article class="card-body animated animate__animated animate__slideInRight">
+
             <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulanteEditar(fPostulante)" #fPostulante="ngForm">
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                 <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
@@ -84,14 +87,11 @@
                     <button type="submit" class="btn btn-primary" [disabled]="obervaciones==false || formValidado==true">Reenviar</button>
                 </div>
             </form>
-
         </article>
     </div>
 </div>
-
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
-
-<div class="container mt-5 animated fadeIn" style="padding-bottom: 100px;" *ngIf="booleanFormularioCompletado==false">
+<div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==false">
     <div class="card">
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
