@@ -7,21 +7,17 @@ import { NgForm } from '@angular/forms';
 declare var JQuery:any;
 declare var $:any;
 @Component({
-  selector: 'app-edit-oferta',
-  templateUrl: './edit-oferta.component.html'
+  selector: 'app-form-validar-oferta-laboral',
+  templateUrl: './form-validar-oferta-laboral.component.html'
 })
-export class EditOfertaComponent implements OnInit {
+export class FormValidarOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
   constructor(private _activateRoute:ActivatedRoute,
     private servicioOfertaLaboral:OfertasLaboralesService) { }
 
   ngOnInit() {
-    //inicializo el formulario con los datos de la oferta laboral
     this.cargarDatosOfertaLaboral();
-
-
   }
-  
   cargarDatosOfertaLaboral(){
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     //obtener los parametros de la ulr para tener los datos del empleador
@@ -32,13 +28,14 @@ export class EditOfertaComponent implements OnInit {
             console.log(suHacesBien);
             //encontro estudiante estado==0
             if(suHacesBien["Siglas"]=="OE"){
-              this.instanciaOfertaLaboral.estado=1;
-              this.instanciaOfertaLaboral.obervaciones="";
               this.instanciaOfertaLaboral.puesto=suHacesBien["mensaje"]['puesto'];
               this.instanciaOfertaLaboral.descripcion=suHacesBien["mensaje"]['descripcion'];
               this.instanciaOfertaLaboral.lugar=suHacesBien["mensaje"]['lugar'];
               this.instanciaOfertaLaboral.requisitos=suHacesBien["mensaje"]['requisitos'];
               this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
+              this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
+              this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
+              
               $(function() {
                 //Add text editor
                 $('#compose-textarea').summernote({
@@ -54,8 +51,8 @@ export class EditOfertaComponent implements OnInit {
                         ['view', [false, false, false]]
                     ]
                 })
+                $('#compose-textarea').summernote('disable');
               })
-
 
             }else{
               console.log("no encontrado");
@@ -68,9 +65,9 @@ export class EditOfertaComponent implements OnInit {
       )
     });
   }
-  onSubMitEditarOfertaLaboral(formEditarOfertaLaboral:NgForm){
-    console.log(formEditarOfertaLaboral);
-    if(formEditarOfertaLaboral.invalid){
+  onSubMitEditarOfertaLaboral(formValidarOfertaLaboral:NgForm){
+    console.log(formValidarOfertaLaboral);
+    if(formValidarOfertaLaboral.invalid){
       return;
     }
     Swal({
@@ -79,8 +76,6 @@ export class EditOfertaComponent implements OnInit {
       text:'Espere por favor'
     });
     Swal.showLoading();
-
-
     this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
     this.servicioOfertaLaboral.actulizarDatosOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
       siHacesBien=>{
@@ -100,4 +95,19 @@ export class EditOfertaComponent implements OnInit {
     
 
   }
+    //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
+    estadoAprobado(estado:Number){
+      //console.log(estado);
+      if(estado==1){
+        this.instanciaOfertaLaboral.estado=1;
+        console.log(this.instanciaOfertaLaboral.estado);
+        return false;
+      }
+      if(estado==2){
+        this.instanciaOfertaLaboral.estado=2;
+        console.log(this.instanciaOfertaLaboral.estado);
+        return true;
+      }
+  
+    }
 }

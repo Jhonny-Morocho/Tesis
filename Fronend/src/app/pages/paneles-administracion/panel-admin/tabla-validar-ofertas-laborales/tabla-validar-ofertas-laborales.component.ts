@@ -37,7 +37,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
   }
   cargarTabla(){
     //listamos los titulos academicos
-    this.servicioOferta.listarOfertasLaboralesExternal_us().subscribe(
+    this.servicioOferta.listarTodasLasOfertas().subscribe(
       siHacesBien=>{
         console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
@@ -68,20 +68,42 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     verOfertaModal(id:Number){
       console.log("click");
       //necesito converitr o typescrip me da error
-      var index=parseInt((id).toString(), 10);  
+      var index=parseInt((id).toString(), 10); 
+
       this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
-      //consultamos los datos del empleador para presentarlos o imprimirlos
-      this.servicioEmpleador.listarFormEmpleador().subscribe(
+      this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
+      console.log( this.instanciaOfertaVer.descripcion);
+      //obtengo todos los usuarios 
+      this.servicioEmpleador.listarEmpleadores().subscribe(
         siHaceBien=>{
             console.log(siHaceBien);
-            this.instanciaEmpleadorModelVer.ciudad=siHaceBien['mensaje']['nom_representante_legal'];
-            this.instanciaEmpleadorModelVer.direccion=siHaceBien['mensaje']['direccion'];
-            this.instanciaEmpleadorModelVer.provincia=siHaceBien['mensaje']['provincia'];
-            this.instanciaEmpleadorModelVer.actividad_ruc=siHaceBien['mensaje']['actividad_ruc'];
-            this.instanciaEmpleadorModelVer.tiposEmpresa=siHaceBien['mensaje']['tiposEmpresa'];
-            this.instanciaEmpleadorModelVer.razon_empresa=siHaceBien['mensaje']['razon_empresa'];
+            // if(this.instanciaOfertaVer.descripcion==){
+
+            // }
+       
+           //filtrar si el id del usuario coincide con el de fk_empleador
+
+            //siHaceBien.forEach(element => element['id']);
+
+            siHaceBien.forEach(element => {
+              //comparo el fk_empleador con el id de usuario
+              if(element['id']== this.instanciaOfertaVer.fk_empleador){
+                console.log(element);
+                this.instanciaEmpleadorModelVer.ciudad=element['nom_representante_legal'];
+                this.instanciaEmpleadorModelVer.direccion=element['direccion'];
+                this.instanciaEmpleadorModelVer.provincia=element['provincia'];
+                this.instanciaEmpleadorModelVer.actividad_ruc=element['actividad_ruc'];
+                this.instanciaEmpleadorModelVer.tiposEmpresa=element['tiposEmpresa'];
+                this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
+              }
+    
+            });
+
+            console.log(this.instanciaEmpleadorModelVer);
+
+
             
         },error=>{
   
@@ -95,5 +117,23 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     }
     cerrarModal(){
       $('#exampleModal').modal('hide');
+    }
+    //conversion de estado
+    estadoConversion(numeroEstado:Number):boolean{
+      if(numeroEstado==1){
+          return false;
+      }
+      if(numeroEstado==2){
+        return true;
+      }
+    }
+    //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
+    estadoRevision(observacion:String):boolean{
+      //si ha escrito algo la secretaria signifca que si reviso
+      if(observacion.length>0){
+        return true;
+      }else{
+        return false;
+      }
     }
   }

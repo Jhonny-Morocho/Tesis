@@ -82,7 +82,9 @@ class OfertaLaboralController extends Controller
                     array(
                         'puesto'=>$request['puesto'], 
                         'descripcion'=>$request['descripcion'],
+                        'estado'=>$request['estado'],
                         'lugar'=>$request['lugar'],
+                        'obervaciones'=>$request['obervaciones'],
                         'requisitos'=>$request['requisitos']
                     ));
                 

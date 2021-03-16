@@ -47,6 +47,7 @@ import { OfertaLaboralComponent } from './pages/paneles-administracion/panel-emp
 import { AddOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import { EditOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
 import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administracion/panel-admin/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
+import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
 //cursos-capacitacines
 
 //import { ModalModule } from 'ngx-bootstrap/modal';
@@ -85,7 +86,8 @@ import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administr
     OfertaLaboralComponent,
     AddOfertaComponent,
     EditOfertaComponent,
-    TablaValidarOfertasLaboralesComponent
+    TablaValidarOfertasLaboralesComponent,
+    FormValidarOfertaLaboralComponent
   ],
 
   imports: [

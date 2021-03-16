@@ -11,6 +11,7 @@ export class OfertasLaboralesService {
   private urlDominio_=environment.dominio;
   private urlCrearOfertaLaboral="/Backend/public/index.php/ofertas-laborales/registro/";
   private urlListarOfertasLaborales="/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesExternal_us/";
+  private urlListarTodasLasOferta="/Backend/public/index.php/ofertas-laborales/listarTodasLasOfertasLaborales";
   private urlELiminarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/eliminarOfertaLaboral";
   private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
   private urlEditarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/actulizarOfertaLaboral/";
@@ -48,10 +49,11 @@ export class OfertasLaboralesService {
   listarTodasLasOfertas(){
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarOfertasLaborales}${localStorage.getItem("external_us")}`
+      `${this.urlDominio_}${this.urlListarTodasLasOferta}`
     ).pipe(
       map(
         respuestaBackend=>{
+          console.log(respuestaBackend);
           return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
         })
     );
