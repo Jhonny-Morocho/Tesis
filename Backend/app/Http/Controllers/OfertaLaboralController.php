@@ -58,10 +58,20 @@ class OfertaLaboralController extends Controller
             //busco si ese usuario es un estudiante 
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
             //4 estado //0== eliminado,1==activo,2==aprobado,3==rechazado
-            $titulosAcademicos=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->where("estado","!=","0")->orderBy('id', 'DESC')->get();
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
+            $ObjOfertaLaboral=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->where("estado","!=","0")->orderBy('id', 'DESC')->get();
+            return response()->json(["mensaje"=>$ObjOfertaLaboral,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar la oferta","Siglas"=>"ONE","error"=>$th,400]);
+        }
+    }
+    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    public function listarTodasLasOfertasLaborales(){
+        //obtener todos los usuarios que sean postulante
+        try {
+            $ObjOfertasLaborales=OfertasLaborales::get();
+            return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
     public function actulizarOfertaLaboral(Request $request,$external_id){
