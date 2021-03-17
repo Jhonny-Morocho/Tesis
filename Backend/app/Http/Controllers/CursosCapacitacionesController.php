@@ -78,6 +78,7 @@ class CursosCapacitacionesController extends Controller
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarCursosCapacitaciones( $external_id){
+        $titulosAcademicos=null;
         //obtener todos los usuarios que sean postulante
         try {
             //buscar si existe el usuario que realiza la peticion
@@ -87,7 +88,7 @@ class CursosCapacitacionesController extends Controller
             $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"ONE","error"=>$th,400]);
         }
     }
     public function actulizarCursoCapacitaciones(Request $request,$external_id){
