@@ -55,7 +55,7 @@ try {
         $router->post('/cursos-capacitaciones/actulizarCursoCapacitaciones/{external_id}','CursosCapacitacionesController@actulizarCursoCapacitaciones');
         $router->post('/cursos-capacitaciones/eliminarCursoCapicitacion','CursosCapacitacionesController@eliminarCursoCapicitacion');
         //ofertasLaboraolesEstuidante
-        $router->get('/ofertasLaboralesEstudiantes/listarTodasOfertaEstudiante','OfertaLaboralEstudianteController@listarTodasOfertaEstudiante');
+        $router->get('/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/{external_id}','OfertaLaboralEstudianteController@listarTodasOfertaEstudianteExternal_us');
         $router->get('/ofertasLaboralesEstudiantes/listTodasOfertasLaboralesEstudiante/{external_id}','OfertaLaboralEstudianteController@listTodasOfertasLaboralesEstudiante');
         $router->post('/ofertasLaboralesEstudiantes/PostularOfertaLaboral/{external_id}','OfertaLaboralEstudianteController@PostularOfertaLaboral');
         //paises

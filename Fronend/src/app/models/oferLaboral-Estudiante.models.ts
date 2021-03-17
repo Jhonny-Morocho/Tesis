@@ -1,5 +1,5 @@
 
-export class OfertaLaboralEstudiante{
+export class OfertaLaboralEstudianteModel{
     fk_estudiante:Number;
     fk_oferta_laboral:Number;
     estado:Number;

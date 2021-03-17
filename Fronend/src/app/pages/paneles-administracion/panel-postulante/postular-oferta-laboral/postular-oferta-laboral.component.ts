@@ -7,7 +7,7 @@ import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
-import {OfertaLaboralEstudiante} from 'src/app/models/oferLaboral-Estudiante.models';
+import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiante.models';
 declare var JQuery:any;
 declare var $:any;
 
@@ -17,13 +17,15 @@ declare var $:any;
 })
 export class PostularOfertaLaboralComponent implements OnInit {
   instanciaEmpleadorModelVer:EmpleadorModel;
-  instanciaOfertLaboralEstudiante:OfertaLaboralEstudiante;
+  instanciaOfertaEstudianteEstado:OfertaLaboralEstudianteModel;
+  instanciaOfertLaboralEstudiante:OfertaLaboralEstudianteModel;
   booleanGestor:boolean=false;
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
   ofertasLaborales:OfertaLaboralModel[]=[];
-
+//arrayOfertasPostuladasEstudaite
+  arrayofertasPostuladasEstudiante:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaVer:OfertaLaboralModel;
   //data table
   dtOptions: DataTables.Settings = {};
@@ -38,12 +40,23 @@ export class PostularOfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
-    this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudiante();
+    this.instanciaOfertaEstudianteEstado=new OfertaLaboralEstudianteModel();
+    this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudianteModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.cargarTabla();
   }
   cargarTabla(){
-    //listamos los titulos academicos
+    //listamos toda las ofertas que el estudiante haya postulado//para poner el stado //estatica 
+    this.servicioOfertaEstudiante.listarTodasOfertaEstudianteExternal_us().subscribe(
+      siHaceBien=>{
+        this.arrayofertasPostuladasEstudiante=siHaceBien;
+        console.log(this.arrayofertasPostuladasEstudiante);
+        console.log(siHaceBien);
+      },error=>{
+        console.log(error);
+      }
+    );
+    //listamos las ofertas laborales
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         console.warn("TODO BIEN");
@@ -51,7 +64,6 @@ export class PostularOfertaLaboralComponent implements OnInit {
         console.log(this.ofertasLaborales);
         //data table
         //cargamos los items o los requisitos
-
         this.dtOptions = {
           pagingType: 'full_numbers',
           pageLength: 2
@@ -62,6 +74,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
         console.warn("TODO MAL");
       }
     );
+
    }
    ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
@@ -76,7 +89,6 @@ export class PostularOfertaLaboralComponent implements OnInit {
       console.log("click");
       //necesito converitr o typescrip me da error
       var index=parseInt((id).toString(), 10); 
-
       this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
@@ -116,23 +128,17 @@ export class PostularOfertaLaboralComponent implements OnInit {
     cerrarModal(){
       $('#exampleModal').modal('hide');
     }
-      //conversion de estado//3 es publicado
-    estadoConversion(numeroEstado:Number):boolean{
-      if(numeroEstado==2){
-          return false;
-      }
-      if(numeroEstado==3){
-        return true;
-      }
-    }
-    //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
-    estadoRevision(observacion:String):boolean{
-      //si ha escrito algo la secretaria signifca que si reviso
-      if(observacion.length>0){
-        return true;
-      }else{
-        return false;
-      }
+
+    //si es tru,entonces ya estoy postulando
+    estadoPostulacion(idOferta:Number){
+      let encontrado=false;
+       this.arrayofertasPostuladasEstudiante.forEach(element => {
+         if(element['fk_oferta_laboral']==idOferta){
+           encontrado= true;
+         }
+
+       });
+      return encontrado;
     }
     postular(externalOferta:string,nomOferta:string){
       Swal({
@@ -160,6 +166,8 @@ export class PostularOfertaLaboralComponent implements OnInit {
             console.log(mensaje);
             if(siHacesBien['Siglas']=='OE'){
               Swal('Guardado',mensaje,'success');
+              this.cargarTabla();
+              this.ngOnDestroy()
 
             }else{
               Swal('Informacion',mensaje,'info');

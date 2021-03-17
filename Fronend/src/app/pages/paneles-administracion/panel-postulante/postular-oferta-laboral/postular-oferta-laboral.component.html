@@ -9,9 +9,7 @@
                         <th>Puesto</th>
                         <th>Lugar</th>
                         <th>Estado</th>
-                        <th>Observaciones</th>
                         <th>Ver</th>
-                        <!-- <th>Postular</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -19,22 +17,15 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
                         <td>{{ ofertaLaboral.lugar}}</td>
-
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==true">
-                            <span class="badge badge-success ">xx</span>
+                        <td *ngIf="estadoPostulacion(ofertaLaboral.id)==true">
+                            <span class="badge badge-success ">Postulando</span>
                         </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false ">
-                            <span class="badge badge-warning">x</span>
+                        <td *ngIf="estadoPostulacion(ofertaLaboral.id)==false">
+                            <span class="badge badge-warning ">Sin postular</span>
                         </td>
-                        <td>{{ ofertaLaboral.obervaciones}}</td>
                         <td>
-                            <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
+                            <a class="btn btn-light " (click)="verOfertaModal(i) "> <i class="fas fa-eye "></i></a>
                         </td>
-                        <!-- <td>
-                            <a class="btn btn-light" [routerLink]="['/panel-admin/form-publicar-ofertaLaboral',ofertaLaboral.external_of] ">
-                                <i class="fas fa-chevron-right "></i>
-                            </a>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -43,83 +34,51 @@
     </div>
 </div>
 
-<!-- Modal  VISUALIZAR OFERTA LABORAL-->
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
 
-            <div class="card-header">
-                <h3 class="card-title">Oferta Laboral Detalles</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="card-header ">
+                <h3 class="card-title ">Oferta Laboral Detalles</h3>
+                <div class="card-tools ">
+                    <button type="button " class="btn btn-tool " data-card-widget="collapse " title="Collapse ">
+                      <i class="fas fa-minus "></i>
                     </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove" (click)="cerrarModal()">
-                      <i class="fas fa-times"></i>
+                    <button type="button " class="btn btn-tool " data-card-widget="remove " title="Remove " (click)="cerrarModal() ">
+                      <i class="fas fa-times "></i>
                     </button>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                        <!-- <div class="row">
-                              <div class="col-12 col-sm-4">
-                                  <div class="info-box bg-light">
-                                      <div class="info-box-content">
-                                          <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                          <span class="info-box-number text-center text-muted mb-0">2300</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-12 col-sm-4">
-                                  <div class="info-box bg-light">
-                                      <div class="info-box-content">
-                                          <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                          <span class="info-box-number text-center text-muted mb-0">2000</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-12 col-sm-4">
-                                  <div class="info-box bg-light">
-                                      <div class="info-box-content">
-                                          <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                                          <span class="info-box-number text-center text-muted mb-0">20</span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> -->
-                        <div class="row">
-                            <div class="col-12">
+            <div class="card-body ">
+                <div class="row ">
+                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1 ">
+                        <div class="row ">
+                            <div class="col-12 ">
                                 <h4>Empleador</h4>
                                 <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../../assets/images/empresa.png" alt="user image">
-                                        <span class="username">
-                                  <p class="text-primary">{{ instanciaEmpleadorModelVer.razon_empresa }}</p>
-                                </span>
-
+                                    <div class="user-block ">
+                                        <img class="img-circle img-bordered-sm " src="../../../assets/images/empresa.png " alt="user image ">
+                                        <span class="username ">
+                                            <p class="text-primary ">{{ instanciaEmpleadorModelVer.razon_empresa }}</p>
+                                        </span>
                                     </div>
                                     <!-- /.user-block -->
-                                    <p class="post">Descripcion de la oferta laboral</p>
+                                    <p class="post ">Descripcion de la oferta laboral</p>
                                     <br>
-                                    <p>
-                                        {{instanciaOfertaVer.descripcion}}
-                                    </p>
-
+                                    <p>{{instanciaOfertaVer.descripcion}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary">Puesto <i class="fab fa-black-tie"></i> {{ instanciaOfertaVer.puesto }}</h3>
+                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2 ">
+                        <h3 class="text-primary ">Puesto <i class="fab fa-black-tie "></i> {{ instanciaOfertaVer.puesto }}</h3>
                         <br>
-                        <h5 class="mt-5 text-muted">Requisitos</h5>
-                        <div id="itemRequisitos">
+                        <h5 class="mt-5 text-muted ">Requisitos</h5>
+                        <div id="itemRequisitos"></div>
 
-                        </div>
-                        <div class="text-center mt-5 mb-3">
-                            <a (click)="postular(instanciaOfertaVer.external_of,instanciaOfertaVer.puesto)" class="btn btn-sm btn-primary">Postular</a>
+                        <div class="text-center mt-5 mb-3 ">
+                            <a (click)="postular(instanciaOfertaVer.external_of,instanciaOfertaVer.puesto) " class="btn btn-sm btn-primary ">Postular</a>
                         </div>
                     </div>
                 </div>
@@ -127,3 +86,4 @@
             <!-- /.card-body -->
         </div>
     </div>
+</div>

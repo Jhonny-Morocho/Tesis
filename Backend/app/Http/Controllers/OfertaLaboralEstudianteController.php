@@ -19,13 +19,11 @@ class OfertaLaboralEstudianteController extends Controller
 {
   
     //el estudiante postula a una oferta laboral//
-    public function listarTodasOfertaEstudiante(){
+    public function listarTodasOfertaEstudianteExternal_us($external_id){
         try {
-            $ObjOfertaEstudiante=OfertaLaboralEstudiante::get();
-            return response()->json(["mensaje"=>"Operacion Exitosa",
-                                        "Siglas"=>"OE",
-                                        "OferEstudiante"=>$ObjOfertaEstudiante,
-                                    200]);
+            $ObjEstudiante=$this->buscarEstudiante($external_id);
+            $ObjOfertaEstudiante=OfertaLaboralEstudiante::where('fk_estudiante',$ObjEstudiante['id'])->get();
+            return response()->json(["mensaje"=>$ObjOfertaEstudiante,"Siglas"=>"OE",200]);
             
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa",
