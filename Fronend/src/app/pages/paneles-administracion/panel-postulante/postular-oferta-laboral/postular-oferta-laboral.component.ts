@@ -128,7 +128,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
     cerrarModal(){
       $('#exampleModal').modal('hide');
     }
-
+    //si esta en la tabla siginica que esta incrito
     //si es tru,entonces ya estoy postulando
     estadoPostulacion(idOferta:Number){
       let encontrado=false;

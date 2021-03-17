@@ -59,7 +59,7 @@
                         <li class="nav-item">
                             <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Validar cuentas del empleador</p>
+                                <p>Validar Empleador</p>
                             </a>
                         </li>
 
@@ -80,20 +80,12 @@
                     </div>
                     <!-- ======================= SECRETARIA ============== -->
                     <div *ngIf="tipoUsuarioSecretaria==true">
-                        <a href="#" class="nav-link active">
-                            <i class="fas fa-tasks mr-1"></i>
-                            <p>
-                                Tareas de la secretaria
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" style="display: none;">
-                            <li class="nav-item">
-                                <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Validar cuentas de estudiante</p>
-                                </a>
-                            </li>
-                        </ul>
+                        <li class="nav-item">
+                            <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Validar Estudiantes</p>
+                            </a>
+                        </li>
                     </div>
                     <!-- ======================= GESTOR ============== -->
                     <div *ngIf="tipoUsuarioGestor==true">
@@ -107,7 +99,7 @@
                             <li class="nav-item">
                                 <a routerLinkActive="active" [routerLink]="['/panel-admin/publicar-oferta-gestor']" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Aprobar y publicar las ofertas laborales</p>
+                                    <p>Aprobar y publicar ofertas laborales</p>
                                 </a>
                             </li>
                         </ul>

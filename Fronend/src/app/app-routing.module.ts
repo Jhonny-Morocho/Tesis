@@ -3,7 +3,6 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { RegistroPostulanteComponent } from './pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
 import {LoginAdminComponent} from './pages/form-registro-login/form-logins/login-admin/login-admin.component';
-import {EmpleadorComponent} from './pages/empleador/empleador.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
@@ -11,6 +10,7 @@ import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import {RegistroEmpleadorComponent} from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
+import {TablaFiltroPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
@@ -44,7 +44,6 @@ const routes: Routes = [
   { path: 'login-admin' , component: LoginAdminComponent },
   { path: 'login-empleador' , component: LoginEmpleadorComponent },
   //rutas del empleador
-  { path: 'empleador' , component: EmpleadorComponent },
   { path: 'panel-empleador/edit-oferta-laboral/:external_of' , component: EditOfertaComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent,canActivate:[AutentificacionGuard] },
@@ -52,6 +51,7 @@ const routes: Routes = [
   { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
   
+  { path: 'panel-admin/filtrar-postulantes/:external_of_es' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-validar-ofertaLaboral/:external_of' , component: FormValidarOfertaLaboralComponent,canActivate:[AutentificacionGuard] },

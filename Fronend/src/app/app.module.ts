@@ -18,7 +18,7 @@ import { RegistroEmpleadorComponent } from './pages/form-registro-login/form-reg
 import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import { NavComponent } from './pages/nav/nav.component';
 
-import { EmpleadorComponent } from './pages/empleador/empleador.component';
+
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
@@ -51,6 +51,7 @@ import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracio
 import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/panel-postulante/postular-oferta-laboral/postular-oferta-laboral.component';
+import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 
 //cursos-capacitacines
 
@@ -65,7 +66,6 @@ import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/p
     HomeComponent,
     LoginAdminComponent,
     NavComponent,
-    EmpleadorComponent,
     PanelAdminComponent,
     MiPerfilComponent,
     LoginPostulanteComponent,
@@ -94,7 +94,8 @@ import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/p
     FormValidarOfertaLaboralComponent,
     TablaPublicarOfertGestorComponent,
     FormPublicarOfertaGestorComponent,
-    PostularOfertaLaboralComponent
+    PostularOfertaLaboralComponent,
+    TablaFiltroPostulantesComponent
   ],
 
   imports: [
