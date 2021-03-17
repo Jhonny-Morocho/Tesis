@@ -37,6 +37,9 @@ class Estudiante extends Model
     public function cursoscapacitaciones(){
         return $this->hasMany('App\Models\cursoscapacitaciones','fk_estudiante');
     }
+    public function ofertaLaboralEstudiante(){
+        return $this->hasMany('App\Models\OfertaLaboralEstudiante','fk_estudiante');
+    }
    
     
 }

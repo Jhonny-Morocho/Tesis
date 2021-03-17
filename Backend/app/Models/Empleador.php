@@ -33,4 +33,5 @@ class Empleador extends Model
          //relaciona al modelo con cual pertenece
          return $this->belongsTo('App\Models\usuario','fk_usuario');
      }
+     
 }

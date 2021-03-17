@@ -27,4 +27,7 @@ class OfertasLaborales extends Model
     public function empleador(){
         return $this->belongsTo('App\Models\Empleador','fk_empleador');
     }
+    public function ofertaLaboralEstudiante(){
+        return $this->hasMany('App\Models\OfertaLaboralEstudiante','fk_oferta_laboral');
+    }
 }

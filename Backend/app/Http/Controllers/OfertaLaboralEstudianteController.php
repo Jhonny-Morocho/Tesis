@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleador;
 use App\Models\OfertasLaborales;
+use App\Models\Estudiante;
+use App\Models\OfertaLaboralEstudiante;
 use App\Models\Usuario;
 use Error;
 //permite traer la data del apirest
@@ -13,36 +15,54 @@ use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
 
-class OfertaLaboralController extends Controller
+class OfertaLaboralEstudianteController extends Controller
 {
   
-
-    //registrar curso y capacitaciones
-    public function RegistrarOfertaLaboral(Request $request,$external_id){
-        //code...
+    //el estudiante postula a una oferta laboral//
+    public function listarTodasOfertaEstudiante(){
+        try {
+            $ObjOfertaEstudiante=OfertaLaboralEstudiante::get();
+            return response()->json(["mensaje"=>"Operacion Exitosa",
+                                        "Siglas"=>"OE",
+                                        "OferEstudiante"=>$ObjOfertaEstudiante,
+                                    200]);
+            
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Operacion No Exitosa",
+                                        "Siglas"=>"ONE","error"=>$th]);
+        }
+    }
+    public function PostularOfertaLaboral(Request $request,$external_id){
         if($request->json()){
-            //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
-            //buscar si existe el usuario que realiza la peticion
-            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            //pregunto si el extern_us es del usuario que realiza la peticion el empleador
-            $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
-            //creamos un objeto de tipo ofertaLaborales para enviar los datos
+            //comprobar el usuario es un estudiante
             try {
-                //code...
-                $ObjOfertasLaborales=new OfertasLaborales();
-                $ObjOfertasLaborales->fk_empleador=$ObjEmpleador->id;
-                $ObjOfertasLaborales->puesto=$datos["puesto"];
-                $ObjOfertasLaborales->descripcion=$datos["descripcion"];
-                $ObjOfertasLaborales->lugar=$datos["lugar"];
-                $ObjOfertasLaborales->obervaciones=$datos["obervaciones"];
-                $ObjOfertasLaborales->requisitos=$datos["requisitos"];
-                $ObjOfertasLaborales->estado=$datos["estado"];
-                $ObjOfertasLaborales->external_of="Of".Utilidades\UUID::v4();
-                $ObjOfertasLaborales->save();
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE","Objeto"=>$ObjOfertasLaborales,200,]);
+                $ObjEstudiante=$this->buscarEstudiante($external_id);
+                //buscamos la oferta laboral
+                $OfertaLaboral=$this->buscarOfertaLaboral($datos['external_of']);
+                //comprobar si el etudainte no postule dos veces a la misma oferta
+                $ValidarPostularUnaOfertaNVeces=$this->validarEstNoPostuleNVecesMismaOfert($ObjEstudiante['id'],$OfertaLaboral['id']);
+                if($ValidarPostularUnaOfertaNVeces==false){
+                    //si no repite la misma postulacion entonces si puede inscribirse
+                        $ObjOfertaLaboralEstudiante=new OfertaLaboralEstudiante();
+                        $ObjOfertaLaboralEstudiante->fk_estudiante=$ObjEstudiante['id'];
+                        $ObjOfertaLaboralEstudiante->fk_oferta_laboral=$OfertaLaboral['id'];
+                        $ObjOfertaLaboralEstudiante->estado=$request['estado'];
+                        $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();;
+                        $ObjOfertaLaboralEstudiante->save();
+                        return response()->json(["mensaje"=>"Operacion Exitosa",
+                                                    "Siglas"=>"OE",
+                                                    "OferEstudiante"=>$ObjOfertaLaboralEstudiante,
+                                                200]);
+                }else{
+                    return response()->json(["mensaje"=>"Usted ya esta postulando a esta oferta","Siglas"=>"ONE",200]);
+                }
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                                        "Siglas"=>"ONE",
+                                        "estudiante"=>$ObjEstudiante,
+                                        "ofertaLaboral"=>$OfertaLaboral,
+                                        "request"=>$request->json()->all(),"error"=>$th]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
@@ -64,11 +84,14 @@ class OfertaLaboralController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar la oferta","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
-    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
-    public function listarTodasLasOfertasLaborales(){
+    // listamos todos los estudiante que han postulado a una oferta xxx
+    public function lisTodOfLabEstExternal_Ofert($external_id){
         //obtener todos los usuarios que sean postulante
         try {
-            $ObjOfertasLaborales=OfertasLaborales::get();
+            //buscamos al id de la oferta laboral
+            $ObjOfertaLaboral=OfertasLaborales::where('external_of',"Cud6b18d6f-4dff-4963-94b0-fba4fc06dd1e");
+            die($ObjOfertaLaboral);
+            $ObjOfertasLaborales=OfertaLaboralEstudiante::get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
@@ -78,19 +101,9 @@ class OfertaLaboralController extends Controller
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante
         try {
+            
             //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
-            $ObjOfertasLaborales=OfertasLaborales::where("estado", ">=", 2)->where("estado", "<=", 3)->get();
-            return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
-        } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
-        }
-    }
-    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
-    public function listarOfertasLaboralesValidadasGestor(){
-        //obtener todos los usuarios que sean postulante
-        try {
-            //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
-            $ObjOfertasLaborales=OfertasLaborales::where("estado",3 )->get();
+            $ObjOfertasLaborales=OfertaLaboralEstudiante::get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
@@ -151,5 +164,54 @@ class OfertaLaboralController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
         }
      
+    }
+
+    //================ FUNCIONES RECURSIVAS =======================//
+    //bucar estudiante
+    private function  buscarEstudiante($external_us){
+        try {
+            //code...
+            $ObjUsuario=Usuario::where("external_us",$external_us)->first();
+            $ObjEstudiante=Estudiante::where("fk_usuario",$ObjUsuario->id)->first();
+            if($ObjEstudiante){
+                return $ObjEstudiante;
+            }else{
+                //ONE
+                return "ONE";
+            }
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    //bucamos la oferta laboral
+    private function  buscarOfertaLaboral($external_of){
+        try {
+            $ObjOfertaLaboral=OfertasLaborales::where("external_of",$external_of)->first();
+            if($ObjOfertaLaboral){
+                return $ObjOfertaLaboral;
+            }else{
+                return "ONE";
+            }
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    // validar que el estudainte no postule dos veces a la misma oferta
+    private function validarEstNoPostuleNVecesMismaOfert($fk_estudiante,$fk_ofertaLoral){
+        try {
+            //code...
+            $ObjOfertaLaboralEstudiante=OfertaLaboralEstudiante::where ('fk_estudiante',$fk_estudiante)->where('fk_oferta_laboral',$fk_ofertaLoral)->first();
+            if($ObjOfertaLaboralEstudiante){
+                // si exiet el usuarui entonces reggresa mensaje
+                //si encontro
+                return true;
+            }else{
+                //no esta postulando a la misma oferta
+                return false;
+            }
+            return $ObjOfertaLaboralEstudiante;
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 }

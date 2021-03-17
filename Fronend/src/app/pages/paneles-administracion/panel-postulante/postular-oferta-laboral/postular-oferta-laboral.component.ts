@@ -6,6 +6,8 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
+import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
+import {OfertaLaboralEstudiante} from 'src/app/models/oferLaboral-Estudiante.models';
 declare var JQuery:any;
 declare var $:any;
 
@@ -15,6 +17,7 @@ declare var $:any;
 })
 export class PostularOfertaLaboralComponent implements OnInit {
   instanciaEmpleadorModelVer:EmpleadorModel;
+  instanciaOfertLaboralEstudiante:OfertaLaboralEstudiante;
   booleanGestor:boolean=false;
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
@@ -27,6 +30,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   
   constructor(private servicioOferta:OfertasLaboralesService,
+    private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioEmpleador:SerivicioEmpleadorService,
     private ruta_:Router) { }
 
@@ -34,12 +38,13 @@ export class PostularOfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
+    this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudiante();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.cargarTabla();
   }
   cargarTabla(){
     //listamos los titulos academicos
-    this.servicioOferta.listarOfertasValidadasEncargado().subscribe(
+    this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
@@ -76,6 +81,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
       this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
+      this.instanciaOfertaVer.external_of=this.ofertasLaborales[index]['external_of'];
       console.log( this.instanciaOfertaVer.descripcion);
       //obtengo todos los usuarios 
       this.servicioEmpleador.listarEmpleadores().subscribe(
@@ -127,6 +133,47 @@ export class PostularOfertaLaboralComponent implements OnInit {
       }else{
         return false;
       }
+    }
+    postular(externalOferta:string,nomOferta:string){
+      Swal({
+        title: 'Are you sure?',
+        text: "Postular a "+nomOferta,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.value) {
+      Swal({
+        allowOutsideClick:false,
+        type:'info',
+        text:'Espere por favor'
+        });
+        Swal.showLoading();
+        this.instanciaOfertLaboralEstudiante.estado=1;
+        this.servicioOfertaEstudiante.postularOfertEstudiante(this.instanciaOfertLaboralEstudiante,externalOferta
+        ).subscribe(
+          siHacesBien=>{
+            console.log(siHacesBien);
+            let mensaje=(siHacesBien['mensaje']);
+            console.log(mensaje);
+            if(siHacesBien['Siglas']=='OE'){
+              Swal('Guardado',mensaje,'success');
+
+            }else{
+              Swal('Informacion',mensaje,'info');
+            }
+          },error=>{
+            let mensaje=error['mensaje'];
+            console.log(error);
+            Swal('Error',mensaje,'error');
+          }
+        );
+
+        }
+      })
+      console.log(externalOferta);
     }
 
 }

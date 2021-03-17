@@ -54,11 +54,15 @@ try {
         $router->post('/cursos-capacitaciones/subirArchivo','CursosCapacitacionesController@subirArchivo');
         $router->post('/cursos-capacitaciones/actulizarCursoCapacitaciones/{external_id}','CursosCapacitacionesController@actulizarCursoCapacitaciones');
         $router->post('/cursos-capacitaciones/eliminarCursoCapicitacion','CursosCapacitacionesController@eliminarCursoCapicitacion');
-   
+        //ofertasLaboraolesEstuidante
+        $router->get('/ofertasLaboralesEstudiantes/listarTodasOfertaEstudiante','OfertaLaboralEstudianteController@listarTodasOfertaEstudiante');
+        $router->get('/ofertasLaboralesEstudiantes/listTodasOfertasLaboralesEstudiante/{external_id}','OfertaLaboralEstudianteController@listTodasOfertasLaboralesEstudiante');
+        $router->post('/ofertasLaboralesEstudiantes/PostularOfertaLaboral/{external_id}','OfertaLaboralEstudianteController@PostularOfertaLaboral');
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
         //ofertas-laborales
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');
+        $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasGestor','OfertaLaboralController@listarOfertasLaboralesValidadasGestor');
         $router->get('/ofertas-laborales/listarTodasLasOfertasLaborales','OfertaLaboralController@listarTodasLasOfertasLaborales');
         $router->post('/ofertas-laborales/eliminarOfertaLaboral','OfertaLaboralController@eliminarOfertaLaboral');
         $router->post('/ofertas-laborales/actulizarOfertaLaboral/{external_id}','OfertaLaboralController@actulizarOfertaLaboral');
