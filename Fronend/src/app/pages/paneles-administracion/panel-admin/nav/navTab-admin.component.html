@@ -53,44 +53,29 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-                <li class="nav-item">
-                    <!-- <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Mis tareas</p>
-                    </a>
-                    <a routerLinkActive="active" [routerLink]="['/panel-empleador/oferta-laboral']" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Ofertas Laborales</p>
-                    </a> -->
+                <li class="nav-item ">
                     <!-- ======================= ENCARGADO ============== -->
                     <div *ngIf="tipoUsuarioEncargado==true">
-                        <a href="#" class="nav-link active">
-                            <i class="fas fa-tasks mr-1"></i>
-                            <p>
-                                Tareas del encargado
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" style="display: none;">
-                            <li class="nav-item">
-                                <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Validar cuentas del empleador</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a routerLinkActive="active" [routerLink]="['/panel-admin/tareas']" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Validar cuentas del empleador</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a routerLinkActive="active" [routerLink]="['/panel-admin/validar-oferta-laboral']" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Validar ofertas laborales </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./index3.html" class="nav-link ">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Calificar empleadores</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a routerLinkActive="active" [routerLink]="['/panel-admin/validar-oferta-laboral']" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Validar ofertas laborales </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Calificar empleadores</p>
+                            </a>
+                        </li>
+                        <ul class="nav nav-treeview" style="display: none;">
                         </ul>
                     </div>
                     <!-- ======================= SECRETARIA ============== -->

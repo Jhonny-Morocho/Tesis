@@ -68,7 +68,7 @@ class OfertaLaboralController extends Controller
     public function listarTodasLasOfertasLaborales(){
         //obtener todos los usuarios que sean postulante
         try {
-            $ObjOfertasLaborales=OfertasLaborales::get();
+            $ObjOfertasLaborales=OfertasLaborales::where("estado",">=",1)->where("estado","<=",3)->get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
