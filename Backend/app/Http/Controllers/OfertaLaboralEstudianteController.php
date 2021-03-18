@@ -46,7 +46,7 @@ class OfertaLaboralEstudianteController extends Controller
                         $ObjOfertaLaboralEstudiante->fk_estudiante=$ObjEstudiante['id'];
                         $ObjOfertaLaboralEstudiante->fk_oferta_laboral=$OfertaLaboral['id'];
                         $ObjOfertaLaboralEstudiante->estado=$request['estado'];
-                        $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();;
+                        $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();
                         $ObjOfertaLaboralEstudiante->save();
                         return response()->json(["mensaje"=>"Operacion Exitosa",
                                                     "Siglas"=>"OE",

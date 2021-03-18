@@ -31,7 +31,10 @@ class Empleador extends Model
      public function usuario(){
          //esta tabla pertenece a usuario
          //relaciona al modelo con cual pertenece
-         return $this->belongsTo('App\Models\usuario','fk_usuario');
+         return $this->belongsTo('App\Models\Usuario','fk_usuario');
      }
+     public function OfertaLaboralEstudiante(){
+        return $this->hasMany('App\Models\CalificarEmpleador','fk_empleador');
+    }
      
 }

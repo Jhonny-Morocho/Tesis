@@ -4,7 +4,10 @@ import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { EmpleadorModel } from 'src/app/models/empleador.models';
+declare var JQuery:any;
+// ========= valoracion =========
 
+declare var $:any;
 
 @Component({
   selector: 'app-validar-cuentas',
@@ -21,7 +24,12 @@ export class TareaValiar implements OnInit {
 
   constructor(private servicioPostulante_:SerivicioPostulanteService,
               private servicioEmpleador_:SerivicioEmpleadorService ) { }
+  
   ngOnInit():void {
+  this.perfilUsuario();
+  //this.calificarEstrellas();
+  }
+  perfilUsuario(){
     if(Number(localStorage.getItem('tipoUsuario'))==3){
       this.tipoUsuarioSecretaria=true;
       this.servicioPostulante_.listarPostulantes().subscribe(
@@ -60,9 +68,21 @@ export class TareaValiar implements OnInit {
         }
       );
     }
-
   }
 
+  calificarEstrellas(){
+    console.log("xx");
+    $('#CalificarModal').modal('show');
+      $(function() {
+        $('#star2').starrr({
+          max: 5,
+          rating: 2,
+          change: function(e, value){
+            console.log(value);
+          }
+        });
+    });
+  }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -76,6 +96,9 @@ export class TareaValiar implements OnInit {
       if(numeroEstado==1){
         return true;
       }
+    }
+    cerrarModal(){
+      $('#CalificarModal').modal('hide')
     }
     //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
     estadoRevision(observacion:String):boolean{

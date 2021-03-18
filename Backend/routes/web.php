@@ -62,6 +62,8 @@ try {
         $router->post('/ofertasLaboralesEstudiantes/PostularOfertaLaboral/{external_id}','OfertaLaboralEstudianteController@PostularOfertaLaboral');
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
+        //calificar empleador
+        $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');
         //ofertas-laborales
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasGestor','OfertaLaboralController@listarOfertasLaboralesValidadasGestor');

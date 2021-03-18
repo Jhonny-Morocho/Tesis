@@ -56,25 +56,38 @@ export class OfertaLaboralEstudianteService {
       map(
         respuestaBackend=>{
           console.log(respuestaBackend);
-          return this.crearArregloOfertaEstudiante(respuestaBackend['mensaje']);
+          return this.crearArregloOfertaEstudiante_ModelPostulante(respuestaBackend['mensaje']);
         })
     );
 
   }
 
   private crearArregloOfertaEstudiante(ObjTitulos:object){
-     const titulos:PostulanteModel[]=[];
+     const titulos:OfertaLaboralEstudianteModel[]=[];
      //validamos si el objeto tiene informaicon
      if(ObjTitulos===null){
          return [];
      }else{
        Object.keys(ObjTitulos).forEach(key=>{
-         const titulo:PostulanteModel=ObjTitulos[key];
+         const titulo:OfertaLaboralEstudianteModel=ObjTitulos[key];
          titulos.push(titulo);
        })
        return titulos;
      }
   }
+  private crearArregloOfertaEstudiante_ModelPostulante(ObjTitulos:object){
+    const postulanteOfertaEstudiante:PostulanteModel[]=[];
+    //validamos si el objeto tiene informaicon
+    if(ObjTitulos===null){
+        return [];
+    }else{
+      Object.keys(ObjTitulos).forEach(key=>{
+        const postulanteOfertaEstudiantes:PostulanteModel=ObjTitulos[key];
+        postulanteOfertaEstudiante.push(postulanteOfertaEstudiantes);
+      })
+      return postulanteOfertaEstudiante;
+    }
+ }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
   obtenerCursoCapacitacionExternal_es(external_cu:string){

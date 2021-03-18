@@ -1,7 +1,9 @@
 <navTab-admin></navTab-admin>
+
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
 <!-- =========== VALIUDAR POSTULANTE si tipo de usuario es el 3==secretaria entonces imprime esta tareas=========== -->
 <div class="content-wrapper" *ngIf="tipoUsuarioSecretaria==true">
+
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <div class="container " *ngIf="tipoUsuarioSecretaria==true">
@@ -17,6 +19,7 @@
                             <th>Estado Validacion</th>
                             <th>Observaciones</th>
                             <th>Detalles</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +47,7 @@
 <!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
 <div class="content-wrapper" *ngIf="tipoUsuarioEncargado==true">
     <div class="card">
+
         <article class="card-body animated animate__animated animate__slideInRight">
             <div class="container ">
                 <h1 class="display-6">Validar cuentas de empleadores</h1>
@@ -60,6 +64,7 @@
                             <th>Estado de validación</th>
                             <th>Observaciones</th>
                             <th>Detalles</th>
+                            <th>Calificar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,6 +80,13 @@
                             <td>
                                 <button type="button " class="btn btn-light" [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
                             </td>
+                            <td>
+                                <!-- <div class='starrr' id='star2'></div> -->
+                                <div class="calificar" (click)="calificarEstrellas()">
+                                    <i class="far fa-star pintar"></i>
+                                    <i class="fas fa-star noPintar"></i>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,6 +95,28 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="CalificarModal" tabindex="-1" role="dialog" aria-labelledby="CalificarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CalificarModalLabel">CALIFICAR</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class='starrr' id='star2'></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ====================== TEMPLATE PARA VALIDAR===================== -->
 <!-- <div class="content-wrapper">
