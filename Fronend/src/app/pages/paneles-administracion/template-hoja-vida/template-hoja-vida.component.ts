@@ -175,6 +175,8 @@ export class TemplateHojaVidaComponent implements OnInit {
             console.log(siHaceBien);
             if(siHaceBien["Siglas"]=="OE"){
               Swal('Registrado', siHaceBien['mensaje'], 'success');
+              this.cargarTabla(this.external_of_es);
+              this.ngOnDestroy()
             }else{
               Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')
             }
