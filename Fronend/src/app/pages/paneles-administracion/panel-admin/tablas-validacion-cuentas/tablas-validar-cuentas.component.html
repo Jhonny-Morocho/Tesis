@@ -83,10 +83,13 @@
                             </td>
                             <td>
                                 <!-- <div class='starrr' id='star2'></div> -->
-                                <div class="calificar" (click)="mostrarModal(empleadores.id)">
-                                    <i class="far fa-star pintar"></i>
-                                    <i class="fas fa-star noPintar"></i>
-                                </div>
+                                <span class="calificar" (click)="mostrarModal(empleadores.id)" *ngFor="let estrellas of arrayEstrellas;let i=index">
+                                    <!-- <i class="far fa-star noPintar"></i> -->
+                                    <!-- <div class='starrr' id='star2' ></div>  -->
+                                    <span >
+                                        <i class="fas fa-star pintar"></i>
+                                    </span>
+                                </span>
                             </td>
                         </tr>
                     </tbody>
@@ -104,7 +107,7 @@
                 <h5 class="modal-title" id="CalificarModalLabel">CALIFICAR</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()">
             <span aria-hidden="true">&times;</span>
-          </button>
+                                </button>
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
@@ -112,8 +115,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
                 <button type="button" class="btn btn-primary" (click)="guardarCalificacion()">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
             </div>
         </div>
     </div>

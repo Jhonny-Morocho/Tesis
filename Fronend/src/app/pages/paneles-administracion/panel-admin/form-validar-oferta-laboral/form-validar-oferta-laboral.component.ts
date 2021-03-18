@@ -12,6 +12,7 @@ declare var $:any;
 })
 export class FormValidarOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
+
   constructor(private _activateRoute:ActivatedRoute,
     private servicioOfertaLaboral:OfertasLaboralesService) { }
 

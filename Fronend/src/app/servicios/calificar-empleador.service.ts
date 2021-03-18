@@ -9,27 +9,28 @@ import {environment} from 'src/environments/environment';
 export class CalificarEmpleadorService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
-  private urlListarPaises="/Backend/public/index.php/paises/listarPaises";
-private  urlCalifcarEmpleador="/Backend/public/index.php/calificar-empleador/calificarEmpleador";
+  private urlObtenerCalifiacionEmpleador="/Backend/public/index.php/calificar-empleador/promedioCalificacionEmpleador/";
+private  urlCalificarEmpleador="/Backend/public/index.php/calificar-empleador/calificarEmpleador";
   constructor(private _httCliente:HttpClient) { }
 
-  //listammos os paises
-//   listarPaises(){
-//     //retorna la respuesata
-//     return this._httCliente.get(
-//       `${this.urlDominio_}${this.urlListarPaises}`
-//     ).pipe(
-//       map(
-//         respuestaBackend=>{
-//           return this.crearArregloPaises(respuestaBackend['mensaje']);
-//         })
-//     );
-//   }
+  //calificacion del empleador
+  obeterCalifacionEmpleador(){
+    //retorna la respuesata
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlObtenerCalifiacionEmpleador}${'exterdfgfgfhjghjg'}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return respuestaBackend['mensaje'];
+        })
+    );
+  }
   registrarCalificacion(modeloCalificarEmpleador:CalificarEmpleadorModel){
     const autenficacionDatos={
         ...modeloCalificarEmpleador
      }
-     return this._httCliente.post(`${this.urlDominio_}${this.urlCalifcarEmpleador}`,autenficacionDatos
+     return this._httCliente.post(`${this.urlDominio_}${this.urlCalificarEmpleador}`,autenficacionDatos
      ).pipe(
        map(
          respuestaBackend=>{

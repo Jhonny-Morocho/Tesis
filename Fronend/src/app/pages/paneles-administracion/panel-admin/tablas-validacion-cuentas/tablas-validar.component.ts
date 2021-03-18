@@ -7,6 +7,7 @@ import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.se
 import { EmpleadorModel } from 'src/app/models/empleador.models';
 import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
 import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
+import { forEach } from '@angular/router/src/utils/collection';
 declare var JQuery:any;
 // ========= valoracion =========
 
@@ -18,6 +19,7 @@ declare var $:any;
 })
 export class TareaValiar implements OnInit {
   //data table
+  arrayEstrellas=[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   estudiante:PostulanteModel[]=[];
@@ -34,6 +36,22 @@ export class TareaValiar implements OnInit {
   this.perfilUsuario();
   this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
   //this.calificarEstrellas();
+  this.servicioCalificarEmpleador.obeterCalifacionEmpleador().subscribe(
+    siHaceBien=>{
+      console.log(siHaceBien);
+      //impirmir estrellas
+      let longitudArray=0;
+      while(siHaceBien> longitudArray){
+        console.log(longitudArray);
+        this.arrayEstrellas.push(longitudArray);
+        longitudArray++;
+      }
+      console.log(this.arrayEstrellas);
+      //imprimir estrellas
+    },error=>{
+      console.log(error);
+    }
+  );
   }
   perfilUsuario(){
     if(Number(localStorage.getItem('tipoUsuario'))==3){
