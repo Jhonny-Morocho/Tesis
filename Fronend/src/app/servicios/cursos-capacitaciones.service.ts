@@ -42,7 +42,7 @@ export class CursosCapacitacionesService {
   }
 
   //listammos postulantes activos /no activos / depende del estado
-  listarCursosCapacitaciones(){
+  listarCursosCapacitacionesExternal_us(){
     //retorna la respuesata
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarCursosCapacitaciones}${localStorage.getItem("external_us")}`
@@ -53,6 +53,18 @@ export class CursosCapacitacionesService {
         })
     );
   }
+    //listammos postulantes activos /no activos / depende del estado
+    listarCursosCapacitacionesExternal_usConParametro(external_us){
+      //retorna la respuesata
+      return this._httCliente.get(
+        `${this.urlDominio_}${this.urlListarCursosCapacitaciones}${external_us}`
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return this.crearArregloCursosCapacitaciones(respuestaBackend['mensaje']);
+          })
+      );
+    }
 
   private crearArregloCursosCapacitaciones(ObjTitulos:object){
      const titulos:CursosCapacitacionesModel[]=[];

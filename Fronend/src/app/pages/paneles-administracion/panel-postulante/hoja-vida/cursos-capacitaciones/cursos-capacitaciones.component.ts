@@ -28,7 +28,7 @@ export class CursosCapacitacionesComponent implements OnInit {
 
   cargarTabla(){
     //listamos los cursos academicos
-    this.servicioCursosCapacitacione.listarCursosCapacitaciones().subscribe(
+    this.servicioCursosCapacitacione.listarCursosCapacitacionesExternal_us().subscribe(
       siHacesBien=>{
         this.cursosCapacitaciones =siHacesBien;
         console.log(this.cursosCapacitaciones);

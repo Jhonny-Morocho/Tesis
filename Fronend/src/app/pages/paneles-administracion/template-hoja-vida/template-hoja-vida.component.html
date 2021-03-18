@@ -1,5 +1,9 @@
 <div class="content-wrapper">
     <div class="card">
+        <div class="col-2 mt-2">
+            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/validar-oferta-laboral']">
+                <i class="fas fa-arrow-left"></i> Regresar</a>
+        </div>
         <article class="card-body animated animate__animated animate__slideInRight">
             <p class="lead">
                 Postulantes
@@ -11,6 +15,7 @@
                         <th>Nombre</th>
                         <th>Apellido </th>
                         <th>Cédula</th>
+                        <th>Correo</th>
                         <th>Hoja Vida</th>
                         <th><i class="far fa-trash-alt"></i></th>
                     </tr>
@@ -21,8 +26,9 @@
                         <td>{{ estudiantes.nombre }}</td>
                         <td>{{ estudiantes.apellido }}</td>
                         <td>{{ estudiantes.cedula }}</td>
+                        <td>{{ estudiantes.correo }}</td>
                         <td>
-                            <button type="button " class="btn btn-light " (click)="verOfertaModal(i) ">
+                            <button type="button " class="btn btn-light " (click)="verHojaVidaModal(i) ">
                               <i class="fas fa-eye"></i>
                           </button>
 
@@ -36,7 +42,6 @@
         </article>
     </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -66,8 +71,8 @@
                                         <h2 class="lead"><b>{{ instanciaVerPostulante.nombre +" "+ instanciaVerPostulante.apellido }} </b></h2>
                                         <!-- <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p> -->
                                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                                            <li class="small" *ngIf="instanciaVerPostulante.genero.toString()=='1'"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Masculino</li>
-                                            <li class="small" *ngIf="instanciaVerPostulante.genero.toString()=='0'"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Femenino</li>
+                                            <li class="small" *ngIf="generoHombre(instanciaVerPostulante.genero)==true"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Masculino</li>
+                                            <li class="small" *ngIf="generoHombre(instanciaVerPostulante.genero)==false"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Femenino</li>
                                             <li class="small"><span class="fa-li"><i class="fas fa-address-card"></i></span> Cedula: {{ instanciaVerPostulante.cedula }}</li>
                                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono :{{instanciaVerPostulante.telefono}}</li>
                                             <li class="small"><span class="fa-li"><i class="far fa-calendar-alt"></i></span> Fecha Nacimiento : {{ instanciaVerPostulante.fecha_nacimiento }}</li>
@@ -85,72 +90,41 @@
                 </div>
                 <!-- Cursos y capacitaciones -->
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Cursos y Capacitaciones</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Evento</th>
-                                    <th>Tipo</th>
-                                    <th>Auspiciante </th>
-                                    <th># Horas</th>
-                                    <th><i class="fas fa-calendar-alt"></i> Inicio</th>
-                                    <th><i class="fas fa-calendar-alt"></i> Culminacion</th>
-                                    <th><i class="far fa-file-pdf"></i> Evidencia</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td>Update software</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-danger">55%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>Clean database</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-warning" style="width: 70%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-warning">70%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td>Cron job running</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar bg-primary" style="width: 30%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-primary">30%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td>Fix and squish bugs</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar bg-success" style="width: 90%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">90%</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-header">
+                        <h3 class="card-title">Cursos y Capacitaciones</h3>
                     </div>
+                    <!-- /.card-header -->
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Evento</th>
+                                <th>Tipo</th>
+                                <th>Auspiciante </th>
+                                <th># Horas</th>
+                                <th>Inicio</th>
+                                <th>Culminacion</th>
+                                <th>Evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cursoCapacitaciones of arrayCursosCapacitaciones;let i=index">
+                                <td>{{ i+1 }}</td>
+                                <td>{{ cursoCapacitaciones.nom_evento }}</td>
+                                <td *ngIf="esCurso(cursoCapacitaciones.tipo_evento)==true">Curso</td>
+                                <td *ngIf="esCurso(cursoCapacitaciones.tipo_evento)==false">Capacitación</td>
+                                <td>{{ cursoCapacitaciones.auspiciante }}</td>
+                                <td>{{ cursoCapacitaciones.horas }}</td>
+                                <td>{{ cursoCapacitaciones.fecha_inicio }}</td>
+                                <td>{{ cursoCapacitaciones.fecha_culminacion }}</td>
+                                <td>
+                                    <a href="{{ dominio }}/Archivos/Cursos/{{ cursoCapacitaciones.evidencia_url }}" target="alt"><i class="far fa-file-pdf"></i></a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
                 </div>
                 <!-- titulos -->
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -215,6 +189,9 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Close</button>
                 </div>
             </div>
         </div>
