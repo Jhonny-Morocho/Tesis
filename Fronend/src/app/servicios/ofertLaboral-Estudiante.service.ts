@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiante.models';
 import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
+import { PostulanteModel } from '../models/postulante.models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class OfertaLaboralEstudianteService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
   private urlBackendPostularOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/PostularOfertaLaboral/";
+  private urlBackendListTodasEstudiantePostulanOfertaExternal_of="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of/";
   private urlListarTodasOfertaEstudianteExternal_us="/Backend/public/index.php/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/";
   private urlELiminarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/eliminarCursoCapicitacion";
   private urlObtenerCursoCapacitacionExternal_ti="/Backend/public/index.php/cursos-capacitaciones/obtenerCursoCapacitacionExternal_cu/";
@@ -45,15 +47,28 @@ export class OfertaLaboralEstudianteService {
         })
     );
   }
+  listTodasEstudiantePostulanOfertaExternal_of(external_Of:String){
+    console.log(external_Of);
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of}${external_Of}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return this.crearArregloOfertaEstudiante(respuestaBackend['mensaje']);
+        })
+    );
+
+  }
 
   private crearArregloOfertaEstudiante(ObjTitulos:object){
-     const titulos:OfertaLaboralEstudianteModel[]=[];
+     const titulos:PostulanteModel[]=[];
      //validamos si el objeto tiene informaicon
      if(ObjTitulos===null){
          return [];
      }else{
        Object.keys(ObjTitulos).forEach(key=>{
-         const titulo:OfertaLaboralEstudianteModel=ObjTitulos[key];
+         const titulo:PostulanteModel=ObjTitulos[key];
          titulos.push(titulo);
        })
        return titulos;

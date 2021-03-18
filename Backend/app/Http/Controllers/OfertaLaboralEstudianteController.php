@@ -83,16 +83,20 @@ class OfertaLaboralEstudianteController extends Controller
         }
     }
     // listamos todos los estudiante que han postulado a una oferta xxx
-    public function lisTodOfLabEstExternal_Ofert($external_id){
+    public function listTodasEstudiantePostulanOfertaExternal_of($external_id){
         //obtener todos los usuarios que sean postulante
+        $EstudiantePostulanOfertaExternal_of=null;
         try {
-            //buscamos al id de la oferta laboral
-            $ObjOfertaLaboral=OfertasLaborales::where('external_of',"Cud6b18d6f-4dff-4963-94b0-fba4fc06dd1e");
-            die($ObjOfertaLaboral);
-            $ObjOfertasLaborales=OfertaLaboralEstudiante::get();
-            return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
+            //buscamos la oferta laboral el id , de la oferta laboral
+            $ObjOfertaLaboral=$this->buscarOfertaLaboral($external_id);
+            $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+            ->join("usuario","usuario.id","=","estudiante.fk_usuario")
+            ->select("estudiante.*","usuario.*")
+             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
+           
+           return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"ONE","error"=>$th,400]);
         }
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
@@ -131,25 +135,7 @@ class OfertaLaboralEstudianteController extends Controller
         }
     }
 
-    //obtener oferta-laboral por url //external_ti
-    public function obtenerOfertaLaboralExternal_of($external_id ){
-        try {
-            $ObjOfertaLaboral=null;
-            $ObjOfertaLaboral=OfertasLaborales::where("external_of","=",$external_id)->first();
-            return $this->retornarOfertaLaboralEncontrado($ObjOfertaLaboral);
-        } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el registro "+$external_id,"Siglas"=>"ONE","error"=>$th]);
-        }
-    }
 
-    private function retornarOfertaLaboralEncontrado($ObjTitulo){
-        if($ObjTitulo!=null){
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
-        }else{
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el titulo"]);
-        }
-    }
-     //terminar de hacer
      public function eliminarOfertaLaboral(Request $request){
         try {
             //actualizo el texto plano 

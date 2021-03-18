@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import { SerivicioPostulanteService } from 'src/app/servicios/serivicio-postulante.service';
-declare var JQuery:any;
-declare var $:any;
-declare var bootstrap:any;
+
 @Component({
   selector: 'app-tabla-filtro-postulantes',
   templateUrl: './tabla-filtro-postulantes.component.html'
@@ -18,17 +16,7 @@ export class TablaFiltroPostulantesComponent implements OnInit {
 
   ngOnInit() {
     this.cargarTabla();
-    $(function() {
-      var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
-      console.log(triggerTabList);
-      triggerTabList.forEach(function (triggerEl) {
-        var tabTrigger = new bootstrap.Tab(triggerEl)
-        triggerEl.addEventListener('click', function (event) {
-          event.preventDefault()
-          tabTrigger.show()
-        })
-      })
-    });
+
   }
   cargarTabla(){
     this.servicioPostulante_.listarPostulantes().subscribe(

@@ -11,4 +11,5 @@ export class PostulanteModel{
     direccion_domicilio:string;
     external_es:string;
     id?:Number;
+    correo?:String;
 }
