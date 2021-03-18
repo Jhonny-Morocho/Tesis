@@ -19,7 +19,6 @@ class CalificarEmpleadorController extends Controller
          if($request->json()){
              //validar si el usuario existe
              $ObjCalificar=null;
-             
              try {
                  //code...
                  $ObjCalificar=new CalificarEmpleador();
@@ -35,6 +34,26 @@ class CalificarEmpleadorController extends Controller
          }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
+     }
+
+
+     public function promedioCalificacionEmpleador($external_id){
+         $premedio=1;
+         try {
+             $ObjCalificacion=CalificarEmpleador::where("fk_empleador",14)
+             ->get();
+             $numRegistros=1;
+             $califiacionUnitaria=0;
+             foreach ($ObjCalificacion as $key => $value) {
+                 $numRegistros++;
+                 $califiacionUnitaria=$value["estrellas"]+ $califiacionUnitaria;
+             }
+             $premedio=round($califiacionUnitaria/$numRegistros); 
+             return response()->json(["mensaje"=>$premedio,"Siglas"=>"OE",200]);
+            echo $califiacionUnitaria;
+         } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>$premedio,"Siglas"=>"ONE","error"=>$th,400]);
+         }  
      }
  
 }

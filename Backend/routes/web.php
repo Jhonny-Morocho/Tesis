@@ -63,6 +63,7 @@ try {
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
         //calificar empleador
+        $router->get('/calificar-empleador/promedioCalificacionEmpleador/{external_id}','CalificarEmpleadorController@promedioCalificacionEmpleador');
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');
         //ofertas-laborales
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');
