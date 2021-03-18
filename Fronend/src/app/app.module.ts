@@ -53,6 +53,7 @@ import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracio
 import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/panel-postulante/postular-oferta-laboral/postular-oferta-laboral.component';
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import { TemplateHojaVidaComponent } from './pages/paneles-administracion/template-hoja-vida/template-hoja-vida.component';
+import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
 
 //cursos-capacitacines
 
@@ -97,7 +98,8 @@ import { TemplateHojaVidaComponent } from './pages/paneles-administracion/templa
     FormPublicarOfertaGestorComponent,
     PostularOfertaLaboralComponent,
     TablaFiltroPostulantesComponent,
-    TemplateHojaVidaComponent
+    TemplateHojaVidaComponent,
+    PostulantesOfertaComponent
   ],
 
   imports: [

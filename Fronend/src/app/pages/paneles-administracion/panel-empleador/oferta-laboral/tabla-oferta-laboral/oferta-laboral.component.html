@@ -17,6 +17,7 @@
                         <th>Estado</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
+                        <th>Postulantes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,11 @@
                             <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
                             <a class="btn btn-light" [routerLink]="['/panel-empleador/edit-oferta-laboral',ofertaLaboral.external_of] "> <i class="fas fa-pencil-alt "></i></a>
                             <a class="btn btn-light" (click)="eliminarOfertaLaboral(ofertaLaboral.external_of,ofertaLaboral.puesto,i)"> <i class="fas fa-trash-alt "></i></a>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/panel-empleador/postulante-oferta',ofertaLaboral.external_of] " class="btn btn-light">
+                                <i class="fas fa-chevron-right "></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

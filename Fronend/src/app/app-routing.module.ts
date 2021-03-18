@@ -19,6 +19,7 @@ import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/
 import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
+import {PostulantesOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
 import {EditOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
 import {AddOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';
@@ -44,6 +45,8 @@ const routes: Routes = [
   { path: 'login-admin' , component: LoginAdminComponent },
   { path: 'login-empleador' , component: LoginEmpleadorComponent },
   //rutas del empleador
+  
+  { path: 'panel-empleador/postulante-oferta/:external_of' , component: PostulantesOfertaComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/edit-oferta-laboral/:external_of' , component: EditOfertaComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/mi-perfil' , component: MiPerfilComponentEmpleador,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent,canActivate:[AutentificacionGuard] },
