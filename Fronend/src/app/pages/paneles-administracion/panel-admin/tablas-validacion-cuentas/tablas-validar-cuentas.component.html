@@ -45,6 +45,7 @@
 
 <!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
 <!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
+<!-- ============== TOSTATADA ====================== -->
 <div class="content-wrapper" *ngIf="tipoUsuarioEncargado==true">
     <div class="card">
 
@@ -82,7 +83,7 @@
                             </td>
                             <td>
                                 <!-- <div class='starrr' id='star2'></div> -->
-                                <div class="calificar" (click)="calificarEstrellas()">
+                                <div class="calificar" (click)="mostrarModal(empleadores.id)">
                                     <i class="far fa-star pintar"></i>
                                     <i class="fas fa-star noPintar"></i>
                                 </div>
@@ -112,11 +113,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-primary" (click)="guardarCalificacion()">Guardar</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- ====================== TEMPLATE PARA VALIDAR===================== -->
 <!-- <div class="content-wrapper">

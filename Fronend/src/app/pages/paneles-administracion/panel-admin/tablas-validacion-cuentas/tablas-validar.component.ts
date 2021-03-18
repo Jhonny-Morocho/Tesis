@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { EmpleadorModel } from 'src/app/models/empleador.models';
+import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
+import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
 declare var JQuery:any;
 // ========= valoracion =========
 
@@ -19,14 +22,17 @@ export class TareaValiar implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   estudiante:PostulanteModel[]=[];
   empleador:EmpleadorModel[]=[];
+  intanciaCalifarEmpleador:CalificarEmpleadorModel;
   tipoUsuarioSecretaria:boolean=false;
   tipoUsuarioEncargado:boolean=false;
 
   constructor(private servicioPostulante_:SerivicioPostulanteService,
+              private servicioCalificarEmpleador:CalificarEmpleadorService,
               private servicioEmpleador_:SerivicioEmpleadorService ) { }
   
   ngOnInit():void {
   this.perfilUsuario();
+  this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
   //this.calificarEstrellas();
   }
   perfilUsuario(){
@@ -40,7 +46,9 @@ export class TareaValiar implements OnInit {
               pagingType: 'full_numbers',
               pageLength: 2
             };
+
           this.estudiante =siHacesBien;
+          console.log(this.estudiante);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
@@ -60,6 +68,7 @@ export class TareaValiar implements OnInit {
             pageLength: 2
           };
           this.empleador =siHacesBien;
+          console.log(this.empleador);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
@@ -69,20 +78,49 @@ export class TareaValiar implements OnInit {
       );
     }
   }
-
-  calificarEstrellas(){
-    console.log("xx");
-    $('#CalificarModal').modal('show');
-      $(function() {
-        $('#star2').starrr({
-          max: 5,
-          rating: 2,
-          change: function(e, value){
-            console.log(value);
-          }
-        });
+  cargarEstrellas(){
+    let calificacion=5;
+    $(function() {
+      $('#star2').starrr({
+        max: 5,
+        rating: 5,
+        change: function(e, value){
+          console.log(value);
+          console.log(e);
+          calificacion=value;
+        }
+      });
     });
+    //validar que no venga vacio o nullo
+    if(calificacion==null){
+      this.intanciaCalifarEmpleador.estrellas=calificacion;
+       calificacion=1;
+    }else{
+      this.intanciaCalifarEmpleador.estrellas=calificacion;
+       calificacion;
+    }
   }
+  guardarCalificacion(){
+    console.log(this.intanciaCalifarEmpleador);
+    this.servicioCalificarEmpleador.registrarCalificacion(this.intanciaCalifarEmpleador).subscribe(
+      siHaceBien=>{
+        console.log(siHaceBien);
+        Swal('Registrado', siHaceBien['mensaje'], 'success');
+        this. cerrarModal();
+      },error=>{
+        Swal('Error', error['mensaje'], 'success');
+        console.log(error);
+      }
+    );
+  }
+  mostrarModal(fk_empleador){
+    $('#CalificarModal').modal('show');
+    this.intanciaCalifarEmpleador.fk_empleador=fk_empleador;
+    this.cargarEstrellas();
+  
+  }
+    // si el usuario apalsta do veces entonces es null, por que borro su eleccion y se inicia la calificaicon desde cero
+  
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
