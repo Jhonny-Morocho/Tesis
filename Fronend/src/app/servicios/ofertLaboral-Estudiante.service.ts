@@ -4,6 +4,7 @@ import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiant
 import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import { PostulanteModel } from '../models/postulante.models';
+import { OfertaLaboralModel } from 'src/app/models/oferta-laboral.models';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class OfertaLaboralEstudianteService {
   private urlBackendPostularOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/PostularOfertaLaboral/";
   private urlBackendListTodasEstudiantePostulanOfertaExternal_of="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of/";
   private urlListarTodasOfertaEstudianteExternal_us="/Backend/public/index.php/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/";
-  private urlELiminarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/eliminarCursoCapicitacion";
+  private urlELiminarPostulanteOfertaLaboral="/Backend/public/index.php/ofertasLaboralesEstudiantes/eliminarPostulanteOfertaLaboral";
   private urlObtenerCursoCapacitacionExternal_ti="/Backend/public/index.php/cursos-capacitaciones/obtenerCursoCapacitacionExternal_cu/";
   private urlEditarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/actulizarCursoCapacitaciones/";
   constructor(private _httCliente:HttpClient) { }
@@ -91,15 +92,17 @@ export class OfertaLaboralEstudianteService {
 
 
   //actulizar estado de validacion del postulante//aprobado y no aprobado
-  eliminarCursoCapacitacion(modeloOfertaEstudiante:OfertaLaboralEstudianteModel){
+  eliminarPostulanteOfertaLaboral(external_of:string,external_us:string,estado:number){
     const autenficacionDatos={
-      ...modeloOfertaEstudiante
+      external_of:external_of,
+      external_us:external_us,
+      estado:estado
     }
-      console.log(modeloOfertaEstudiante);
+    console.log(autenficacionDatos);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlELiminarCursoCapacitacion}`);
+    console.log(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`);
       return this._httCliente.post(
-        `${this.urlDominio_}${this.urlELiminarCursoCapacitacion}`,autenficacionDatos
+        `${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,autenficacionDatos
       ).pipe(
         map(
           respuestaBackend=>{

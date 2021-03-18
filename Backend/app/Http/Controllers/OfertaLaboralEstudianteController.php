@@ -92,7 +92,8 @@ class OfertaLaboralEstudianteController extends Controller
             $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
             ->join("usuario","usuario.id","=","estudiante.fk_usuario")
             ->select("estudiante.*","usuario.*")
-             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
+            ->where('ofertalaboral_estudiante.estado',"=",1)
+            ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
            
            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
@@ -136,16 +137,31 @@ class OfertaLaboralEstudianteController extends Controller
     }
 
 
-     public function eliminarOfertaLaboral(Request $request){
+     public function eliminarPostulanteOfertaLaboral(Request $request){
+         $OfertaLaboralPostulanteBorrar=null;
         try {
-            //actualizo el texto plano 
-            $ObjTituloAcademico=OfertasLaborales::where("external_of","=", $request['external_of'])->update(array('estado'=>$request['estado']));
+            //buscamos la oferta laboral
+            $ObjOfertaLaboral=$this->buscarOfertaLaboral($request['external_of']);
+            //buscamos al estudiante
+            $ObjEstudiante=$this->buscarEstudiante($request['external_us']);
+            //buscamos el estudiante que este postulando a esa oferta
+            $OfertaLaboralPostulante=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+            ->join("oferta_laboral","oferta_laboral.id","=","ofertalaboral_estudiante.fk_oferta_laboral")
+            ->where('ofertalaboral_estudiante.fk_estudiante','=',$ObjEstudiante->id)
+            ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)
+            ->first();
+            //actualizo el estado del estudiante que postulo a una oferta x , estado 0
+            $OfertaLaboralPostulanteBorrar=OfertaLaboralEstudiante::where("external_of_est","=", $OfertaLaboralPostulante->external_of_est)->update(
+                                array(
+                                    'estado'=>$request['estado']
+                                ));
 
-            return response()->json(["mensaje"=>"Operacion Exitosa",
-                                     "Respuesta"=>$ObjTituloAcademico,200]);
+            return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",
+                                     "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
         
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>"Error no se puede borrar","respuesta"=>$OfertaLaboralPostulanteBorrar,
+                                    "Siglas"=>"ONE","error"=>$th]);
         }
      
     }

@@ -51,7 +51,7 @@ const routes: Routes = [
   { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
   
-  { path: 'panel-admin/filtrar-postulantes/:external_of_es' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/filtrar-postulantes/:external_of' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-validar-ofertaLaboral/:external_of' , component: FormValidarOfertaLaboralComponent,canActivate:[AutentificacionGuard] },

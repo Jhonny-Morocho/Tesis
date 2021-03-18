@@ -34,7 +34,9 @@
 
                         </td>
                         <td>
-                            <button type="button " class="btn btn-light "><i class="far fa-trash-alt"></i></button>
+                            <button type="button " class="btn btn-light " (click)="eliminarPostulanteOferta(estudiantes.nombre,estudiantes.apellido,i)">
+                              <i class="far fa-trash-alt"></i>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -104,7 +106,7 @@
                                 <th># Horas</th>
                                 <th>Inicio</th>
                                 <th>Culminacion</th>
-                                <th>Evidencia</th>
+                                <th>PDF</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,7 +123,6 @@
                                     <a href="{{ dominio }}/Archivos/Cursos/{{ cursoCapacitaciones.evidencia_url }}" target="alt"><i class="far fa-file-pdf"></i></a>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
 
@@ -130,59 +131,35 @@
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Condensed Full Width Table</h3>
+                            <h3 class="card-title">Titulos Academicos</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Task</th>
-                                        <th>Progress</th>
-                                        <th style="width: 40px">Label</th>
+                                        <th>#</th>
+                                        <th>Titulo</th>
+                                        <th># Registro</th>
+                                        <th>Tipo</th>
+                                        <th>Nivel</th>
+                                        <th>Detalles</th>
+                                        <th>PDF</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
+                                    <tr *ngFor="let TitulosAcademicos of arrayTitulosAcademicos;let i=index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ TitulosAcademicos.titulo_obtenido }}</td>
+                                        <td>{{ TitulosAcademicos.numero_registro }}</td>
+                                        <td *ngIf="esNancional(TitulosAcademicos.tipo_titulo)==true">Nacional</td>
+                                        <td *ngIf="esNancional(TitulosAcademicos.tipo_titulo)==false">Extranjero</td>
+                                        <td *ngIf="esTercerNivel(TitulosAcademicos.nivel_instruccion)==true">Tercer Nivel</td>
+                                        <td *ngIf="esTercerNivel(TitulosAcademicos.nivel_instruccion)==false">Cuarto Nivel</td>
+                                        <td>{{ TitulosAcademicos.detalles_adiciones }}</td>
                                         <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                            </div>
+                                            <a href="{{ dominio }}/Archivos/Titulos/{{ TitulosAcademicos.evidencias_url }}" target="alt"><i class="far fa-file-pdf"></i></a>
                                         </td>
-                                        <td><span class="badge bg-danger">55%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td>Clean database</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar bg-warning" style="width: 70%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-warning">70%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Cron job running</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-primary" style="width: 30%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-primary">30%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.</td>
-                                        <td>Fix and squish bugs</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar bg-success" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                        <td><span class="badge bg-success">90%</span></td>
                                     </tr>
                                 </tbody>
                             </table>

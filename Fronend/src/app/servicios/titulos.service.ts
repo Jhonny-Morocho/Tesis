@@ -56,6 +56,18 @@ export class TituloService {
         })
     );
   }
+  listarTitulosExternal_usConParametro(external_us:string){
+
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlListarTitulo}${external_us}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return this.crearArregloTitulo(respuestaBackend['mensaje']);
+        })
+    );
+  }
 
   private crearArregloTitulo(ObjTitulos:object){
      const titulos:TituloModel[]=[];
