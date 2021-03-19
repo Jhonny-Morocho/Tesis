@@ -40,7 +40,7 @@ class CalificarEmpleadorController extends Controller
      public function promedioCalificacionEmpleador($external_id){
          $premedio=1;
          try {
-             $ObjCalificacion=CalificarEmpleador::where("fk_empleador",14)
+             $ObjCalificacion=CalificarEmpleador::where("fk_empleador",$external_id)
              ->get();
              $numRegistros=1;
              $califiacionUnitaria=0;

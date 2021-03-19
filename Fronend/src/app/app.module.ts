@@ -109,7 +109,8 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     FormsModule,
     HttpClientModule,
     // DATA TABLE
-    DataTablesModule
+    DataTablesModule,
+
     // boostrap
     //ModalModule.forRoot()
   ],

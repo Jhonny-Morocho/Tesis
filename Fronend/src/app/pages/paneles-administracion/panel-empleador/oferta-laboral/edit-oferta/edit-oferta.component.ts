@@ -55,8 +55,6 @@ export class EditOfertaComponent implements OnInit {
                     ]
                 })
               })
-
-
             }else{
               console.log("no encontrado");
               //this.encontrado=false;

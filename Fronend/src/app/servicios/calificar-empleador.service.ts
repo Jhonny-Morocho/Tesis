@@ -14,10 +14,10 @@ private  urlCalificarEmpleador="/Backend/public/index.php/calificar-empleador/ca
   constructor(private _httCliente:HttpClient) { }
 
   //calificacion del empleador
-  obeterCalifacionEmpleador(){
+  obeterCalifacionEmpleador(idEmpleador:Number){
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlObtenerCalifiacionEmpleador}${'exterdfgfgfhjghjg'}`
+      `${this.urlDominio_}${this.urlObtenerCalifiacionEmpleador}${idEmpleador}`
     ).pipe(
       map(
         respuestaBackend=>{
