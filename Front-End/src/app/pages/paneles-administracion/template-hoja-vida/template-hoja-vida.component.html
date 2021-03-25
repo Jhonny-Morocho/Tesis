@@ -1,0 +1,266 @@
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <ul class="todo-list ui-sortable" data-widget="todo-list">
+                <p class="lead">
+                    Seleccionar y Aprobar postulantes
+                </p>
+                <li class="done">
+                    <span class="handle ui-sortable-handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                        <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Kevin Joel Mite Mendoza</span>
+                    <!-- <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small> -->
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+                <li class="done">
+                    <span class="handle ui-sortable-handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                        <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Yuli Elizabeth Guamán</span>
+                    <!-- <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small> -->
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+                <li class="done">
+                    <span class="handle ui-sortable-handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                        <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Jose Luis Cartuche</span>
+                    <!-- <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small> -->
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+                <li class="done">
+                    <span class="handle ui-sortable-handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                        <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Pedro Loaiza Medina</span>
+                    <!-- <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small> -->
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+                <li class="done">
+                    <span class="handle ui-sortable-handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
+                        <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Make the theme responsive</span>
+                    <!-- <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small> -->
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+            </ul>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Aprobar </button>
+            </div>
+        </div>
+        <!-- <div class="col-2 mt-2">
+            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/validar-oferta-laboral']">
+                <i class="fas fa-arrow-left"></i> Regresar</a>
+        </div> -->
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <p class="lead">
+                Postulantes
+            </p>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido </th>
+                        <th>Cédula</th>
+                        <th>Correo</th>
+                        <th>Hoja Vida</th>
+                        <th><i class="far fa-trash-alt"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estudiantes of arrayPostulante;let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ estudiantes.nombre }}</td>
+                        <td>{{ estudiantes.apellido }}</td>
+                        <td>{{ estudiantes.cedula }}</td>
+                        <td>{{ estudiantes.correo }}</td>
+                        <td>
+                            <button type="button " class="btn btn-light " (click)="verHojaVidaModal(i) ">
+                              <i class="fas fa-eye"></i>
+                          </button>
+
+                        </td>
+                        <td>
+                            <button type="button " class="btn btn-light " (click)="eliminarPostulanteOferta(estudiantes.nombre,estudiantes.apellido,i)">
+                              <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Informacion Personal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Cursos y capacitaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Titulos Academicos</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <!-- informacion personal del postulante -->
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="card col-12 col-sm-12 col-md-12 d-flex align-items-stretch">
+                        <div class="col-12">
+                            <div class="card-header text-muted border-bottom-0">
+                                Postulante
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>{{ instanciaVerPostulante.nombre +" "+ instanciaVerPostulante.apellido }} </b></h2>
+                                        <!-- <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p> -->
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small" *ngIf="generoHombre(instanciaVerPostulante.genero)==true"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Masculino</li>
+                                            <li class="small" *ngIf="generoHombre(instanciaVerPostulante.genero)==false"><span class="fa-li"><i class="fas fa-venus-mars"></i></span> Genero:Femenino</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-address-card"></i></span> Cedula: {{ instanciaVerPostulante.cedula }}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Telefono :{{instanciaVerPostulante.telefono}}</li>
+                                            <li class="small"><span class="fa-li"><i class="far fa-calendar-alt"></i></span> Fecha Nacimiento : {{ instanciaVerPostulante.fecha_nacimiento }}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Direccion Dominicilio : {{ instanciaVerPostulante.direccion_domicilio }}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-envelope-square"></i></span> Correo: {{ instanciaVerPostulante.correo }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="../../../assets/images/empresa.png" alt="" class="img-circle img-fluid">5
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cursos y capacitaciones -->
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="card-header">
+                        <h3 class="card-title">Cursos y Capacitaciones</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Evento</th>
+                                <th>Tipo</th>
+                                <th>Auspiciante </th>
+                                <th># Horas</th>
+                                <th>Inicio</th>
+                                <th>Culminacion</th>
+                                <th>PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cursoCapacitaciones of arrayCursosCapacitaciones;let i=index">
+                                <td>{{ i+1 }}</td>
+                                <td>{{ cursoCapacitaciones.nom_evento }}</td>
+                                <td *ngIf="esCurso(cursoCapacitaciones.tipo_evento)==true">Curso</td>
+                                <td *ngIf="esCurso(cursoCapacitaciones.tipo_evento)==false">Capacitación</td>
+                                <td>{{ cursoCapacitaciones.auspiciante }}</td>
+                                <td>{{ cursoCapacitaciones.horas }}</td>
+                                <td>{{ cursoCapacitaciones.fecha_inicio }}</td>
+                                <td>{{ cursoCapacitaciones.fecha_culminacion }}</td>
+                                <td>
+                                    <a href="{{ dominio }}/Archivos/Cursos/{{ cursoCapacitaciones.evidencia_url }}" target="alt"><i class="far fa-file-pdf"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- titulos -->
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Titulos Academicos</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Titulo</th>
+                                        <th># Registro</th>
+                                        <th>Tipo</th>
+                                        <th>Nivel</th>
+                                        <th>Detalles</th>
+                                        <th>PDF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let TitulosAcademicos of arrayTitulosAcademicos;let i=index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ TitulosAcademicos.titulo_obtenido }}</td>
+                                        <td>{{ TitulosAcademicos.numero_registro }}</td>
+                                        <td *ngIf="esNancional(TitulosAcademicos.tipo_titulo)==true">Nacional</td>
+                                        <td *ngIf="esNancional(TitulosAcademicos.tipo_titulo)==false">Extranjero</td>
+                                        <td *ngIf="esTercerNivel(TitulosAcademicos.nivel_instruccion)==true">Tercer Nivel</td>
+                                        <td *ngIf="esTercerNivel(TitulosAcademicos.nivel_instruccion)==false">Cuarto Nivel</td>
+                                        <td>{{ TitulosAcademicos.detalles_adiciones }}</td>
+                                        <td>
+                                            <a href="{{ dominio }}/Archivos/Titulos/{{ TitulosAcademicos.evidencias_url }}" target="alt"><i class="far fa-file-pdf"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
