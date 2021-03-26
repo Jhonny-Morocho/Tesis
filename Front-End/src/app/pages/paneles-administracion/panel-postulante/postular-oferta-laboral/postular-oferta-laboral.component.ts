@@ -6,6 +6,7 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
+import {environment} from 'src/environments/environment';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
 import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiante.models';
 declare var JQuery:any;
@@ -17,6 +18,7 @@ declare var $:any;
 })
 export class PostularOfertaLaboralComponent implements OnInit {
   instanciaEmpleadorModelVer:EmpleadorModel;
+  dominio=environment;
   instanciaOfertaEstudianteEstado:OfertaLaboralEstudianteModel;
   instanciaOfertLaboralEstudiante:OfertaLaboralEstudianteModel;
   booleanGestor:boolean=false;
@@ -37,6 +39,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
     private ruta_:Router) { }
 
   ngOnInit() {
+
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
@@ -47,36 +50,21 @@ export class PostularOfertaLaboralComponent implements OnInit {
   }
   cargarTabla(){
     //listamos toda las ofertas que el estudiante haya postulado//para poner el stado //estatica 
-    this.servicioOfertaEstudiante.listarTodasOfertaEstudianteExternal_us().subscribe(
-      siHaceBien=>{
-        this.arrayofertasPostuladasEstudiante=siHaceBien;
-        console.log(this.arrayofertasPostuladasEstudiante);
-        console.log(siHaceBien);
-         //imprimimos las estrellas
-         let contador=0;
-         let numeroEstrellas=0;
-         this.empleador.forEach(element => {
-          //imprimir las estrellas en el td
-          this.servicioCalificarEmpleador.obeterCalifacionEmpleador(element['id']).subscribe(
-            siHcesBienCal=>{
-              numeroEstrellas=siHcesBienCal;
-              console.log(siHcesBienCal);
-              console.log("Num estrellas",numeroEstrellas);
-              console.log("contador",contador);
-              this.imprimirEstrellasTd(contador,numeroEstrellas);
-              contador++;
-            },errorCal=>{
-              console.log(errorCal);
-            });
-        });
-      },error=>{
-        console.log(error);
-      }
-    );
+    // this.servicioOfertaEstudiante.listarTodasOfertaEstudianteExternal_us().subscribe(
+    //   siHaceBien=>{
+    //     this.arrayofertasPostuladasEstudiante=siHaceBien;
+    //     console.log(this.arrayofertasPostuladasEstudiante);
+    //     console.log(siHaceBien);
+    //   },error=>{
+    //     console.log(error);
+    //   }
+    // );
     //listamos las ofertas laborales
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
-        console.warn("TODO BIEN");
+        console.info("TODO BIEN");
+        let contador=0;
+        console.log("xxx");
         this.ofertasLaborales =siHacesBien;
         console.log(this.ofertasLaborales);
         //data table
@@ -86,14 +74,20 @@ export class PostularOfertaLaboralComponent implements OnInit {
           pageLength: 2
         };
         this.dtTrigger.next();
+  
       },
       (peroSiTenemosErro)=>{
         console.warn("TODO MAL");
       }
-    );
+      );
+   }
 
+   pintarRequisitos(i){
+    $("#"+i).html(this.ofertasLaborales[i]['requisitos']);
+    console.log(this.ofertasLaborales[i]['requisitos']);
    }
    ngOnDestroy(): void {
+
     // Do not forget to unsubscribe the event
       try {
         this.dtTrigger.unsubscribe();
@@ -144,6 +138,12 @@ export class PostularOfertaLaboralComponent implements OnInit {
    
     }
     cerrarModal(){
+      $('#exampleModal').modal('hide');
+    }
+    abrirModal(){
+      console.log("Xxx");
+      $("#0").html("<ul><li>Buena presencia</li><li>Ganas de trabaar</li><li>List item three</li><li>List item four</li></ul>");
+      $("#1").html("<ul><li>Buena presencia</li><li>Ganas de trabaar</li><li>List item three</li><li>List item four</li></ul>");
       $('#exampleModal').modal('hide');
     }
     //si esta en la tabla siginica que esta incrito
