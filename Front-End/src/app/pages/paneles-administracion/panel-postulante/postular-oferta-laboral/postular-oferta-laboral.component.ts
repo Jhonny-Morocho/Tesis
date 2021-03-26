@@ -93,6 +93,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
       this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
+      //this.instanciaOfertaVer.e=this.ofertasLaborales[index]['fk_empleador'];
       this.instanciaOfertaVer.external_of=this.ofertasLaborales[index]['external_of'];
       console.log( this.instanciaOfertaVer.descripcion);
       //obtengo todos los usuarios 

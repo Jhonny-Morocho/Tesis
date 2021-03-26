@@ -1,89 +1,114 @@
-<navTab-postulante></navTab-postulante>
-<div class="content-wrapper">
-    <div class="card">
+<!-- <navTab-postulante></navTab-postulante> -->
+
+<div class="container mt-5">
+    <!-- <div class="">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Puesto</th>
+                    <th>Lugar</th>
+                    <th>Estado</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ ofertaLaboral.puesto}}</td>
+                    <td>{{ ofertaLaboral.lugar}}</td>
+                    <td *ngIf="estadoPostulacion(ofertaLaboral.id)==true">
+                        <span class="badge badge-success ">Postulando</span>
+                    </td>
+                    <td *ngIf="estadoPostulacion(ofertaLaboral.id)==false">
+                        <span class="badge badge-warning ">Sin postular</span>
+                    </td>
+                    <td>
+                        <a class="btn btn-light " (click)="verOfertaModal(i) "> <i class="fas fa-eye "></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <article class="card-body animated animate__animated animate__slideInRight">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Puesto</th>
-                        <th>Lugar</th>
-                        <th>Estado</th>
-                        <th>Ver</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ ofertaLaboral.puesto}}</td>
-                        <td>{{ ofertaLaboral.lugar}}</td>
-                        <td *ngIf="estadoPostulacion(ofertaLaboral.id)==true">
-                            <span class="badge badge-success ">Postulando</span>
-                        </td>
-                        <td *ngIf="estadoPostulacion(ofertaLaboral.id)==false">
-                            <span class="badge badge-warning ">Sin postular</span>
-                        </td>
-                        <td>
-                            <a class="btn btn-light " (click)="verOfertaModal(i) "> <i class="fas fa-eye "></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
         </article>
-    </div>
-</div>
+    </div> -->
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content ">
-            <div class="card-header ">
-                <h3 class="card-title ">Oferta Laboral Detalles</h3>
-                <div class="card-tools ">
-                    <button type="button " class="btn btn-tool " data-card-widget="collapse " title="Collapse ">
-                      <i class="fas fa-minus "></i>
-                    </button>
-                    <button type="button " class="btn btn-tool " data-card-widget="remove " title="Remove " (click)="cerrarModal() ">
-                      <i class="fas fa-times "></i>
-                    </button>
+    <div class="">
+        <div class=" card-solid">
+            <div class="card-body pb-0">
+                <div class="container mb-5">
+                    <div class="input-group rounded">
+                        <input type="search" class="form-control rounded" placeholder="Buscar.." aria-label="Search" aria-describedby="search-addon" />
+                        <span class="input-group-text border-0" id="search-addon">
+                          <i class="fas fa-search"></i>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body ">
-                <div class="row ">
-                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1 ">
-                        <div class="row ">
-                            <div class="col-12 ">
-                                <h4>Empleador</h4>
-                                <div class="post">
-                                    <div class="user-block ">
-                                        <img class="img-circle img-bordered-sm " src="../../../assets/images/empresa.png " alt="user image ">
-                                        <span class="username ">
-                                            <p class="text-primary ">{{ instanciaEmpleadorModelVer.razon_empresa }}</p>
-                                        </span>
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
+                        <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                                Digital Strategist
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>Nicole Pearson</b></h2>
+                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                                        </ul>
                                     </div>
-                                    <!-- /.user-block -->
-                                    <p class="post ">Descripcion de la oferta laboral</p>
-                                    <br>
-                                    <p>{{instanciaOfertaVer.descripcion}}</p>
+                                    <div class="col-5 text-center">
+                                        <img src="../../dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-sm bg-teal">
+                                        <i class="fas fa-comments"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-user"></i> View Profile
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2 ">
-                        <h3 class="text-primary ">Puesto <i class="fab fa-black-tie "></i> {{ instanciaOfertaVer.puesto }}</h3>
-                        <br>
-                        <h5 class="mt-5 text-muted ">Requisitos</h5>
-                        <div id="itemRequisitos"></div>
 
-                        <div class="text-center mt-5 mb-3 ">
-                            <a (click)="postular(instanciaOfertaVer.external_of,instanciaOfertaVer.puesto) " class="btn btn-sm btn-primary ">Postular</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-            <!-- /.card-body -->
         </div>
+
+        <!-- <h1 class="display-3">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p> -->
     </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <nav aria-label="Contacts Page Navigation">
+            <ul class="pagination justify-content-center m-0">
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- /.card-footer -->
+
+
+
 </div>
