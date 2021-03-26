@@ -37,7 +37,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
     private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioEmpleador:SerivicioEmpleadorService,
     private ruta_:Router) { }
-
+  
   ngOnInit() {
 
     this.instanciaOfertaVer=new OfertaLaboralModel();
@@ -46,8 +46,11 @@ export class PostularOfertaLaboralComponent implements OnInit {
     this.instanciaOfertaEstudianteEstado=new OfertaLaboralEstudianteModel();
     this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudianteModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
+    this.configurarParametrosDataTable();
     this.cargarTabla();
   }
+
+
   cargarTabla(){
     //listamos toda las ofertas que el estudiante haya postulado//para poner el stado //estatica 
     // this.servicioOfertaEstudiante.listarTodasOfertaEstudianteExternal_us().subscribe(
@@ -65,10 +68,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
         console.info("TODO BIEN");
         // data table
         // cargamos los items o los requisitos
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
+    
         this.ofertasLaborales =siHacesBien;
         console.log(this.ofertasLaborales);
         this.dtTrigger.next();
@@ -139,8 +139,6 @@ export class PostularOfertaLaboralComponent implements OnInit {
     }
     abrirModal(){
       console.log("Xxx");
-      $("#0").html("<ul><li>Buena presencia</li><li>Ganas de trabaar</li><li>List item three</li><li>List item four</li></ul>");
-      $("#1").html("<ul><li>Buena presencia</li><li>Ganas de trabaar</li><li>List item three</li><li>List item four</li></ul>");
       $('#exampleModal').modal('hide');
     }
     //si esta en la tabla siginica que esta incrito
@@ -197,6 +195,36 @@ export class PostularOfertaLaboralComponent implements OnInit {
         }
       })
       console.log(externalOferta);
+    }
+    configurarParametrosDataTable(){
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        responsive: true,
+         /* below is the relevant part, e.g. translated to spanish */ 
+        language: {
+          processing: "Procesando...",
+          search: "Buscar:",
+          lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+          info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+          infoEmpty: "Mostrando ningún elemento.",
+          infoFiltered: "(filtrado _MAX_ elementos total)",
+          infoPostFix: "",
+          loadingRecords: "Cargando registros...",
+          zeroRecords: "No se encontraron registros",
+          emptyTable: "No hay datos disponibles en la tabla",
+          paginate: {
+            first: "Primero",
+            previous: "Anterior",
+            next: "Siguiente",
+            last: "Último"
+          },
+          aria: {
+            sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+            sortDescending: ": Activar para ordenar la tabla en orden descendente"
+          }
+        }
+      };
     }
 
 }
