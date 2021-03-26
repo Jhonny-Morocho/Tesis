@@ -23,7 +23,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
-  ofertasLaborales:OfertaLaboralModel[]=[];
+  ofertasLaborales=[];
 //arrayOfertasPostuladasEstudaite
   arrayofertasPostuladasEstudiante:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaVer:OfertaLaboralModel;
@@ -52,6 +52,23 @@ export class PostularOfertaLaboralComponent implements OnInit {
         this.arrayofertasPostuladasEstudiante=siHaceBien;
         console.log(this.arrayofertasPostuladasEstudiante);
         console.log(siHaceBien);
+         //imprimimos las estrellas
+         let contador=0;
+         let numeroEstrellas=0;
+         this.empleador.forEach(element => {
+          //imprimir las estrellas en el td
+          this.servicioCalificarEmpleador.obeterCalifacionEmpleador(element['id']).subscribe(
+            siHcesBienCal=>{
+              numeroEstrellas=siHcesBienCal;
+              console.log(siHcesBienCal);
+              console.log("Num estrellas",numeroEstrellas);
+              console.log("contador",contador);
+              this.imprimirEstrellasTd(contador,numeroEstrellas);
+              contador++;
+            },errorCal=>{
+              console.log(errorCal);
+            });
+        });
       },error=>{
         console.log(error);
       }

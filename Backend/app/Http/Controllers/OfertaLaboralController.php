@@ -90,7 +90,14 @@ class OfertaLaboralController extends Controller
         //obtener todos los usuarios que sean postulante
         try {
             //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
-            $ObjOfertasLaborales=OfertasLaborales::where("estado",3 )->get();
+            //$ObjOfertasLaborales=OfertasLaborales::where("estado",3 )->get();
+            $ObjOfertasLaborales=OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
+            ->where("oferta_laboral.estado",3 )->get();
+            // $OfertaLaboralPostulante=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+            // ->join("oferta_laboral","oferta_laboral.id","=","ofertalaboral_estudiante.fk_oferta_laboral")
+            // ->where('ofertalaboral_estudiante.fk_estudiante','=',$ObjEstudiante->id)
+            // ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)
+            // ->first();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
