@@ -1,23 +1,23 @@
 <div class="centrarFormularioLoginRegistro animate__animated    animate__slideInLeft">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="index.html" class="h1"><b>Registro </b>Postulante</a>
+            <a class="h1"><b>Registro </b>Postulante</a>
         </div>
         <article class="card-body">
             <form class="row g-3" (ngSubmit)="onSubMitRegistroPostulante(fRegistroPostulante)" #fRegistroPostulante="ngForm">
 
                 <div class="col-3">
                     <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-primary">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a Login Postulante</a>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio</a>
                 </div>
                 <hr>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Email </label><br>
+                    <label for="inputEmail4" class="form-label">Correo </label><br>
                     <span class="text-danger " *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['correo'].errors">El correo es obligatorio</span>
                     <input type="email" [(ngModel)]="usuarioModel.correo" name="correo" class="form-control" required email>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputPassword4" class="form-label">Password</label><br>
+                    <label for="inputPassword4" class="form-label">Contraseña</label><br>
                     <span class="text-danger" *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['password'].errors">El password es obligatorio</span>
                     <input type="password" [(ngModel)]="usuarioModel.password" name="password" class="form-control" required minlength="6">
                 </div>
