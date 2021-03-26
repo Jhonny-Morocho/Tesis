@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { RegistroPostulanteComponent } from './pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
-import {LoginAdminComponent} from './pages/form-registro-login/form-logins/login-admin/login-admin.component';
+import {LoginAdminComponent} from './pages/form-registro-login/form-logins/login-admin/login.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
 import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
-import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
-import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
+//import {LoginPostulanteComponent} from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
+//import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
 import {RegistroEmpleadorComponent} from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
 import {TablaFiltroPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
@@ -41,9 +41,9 @@ const routes: Routes = [
   { path: 'home'    , component: HomeComponent },
   { path: 'registro-postulante', component: RegistroPostulanteComponent },
   { path: 'registro-empleador', component: RegistroEmpleadorComponent },
-  { path: 'login-postulante'   , component: LoginPostulanteComponent },
-  { path: 'login-admin' , component: LoginAdminComponent },
-  { path: 'login-empleador' , component: LoginEmpleadorComponent },
+  //{ path: 'login-postulante'   , component: LoginPostulanteComponent },
+  { path: 'login' , component: LoginAdminComponent },
+  //{ path: 'login-empleador' , component: LoginEmpleadorComponent },
   //rutas del empleador
   
   { path: 'panel-empleador/postulante-oferta/:external_of' , component: PostulantesOfertaComponent,canActivate:[AutentificacionGuard] },

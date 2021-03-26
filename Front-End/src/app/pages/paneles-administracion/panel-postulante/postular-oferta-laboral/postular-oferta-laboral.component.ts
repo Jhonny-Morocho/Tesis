@@ -63,18 +63,15 @@ export class PostularOfertaLaboralComponent implements OnInit {
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         console.info("TODO BIEN");
-        let contador=0;
-        console.log("xxx");
-        this.ofertasLaborales =siHacesBien;
-        console.log(this.ofertasLaborales);
-        //data table
-        //cargamos los items o los requisitos
+        // data table
+        // cargamos los items o los requisitos
         this.dtOptions = {
           pagingType: 'full_numbers',
           pageLength: 2
         };
+        this.ofertasLaborales =siHacesBien;
+        console.log(this.ofertasLaborales);
         this.dtTrigger.next();
-  
       },
       (peroSiTenemosErro)=>{
         console.warn("TODO MAL");

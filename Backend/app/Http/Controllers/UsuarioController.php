@@ -122,29 +122,33 @@ class UsuarioController extends Controller
      public function login(Request $request){
         
         if($request->json()){
-            $datos=$request->json()->all();
-            $usuario=Usuario::where("correo",$datos['correo'])->first();
+      
             // ========= VALIDACION DEL USUARIO ANTES DE INICIAR EL LOGIN ====
             //existe el usuario 
-            if($usuario){
-                if(password_verify($datos['password'],$usuario['password'])){
-                    // preguntamos que tipo de usuario es 
-                 try {
-              
-                        return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
-
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"request"=>$th]);
+            $usuario=null;
+            try {
+                $datos=$request->json()->all();
+                $usuario=Usuario::where("correo",$datos['correo'])->first();
+                if($usuario){
+                    if(password_verify($datos['password'],$usuario['password'])){
+                        // preguntamos que tipo de usuario es 
+                     try {
+                            return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
+    
+                        } catch (\Throwable $th) {
+                            //throw $th;
+                            return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"request"=>$th]);
+                        }
+                    }else{
+                        return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
                     }
-                }else{
-                    return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
+    
+                } // usuario no encontrado
+                else{
+                    return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
                 }
-
-            }
-            // usuario no encontrado
-            else{
-                return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"Error",$th,400]);
             }
 
         }else{

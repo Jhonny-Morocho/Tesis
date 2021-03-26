@@ -42,9 +42,7 @@ export class AutenticacionUserService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log("Entro en el mapa del RKJS");
           console.log(respuestaBackend);
-          this.guarUsuarioTempLocalSotarage(respuestaBackend['mensaje']);
           return respuestaBackend;
         }
       )

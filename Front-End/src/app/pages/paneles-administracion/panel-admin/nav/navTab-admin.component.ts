@@ -47,13 +47,13 @@ export class PanelAdminComponent implements OnInit {
   salirSession(){
     // ocupo el servicio
     Swal({
-      title: 'Are you sure?',
-      text: "Esta seguro que desea cerrar su session",
-      type: 'warning',
+      title: 'Estas seguro ?',
+      text: "La sesión se cerrara ",
+      type: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: 'Si'
     }).then((result) => {
       if (result.value) {
         this.servicioUsuario.cerrarSession();
