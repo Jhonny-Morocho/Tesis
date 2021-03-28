@@ -77,7 +77,7 @@ export class TemplateHojaVidaComponent implements OnInit {
       }
     );
   }
-  generoHombre(tipoGenero:number){
+  generoHombre(tipoGenero){
     if(tipoGenero==1){
       return false;
     }

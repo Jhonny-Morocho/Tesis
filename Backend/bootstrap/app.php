@@ -48,7 +48,10 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
-
+//========== agregados
+// $app->singleton('filesystem', function ($app) {
+//     return $app->loadComponent('filesystems', 'Illuminate\Filesystem\FilesystemServiceProvider', 'filesystem');
+// });
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -112,7 +115,7 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Http\Controllers'
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });

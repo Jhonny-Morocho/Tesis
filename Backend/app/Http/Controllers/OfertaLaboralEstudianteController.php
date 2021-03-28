@@ -94,7 +94,8 @@ class OfertaLaboralEstudianteController extends Controller
             ->select("estudiante.*","usuario.*")
             ->where('ofertalaboral_estudiante.estado',"=",1)
             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
-           
+           echo "enviando correo";
+           //SendEmail::dispatch($user);
            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"ONE","error"=>$th,400]);

@@ -94,14 +94,20 @@
 }
 
 nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
-    height: 70px;
+    /* height: 70px; */
     font-size: 18px;
 }
 
 
 /* Extra small devices (phones, 600px and down) */
 
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    div.dataTables_wrapper div.dataTables_length,
+    div.dataTables_wrapper div.dataTables_paginate {
+        text-align: center;
+        font-size: 12px !important;
+    }
+}
 
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

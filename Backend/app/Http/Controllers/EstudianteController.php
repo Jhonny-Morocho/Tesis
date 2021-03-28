@@ -95,7 +95,7 @@ class EstudianteController extends Controller
 
    }
      // Listar todos los postulante estado cero y no cero//con sus datos de formulario
-     public function listarEstudiantes(){
+     public  function listarEstudiantes(){
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEstudiante=null;
@@ -133,4 +133,5 @@ class EstudianteController extends Controller
         }
 
     }
+
 }

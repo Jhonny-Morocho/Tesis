@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
 require 'Utilidades/PHPMailer/vendor/autoload.php';
-class UsuarioController extends Controller
+class TemplateCorreoController extends Controller
 {
    
     

@@ -3,7 +3,11 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
+use Psy\Command\Command;
+use App\Models\Estudiante;
+use Illuminate\Database\Eloquent\Model;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,9 +17,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        "App\Console\Commands\DeletedOldMessages"
     ];
-
+ 
     /**
      * Define the application's command schedule.
      *
@@ -24,6 +28,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->command('command:eliminarMensaje')->everyMinute();
+        //$schedule->command('command:eliminarMensaje')->everyMinute();
     }
+
 }
