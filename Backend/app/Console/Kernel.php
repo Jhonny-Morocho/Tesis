@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
+    {   
         $schedule->command('command:eliminarMensaje')->everyMinute();
         //$schedule->command('command:eliminarMensaje')->everyMinute();
     }
