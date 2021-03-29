@@ -8,7 +8,8 @@
         "php": "^7.3|^8.0",
         "flipbox/lumen-generator": "^8.2",
         "hmazter/laravel-schedule-list": "^2.2",
-        "laravel/lumen-framework": "^8.0"
+        "laravel/lumen-framework": "^8.0",
+        "phpmailer/phpmailer": "^6.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",

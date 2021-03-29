@@ -1,40 +1,8 @@
-[2021-03-28 23:13:41] Estado :1 Randon : 27 Correo : false
+[2021-03-29 12:45:50] Update Estudiante :eerssa9@hotmail.com = true ↑↑ Enviar Correo : true
 
 
 
-[2021-03-28 23:15:45] Estado :1 Randon : 24 Correo : xxx
-
-
-
-[2021-03-28 23:19:25] Estado :1 Randon : 54 Correo : yyy
-
-
-
-[2021-03-28 23:22:41] Estado :1 Randon : 89 Correo : false
-
-
-
-[2021-03-28 23:25:35] Estado :1 Randon : 14 Correo : false
-
-
-
-[2021-03-28 23:26:12] Estado :1 Randon : 24 Correo : false
-
-
-
-[2021-03-28 23:33:18] Estado :1 Randon : 38 Correo : false
-
-
-
-[2021-03-28 23:33:30] Estado :1 Randon : 51 Correo : false
-
-
-
-[2021-03-28 23:54:47] Estado :1 Randon : 39 Correo : false
-
-
-
-[2021-03-28 23:54:53] Estado :1 Randon : 76 Correo : false
+[2021-03-29 12:46:40] Update Empleador :eerssa9@hotmail.com = true ↑↑ Enviar Correo : true
 
 
 
