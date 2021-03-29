@@ -7,8 +7,6 @@ use Illuminate\Console\Command;
 use App\Models\Estudiante;
 use App\Models\Empleador;
 use Carbon\Carbon;
-// use PHPMailer\PHPMailer\PHPMailer;
-// require 'PHPMailer/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 
 class NotificarUsuarios extends Command
@@ -63,18 +61,19 @@ class NotificarUsuarios extends Command
             $usuario=Estudiante::join("usuario","usuario.id","=","estudiante.fk_usuario")
             ->select("estudiante.*","usuario.*")
             ->where("estudiante.estado",0)
+            ->where("usuario.tipoUsuario",2)
             ->where("estudiante.observaciones","")
             ->whereDate('estudiante.updated_at',"<",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
             ->get();
 
-            $TituloCorreo="Proceso de Postulacion ha oferta laboral";
+            $TituloCorreo="Proceso de registro del Postulante";
             $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
                 $estudianteBooleand=Estudiante::where("fk_usuario","=",$value['fk_usuario'])
                 ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
                 $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['nombre'],$value['apellido'],$TituloCorreo);
                 $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$this->de,$value['correo'],$TituloCorreo);
-                $texto="[".date("Y-m-d H:i:s")."]" ." Update Estudiante :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
+                $texto="[".date("Y-m-d H:i:s")."]" ." Update Estudiante Registro Expirado :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
             }
@@ -94,6 +93,7 @@ class NotificarUsuarios extends Command
                 $usuario=Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
                 ->select("empleador.*","usuario.*")
                 ->where("empleador.estado",0)
+                ->where("usuario.tipoUsuario",6)
                 ->where("empleador.observaciones","")
                 ->whereDate('empleador.updated_at',"<",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
                 ->get();
@@ -105,7 +105,7 @@ class NotificarUsuarios extends Command
                     ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
                     $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['razon_empresa'],"",$TituloCorreo);
                     $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$this->de,$value['correo'],$TituloCorreo);
-                    $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
+                    $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
                 }
@@ -134,7 +134,7 @@ class NotificarUsuarios extends Command
                                     <br>
                                     <hr>
                                     <div class="alert alert-warning">
-                                        Estimado '.$nombre." ".$apellido. ' Se le informa que la validación de su información ha expirado, porfavor vuelva a insistir ingresando a su cuenta y reenviando el formulario
+                                        Estimado/a '.$nombre." ".$apellido. ' Se le informa que la validación de su información ha expirado, porfavor vuelva a insistir ingresando a su cuenta y reenviando el formulario
                                 </div>
                                 </div>
                                 </div>

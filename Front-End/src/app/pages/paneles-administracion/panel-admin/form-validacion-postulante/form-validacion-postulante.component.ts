@@ -19,6 +19,13 @@ export class FormInfoPostulanteComponent implements OnInit {
   constructor(private servicioPostulante_:SerivicioPostulanteService,private _activateRoute:ActivatedRoute) {
     this.instanciaPostulante=new PostulanteModel();
     //ontengo el paremtro de la url pára tarer los datos des estudiante
+    this.formEstudiante();
+   }
+  ngOnInit() {
+
+  }
+
+  formEstudiante(){
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.externalEst=params['external_es'];
@@ -49,11 +56,7 @@ export class FormInfoPostulanteComponent implements OnInit {
         }
       );
     });
-   }
-  ngOnInit() {
-
   }
-
   //aprobar postulante //y tambien no aprobar estudiante
   onSubmitForPostulanteAprobacion(formularioAprobacion:NgForm){
     if(formularioAprobacion.invalid){
