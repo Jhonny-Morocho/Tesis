@@ -1,7 +1,7 @@
 
 export class EmpleadorModel{
     razon_empresa:string;
-    tiposEmpresa:string;
+    tipo_empresa:string;
     actividad_ruc:string;
     num_ruc:string;
     cedula:string;

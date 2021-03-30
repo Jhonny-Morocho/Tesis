@@ -14,7 +14,7 @@ class CiudadesController extends Controller
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjCiudades=Ciudades::join("provincia","provincia.id","=","ciudad.fk_provincia")
-            ->select("provincia.nombre","ciudad.fk_provincia","ciudad.nombre")
+            ->select("provincia.nombre","ciudad.*")
             ->where("ciudad.fk_provincia",$external_id)
             ->get();
             return response()->json(["mensaje"=>$ObjCiudades,"Siglas"=>"OE",200]);

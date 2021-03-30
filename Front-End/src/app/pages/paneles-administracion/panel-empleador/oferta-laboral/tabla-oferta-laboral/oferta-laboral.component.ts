@@ -82,7 +82,7 @@ export class OfertaLaboralComponent implements OnInit {
           this.instanciaEmpleadorModelVer.direccion=siHaceBien['mensaje']['direccion'];
           this.instanciaEmpleadorModelVer.fk_provincia=siHaceBien['mensaje']['fk_provincia'];
           this.instanciaEmpleadorModelVer.actividad_ruc=siHaceBien['mensaje']['actividad_ruc'];
-          this.instanciaEmpleadorModelVer.tiposEmpresa=siHaceBien['mensaje']['tiposEmpresa'];
+          this.instanciaEmpleadorModelVer.tipo_empresa=siHaceBien['mensaje']['tiposEmpresa'];
           this.instanciaEmpleadorModelVer.razon_empresa=siHaceBien['mensaje']['razon_empresa'];
           this.instanciaEmpleadorModelVer.nom_representante_legal=siHaceBien['mensaje']['nom_representante_legal'];
           

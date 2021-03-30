@@ -90,7 +90,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
                 this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
                 this.instanciaEmpleadorModelVer.fk_ciudad=element['fk_ciudad'];
                 this.instanciaEmpleadorModelVer.actividad_ruc=element['actividad_ruc'];
-                this.instanciaEmpleadorModelVer.tiposEmpresa=element['tiposEmpresa'];
+                this.instanciaEmpleadorModelVer.tipo_empresa=element['tiposEmpresa'];
                 this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
               }
     

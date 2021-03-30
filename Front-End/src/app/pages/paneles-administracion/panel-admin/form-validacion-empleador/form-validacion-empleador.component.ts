@@ -30,7 +30,7 @@ export class FormValidacionEmpleadorComponent implements OnInit {
             this.instanciaEmpleador.razon_empresa=suHacesBien['mensaje']['razon_empresa'];
             this.instanciaEmpleador.actividad_ruc=suHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=suHacesBien['mensaje']['cedula'];
-            this.instanciaEmpleador.tiposEmpresa=suHacesBien['mensaje']['tipo_empresa'];
+            this.instanciaEmpleador.tipo_empresa=suHacesBien['mensaje']['tipo_empresa'];
             this.instanciaEmpleador.fk_provincia=suHacesBien['mensaje']['fk_provincia'];
             this.instanciaEmpleador.telefono=suHacesBien['mensaje']['telefono'];
             this.instanciaEmpleador.fk_ciudad=suHacesBien['mensaje']['fk_ciudad'];
@@ -61,7 +61,7 @@ export class FormValidacionEmpleadorComponent implements OnInit {
   if(formularioAprobacion.invalid){
     return;
   }
-  console.log(formularioAprobacion.invalid);
+
   Swal({
     allowOutsideClick:false,
     type:'info',

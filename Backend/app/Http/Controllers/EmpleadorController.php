@@ -142,12 +142,13 @@ class EmpleadorController extends Controller
 
         if($request->json()){
             $datos=$request->json()->all();
-            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
             //empleador es tipo de usuariuo 6
-            if($ObjUsuario->tipoUsuario==6){
-                //creo un objeto Docente para guardar el nuevo decente
-                try {
-                    //code...
+            $ObjUsuario=null;
+            $ObjEmpleador=null;
+            try {
+                $ObjUsuario=Usuario::where("external_us",$external_id)->first();
+        
+                if($ObjUsuario->tipoUsuario==6){
                     $ObjEmpleador=new Empleador();
                     $ObjEmpleador->fk_usuario=$ObjUsuario->id;
                     $ObjEmpleador->razon_empresa=$datos["razon_empresa"];
@@ -155,24 +156,34 @@ class EmpleadorController extends Controller
                     $ObjEmpleador->actividad_ruc=$datos["actividad_ruc"];
                     $ObjEmpleador->num_ruc=$datos["num_ruc"];
                     $ObjEmpleador->cedula=$datos["cedula"];
-                    $ObjEmpleador->ciudad=$datos["ciudad"];
-                    $ObjEmpleador->provincia=$datos["provincia"];
+                    $ObjEmpleador->fk_ciudad=$datos["fk_ciudad"];
+                    $ObjEmpleador->fk_provincia=$datos["fk_provincia"];
                     $ObjEmpleador->telefono=$datos["telefono"];
                     $ObjEmpleador->direccion=$datos["direccion"];
-                    $ObjEmpleador->nom_representante_legal=$datos['nom_representante_legal'];
+                    $ObjEmpleador->nom_representante_legal=$datos["nom_representante_legal"];
                     $ObjEmpleador->observaciones=$datos["observaciones"];
                     $ObjEmpleador->estado=$datos["estado"];
                     $ObjEmpleador->external_em="Em".Utilidades\UUID::v4();
                     $ObjEmpleador->save();
-                    return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE"]);
-                } catch (\Throwable $th) {
-                    //throw $th;
-                    return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
-                }
-            }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external","Siglas"=>"ONE"]);
-            } 
-                
+                    if($ObjEmpleador==true){
+                        return response()->json(["mensaje"=> "Registro Exitoso","Siglas"=>"OE",
+                                                    "respuestaEmpleador"=>$ObjEmpleador,200]);
+
+                    }else{
+                        return response()->json(["mensaje"=> "No se guardo el registro","Siglas"=>"OE",
+                                                    "respuestaEmpleador"=>$ObjEmpleador,
+                                                    400]);
+                    }
+                }else{
+                    return response()->json(["mensaje"=>"Usuario no encontrado","Siglas"=>"ONE",400]);
+                } 
+            } catch (\Throwable $th) {
+                //throw $th;
+                return response()->json(["mensaje"=>"Error en el servidor",
+                "respuestaObjUsuario"=>$ObjUsuario,
+                "respuestaObjEmpleador"=>$ObjEmpleador,
+                "Siglas"=>"ONE","error"=>$th]);
+            }
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }

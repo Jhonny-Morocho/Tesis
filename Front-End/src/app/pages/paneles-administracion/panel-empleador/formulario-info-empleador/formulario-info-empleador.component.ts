@@ -15,7 +15,8 @@ import { Router } from '@angular/router';
   templateUrl: './formulario-info-empleador.component.html'
 })
 export class FormularioInfoEmpleadorComponent implements OnInit {
-  instanciaEmpleador:EmpleadorModel;
+  instanciaEmpleadorLlenarForm:EmpleadorModel;
+  instanciaEmpleadorRegistrar:EmpleadorModel;
   booleanFormularioCompletado=false;
   arrayProvincias:ProvinciasModels []=[];
   arrayCiudad:CiudadesModel []=[];
@@ -29,7 +30,8 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
               private ruta_:Router) { }
 
   ngOnInit() {
-    this.instanciaEmpleador=new EmpleadorModel();
+    this.instanciaEmpleadorRegistrar=new EmpleadorModel();
+    this.instanciaEmpleadorLlenarForm=new EmpleadorModel();
     this.formEmpleador();
     this.provincias();
  
@@ -64,31 +66,21 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
             // por lo tanto formulario completo ==true
             this.booleanFormularioCompletado=true;
             //registro de empleador encontrado, ya esta creado el empleador en el BD
-            this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
-            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
-            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['fk_provincia'];
-            this.instanciaEmpleador.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
-            this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
-            this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
-            this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
-            this.instanciaEmpleador.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
-            this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
-            this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
-            this.instanciaEmpleador.tiposEmpresa=siHacesBien['mensaje']['tipo_empresa'];
-            this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
-            this.instanciaEmpleador.estado=siHacesBien['mensaje']['estado'];
+            this.instanciaEmpleadorLlenarForm.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
+            this.instanciaEmpleadorLlenarForm.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaEmpleadorLlenarForm.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
+            this.instanciaEmpleadorLlenarForm.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
+            this.instanciaEmpleadorLlenarForm.direccion=siHacesBien['mensaje']['direccion'];
+            this.instanciaEmpleadorLlenarForm.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
+            this.instanciaEmpleadorLlenarForm.num_ruc=siHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleadorLlenarForm.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
+            this.instanciaEmpleadorLlenarForm.telefono=siHacesBien['mensaje']['telefono'];
+            this.instanciaEmpleadorLlenarForm.tipo_empresa=siHacesBien['mensaje']['tipo_empresa'];
+            this.instanciaEmpleadorLlenarForm.observaciones=siHacesBien['mensaje']['observaciones'];
+            this.instanciaEmpleadorLlenarForm.estado=siHacesBien['mensaje']['estado'];
             //si es mayor a cero es q si ha revisado y si ha visto el formulario
-            this.obervaciones = ( this.instanciaEmpleador.observaciones.length>0)?true:false;
-            this.formValidado = ( this.instanciaEmpleador.estado==1)?true:false;
-            }else{
-            //llena el formulario por primera ves
-              // this.instanciaPostulante.nombre="";
-              // this.instanciaPostulante.apellido="";
-              // this.instanciaPostulante.cedula="";
-              // this.instanciaPostulante.telefono="";
-              // this.instanciaPostulante.genero=0;
-              // this.instanciaPostulante.fecha_nacimiento=this.today;
-              // this.instanciaPostulante.direccion_domicilio="";
+            this.obervaciones = ( this.instanciaEmpleadorLlenarForm.observaciones.length>0)?true:false;
+            this.formValidado = ( this.instanciaEmpleadorLlenarForm.estado==1)?true:false;
             }
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
@@ -99,7 +91,6 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   //creacion del empleador
   onSubmitFormularioEmpledor(formRegistroEmpleador:NgForm){
     console.log(formRegistroEmpleador);
-    console.log("on submit Formulario Registro datos postulante postular");
     if(formRegistroEmpleador.invalid){
       return;
      }
@@ -109,14 +100,18 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
       text:'Espere por favor'
     });
     Swal.showLoading();
-    //envio la informacion a mi servicio - consumo el servici
-    console.log(this.instanciaEmpleador);
-    this.servicioEmpleador_.crearEmpleador(this.instanciaEmpleador).subscribe(
+    this.instanciaEmpleadorRegistrar.estado=0;
+    this.instanciaEmpleadorRegistrar.observaciones="";
+    console.log(this.instanciaEmpleadorRegistrar);
+    this.servicioEmpleador_.crearEmpleador(this.instanciaEmpleadorRegistrar).subscribe(
       siHacesBien=>{
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
           console.log(siHacesBien);
+          //bloqueo el formulario
+          this.booleanFormularioCompletado=true;
+          this.obervaciones=false;
            //this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
             console.warn(siHacesBien);
@@ -125,7 +120,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
       
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro['error']);
-        console.log(this.instanciaEmpleador);
+        console.log(this.instanciaEmpleadorRegistrar);
         Swal({
           title:'Error al registrar informacion',
           type:'error',
@@ -147,8 +142,8 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
       text:'Espere por favor'
     });
     //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
-    this.instanciaEmpleador.observaciones="";
-    this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleador).subscribe(
+    this.instanciaEmpleadorLlenarForm.observaciones="";
+    this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleadorLlenarForm).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);

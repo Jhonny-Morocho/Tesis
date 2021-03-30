@@ -20,18 +20,8 @@ export class SerivicioEmpleadorService {
   crearEmpleador(modeloEmpleador:EmpleadorModel){
     console.log(modeloEmpleador);
     const autenficacionDatos={
-      razon_empresa:modeloEmpleador.razon_empresa,
-      tipo_empresa:modeloEmpleador.tiposEmpresa,
-      actividad_ruc:modeloEmpleador.actividad_ruc,
-      num_ruc:modeloEmpleador.num_ruc,
-      cedula:modeloEmpleador.cedula,
-      nom_representante_legal:modeloEmpleador.nom_representante_legal,
-      fk_ciudad:modeloEmpleador.fk_ciudad,
-      fk_provincia:modeloEmpleador.fk_provincia,
-      telefono:modeloEmpleador.telefono,
-      direccion:modeloEmpleador.direccion,
-      observaciones:'',
-      estado:0
+      ...modeloEmpleador
+
     }
     console.log(autenficacionDatos);
     //retorna la respuesata
@@ -126,7 +116,7 @@ export class SerivicioEmpleadorService {
   actulizarDatosEmpleador(modeloEmpleador:EmpleadorModel){
       const autenficacionDatos={
         razon_empresa:modeloEmpleador.razon_empresa,
-        tipo_empresa:modeloEmpleador.tiposEmpresa,
+        tipo_empresa:modeloEmpleador.tipo_empresa,
         actividad_ruc:modeloEmpleador.actividad_ruc,
         num_ruc:modeloEmpleador.num_ruc,
         cedula:modeloEmpleador.cedula,
