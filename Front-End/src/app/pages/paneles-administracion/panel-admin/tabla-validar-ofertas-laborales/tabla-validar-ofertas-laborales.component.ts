@@ -85,9 +85,10 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
               //comparo el fk_empleador con el id de usuario
               if(element['id']== this.instanciaOfertaVer.fk_empleador){
                 console.log(element);
-                this.instanciaEmpleadorModelVer.ciudad=element['nom_representante_legal'];
+                this.instanciaEmpleadorModelVer.nom_representante_legal=element['nom_representante_legal'];
                 this.instanciaEmpleadorModelVer.direccion=element['direccion'];
-                this.instanciaEmpleadorModelVer.provincia=element['provincia'];
+                this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
+                this.instanciaEmpleadorModelVer.fk_ciudad=element['fk_ciudad'];
                 this.instanciaEmpleadorModelVer.actividad_ruc=element['actividad_ruc'];
                 this.instanciaEmpleadorModelVer.tiposEmpresa=element['tiposEmpresa'];
                 this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];

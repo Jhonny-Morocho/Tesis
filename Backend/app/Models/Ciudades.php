@@ -17,7 +17,8 @@ class Ciudades extends Model
         "nombre"
     ];
     
-    public function CursosCapacitaciones(){
-        return $this->hasMany('App\Models\provincias','fk_provincia');
+    public function provincias(){
+      return $this->belongsTo('App\Models\provincias','fk_provincia');
     }
+ 
 }

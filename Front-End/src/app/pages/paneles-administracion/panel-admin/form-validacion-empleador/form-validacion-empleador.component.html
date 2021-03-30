@@ -56,7 +56,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Ciudad</label><br>
                     <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required disabled>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.fk_ciudad" name="ciudad" class="form-control" required disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Telefono</label><br>

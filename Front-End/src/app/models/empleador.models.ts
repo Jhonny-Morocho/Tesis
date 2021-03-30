@@ -6,8 +6,7 @@ export class EmpleadorModel{
     num_ruc:string;
     cedula:string;
     nom_representante_legal:string;
-    ciudad:string;
-    provincia:string;
+    fk_ciudad:Number;
     telefono:string;
     direccion:string;
     fk_provincia:Number;

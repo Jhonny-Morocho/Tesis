@@ -3,6 +3,8 @@ import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import {ServicioProvincias} from 'src/app/servicios/provincias.service';
 import {ProvinciasModels} from 'src/app/models/provincias.models'; 
+import {CiudadesModel} from 'src/app/models/ciudades.models';
+import {ServicioCiudades} from 'src/app/servicios/ciudades.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,12 +18,13 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   instanciaEmpleador:EmpleadorModel;
   booleanFormularioCompletado=false;
   arrayProvincias:ProvinciasModels []=[];
-  arrayCiudad:ProvinciasModels []=[];
+  arrayCiudad:CiudadesModel []=[];
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
   obervaciones=false;
   //validacion de formulario true/false
   formValidado=false;
   constructor(private servicioEmpleador_:SerivicioEmpleadorService,
+              private servicioCiudades:ServicioCiudades,
               private servicioProvincias:ServicioProvincias,
               private ruta_:Router) { }
 
@@ -33,6 +36,14 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   }
   escucharSelectProvincia(idProvincia){
     console.log(idProvincia);
+    this.servicioCiudades.listarCiudades(idProvincia).subscribe(
+      siHaceBien=>{
+          console.log(siHaceBien);
+          this.arrayCiudad=siHaceBien;
+      },siHaceMal=>{
+        console.warn(siHaceMal);
+      }
+    );
   }
   provincias(){
     this.servicioProvincias.listarProvincias().subscribe(
@@ -56,11 +67,11 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
             this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['fk_provincia'];
-            this.instanciaEmpleador.ciudad=siHacesBien['mensaje']['ciudad'];
+            this.instanciaEmpleador.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
             this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
             this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
             this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
-            this.instanciaEmpleador.provincia=siHacesBien['mensaje']['provincia'];
+            this.instanciaEmpleador.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
             this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
             this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
             this.instanciaEmpleador.tiposEmpresa=siHacesBien['mensaje']['tipo_empresa'];

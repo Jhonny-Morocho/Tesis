@@ -26,10 +26,10 @@ export class SerivicioEmpleadorService {
       num_ruc:modeloEmpleador.num_ruc,
       cedula:modeloEmpleador.cedula,
       nom_representante_legal:modeloEmpleador.nom_representante_legal,
-      ciudad:modeloEmpleador.ciudad,
-      provincia:modeloEmpleador.provincia,
-      telefono:modeloEmpleador.provincia,
-      direccion:modeloEmpleador.provincia,
+      fk_ciudad:modeloEmpleador.fk_ciudad,
+      fk_provincia:modeloEmpleador.fk_provincia,
+      telefono:modeloEmpleador.telefono,
+      direccion:modeloEmpleador.direccion,
       observaciones:'',
       estado:0
     }
@@ -131,10 +131,10 @@ export class SerivicioEmpleadorService {
         num_ruc:modeloEmpleador.num_ruc,
         cedula:modeloEmpleador.cedula,
         nom_representante_legal:modeloEmpleador.nom_representante_legal,
-        ciudad:modeloEmpleador.ciudad,
-        provincia:modeloEmpleador.provincia,
-        telefono:modeloEmpleador.provincia,
-        direccion:modeloEmpleador.provincia,
+        fk_ciudad:modeloEmpleador.fk_ciudad,
+        fk_provincia:modeloEmpleador.fk_provincia,
+        telefono:modeloEmpleador.telefono,
+        direccion:modeloEmpleador.direccion,
         observaciones:modeloEmpleador.observaciones
       }
     //retorna la respuesata

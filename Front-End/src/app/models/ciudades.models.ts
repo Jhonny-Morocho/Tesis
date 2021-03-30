@@ -1,5 +1,5 @@
 
-export class ProvinciasModels{
+export class CiudadesModel{
     id:number;
     nombre:string;
 }

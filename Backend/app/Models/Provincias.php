@@ -16,7 +16,7 @@ class Provincias extends Model
         "nombre"
     ];
     
-    public function CursosCapacitaciones(){
-        return $this->hasOne('App\Models\empleador','fk_provincia');
+    public function ciudad(){
+        return $this->hasMany('App\Models\ciudad','fk_provincia');
     }
 }

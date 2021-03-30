@@ -78,12 +78,13 @@ export class OfertaLaboralComponent implements OnInit {
     this.servicioEmpleador.listarFormEmpleador().subscribe(
       siHaceBien=>{
           console.log(siHaceBien);
-          this.instanciaEmpleadorModelVer.ciudad=siHaceBien['mensaje']['nom_representante_legal'];
+          this.instanciaEmpleadorModelVer.fk_ciudad=siHaceBien['mensaje']['fk_ciudad'];
           this.instanciaEmpleadorModelVer.direccion=siHaceBien['mensaje']['direccion'];
-          this.instanciaEmpleadorModelVer.provincia=siHaceBien['mensaje']['provincia'];
+          this.instanciaEmpleadorModelVer.fk_provincia=siHaceBien['mensaje']['fk_provincia'];
           this.instanciaEmpleadorModelVer.actividad_ruc=siHaceBien['mensaje']['actividad_ruc'];
           this.instanciaEmpleadorModelVer.tiposEmpresa=siHaceBien['mensaje']['tiposEmpresa'];
           this.instanciaEmpleadorModelVer.razon_empresa=siHaceBien['mensaje']['razon_empresa'];
+          this.instanciaEmpleadorModelVer.nom_representante_legal=siHaceBien['mensaje']['nom_representante_legal'];
           
       },error=>{
 

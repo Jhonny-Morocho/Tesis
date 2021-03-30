@@ -31,9 +31,9 @@ export class FormValidacionEmpleadorComponent implements OnInit {
             this.instanciaEmpleador.actividad_ruc=suHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=suHacesBien['mensaje']['cedula'];
             this.instanciaEmpleador.tiposEmpresa=suHacesBien['mensaje']['tipo_empresa'];
-            this.instanciaEmpleador.provincia=suHacesBien['mensaje']['provincia'];
+            this.instanciaEmpleador.fk_provincia=suHacesBien['mensaje']['fk_provincia'];
             this.instanciaEmpleador.telefono=suHacesBien['mensaje']['telefono'];
-            this.instanciaEmpleador.ciudad=suHacesBien['mensaje']['ciudad'];
+            this.instanciaEmpleador.fk_ciudad=suHacesBien['mensaje']['fk_ciudad'];
             this.instanciaEmpleador.direccion=suHacesBien['mensaje']['direccion'];
             this.instanciaEmpleador.estado=suHacesBien['mensaje']['estado'];
             this.instanciaEmpleador.nom_representante_legal=suHacesBien['mensaje']['nom_representante_legal'];

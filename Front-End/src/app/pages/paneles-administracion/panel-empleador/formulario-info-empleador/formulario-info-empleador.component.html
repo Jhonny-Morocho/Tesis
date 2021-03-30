@@ -23,10 +23,6 @@
                         <p class="mb-0">Por favor vuelte a intentar</p>
                     </div>
                     <h3>Registro de Empleador</h3>
-                    <div class="col-3">
-                        <a [routerLink]="['/panel-empleador/mi-perfil']" class="float-right btn btn-outline-success">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>
-                    </div>
 
                     <hr>
                     <div class="col-md-6">
@@ -49,12 +45,12 @@
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                        <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false || formValidado==true" max="13">
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10" [disabled]="obervaciones==false || formValidado==true">
+                        <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required min="10" [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
@@ -62,13 +58,8 @@
                         <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincia'].errors">La provinicia es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
-                    </div>
-                    <div class="col-md-6">
                         <label for="inputPais" class="form-label">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
                         <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
                         <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
                       </select>
@@ -76,7 +67,7 @@
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Ciudad</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                        <input type="text" [(ngModel)]="instanciaEmpleador.fk_ciudad" name="ciudad" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Telefono de Nacimiento</label><br>
@@ -104,12 +95,6 @@
             <article class="card-body">
                 <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpledor(fEmpleador)" #fEmpleador="ngForm">
                     <h3>Registro de Empleador</h3>
-
-                    <div class="col-3">
-                        <a [routerLink]="['/panel-postulante/mi-perfil']" class="float-right btn btn-outline-success">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar a mi perfil </a>
-                    </div>
-
                     <hr>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
@@ -129,14 +114,14 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
+                        <label for="inputEmail4" class="form-label">Número de RUC</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required>
+                        <input type="text" [(ngModel)]="instanciaEmpleador.num_ruc" name="numeroRuc" class="form-control" required maxlength="13">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" required max="10">
+                        <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
+                        <span class="text-danger" *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
+                        <input type="text" [(ngModel)]="instanciaEmpleador.cedula" name="cedula" class="form-control" maxlength="10" required>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
@@ -145,27 +130,22 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputPais" class="form-label">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La Provincia es obligatorio</span>
                         <select (ngModelChange)="escucharSelectProvincia($event)" class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
                         <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                         <label for="inputPais" class="form-label">Ciudad</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
-                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
-                        <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La Ciudad es obligatorio</span>
+                        <select class="form-control" [(ngModel)]="instanciaEmpleador.fk_ciudad" name="ciudad" required>
+                        <option [value]="i+1"*ngFor="let item of arrayCiudad;let i=index">{{item.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Ciudad</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Telefono </label><br>
+                        <label for="inputEmail4" class="form-label">Teléfono </label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['telefono'].errors">El Telefono es obligatoria</span>
-                        <input type="text" [ngModel]='instanciaEmpleador.telefono' name="telefono" class="form-control" required>
+                        <input type="text" [ngModel]='instanciaEmpleador.telefono' name="telefono" class="form-control" required maxlength="9">
                     </div>
 
                     <div class="col-md-6">
@@ -179,9 +159,7 @@
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </div>
                 </form>
-
             </article>
         </div>
     </div>
-
 </div>

@@ -122,7 +122,8 @@ export class TareaValiar implements OnInit {
    
     this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
     this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
-    this.intanciaEmpleadorCalificar.ciudad=this.empleador[indice]['ciudad'];
+    this.intanciaEmpleadorCalificar.fk_ciudad=this.empleador[indice]['fk_ciudad'];
+    this.intanciaEmpleadorCalificar.fk_provincia=this.empleador[indice]['fk_provincia'];
     this.intanciaEmpleadorCalificar.direccion=this.empleador[indice]['direccion'];
     this.intanciaEmpleadorCalificar.external_em=this.empleador[indice]['external_em'];
     this.intanciaEmpleadorCalificar.id=this.empleador[indice]['id'];
