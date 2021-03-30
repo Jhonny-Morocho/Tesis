@@ -32,8 +32,8 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   ngOnInit() {
     this.instanciaEmpleadorRegistrar=new EmpleadorModel();
     this.instanciaEmpleadorLlenarForm=new EmpleadorModel();
-    this.formEmpleador();
     this.provincias();
+    this.formEmpleador();
  
   }
   escucharSelectProvincia(idProvincia){
@@ -63,12 +63,14 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
       siHacesBien=>{
             // si esta registradoo en la BD el formulario completo entonces presento los datos
           if(siHacesBien['Siglas']=="OE"){
+            console.log(siHacesBien);
             // por lo tanto formulario completo ==true
             this.booleanFormularioCompletado=true;
             //registro de empleador encontrado, ya esta creado el empleador en el BD
             this.instanciaEmpleadorLlenarForm.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleadorLlenarForm.cedula=siHacesBien['mensaje']['cedula'];
             this.instanciaEmpleadorLlenarForm.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
+            this.escucharSelectProvincia(this.instanciaEmpleadorLlenarForm.fk_provincia);
             this.instanciaEmpleadorLlenarForm.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
             this.instanciaEmpleadorLlenarForm.direccion=siHacesBien['mensaje']['direccion'];
             this.instanciaEmpleadorLlenarForm.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];

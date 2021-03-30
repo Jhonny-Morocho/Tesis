@@ -43,12 +43,12 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Numero de RUC</label><br>
+                        <label for="inputEmail4" class="form-label">Némero de RUC</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
                         <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false || formValidado==true" max="13">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Cedula de identidad del representante legal</label><br>
+                        <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
                         <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.cedula" name="cedula" class="form-control" required min="10" [disabled]="obervaciones==false || formValidado==true">
                     </div>
@@ -58,19 +58,22 @@
                         <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPais" class="form-label">Provincia</label><br>
+                        <label for="inputPais" class="form-label">Provincia{{ instanciaEmpleadorLlenarForm.fk_provincia }}</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
-                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" required>
-                        <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" [disabled]="obervaciones==false || formValidado==true" required>
+                        <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 ">
+                        <label for="inputPais " class="form-label ">Ciudad </label><br>
+                        <span class="text-danger" *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors ">La Ciudad es obligatorio</span>
+                        <select class="form-control " [(ngModel)]="instanciaEmpleadorLlenarForm.fk_ciudad" name="ciudad" [disabled]="obervaciones==false || formValidado==true" required>
+
+                            <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
                       </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Ciudad</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_ciudad" name="ciudad" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Telefono de Nacimiento</label><br>
+                        <label for="inputEmail4" class="form-label">Télefono</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['telefono'].errors">La fecha es obligatorio</span>
                         <input type="text" [ngModel]='instanciaEmpleadorLlenarForm.telefono' name="telefono" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
