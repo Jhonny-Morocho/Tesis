@@ -10,6 +10,7 @@ export class EmpleadorModel{
     provincia:string;
     telefono:string;
     direccion:string;
+    fk_provincia:Number;
     observaciones:string;
     external_em:string;
     id?:Number;

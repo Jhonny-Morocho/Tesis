@@ -67,6 +67,13 @@
                         <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
+                        <label for="inputPais" class="form-label">Provincia</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
+                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
+                        <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Ciudad</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
                         <input type="text" [(ngModel)]="instanciaEmpleador.ciudad" name="ciudad" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
@@ -137,9 +144,18 @@
                         <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincia'].errors">La provinicia es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required>
+                        <label for="inputPais" class="form-label">Provincia</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
+                        <select (ngModelChange)="escucharSelectProvincia($event)" class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
+                        <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPais" class="form-label">Ciudad</label><br>
+                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">El País es obligatorio</span>
+                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required>
+                        <option [value]="i+1"*ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                      </select>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Ciudad</label><br>

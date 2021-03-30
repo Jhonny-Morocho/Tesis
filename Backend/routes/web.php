@@ -62,6 +62,8 @@ try {
         $router->post('/ofertasLaboralesEstudiantes/PostularOfertaLaboral/{external_id}','OfertaLaboralEstudianteController@PostularOfertaLaboral');
         //paises
         $router->get('/paises/listarPaises','PaisesController@listarPaises');
+         //provincias
+        $router->get('/provincias/listarProvincias','ProvinciasController@listarProvincias');
         //calificar empleador
         $router->get('/calificar-empleador/promedioCalificacionEmpleador/{external_id}','CalificarEmpleadorController@promedioCalificacionEmpleador');
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');

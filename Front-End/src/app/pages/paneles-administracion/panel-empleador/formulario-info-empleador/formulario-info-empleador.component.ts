@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
+import {ServicioProvincias} from 'src/app/servicios/provincias.service';
+import {ProvinciasModels} from 'src/app/models/provincias.models'; 
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-formulario-info-empleador',
   templateUrl: './formulario-info-empleador.component.html'
@@ -11,16 +15,38 @@ import { Router } from '@angular/router';
 export class FormularioInfoEmpleadorComponent implements OnInit {
   instanciaEmpleador:EmpleadorModel;
   booleanFormularioCompletado=false;
+  arrayProvincias:ProvinciasModels []=[];
+  arrayCiudad:ProvinciasModels []=[];
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
   obervaciones=false;
   //validacion de formulario true/false
   formValidado=false;
-  constructor(private servicioEmpleador_:SerivicioEmpleadorService,private ruta_:Router) { }
+  constructor(private servicioEmpleador_:SerivicioEmpleadorService,
+              private servicioProvincias:ServicioProvincias,
+              private ruta_:Router) { }
 
   ngOnInit() {
     this.instanciaEmpleador=new EmpleadorModel();
-    //consultar si el postulante ha llenado el formulario
-    this.servicioEmpleador_.listarFormEmpleador().subscribe(
+    this.formEmpleador();
+    this.provincias();
+ 
+  }
+  escucharSelectProvincia(idProvincia){
+    console.log(idProvincia);
+  }
+  provincias(){
+    this.servicioProvincias.listarProvincias().subscribe(
+      siHaceBien=>{
+          console.log(siHaceBien);
+          this.arrayProvincias=siHaceBien;
+      },siHaceMal=>{
+        console.warn(siHaceMal);
+      }
+    );
+  }
+  formEmpleador(){
+   //consultar si el postulante ha llenado el formulario
+     this.servicioEmpleador_.listarFormEmpleador().subscribe(
       siHacesBien=>{
             // si esta registradoo en la BD el formulario completo entonces presento los datos
           if(siHacesBien['Siglas']=="OE"){
@@ -29,6 +55,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
             //registro de empleador encontrado, ya esta creado el empleador en el BD
             this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['fk_provincia'];
             this.instanciaEmpleador.ciudad=siHacesBien['mensaje']['ciudad'];
             this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
             this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
@@ -78,15 +105,6 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
-          
-          // localStorage.setItem("nombre", this.instanciaEmpleador.nombre);
-          // localStorage.setItem("apellido", this.instanciaEmpleador.apellido);
-          // localStorage.setItem("cedula",this.instanciaEmpleador.cedula);
-          // localStorage.setItem("telefono",this.instanciaEmpleador.telefono);
-          // localStorage.setItem("genero",(this.instanciaEmpleador.genero).toString());
-          // localStorage.setItem("direccion_domicilio",this.instanciaEmpleador.direccion_domicilio);
-          // localStorage.setItem("fecha_nacimiento",this.instanciaEmpleador.fecha_nacimiento);
-          // localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
           console.log(siHacesBien);
            //this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
