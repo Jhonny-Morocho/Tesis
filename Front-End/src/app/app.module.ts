@@ -58,7 +58,6 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
 //cursos-capacitacines
 //import { ModalModule } from 'ngx-bootstrap/modal';
 
-
 // import { ToastrModule } from 'ngx-toastr';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -114,8 +113,6 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
 
 
     // Tostadas
-    // BrowserAnimationsModule,
-    // ToastrModule.forRoot()
   ],
   providers: [
 

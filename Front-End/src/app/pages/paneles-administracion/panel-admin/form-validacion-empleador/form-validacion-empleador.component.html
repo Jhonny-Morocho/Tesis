@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
                     <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['tipoEmpresa'].errors">El tipo de institución o empresa es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.tiposEmpresa" name="tipoEmpresa" class="form-control" required disabled>
+                    <input type="text" [(ngModel)]="instanciaEmpleador.tipo_empresa" name="tipoEmpresa" class="form-control" required disabled>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -48,15 +48,26 @@
                     <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
                     <input type="text" [(ngModel)]="instanciaEmpleador.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required disabled>
                 </div>
-                <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Provincia</label><br>
-                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincia'].errors">La provinicia es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaEmpleador.provincia" name="provincia" class="form-control" required disabled>
-                </div>
+
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Ciudad</label><br>
                     <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">La ciudad es obligatoria</span>
                     <input type="text" [(ngModel)]="instanciaEmpleador.fk_ciudad" name="ciudad" class="form-control" required disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPais" class="form-label">Provincia</label><br>
+                    <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
+                    <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleador.fk_provincia" required disabled>
+                    <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputPais " class="form-label ">Ciudad </label><br>
+                    <span class="text-danger" *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors ">La Ciudad es obligatorio</span>
+                    <select class="form-control " [(ngModel)]="instanciaEmpleador.fk_ciudad" name="ciudad" required disabled>
+
+                        <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
+                  </select>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Telefono</label><br>

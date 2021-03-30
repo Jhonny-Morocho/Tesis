@@ -58,7 +58,7 @@
                         <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPais" class="form-label">Provincia{{ instanciaEmpleadorLlenarForm.fk_provincia }}</label><br>
+                        <label for="inputPais" class="form-label">Provincia</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
                         <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" [disabled]="obervaciones==false || formValidado==true" required>
                         <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
