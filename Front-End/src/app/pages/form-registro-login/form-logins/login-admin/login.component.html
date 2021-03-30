@@ -1,46 +1,40 @@
-<!-- ============ TOSTADA ================== -->
-<div class="toast" data-autohide="false" style="position: absolute; top: 0; right: 0; min-width: 300px;">
-    <div class="toast-header">
-        <strong class="mr-auto text-primary">Bienvenido </strong>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-    </div>
-</div>
-<div class="centrarFormularioLoginRegistro  animate__animated  animate__slideInLeft ">
-
-    <!-- /.login-logo -->
-    <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-            <a class="h1"><b>Iniciar  </b>Sesión</a>
+<div id="hero">
+    <div class="centrarFormularioLoginRegistro  animate__animated  fadeIn ">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a class="h1"><b>Iniciar  </b>Sesión</a>
+            </div>
+            <div class="card-body">
+                <article class="card-body">
+                    <form class="row g-3" (ngSubmit)="loginAdmin(fLoginAdmin)" #fLoginAdmin="ngForm">
+                        <div class="col-3">
+                            <a [routerLink]="['/home']" class="float-right btn btn-outline-primary">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio</a>
+                        </div>
+                        <hr>
+                        <div class="col-md-6">
+                            <label for="inputEmailAdmin" class="form-label">Email </label><br>
+                            <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El correo es obligatorio</span>
+                            <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" required email>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPasswordAdmin" class="form-label">Password</label><br>
+                            <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
+                            <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" required minlength="6">
+                        </div>
+                        <div class="col-12">
+                            <p class="mb-4 mt-2">
+                                <a href="forgot-password.html">Olvidé mi contraseña</a>
+                            </p>
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+            <!-- /.card-body -->
         </div>
-        <div class="card-body">
-            <article class="card-body">
-                <form class="row g-3" (ngSubmit)="loginAdmin(fLoginAdmin)" #fLoginAdmin="ngForm">
-                    <div class="col-3">
-                        <a [routerLink]="['/home']" class="float-right btn btn-outline-primary">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio</a>
-                    </div>
-                    <hr>
-                    <div class="col-md-6">
-                        <label for="inputEmailAdmin" class="form-label">Email </label><br>
-                        <span class="text-danger " *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['correo'].errors">El correo es obligatorio</span>
-                        <input type="email" [(ngModel)]="instanciaModeloUsuarioLogin.correo" name="correo" class="form-control" required email>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPasswordAdmin" class="form-label">Password</label><br>
-                        <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
-                        <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" required minlength="6">
-                    </div>
-                    <div class="col-12">
-                        <p class="mb-4 mt-2">
-                            <a href="forgot-password.html">Olvidé mi contraseña</a>
-                        </p>
-                        <button type="submit" class="btn btn-primary">Ingresar</button>
-                    </div>
-                </form>
-
-            </article>
-        </div>
-        <!-- /.card-body -->
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
+
 </div>

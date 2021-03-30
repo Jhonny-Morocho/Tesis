@@ -16,7 +16,7 @@ import { LoginAdminComponent } from './pages/form-registro-login/form-logins/log
 import { RegistroPostulanteComponent } from './pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
 import { RegistroEmpleadorComponent } from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
-import { NavComponent } from './pages/nav/nav.component';
+import { HeaderComponent } from './pages/header-home/header.component';
 
 
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
@@ -68,7 +68,7 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     AppComponent,
     HomeComponent,
     LoginAdminComponent,
-    NavComponent,
+    HeaderComponent,
     PanelAdminComponent,
     MiPerfilComponent,
     //LoginPostulanteComponent,

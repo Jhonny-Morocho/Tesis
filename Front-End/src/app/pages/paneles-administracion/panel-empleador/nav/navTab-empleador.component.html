@@ -46,7 +46,7 @@
                             <i class="far fa-circle nav-icon"></i>
                             <p>Formulario de registro</p>
                         </a>
-                        <a routerLinkActive="active" [routerLink]="['/panel-empleador/oferta-laboral']" class="nav-link ">
+                        <a *ngIf="estadoValidacion==true" routerLinkActive="active" [routerLink]="['/panel-empleador/oferta-laboral']" class="nav-link ">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Ofertas Laborales</p>
                         </a>

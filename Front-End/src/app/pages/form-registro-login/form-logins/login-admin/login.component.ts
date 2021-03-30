@@ -21,13 +21,14 @@ export class LoginAdminComponent implements OnInit {
   constructor(private _servicioAdmin:AutenticacionUserService,private router:Router) { }
 
   ngOnInit() {
-
+  
    // this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
     console.log(this.instanciaModeloUsuarioLogin);
+    
     if(formularioAdministrador.invalid){
  
       return;
@@ -48,9 +49,10 @@ export class LoginAdminComponent implements OnInit {
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
         Swal.close();
+
         //verifico si encontro el usurio
-        $('.toast').toast('show');
         if(siHacesBien['Siglas']=="OE"){
+        
           this._servicioAdmin.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
           switch (siHacesBien['mensaje']['tipoUsuario']) {
             case 3:
@@ -63,8 +65,10 @@ export class LoginAdminComponent implements OnInit {
             case 2:
               this.router.navigateByUrl('/panel-postulante/mi-perfil');
             case 5:
+
               this.router.navigateByUrl('/panel-admin/mi-perfil');
             case 4:
+            
               this.router.navigateByUrl('/panel-admin/mi-perfil');
               //this.router.navigateByUrl('/panel-admin/mi-perfil');
               break;
@@ -92,6 +96,6 @@ export class LoginAdminComponent implements OnInit {
       }
     );
   }
-
+  
 }
 
