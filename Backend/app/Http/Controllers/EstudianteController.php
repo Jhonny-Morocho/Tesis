@@ -48,30 +48,32 @@ class EstudianteController extends Controller
                  ->where("usuario.tipoUsuario",2)
                  ->where("external_es",$external_id)
                  ->first();
-                 //se envia al postulante
+                 //se envia al postulante la notifiacion
                  $plantillaCorreo=$this->templateCorreoValidacionNoExitosa( $usuarioEstudiante['nombre'],
                                                                 $usuarioEstudiante['apellido'],
                                                                 $request['estado']);
                  $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$usuarioEstudiante['correo'],$this->de,"Proceso de registro de Postulante");
                 
                 
-                 //se envia el correo al encargado
-                $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
-                ->select("docente.*","usuario.*")
-                ->where("docente.estado",1)
-                ->where("usuario.tipoUsuario",5)
-                ->get();
-                $arrayEncagado=array();
-                foreach ($usuarioEncargado as $key => $value) {
-                   $enviarCorreoEncargado= $this->
-                   templateCorreoValidacionExitosaEncargado($value['nombre'],$value['apellido'],$usuarioEstudiante['correo']);
-                    $enviarCorreoBoolean=$this->enviarCorreo($enviarCorreoEncargado,$usuarioEstudiante['correo'],$this->de,"Nuevo postulante registrado");
-                    $arrayEncagado[$key]=array("nombre"=>$value['nombre'],
-                                                "apellido"=>$value['apellido'],
-                                                "estadoEnvioCorreo"=>$enviarCorreoBoolean,
-                                                "correo"=>$value['correo'],
-                                                );
-                }
+                 //se envia el correo al encargado el usuario registrrado y vladiado exitosamente
+                 $arrayEncagado=array();
+                 if($request['estado']==1){
+                     $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
+                     ->select("docente.*","usuario.*")
+                     ->where("docente.estado",1)
+                     ->where("usuario.tipoUsuario",5)
+                     ->get();
+                     foreach ($usuarioEncargado as $key => $value) {
+                        $enviarCorreoEncargado= $this->
+                        templateCorreoValidacionExitosaEncargado($value['nombre'],$value['apellido'],$usuarioEstudiante['correo']);
+                         $enviarCorreoBoolean=$this->enviarCorreo($enviarCorreoEncargado,$usuarioEstudiante['correo'],$this->de,"Nuevo postulante registrado");
+                         $arrayEncagado[$key]=array("nombre"=>$value['nombre'],
+                                                     "apellido"=>$value['apellido'],
+                                                     "estadoEnvioCorreo"=>$enviarCorreoBoolean,
+                                                     "correo"=>$value['correo'],
+                                                     );
+                     }
+                 }
                 return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE",
                                             "correoEstadoEstudiante"=> $enviarCorreoBolean,
                                             "correoEstadoEncargado"=> $arrayEncagado,

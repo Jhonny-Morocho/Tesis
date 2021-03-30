@@ -46,10 +46,9 @@
 <!-- ============== TOSTATADA ====================== -->
 <div class="content-wrapper" *ngIf="tipoUsuarioEncargado==true">
     <div class="card">
-
         <article class="card-body animated animate__animated animate__slideInRight">
             <div class="container ">
-                <h1 class="display-6">Validar cuentas de empleadores</h1>
+                <h6>Validar cuentas de empleadores</h6>
                 <hr>
                 <div class="container ">
                 </div>
@@ -81,7 +80,6 @@
                             </td>
                             <td>
                                 <span (click)="calificarEmpleador(empleadores.id,i)">
-                                    
                                      <div class='starrr' id='{{ i }}' style="pointer-events: none;" ></div>  
                                 </span>
                             </td>
@@ -117,18 +115,10 @@
                                 <li class="large"><span class="fa-li"><i class="far fa-address-card"></i></span> Cedula #: {{ intanciaEmpleadorCalificar.cedula }}</li>
                             </ul>
                         </div>
-                        <!-- <div class="col-4 text-center">
-
-                            <img src="https://es.wikipedia.org/wiki/Usuario_(inform%C3%A1tica)#/media/Archivo:User_icon_2.svg" alt="" class="img-circle img-fluid">
-                        </div> -->
 
                     </div>
                 </div>
                 <div class="text-center">
-                    <!-- <div class='starrr' id="estrellas" (click)="retornaNumeroEstrellas()"></div> -->
-                    <!-- <span class='choice'></span> -->
-                    <!-- <i class="fas fa-star"></i> -->
-
                     <form>
                         <p class="clasificacion">
                             <input id="radio1" type="radio" (click)="valorEstrella(5)">

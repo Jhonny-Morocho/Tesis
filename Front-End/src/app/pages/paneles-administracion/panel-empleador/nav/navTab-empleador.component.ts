@@ -5,13 +5,14 @@ import { Router } from '@angular/router';
 import {UsuarioModel} from '../../../../models/usuario.model';
 import Swal from 'sweetalert2';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';
-
+import {environment} from 'src/environments/environment';
 @Component({
   selector: 'navTab-empleador',
   templateUrl: './navTab-empleador.component.html'
 })
 export class NabPanelEmpleador implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
+  dominio=environment;
   
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 

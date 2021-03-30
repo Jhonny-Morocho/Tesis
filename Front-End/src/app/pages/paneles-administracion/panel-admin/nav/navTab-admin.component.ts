@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {UsuarioModel} from '../../../../models/usuario.model';
 import { Router } from '@angular/router';
+import {environment} from 'src/environments/environment';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';
 declare var JQuery:any;
 declare var $:any;
@@ -12,6 +13,7 @@ declare var $:any;
 })
 export class PanelAdminComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
+  dominio=environment;
   tipoUsuarioSecretaria:boolean=false;
   tipoUsuarioEncargado:boolean=false;
   tipoUsuarioGestor:boolean=false;
