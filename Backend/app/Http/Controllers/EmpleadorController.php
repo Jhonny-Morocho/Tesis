@@ -9,11 +9,6 @@ use App\Models\Empleador;
 use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Foreach_;
-use PhpParser\Node\Stmt\TryCatch;
-
-use function PHPUnit\Framework\isEmpty;
-
 class EmpleadorController extends Controller
 {
     //formulario de estudiante comparando el external_us y externarl_es//creamos un estudiante
@@ -37,7 +32,7 @@ class EmpleadorController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
      }
-     //actulizar dato de postulante//estudainte
+     //aqui aprobamos o no al empleador 
      public function actulizarAprobacionEmpleador(Request $request,$external_id){
          if($request->json()){
              try {
@@ -55,28 +50,26 @@ class EmpleadorController extends Controller
     public function actulizarFormEmpleador(Request $request,$external_id){
         //die(json_encode($request->json()->all()));
         if($request->json()){
+            $ObjUsuario=null;
             try {
-
                 $ObjUsuario = usuario::where("external_us",$external_id)->first();
                 if($ObjUsuario!=null){
                     $ObjEstudiante = 
-                        Empleador::where("fk_usuario","=", $ObjUsuario->id)->update(
-                                                                                    array( 
-                                                                                        
-                                                                                    'razon_empresa'=>$request['razon_empresa'], 
-                                                                                    'tipo_empresa'=>$request['tipo_empresa'],
-                                                                                    'actividad_ruc'=>$request['actividad_ruc'],
-                                                                                    'num_ruc'=>$request['num_ruc'],
-                                                                                    'cedula'=>$request['cedula'],
-                                                                                    'nom_representante_legal'=>$request['nom_representante_legal'],
-                                                                                    'ciudad'=>$request['ciudad'],
-                                                                                    'provincia'=>$request['provincia'],
-                                                                                    'telefono'=>$request['telefono'],
-                                                                                    'provincia'=>$request['provincia'],
-                                                                                    'direccion'=>$request['direccion'],
-                                                                                    'observaciones'=>$request['observaciones']
-                                                                            
-                                                                               ));
+                        Empleador::where("fk_usuario","=", $ObjUsuario->id)
+                        ->update(
+                                array( 
+                                'razon_empresa'=>$request['razon_empresa'], 
+                                'tipo_empresa'=>$request['tipo_empresa'],
+                                'actividad_ruc'=>$request['actividad_ruc'],
+                                'num_ruc'=>$request['num_ruc'],
+                                'cedula'=>$request['cedula'],
+                                'nom_representante_legal'=>$request['nom_representante_legal'],
+                                'fk_ciudad'=>$request['fk_ciudad'],
+                                'fk_provincia'=>$request['fk_provincia'],
+                                'telefono'=>$request['telefono'],
+                                'direccion'=>$request['direccion'],
+                                'observaciones'=>$request['observaciones']
+                            ));
                     //debe exitir un usuario y a la vez la respuesta de al consulta sea true 
                     if($ObjEstudiante !=null || $ObjEstudiante==true){
                         return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
@@ -87,11 +80,11 @@ class EmpleadorController extends Controller
                }else{
                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_em","Siglas"=>"ONE"]);
                }
-
-             
-                
             } catch (\Throwable $th) {
-               return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el empleador","Siglas"=>"ONE","error"=>$th]);
+               return response()->json(["mensaje"=>"No se puede actulizar el empleador",
+                                        "respuestaObjUsuario"=> $ObjUsuario,
+                                        "objEmpelador"=>$request->json()->all(),
+                                        "Siglas"=>"ONE","error"=>$th]);
             }
 
         }else{

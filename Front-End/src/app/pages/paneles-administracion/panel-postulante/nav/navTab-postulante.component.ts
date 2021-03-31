@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 // importa utomaticamente el ingForm
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import {environment} from 'src/environments/environment';
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -11,16 +13,36 @@ import Swal from 'sweetalert2';
 })
 export class PanelPostulanteComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
-  constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
+  domininio=environment;
+  estadoValidacionForm=false;
+  constructor(private _router:Router,
+              private servicioEstudiante:SerivicioPostulanteService,
+    private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
+    this.comprobarSession();
+    this.comprobarPostulanteFormValidado();
+  }
+  // si el postulante esta su formulario validado tiene accesso a las ofertas laborales y a llenar su hoja de vida
+  comprobarPostulanteFormValidado(){
+    //obtener el external_usuario
+
+    this.servicioEstudiante.listarFormPostulante().subscribe(
+      sihacesBien=>{
+        console.log(sihacesBien);
+      },siHacesMal=>{
+        
+      }
+
+    );
+  }
+  comprobarSession(){
     if(localStorage.getItem('correo')){
       this.instanciaUsuario.correo = localStorage.getItem('correo');
       
     }else{
      // no existe session por lo cual debo direccionar al inicio
     }
-
   }
   salirSession(){
     // ocupo el servicio

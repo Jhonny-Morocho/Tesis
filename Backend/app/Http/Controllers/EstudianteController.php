@@ -13,9 +13,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 
 class EstudianteController extends Controller
-{
+{   
+    //correo de le emplesa
     private $de='soporte@proeditsclub.com';
-    //formulario de estudiante comparando el external_us y externarl_es//creamos un estudiante
+    //registrar postulante
      public function FormEstudiante(Request $request){
          if($request->json()){
              //validar si el usuario existe
@@ -23,7 +24,9 @@ class EstudianteController extends Controller
              if($ObjUsuario!=null){
                  
                  $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
+                 
                  if($ObjEstudiante !=null){
+
                      return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
                  }else{
                     return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
@@ -48,25 +51,27 @@ class EstudianteController extends Controller
                  ->where("usuario.tipoUsuario",2)
                  ->where("external_es",$external_id)
                  ->first();
-                 //se envia al postulante la notifiacion
-                 $plantillaCorreo=$this->templateCorreoValidacionNoExitosa( $usuarioEstudiante['nombre'],
-                                                                $usuarioEstudiante['apellido'],
-                                                                $request['estado']);
-                 $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$usuarioEstudiante['correo'],$this->de,"Proceso de registro de Postulante");
-                
-                
+                 //se envia al postulante la notifiacion si el estado es cero
+                 if($request['estado']==0){
+                     $plantillaCorreo=$this->templateCorreoValidacionNoExitosa( $usuarioEstudiante['nombre'],
+                                                                    $usuarioEstudiante['apellido'],
+                                                                    $request['estado']);
+                     $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$usuarioEstudiante['correo'],$this->de,"Proceso de registro de Postulante");
+                 }
                  //se envia el correo al encargado el usuario registrrado y vladiado exitosamente
                  $arrayEncagado=array();
-                 if($request['estado']==1){
+                 // si la potulacion es aprobada exitosamente se notifica al encargado y al empleaodr
+                 if($request['estado']==1){// validacion exitosa
                      $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
                      ->select("docente.*","usuario.*")
                      ->where("docente.estado",1)
                      ->where("usuario.tipoUsuario",5)
                      ->get();
+                     //enviamo el correo
                      foreach ($usuarioEncargado as $key => $value) {
                         $enviarCorreoEncargado= $this->
                         templateCorreoValidacionExitosaEncargado($value['nombre'],$value['apellido'],$usuarioEstudiante['correo']);
-                         $enviarCorreoBoolean=$this->enviarCorreo($enviarCorreoEncargado,$usuarioEstudiante['correo'],$this->de,"Nuevo postulante registrado");
+                         $enviarCorreoBoolean=$this->enviarCorreo($enviarCorreoEncargado,$usuarioEstudiante['correo'],$this->de,"Nuevo postulante aprobado");
                          $arrayEncagado[$key]=array("nombre"=>$value['nombre'],
                                                      "apellido"=>$value['apellido'],
                                                      "estadoEnvioCorreo"=>$enviarCorreoBoolean,
@@ -74,6 +79,7 @@ class EstudianteController extends Controller
                                                      );
                      }
                  }
+                 // si la validacion no es exitosa se le comina al estudiante que revise su informaicon
                 return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE",
                                             "correoEstadoEstudiante"=> $enviarCorreoBolean,
                                             "correoEstadoEncargado"=> $arrayEncagado,
@@ -96,16 +102,17 @@ class EstudianteController extends Controller
                 $ObjUsuario = usuario::where("external_us",$external_id)->first();
                 if($ObjUsuario!=null){
                     $ObjEstudiante = 
-                        estudiante::where("fk_usuario","=", $ObjUsuario->id)->update(
-                                                                                    array( 'cedula'=>$request['cedula'], 
-                                                                                    'telefono'=>$request['telefono'],
-                                                                                    'nombre'=>$request['nombre'],
-                                                                                    'apellido'=>$request['apellido'],
-                                                                                    'genero'=>$request['genero'],
-                                                                                    'fecha_nacimiento'=>$request['fecha_nacimiento'],
-                                                                                    'direccion_domicilio'=>$request['direccion_domicilio'],
-                                                                                    'observaciones'=>$request['observaciones']
-                                                                               ));
+                        estudiante::where("fk_usuario","=", $ObjUsuario->id)
+                        ->update(
+                                array( 'cedula'=>$request['cedula'], 
+                                'telefono'=>$request['telefono'],
+                                'nombre'=>$request['nombre'],
+                                'apellido'=>$request['apellido'],
+                                'genero'=>$request['genero'],
+                                'fecha_nacimiento'=>$request['fecha_nacimiento'],
+                                'direccion_domicilio'=>$request['direccion_domicilio'],
+                                'observaciones'=>$request['observaciones']
+                        ));
                     //debe exitir un usuario y a la vez la respuesta de al consulta sea true 
                     if($ObjEstudiante !=null || $ObjEstudiante==true){
                         return response()->json(["mensaje"=> $ObjEstudiante,"Siglas"=>"OE"]);
@@ -128,6 +135,7 @@ class EstudianteController extends Controller
         }
 
    }
+   
      // Listar todos los postulante estado cero y no cero//con sus datos de formulario
      public  function listarEstudiantes(){
         //obtener todos los usuarios que sean postulante
@@ -140,6 +148,9 @@ class EstudianteController extends Controller
         }
 
     }
+    //=================== FUNCIONE PRIVADAS =================================//
+    //=================== FUNCIONE PRIVADAS =================================//
+    //=================== FUNCIONE PRIVADAS =================================//
     //obtener postulante por url //external_us
     public function obtenerPostulanteExternal_es(Request $request){
 
@@ -232,6 +243,7 @@ class EstudianteController extends Controller
         return $emailMensaje;      
     }
     
+
     private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
         try {
    

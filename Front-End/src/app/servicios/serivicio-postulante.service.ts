@@ -19,15 +19,7 @@ export class SerivicioPostulanteService {
 
   crearPostulante(modeloPostulante:PostulanteModel){
     const autenficacionDatos={
-      cedula:modeloPostulante.cedula,
-      telefono:modeloPostulante.telefono,
-      nombre:modeloPostulante.nombre,
-      apellido:modeloPostulante.apellido,
-      genero:modeloPostulante.genero,
-      fecha_nacimiento:modeloPostulante.fecha_nacimiento,
-      direccion_domicilio:modeloPostulante.direccion_domicilio,
-      observaciones:"",
-      estado:0
+      ...modeloPostulante
       //external_es:localStorage.getItem("external_us")
     }
     //retorna la respuesata

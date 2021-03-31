@@ -115,18 +115,9 @@ export class SerivicioEmpleadorService {
     //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarDatosEmpleador(modeloEmpleador:EmpleadorModel){
       const autenficacionDatos={
-        razon_empresa:modeloEmpleador.razon_empresa,
-        tipo_empresa:modeloEmpleador.tipo_empresa,
-        actividad_ruc:modeloEmpleador.actividad_ruc,
-        num_ruc:modeloEmpleador.num_ruc,
-        cedula:modeloEmpleador.cedula,
-        nom_representante_legal:modeloEmpleador.nom_representante_legal,
-        fk_ciudad:modeloEmpleador.fk_ciudad,
-        fk_provincia:modeloEmpleador.fk_provincia,
-        telefono:modeloEmpleador.telefono,
-        direccion:modeloEmpleador.direccion,
-        observaciones:modeloEmpleador.observaciones
+        ...modeloEmpleador
       }
+      console.log(autenficacionDatos);
     //retorna la respuesata
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlEditarFormEmpleador}${localStorage.getItem("external_us")}`,autenficacionDatos

@@ -17,15 +17,18 @@ export class FormularioInfoPostulanteComponent implements OnInit {
    obervaciones=false;
    //validacion de formulario true/false
    formValidado=false;
-   today: string;
+  
    
 
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
   ngOnInit() {
     this.instanciaPostulante=new PostulanteModel();
-    this.today = new Date().toISOString().split('T')[0];
     //consultar si el postulante ha llenado el formulario
+    this.formMotrarFormularioCompletado();
+  }
+  
+  formMotrarFormularioCompletado(){
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
            // si esta registradoo en la BD el formulario completo entonces presento los datos
@@ -45,22 +48,15 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             //si es mayor a cero es q si ha revisado y si ha visto el formulario
             this.obervaciones = ( this.instanciaPostulante.observaciones.length>0)?true:false;
             this.formValidado = ( this.instanciaPostulante.estado==1)?true:false;
-           }else{
-            //llena el formulario por primera ves
-             this.instanciaPostulante.nombre="";
-             this.instanciaPostulante.apellido="";
-             this.instanciaPostulante.cedula="";
-             this.instanciaPostulante.telefono="";
-             this.instanciaPostulante.genero=0;
-             this.instanciaPostulante.fecha_nacimiento=this.today;
-             this.instanciaPostulante.direccion_domicilio="";
            }
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
         console.warn("TODO MAL");
     });
+
   }
-  //crreacion
+
+  //creacion usuario estudiante
   onSubmitFormularioPostulante(formRegistroPostulanteDatosCompletos:NgForm){
     console.log(formRegistroPostulanteDatosCompletos);
     console.log("on submit Formulario Registro datos postulante postular");
@@ -73,7 +69,9 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       text:'Espere por favor'
     });
     Swal.showLoading();
-    //envio la informacion a mi servicio - consumo el servici
+    this.instanciaPostulante.estado=0;
+    this.instanciaPostulante.observaciones="";
+    console.log(this.instanciaPostulante);
     this.servicioPostulante_.crearPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
         Swal.close();
@@ -87,7 +85,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           localStorage.setItem("direccion_domicilio",this.instanciaPostulante.direccion_domicilio);
           localStorage.setItem("fecha_nacimiento",this.instanciaPostulante.fecha_nacimiento);
           localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
-          this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
+          this.booleanFormularioCompletado=true;
           }else{
             console.warn(siHacesBien);
             Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')

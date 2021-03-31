@@ -49,7 +49,7 @@ class NotificarUsuarios extends Command
     public function handle()
     {   
         
-    // $this->notificarEstudiante();
+     $this->notificarEstudiante();
      $this->notificarEmpleador();
         
     }

@@ -145,6 +145,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     });
     //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
     this.instanciaEmpleadorLlenarForm.observaciones="";
+    console.log(this.instanciaEmpleadorLlenarForm);
     this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleadorLlenarForm).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);

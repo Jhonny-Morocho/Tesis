@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 //llamar los modelos q voy a ocupar
 use App\Models\Usuario;
 use App\Models\Docente;
-
-use App\Models\Empleador;
 use App\Models\Estudiante;
-use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\isEmpty;
+use PHPMailer\PHPMailer\PHPMailer;
+use SebastianBergmann\Template\Template;
 
 class UsuarioController extends Controller
 {
     //Registrar Usuario
-    
+    //correo de le emplesa
+    private $de='soporte@proeditsclub.com';
+
     public function RegistrarUsuario(Request $request){
         //code...
         if($request->json()){
@@ -47,6 +46,7 @@ class UsuarioController extends Controller
         }
  
     }
+
 
     //Registrar docente
     //(obtengo todos los datos del formulario,el id a comparar)
@@ -84,6 +84,9 @@ class UsuarioController extends Controller
                 //verificar si existe ese tipo o rol de usuario
                 if($ObjUsuario->tipoUsuario==2){
                     //creo un objeto para guardar el estudiante
+                    $texto="";
+                    $handle = fopen("logRegistroPostulante.txt", "a");
+                    $ObjEstudiante=null;
                     try {
                         //code...
                         $ObjEstudiante=new Estudiante();
@@ -99,21 +102,54 @@ class UsuarioController extends Controller
                         $ObjEstudiante->external_es="Es".Utilidades\UUID::v4();
                         $ObjEstudiante->estado=$datos["estado"];
                         $ObjEstudiante->save();
-                
-                        return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE"]);
+                        
+                        //enviamos registro de postulante a la secretaria a la secretaria
+                        $usuarioSecrataria=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
+                        ->select("docente.*","usuario.*")
+                        ->where("docente.estado",1)
+                        ->where("usuario.tipoUsuario",3)
+                        ->get();
+                    
+                        //recorremo todoss los usuario que sean secretaria
+                        $arrayEncagado=null;
+                        foreach ($usuarioSecrataria as $key => $value) {
+                            //tengo q redacatra el menaje a la secretaria
+                            $plantillaCorreo=$this->templateCorreoNotificarSecretariaRegistro(
+                                                    $datos["nombre"],
+                                                    $datos["apellido"],
+                                                    $ObjUsuario->correo
+                                                );
+
+                             $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,$value['correo'],
+                                                                    $this->de,"Nuevo postulante registrado");
+                             $arrayEncagado[$key]=array("nombre"=>$value['nombre'],
+                                                         "apellido"=>$value['apellido'],
+                                                         "estadoEnvioCorreo"=>$enviarCorreoBolean,
+                                                         "correo"=>$value['correo'],
+                                                         );
+                            $texto="[".date("Y-m-d H:i:s")."]" ." Registro Postulante Correo : ".$enviarCorreoBolean." ]";
+                            fwrite($handle, $texto);
+                            fwrite($handle, "\r\n\n\n\n");
+                            fclose($handle);
+                        }
+                        return response()->json(["mensaje"=>$ObjEstudiante,
+                                                "estadoCorreoEnviado"=>$arrayEncagado,
+                                                "Siglas"=>"OE"]);
                     } catch (\Throwable $th) {
-                        return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+                        $texto="[".date("Y-m-d H:i:s")."]" ."Crear usuario Estudiante Error : ".$th." ]";
+                        fwrite($handle, $texto);
+                        fwrite($handle, "\r\n\n\n\n");
+                        fclose($handle);
+                        return response()->json(["mensaje"=>"Operacion No Exitosa",
+                        "request"=>$request->json()->all(),
+                        "Siglas"=>"ONE","error"=>$th]);
                     }
                 }else{
-                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el tipo de usuario","Siglas"=>"ONETU"]);
+                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el rol del usuario","Siglas"=>"ONETU"]);
                 } 
-
             }else{
-            
                 return response()->json(["mensaje"=>"Operacion No Exitosa no coincide el external user","Siglas"=>"ONE"]);
             }
-        
-                
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
@@ -155,6 +191,62 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
      }
+
+     //================== funciones privadas =======================//
+     //================== funciones privadas =======================//
+     //================== funciones privadas =======================//
+     private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
+        try {
+   
+            $mail=new PHPMailer();
+            $mail->CharSet='UTF-8';
+            $mail->isMail();
+            $mail->setFrom($de,'Proceso de Inserccón Laboral');
+            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
+            $mail->Subject=($tituloCorreo);
+            $mail->addAddress($para);
+            $mail->msgHTML($emailMensaje);
+            $envio=$mail->Send();
+            if ($envio==true) {
+            return $respuestaMensaje="true";
+            }else{
+                return $respuestaMensaje="false";
+            }
+        } catch (\Throwable $th) {
+        return  $respuestaMensaje=$th;
+        }
+    }
+     private function templateCorreoNotificarSecretariaRegistro($nombre,$apellido,$correoPostulante){
+
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
+                                <br>
+                                <hr>
+                                <div class="alert alert-primary">
+                                    Se ha registrado el nuevo postulante
+                                    '.$nombre." ".$apellido. ' 
+
+                                    <hr>
+                                    Correo del Postulante: '.$correoPostulante.'
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+        return $emailMensaje;      
+    }
 
   
 

@@ -25,7 +25,7 @@ import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi
 import {TareaValiar} from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
-import {MiPerfilPostulanteComponent} from './pages/paneles-administracion/panel-postulante/mi-perfil/mi-perfil.component';
+
 import { from } from 'rxjs';
 import { FormularioInfoPostulanteComponent } from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //===================== DATA TABLE ============================//
@@ -75,7 +75,6 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     RegistroEmpleadorComponent,
     //LoginEmpleadorComponent,
     PanelPostulanteComponent,
-    MiPerfilPostulanteComponent,
     FormularioInfoPostulanteComponent,
     FormInfoPostulanteComponent,
     TareaValiar,
