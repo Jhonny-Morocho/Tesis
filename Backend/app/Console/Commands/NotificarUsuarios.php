@@ -100,11 +100,11 @@ class NotificarUsuarios extends Command
                 $TituloCorreo="Proceso de inscripción del empleador";
                 $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
                 foreach ($usuario as $key => $value) {
-                    $estudianteBooleand=Empleador::where("fk_usuario","=",$value['fk_usuario'])
+                    $empleadorBooleand=Empleador::where("fk_usuario","=",$value['fk_usuario'])
                     ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
                     $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['razon_empresa'],"",$TituloCorreo);
-                    $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$this->de,$value['correo'],$TituloCorreo);
-                    $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
+                    $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
+                    $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $empleadorBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
                 }

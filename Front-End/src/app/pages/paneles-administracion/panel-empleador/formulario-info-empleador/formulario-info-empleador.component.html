@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
     <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
-        Registro de postulacion en proceso de validación, en 72 horas se notificara su aprobación
+        Registro de empleador en proceso de validación, en 72 horas se notificara su aprobación
     </div>
     <div class=" animated fadeIn" *ngIf="booleanFormularioCompletado==true">
         <div class="card">
@@ -60,7 +60,7 @@
                     <div class="col-md-6">
                         <label for="inputPais" class="form-label">Provincia</label><br>
                         <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
-                        <select class="form-control" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" [disabled]="obervaciones==false || formValidado==true" required>
+                        <select class="form-control" (ngModelChange)="escucharSelectProvincia($event)" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" [disabled]="obervaciones==false || formValidado==true" required>
                         <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
                       </select>
                     </div>
@@ -109,7 +109,7 @@
                         <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['tipoEmpresaRegistrar'].errors">El tipo de institución o empresa es obligatorio</span>
                         <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.tipo_empresa" name="tipoEmpresaRegistrar" class="form-control" required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
                             <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['actividadRucRegistrar'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
@@ -139,7 +139,7 @@
                     <div class="col-md-6 ">
                         <label for="inputPais " class="form-label ">Provincia</label><br>
                         <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['provinciasRegistrar'].errors ">La Provincia es obligatorio</span>
-                        <select (ngModelChange)="escucharSelectProvincia($event) " class="form-control " name="provinciasRegistrar" [(ngModel)]="instanciaEmpleadorRegistrar.fk_provincia" required>
+                        <select (ngModelChange)="escucharSelectProvincia($event)" class="form-control " name="provinciasRegistrar" [(ngModel)]="instanciaEmpleadorRegistrar.fk_provincia" required>
                         <option [value]="item.id "*ngFor="let item of arrayProvincias;let i=index ">{{item.nombre}}</option>
                       </select>
                     </div>
@@ -150,9 +150,7 @@
                         <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
                       </select>
                     </div>
-
-
-                    <div class="col-md-6 ">
+                    <div class="col-md-6">
                         <div class="form-group ">
                             <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
                             <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls[ 'direcionDomicilioRegistrar'].errors ">La direccion es obligatorio</span>
