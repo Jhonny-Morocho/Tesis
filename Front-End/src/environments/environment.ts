@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  dominio:"http://localhost/Tesis"
+  production: true,
+  dominio:"https://proeditsclub.com/Tesis"
 };
 //domio sanbox http://localhost/Tesis
 //domio produccion https://proeditsclub.com/Tesis

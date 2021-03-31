@@ -47,30 +47,30 @@
                             <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors">El genero es obligatorio</span>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="0" required [(ngModel)]="instanciaPostulante.genero" disabled>
-                                    <label class="form-check-label" for="gridRadios1"> Masculino</label>
+                                    <input class="form-check-input" type="radio" name="genero" [value]="0" required [(ngModel)]="instanciaPostulante.genero" [disabled]="true">
+                                    <label class="form-check-label " for="gridRadios1 "> Masculino</label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="1" required [(ngModel)]="instanciaPostulante.genero" disabled>
-                                    <label class="form-check-label" for="gridRadios2">Femenino</label>
+                                <div class="form-check ">
+                                    <input class="form-check-input " type="radio" name="genero" [value]="1" required [(ngModel)]="instanciaPostulante.genero" [disabled]="true">
+                                    <label class="form-check-label " for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label><br>
-                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaPostulante.direccion_domicilio" name="direcionDomicilio" rows="3" required minlength="5" disabled></textarea>
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'direcionDomicilio'].errors ">La direccion es obligatorio</span>
+                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio " name="direcionDomicilio " rows="3 " required minlength="5 " disabled></textarea>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Observaciones</label><br>
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Observaciones</label><br>
 
-                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['observaciones'].errors">Debe poner un comentario</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaPostulante.observaciones" name="observaciones" rows="3" required></textarea>
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'observaciones'].errors ">Debe poner un comentario</span>
+                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.observaciones " name="observaciones " rows="3 " required></textarea>
                     </div>
                 </div>
                 <div class=" col-md-6 ">

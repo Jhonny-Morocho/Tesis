@@ -55,7 +55,6 @@ class NotificarUsuarios extends Command
     }
 
     private function notificarEstudiante(){
-        $texto="";
         $handle = fopen("log.txt", "a");
         try {
             $usuario=Estudiante::join("usuario","usuario.id","=","estudiante.fk_usuario")
@@ -63,16 +62,16 @@ class NotificarUsuarios extends Command
             ->where("estudiante.estado",0)
             ->where("usuario.tipoUsuario",2)
             ->where("estudiante.observaciones","")
-            ->whereDate('estudiante.updated_at',"<",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
+            ->whereDate('estudiante.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
             ->get();
-
+            
             $TituloCorreo="Proceso de registro del Postulante";
             $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
                 $estudianteBooleand=Estudiante::where("fk_usuario","=",$value['fk_usuario'])
                 ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
                 $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['nombre'],$value['apellido'],$TituloCorreo);
-                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$this->de,$value['correo'],$TituloCorreo);
+                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
                 $texto="[".date("Y-m-d H:i:s")."]" ." Update Estudiante Registro Expirado :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
@@ -95,7 +94,7 @@ class NotificarUsuarios extends Command
                 ->where("empleador.estado",0)
                 ->where("usuario.tipoUsuario",6)
                 ->where("empleador.observaciones","")
-                ->whereDate('empleador.updated_at',"<",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
+                ->whereDate('empleador.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
                 ->get();
 
                 $TituloCorreo="Proceso de inscripción del empleador";

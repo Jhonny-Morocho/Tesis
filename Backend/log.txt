@@ -1,8 +1,8 @@
-[2021-03-29 12:45:50] Update Estudiante :eerssa9@hotmail.com = true ↑↑ Enviar Correo : true
+[2021-03-30 22:52:29] Update Estudiante Registro Expirado :jmmorochoa@unl.edu.ec = true ↑↑ Enviar Correo : true
 
 
 
-[2021-03-29 12:46:40] Update Empleador :eerssa9@hotmail.com = true ↑↑ Enviar Correo : true
+[2021-03-30 22:53:13] Update Estudiante Registro Expirado :jmmorochoa@unl.edu.ec = true ↑↑ Enviar Correo : true
 
 
 

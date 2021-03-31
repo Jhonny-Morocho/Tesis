@@ -21,8 +21,6 @@ export class LoginAdminComponent implements OnInit {
   constructor(private _servicioAdmin:AutenticacionUserService,private router:Router) { }
 
   ngOnInit() {
-  
-   // this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
   // Login del formulario del admistrador
@@ -52,27 +50,26 @@ export class LoginAdminComponent implements OnInit {
 
         //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
-        
+
           this._servicioAdmin.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
-          switch (siHacesBien['mensaje']['tipoUsuario']) {
+          switch (parseInt(siHacesBien['mensaje']['tipoUsuario'])) {
             case 3:
               this.router.navigateByUrl('/panel-admin/mi-perfil');
               break;
             case 6:
-              this.router.navigateByUrl('/panel-empleador/mi-perfil');
-              //this.router.navigateByUrl('/panel-admin/mi-perfil');
+              this.router.navigateByUrl('/panel-empleador/form-info-empleador');
               break;
             case 2:
-              this.router.navigateByUrl('/panel-postulante/mi-perfil');
+              this.router.navigateByUrl('/panel-postulante/form-info-postulante');
+              console.log("llegue xxx");
+              break;
             case 5:
-
               this.router.navigateByUrl('/panel-admin/mi-perfil');
+              break;
             case 4:
-            
               this.router.navigateByUrl('/panel-admin/mi-perfil');
               //this.router.navigateByUrl('/panel-admin/mi-perfil');
               break;
-
             default:
               break;
           }

@@ -5,7 +5,7 @@
 <div class="content-wrapper" *ngIf="tipoUsuarioSecretaria==true">
 
     <div class="card">
-        <article class="card-body animated animate__animated animate__slideInRight">
+        <article class="card-body animated animate__animated fadeIn">
             <div class="container " *ngIf="tipoUsuarioSecretaria==true">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                     <thead>
@@ -108,8 +108,8 @@
                             <h2 class="lead"><b>{{ intanciaEmpleadorCalificar.nom_representante_legal }}</b></h2>
                             <p class="text-muted text-lg"><b>{{ intanciaEmpleadorCalificar.razon_empresa }}: </b> {{ intanciaEmpleadorCalificar.num_ruc }} </p>
                             <ul class="ml-4 mb-0 fa-ul text-muted">
-                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Ciudad: {{ intanciaEmpleadorCalificar.ciudad }}</li>
-                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Provincia: {{ intanciaEmpleadorCalificar.provincia }}</li>
+                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Ciudad: {{ intanciaEmpleadorCalificar.fk_ciudad }}</li>
+                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Provincia: {{ intanciaEmpleadorCalificar.fk_provincia }}</li>
                                 <li class="large"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{ intanciaEmpleadorCalificar.telefono }}</li>
                                 <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Direccion #: {{ intanciaEmpleadorCalificar.direccion }}</li>
                                 <li class="large"><span class="fa-li"><i class="far fa-address-card"></i></span> Cedula #: {{ intanciaEmpleadorCalificar.cedula }}</li>
