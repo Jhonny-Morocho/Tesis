@@ -1,8 +1,4 @@
-[2021-03-30 22:52:29] Update Estudiante Registro Expirado :jmmorochoa@unl.edu.ec = true ↑↑ Enviar Correo : true
-
-
-
-[2021-03-30 22:53:13] Update Estudiante Registro Expirado :jmmorochoa@unl.edu.ec = true ↑↑ Enviar Correo : true
+[2021-03-31 09:57:20] Update Empleador registro Expirado :empleador1unl@gmail.com = true ↑↑ Enviar Correo : true
 
 
 
