@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
+import{environment} from 'src/environments/environment.prod';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
@@ -17,6 +18,7 @@ export class OfertaLaboralComponent implements OnInit {
   instanciaEmpleadorModelVer:EmpleadorModel;
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
+  dominio=environment;
   //array de data ofertas labarales
   ofertasLaborales:OfertaLaboralModel[]=[];
 
@@ -33,6 +35,7 @@ export class OfertaLaboralComponent implements OnInit {
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
+    this.configurarParametrosDataTable();
     this.cargarTabla();
 
   }
@@ -105,13 +108,13 @@ export class OfertaLaboralComponent implements OnInit {
     // ocupo el servicio
 
      Swal({
-       title: 'Are you sure?',
-       text: "Esta seguro que desea borrar el Titulo "+nombreTitulo,
+       title: '¿Esta seguro?',
+       text: "Se eliminara  "+nombreTitulo,
        type: 'warning',
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
        cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes'
+       confirmButtonText: 'Si'
      }).then((result) => {
        if (result.value) {
          this.instanciaOfertaLaboralActualizar.estado=0;
@@ -153,5 +156,35 @@ export class OfertaLaboralComponent implements OnInit {
     }else{
       return false;
     }
+  }
+  configurarParametrosDataTable(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      responsive: true,
+        /* below is the relevant part, e.g. translated to spanish */ 
+      language: {
+        processing: "Procesando...",
+        search: "Buscar:",
+        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+        infoEmpty: "Mostrando ningún elemento.",
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "No se encontraron registros",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: "Primero",
+          previous: "Anterior",
+          next: "Siguiente",
+          last: "Último"
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
 }

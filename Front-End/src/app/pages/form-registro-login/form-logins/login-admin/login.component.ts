@@ -18,7 +18,8 @@ export class LoginAdminComponent implements OnInit {
   
   // Instancio mi modelo
   instanciaModeloUsuarioLogin:UsuarioModel=new UsuarioModel;
-  constructor(private _servicioAdmin:AutenticacionUserService,private router:Router) { }
+  constructor(private _servicioAdmin:AutenticacionUserService,
+    private router:Router) { }
 
   ngOnInit() {
   }

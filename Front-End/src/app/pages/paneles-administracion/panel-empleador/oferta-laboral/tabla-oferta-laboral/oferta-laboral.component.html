@@ -2,12 +2,13 @@
 </navTab-empleador>
 <div class="content-wrapper">
     <div class="card">
-        <div class="col-2 mt-2">
-            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/add-ferta-laboral']">
+        <h6 class="container mt-2"> Ofertas Laborale</h6>
+        <hr>
+        <div class="col-2  ml-4">
+            <a class=" btn btn-outline-primary" [routerLink]="['/panel-empleador/add-ferta-laboral']">
                 <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
         </div>
-        <article class="card-body animated animate__animated animate__slideInRight">
-
+        <article class="card-body animated animate__animated fadeIn">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
@@ -76,45 +77,15 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                        <!-- <div class="row">
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2300</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                                            <span class="info-box-number text-center text-muted mb-0">20</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         <div class="row">
                             <div class="col-12">
-                                <h4>Empleador</h4>
                                 <div class="post">
                                     <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../../assets/images/empresa.png" alt="user image">
+                                        <img class="img-circle img-bordered-sm" src="{{dominio.dominio}}/Archivos/images/empresa.png" alt="user image">
                                         <span class="username">
-                                    <a href="#">{{ instanciaEmpleadorModelVer.razon_empresa }}</a>
-                                  </span>
-
+                                            <a href="#">{{ instanciaEmpleadorModelVer.razon_empresa }}</a>
+                                        </span>
                                     </div>
-                                    <!-- /.user-block -->
-                                    <p class="post">Descripcion de la oferta laboral</p>
                                     <br>
                                     <p>
                                         {{instanciaOfertaVer.descripcion}}
@@ -125,7 +96,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary">Puesto <i class="fab fa-black-tie"></i> {{ instanciaOfertaVer.puesto }}</h3>
+                        <h3 class="text-primary"> {{ instanciaOfertaVer.puesto }}</h3>
                         <br>
                         <h5 class="mt-5 text-muted">Requisitos</h5>
                         <div id="itemRequisitos"></div>

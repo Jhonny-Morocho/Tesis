@@ -7,6 +7,8 @@ export class OfertaLaboralModel{
     obervaciones:string;
     requisitos:string;
     estado:Number;
+    correo?:string;
+    razon_empresa?:string;
     external_of:string;
     created_at?:string;
     id?:Number;

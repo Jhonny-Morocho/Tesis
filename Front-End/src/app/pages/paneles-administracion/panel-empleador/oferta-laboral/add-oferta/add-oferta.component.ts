@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import { OfertasLaboralesService } from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
@@ -11,7 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class AddOfertaComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
-  constructor(private servicioOfertaLaboral:OfertasLaboralesService) { }
+  constructor(private servicioOfertaLaboral:OfertasLaboralesService,
+    private router:Router) { }
 
   ngOnInit() {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
@@ -38,7 +40,7 @@ export class AddOfertaComponent implements OnInit {
     console.log(formRegistroTitulo.value);
     //var textAreaRequisitos = $('#compose-textarea').val();
     this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
-    this.instanciaOfertaLaboral.estado=0;
+    this.instanciaOfertaLaboral.estado=1;
     this.instanciaOfertaLaboral.obervaciones="";
     //console.log(textAreaRequisitos);
     if(formRegistroTitulo.invalid){
@@ -56,14 +58,7 @@ export class AddOfertaComponent implements OnInit {
           if(siHaceBien['Siglas']=="OE"){
             console.log(siHaceBien);
             Swal('Registrado', 'Informacion Registrada con Exito', 'success');
-            this.instanciaOfertaLaboral.puesto="";
-            this.instanciaOfertaLaboral.descripcion="";
-            this.instanciaOfertaLaboral.lugar="";
-            // this.instanciaOfertaLaboral.requisitos='<ul><li>List item onesfs</li>'+
-            //                                         '<li>List item twods</li>'+
-            //                                         '<li>List item threedsds</li>'+
-            //                                         '<li>List item fourds</li>'+'</ul>';
-           
+            this.router.navigateByUrl('/panel-empleador/oferta-laboral');
           }else{
             console.warn(siHaceBien);
             Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')

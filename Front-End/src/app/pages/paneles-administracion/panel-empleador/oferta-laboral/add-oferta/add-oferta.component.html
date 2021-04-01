@@ -2,8 +2,8 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitRegistroOfertaLaboral(fRegistrarOfertaLaboral)" #fRegistrarOfertaLaboral="ngForm" enctype="multipart/form-data">
-                <h3>Registrar Oferta Laboral</h3>
-
+                <h6>Registrar Oferta Laboral</h6>
+                <hr>
                 <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
@@ -16,7 +16,7 @@
                     <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required>
                 </div>
                 <div class="col-md-12">
-                    <label for="inputDescripcion" class="form-label">Descripcion </label><br>
+                    <label for="inputDescripcion" class="form-label">Descripción </label><br>
                     <span class="text-danger " *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
                     <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required></textarea>
                 </div>
@@ -27,14 +27,13 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="inputEmail4" class="form-label">Requisitos </label><br>
-                    <!-- <span class="text-danger " *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['requisitos'].errors">El Numero de registro es obligatorio</span> -->
+                    <label for="inputEmail4" class="form-label">Requisito </label><br>
                     <textarea id="compose-textarea" class="form-control" style="height: 300px" name="requisitos">
                     <ul>
-                      <li>List item one</li>
-                      <li>List item two</li>
-                      <li>List item three</li>
-                      <li>List item four</li>
+                      <li>Primer requisito</li>
+                      <li>Segundo requisito</li>
+                      <li>Tercer requisito</li>
+                      <li>Cuarto Requisito</li>
                     </ul>
                   </textarea>
                 </div>

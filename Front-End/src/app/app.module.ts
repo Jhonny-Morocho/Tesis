@@ -53,6 +53,7 @@ import { PostularOfertaLaboralComponent } from './pages/ofertas-postululadas/ofe
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import { TemplateHojaVidaComponent } from './pages/paneles-administracion/template-hoja-vida/template-hoja-vida.component';
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
+import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 //============================== Visor PDF ===========
 
 //cursos-capacitacines
@@ -97,7 +98,8 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     PostularOfertaLaboralComponent,
     TablaFiltroPostulantesComponent,
     TemplateHojaVidaComponent,
-    PostulantesOfertaComponent
+    PostulantesOfertaComponent,
+    VerOfertaLaboralComponent
   ],
 
   imports: [

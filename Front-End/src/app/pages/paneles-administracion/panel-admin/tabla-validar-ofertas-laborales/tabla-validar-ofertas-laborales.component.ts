@@ -75,6 +75,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
       this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
+      this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
       console.log( this.instanciaOfertaVer.descripcion);
       //obtengo todos los usuarios 
       this.servicioEmpleador.listarEmpleadores().subscribe(
