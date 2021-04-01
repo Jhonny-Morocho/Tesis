@@ -13,5 +13,6 @@ export class EmpleadorModel{
     observaciones:string;
     external_em:string;
     id?:Number;
+    correo?:string;
     estado:Number
 }

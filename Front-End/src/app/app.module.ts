@@ -53,7 +53,9 @@ import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/p
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import { TemplateHojaVidaComponent } from './pages/paneles-administracion/template-hoja-vida/template-hoja-vida.component';
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
-
+//============================== Visor PDF ===========
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { VisorPdfComponent } from './visor-pdf/visor-pdf.component';
 //cursos-capacitacines
 //import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -96,7 +98,8 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     PostularOfertaLaboralComponent,
     TablaFiltroPostulantesComponent,
     TemplateHojaVidaComponent,
-    PostulantesOfertaComponent
+    PostulantesOfertaComponent,
+    VisorPdfComponent
   ],
 
   imports: [
@@ -107,7 +110,8 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
     HttpClientModule,
     // DATA TABLE
     DataTablesModule,
-
+    // VISOR PDF
+    PdfViewerModule
 
     // Tostadas
   ],

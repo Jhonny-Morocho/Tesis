@@ -1,0 +1,4 @@
+[2021-03-31 17:59:58] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+

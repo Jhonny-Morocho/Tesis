@@ -2,9 +2,9 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitRegistrarCursoCapacitacion(fRegistrarCursoCapacitacion)" #fRegistrarCursoCapacitacion="ngForm" enctype="multipart/form-data">
-                <h3>Registrar curso o capacitacion</h3>
+                <h3>Registrar curso o capacitación</h3>
 
-                <div class="col-3">
+                <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
                 </div>
@@ -20,7 +20,7 @@
                     <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.auspiciante" name="auspiciante" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputNumeroHoras" class="form-label">Numero de horas</label><br>
+                    <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
                     <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors">El Numero de horas es obligatorio</span>
                     <input type="number" [(ngModel)]="instanciaCursosCapacitaciones.horas" name="horas" class="form-control" min="1" required>
                 </div>
@@ -31,7 +31,7 @@
                     <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_inicio" name="fecha_inicio" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminacion</label><br>
+                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación</label><br>
                     <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors">La Fecha de culminacion es obligatorio</span>
                     <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_culminacion" name="fecha_culminacion" class="form-control" required>
                 </div>

@@ -26,10 +26,12 @@ export class PanelPostulanteComponent implements OnInit {
   // si el postulante esta su formulario validado tiene accesso a las ofertas laborales y a llenar su hoja de vida
   comprobarPostulanteFormValidado(){
     //obtener el external_usuario
-
     this.servicioEstudiante.listarFormPostulante().subscribe(
       sihacesBien=>{
         console.log(sihacesBien);
+        if(sihacesBien['Siglas']=="OE" && parseInt(sihacesBien['mensaje']['estado'])==1){
+          this.estadoValidacionForm=true;
+        }
       },siHacesMal=>{
         
       }
@@ -47,7 +49,7 @@ export class PanelPostulanteComponent implements OnInit {
   salirSession(){
     // ocupo el servicio
     Swal({
-      title: 'Are you sure?',
+      title: 'Esta seguro?',
       text: "Esta seguro que desea cerrar su session",
       type: 'warning',
       showCancelButton: true,

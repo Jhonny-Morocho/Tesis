@@ -14,7 +14,7 @@ export class FormEditarTituloComponent implements OnInit {
   file;
   instanciaTituloAcademico:TituloModel;
   listaNivelInsturccion:string[]=["Tercer Nivel","Cuarto Nivel"];
-
+  tipoTitulo:string[]=["Nacional","Extranjero"];
 
   constructor(private _activateRoute:ActivatedRoute, private servicioTitulo:TituloService) {
   }

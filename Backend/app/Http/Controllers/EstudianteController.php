@@ -195,7 +195,10 @@ class EstudianteController extends Controller
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEstudiante=null;
-            $ObjeEstudiante=Estudiante::get();
+            $ObjeEstudiante=Estudiante::join("usuario","usuario.id","=","estudiante.fk_usuario")
+            ->select("usuario.*","estudiante.*")
+            ->where("usuario.tipoUsuario",2)
+            ->get();
             return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);

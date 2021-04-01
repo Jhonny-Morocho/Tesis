@@ -161,7 +161,10 @@ class EmpleadorController extends Controller{
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEmpleador=null;
-            $ObjeEmpleador=Empleador::get();
+            $ObjeEmpleador=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
+            ->select("usuario.*","empleador.*")
+            ->where("usuario.tipoUsuario",6)
+            ->get();
             return response()->json(["mensaje"=>$ObjeEmpleador,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);

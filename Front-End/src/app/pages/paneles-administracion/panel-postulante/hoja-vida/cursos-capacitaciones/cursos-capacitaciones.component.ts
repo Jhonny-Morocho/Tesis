@@ -5,6 +5,8 @@ import { PaisesModel } from 'src/app/models/paises.models';
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
 import {PaisesService} from 'src/app/servicios/paises.service';
 import Swal from 'sweetalert2';
+import {environment} from 'src/environments/environment.prod';
+declare var $:any;
 @Component({
   selector: 'app-cursos-capacitaciones',
   templateUrl: './cursos-capacitaciones.component.html'
@@ -13,6 +15,7 @@ export class CursosCapacitacionesComponent implements OnInit {
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
   //tabla data que consumo del servicio
   paises:PaisesModel[]=[];
+  rutaArchivoPdf:string="";
   cursosCapacitaciones:CursosCapacitacionesModel[]=[];
     //data table
     dtOptions: DataTables.Settings = {};
@@ -22,6 +25,7 @@ export class CursosCapacitacionesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.configurarParametrosDataTable();
     this.cargarTabla();
     this.cargarPaises();
   }
@@ -45,13 +49,32 @@ export class CursosCapacitacionesComponent implements OnInit {
       }
     );
    }
+
+   buscarPais(idPais){
+    let nombrePais="";
+    this.paises.forEach(element => {
+      if(element.id==parseInt(idPais)){
+        console.log(element.nombre);
+        nombrePais=element.nombre;
+      }
+    });
+    return nombrePais;
+   }
+   mostrarPdf(urlEvidencias){
+    console.log(urlEvidencias);
+
+    this.rutaArchivoPdf=environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
+    // this.rutaArchivoPdf="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+    $('#mostrarPDF').modal('show');
+  }
    cargarPaises(){
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        console.warn("TODO BIEN");
+        //console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
+   
       },
       (peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
@@ -65,13 +88,13 @@ export class CursosCapacitacionesComponent implements OnInit {
     // ocupo el servicio
 
      Swal({
-       title: 'Are you sure?',
-       text: "Esta seguro que desea borrar el Titulo "+nombreTitulo,
+       title: 'Esta seguro?',
+       text: "Se eliminara "+nombreTitulo,
        type: 'warning',
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
        cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes'
+       confirmButtonText: 'Si'
      }).then((result) => {
        if (result.value) {
          this.instanciaCursosCapacitaciones=new CursosCapacitacionesModel();
@@ -95,7 +118,36 @@ export class CursosCapacitacionesComponent implements OnInit {
        }
      })
     //alert("estoy eliminado");
-
+  }
+  configurarParametrosDataTable(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      responsive: true,
+        /* below is the relevant part, e.g. translated to spanish */ 
+      language: {
+        processing: "Procesando...",
+        search: "Buscar:",
+        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+        infoEmpty: "Mostrando ningún elemento.",
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "No se encontraron registros",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: "Primero",
+          previous: "Anterior",
+          next: "Siguiente",
+          last: "Último"
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
 
 }

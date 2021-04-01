@@ -2,21 +2,21 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitActualizarTitulo(fEditarTitulo)" #fEditarTitulo="ngForm" enctype="multipart/form-data">
-                <h3>Editar titulo academicos</h3>
+                <h3>Editar Título Académico</h3>
 
-                <div class="col-3">
+                <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/titulos-academicos']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
                 </div>
 
                 <hr>
                 <div class="col-md-6">
-                    <label for="inputTituloObtenido" class="form-label">Titulo obtenido </label><br>
+                    <label for="inputTituloObtenido" class="form-label">Título obtenido </label><br>
                     <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaTituloAcademico.titulo_obtenido" name="titulo_obtenido" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Numero de registro</label><br>
+                    <label for="inputEmail4" class="form-label">Número de registro</label><br>
                     <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaTituloAcademico.numero_registro" name="numero_registro" class="form-control" required>
                 </div>
@@ -28,12 +28,19 @@
                     </select>
                 </div>
                 <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Tipo de Título</label><br>
+                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['nivel_instruccion'].errors">El titpo de titulo es obligatorio</span>
+                    <select class="form-control" name="nivel_instruccion" [(ngModel)]="instanciaTituloAcademico.tipo_titulo" required>
+                        <option [value]="i+1"*ngFor="let item of tipoTitulo;let i=index">{{item}}</option>
+                      </select>
+                </div>
+                <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
                     <textarea class="form-control" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones"></textarea>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Evidencias</label><br>
-                    <input type="file" (change)="fileEvent($event)" class="form-control" accept="application/pdf">
+                    <label for="inputEmail4" class="form-label">Evidencias (Formato PDF)</label><br>
+                    <input type="file" (change)="fileEvent($event)" class="form-control" accept="application/pdf" placeholder="Formato PDF">
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Guardar</button>

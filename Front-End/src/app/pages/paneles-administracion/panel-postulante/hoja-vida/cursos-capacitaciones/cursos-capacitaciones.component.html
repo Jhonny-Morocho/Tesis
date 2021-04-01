@@ -2,50 +2,66 @@
 
 <div class="content-wrapper">
     <div class="card">
+        <h3 class="container">Cursos y capacitaciones</h3>
+        <hr>
         <div class="col-2 mt-1">
             <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-curso-capacitacion']">
                 <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
         </div>
-        <article class="card-body animated animate__animated animate__slideInRight">
-            <article class="card-body animated animate__animated animate__slideInRight">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Evento</th>
-                            <th>Auspiciante</th>
-                            <th>Horas</th>
-                            <th>Inicio</th>
-                            <th>Fin</th>
-                            <th>Evento</th>
-                            <th>País</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let cursoCapatiacionesArray of cursosCapacitaciones;let i=index">
-                            <td>{{ i+1 }}</td>
-                            <td>{{cursoCapatiacionesArray.nom_evento }}</td>
-                            <td>{{cursoCapatiacionesArray.auspiciante }}</td>
-                            <td>{{cursoCapatiacionesArray.horas }}</td>
-                            <td>{{cursoCapatiacionesArray.fecha_inicio }}</td>
-                            <td>{{cursoCapatiacionesArray.fecha_culminacion }}</td>
+        <article class="card-body animated animate__animated fadeIn">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Evento</th>
+                        <th>Auspiciante</th>
+                        <th>Horas</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Evento</th>
+                        <th>País</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cursoCapatiacionesArray of cursosCapacitaciones;let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{cursoCapatiacionesArray.nom_evento }}</td>
+                        <td>{{cursoCapatiacionesArray.auspiciante }}</td>
+                        <td>{{cursoCapatiacionesArray.horas }}</td>
+                        <td>{{cursoCapatiacionesArray.fecha_inicio }}</td>
+                        <td>{{cursoCapatiacionesArray.fecha_culminacion }}</td>
 
-                            <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='1' ">Curso</td>
-                            <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='2' ">Capacitacion</td>
-                            <td>{{ paises[cursoCapatiacionesArray.fk_pais]?.nombre}}</td>
+                        <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='1' ">Curso</td>
+                        <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='2' ">Capacitacion</td>
+                        <td>{{buscarPais(cursoCapatiacionesArray.fk_pais)}}</td>
 
-                            <td>
-                                <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Cursos/{{ cursoCapatiacionesArray.evidencia_url }} " target="alt "><i class="far fa-file-pdf " ></i></a>
-                                <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-curso-capacitacion',cursoCapatiacionesArray.external_cu] "><i class="fas fa-pencil-alt " ></i></a>
-                                <a class="btn btn-light " (click)="eliminarCursosCapacitaciones(cursoCapatiacionesArray.external_cu,cursoCapatiacionesArray.nom_evento,cursoCapatiacionesArray.evidencia_url,i)"><i class="fas fa-trash-alt "></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </article>
+                        <td>
+                            <a class="btn btn-light " (click)="mostrarPdf(cursoCapatiacionesArray.evidencia_url)"><i class="far fa-file-pdf " ></i></a>
+                            <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-curso-capacitacion',cursoCapatiacionesArray.external_cu] "><i class="fas fa-pencil-alt " ></i></a>
+                            <a class="btn btn-light " (click)="eliminarCursosCapacitaciones(cursoCapatiacionesArray.external_cu,cursoCapatiacionesArray.nom_evento,cursoCapatiacionesArray.evidencia_url,i)"><i class="fas fa-trash-alt "></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </article>
+    </div>
+</div>
+<!-- Full screen modal -->
+<div class="modal fade" id="mostrarPDF" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">PDF</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-visor-pdf [pdfSrc]="rutaArchivoPdf"></app-visor-pdf>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>

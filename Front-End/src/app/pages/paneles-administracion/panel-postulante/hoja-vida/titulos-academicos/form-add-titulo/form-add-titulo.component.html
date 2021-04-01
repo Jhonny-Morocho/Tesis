@@ -2,9 +2,9 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo(fRegistrarTitulo)" #fRegistrarTitulo="ngForm" enctype="multipart/form-data">
-                <h3>Registrar titulos academicos</h3>
+                <h3>Registrar Título Académico</h3>
 
-                <div class="col-3">
+                <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/titulos-academicos']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
                 </div>
@@ -39,7 +39,7 @@
                     <textarea class="form-control" [(ngModel)]="instanciaTituloAcademico.detalles_adiciones" name="detalles_adiciones"></textarea>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Evidencias</label><br>
+                    <label for="inputEmail4" class="form-label">Evidencias (Formato PDF)</label><br>
                     <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
                     <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
                 </div>

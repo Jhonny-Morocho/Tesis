@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {TituloModel} from 'src/app/models/titulo.models';
-//import { NgForm } from '@angular/forms';
 import {TituloService} from 'src/app/servicios/titulos.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-//import { isEmpty } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-//import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
-//import {} from '';
+declare var $:any;
+import {environment} from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-titulos-academicos',
   templateUrl: './titulos-academicos.component.html'
 })
 export class TitulosAcademicosComponent implements OnInit {
-
-
+  rutaArchivoPdf:string="";
   instanciaTituloAcademico:TituloModel;
   //para imprimir la tabla
   tituloAcademico:TituloModel[]=[];
@@ -27,12 +23,17 @@ export class TitulosAcademicosComponent implements OnInit {
   constructor(private servicioTitulo:TituloService,private ruta_:Router) { }
 
   ngOnInit() {
-
+    this.configurarParametrosDataTable();
     this.cargarTabla();
 
-   //instancia de titulomodel //debo inicializarlos//si no coloco esto no me inserta en la bd
   }
+  mostrarPdf(urlEvidencias){
+    console.log(urlEvidencias);
 
+    this.rutaArchivoPdf=environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
+    // this.rutaArchivoPdf="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+    $('#mostrarPDF').modal('show');
+  }
   cargarTabla(){
     //listamos los titulos academicos
     this.servicioTitulo.listarTitulos().subscribe(
@@ -58,13 +59,13 @@ export class TitulosAcademicosComponent implements OnInit {
      // ocupo el servicio
     
       Swal({
-        title: 'Are you sure?',
-        text: "Esta seguro que desea borrar el Titulo "+nombreTitulo,
+        title: 'Esta seguro ?',
+        text: "Se elimara  "+nombreTitulo,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
+        confirmButtonText: 'Si'
       }).then((result) => {
         if (result.value) {
           this.instanciaTituloAcademico=new TituloModel();
@@ -100,8 +101,36 @@ export class TitulosAcademicosComponent implements OnInit {
       }
     }
 
-    
-
+  configurarParametrosDataTable(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      responsive: true,
+        /* below is the relevant part, e.g. translated to spanish */ 
+      language: {
+        processing: "Procesando...",
+        search: "Buscar:",
+        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+        infoEmpty: "Mostrando ningún elemento.",
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "No se encontraron registros",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: "Primero",
+          previous: "Anterior",
+          next: "Siguiente",
+          last: "Último"
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
+  }
   
 }
 

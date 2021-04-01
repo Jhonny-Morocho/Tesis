@@ -20,7 +20,7 @@
                     <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.auspiciante" name="auspiciante" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputNumeroHoras" class="form-label">Numero de horas</label><br>
+                    <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
                     <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors">El Numero de horas es obligatorio</span>
                     <input type="number" [(ngModel)]="instanciaCursosCapacitaciones.horas" name="horas" class="form-control" min="1" required>
                 </div>
