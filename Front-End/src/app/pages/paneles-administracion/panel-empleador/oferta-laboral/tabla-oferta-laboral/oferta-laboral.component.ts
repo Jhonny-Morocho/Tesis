@@ -77,25 +77,12 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
     this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
     this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
-    //consultamos los datos del empleador para presentarlos o imprimirlos
-    this.servicioEmpleador.listarFormEmpleador().subscribe(
-      siHaceBien=>{
-          console.log(siHaceBien);
-          this.instanciaEmpleadorModelVer.fk_ciudad=siHaceBien['mensaje']['fk_ciudad'];
-          this.instanciaEmpleadorModelVer.direccion=siHaceBien['mensaje']['direccion'];
-          this.instanciaEmpleadorModelVer.fk_provincia=siHaceBien['mensaje']['fk_provincia'];
-          this.instanciaEmpleadorModelVer.actividad_ruc=siHaceBien['mensaje']['actividad_ruc'];
-          this.instanciaEmpleadorModelVer.tipo_empresa=siHaceBien['mensaje']['tiposEmpresa'];
-          this.instanciaEmpleadorModelVer.razon_empresa=siHaceBien['mensaje']['razon_empresa'];
-          this.instanciaEmpleadorModelVer.nom_representante_legal=siHaceBien['mensaje']['nom_representante_legal'];
-          
-      },error=>{
+    this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
+    
 
-        console.log(error);
-      });
     
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
-    console.log(this.instanciaOfertaVer.requisitos);
+    console.log(this.instanciaOfertaVer);
     $('#exampleModal').modal('show');
  
   }
