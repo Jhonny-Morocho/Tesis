@@ -14,7 +14,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-postular-oferta-laboral',
-  templateUrl: './postular-oferta-laboral.component.html'
+  templateUrl: './ofertas-laborales.component.html'
 })
 export class PostularOfertaLaboralComponent implements OnInit {
   instanciaEmpleadorModelVer:EmpleadorModel;

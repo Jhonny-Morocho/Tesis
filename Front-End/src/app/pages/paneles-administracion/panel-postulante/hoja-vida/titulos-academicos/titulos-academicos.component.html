@@ -3,7 +3,7 @@
 
 <div class="content-wrapper">
     <div class="card">
-        <h3 class="container">Títulos Académicos</h3>
+        <h6 class="container mt-4">Títulos Académicos</h6>
         <hr>
         <div class="col-2 mt-2">
             <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-titulo']">
@@ -57,7 +57,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-visor-pdf [pdfSrc]="rutaArchivoPdf"></app-visor-pdf>
+                <div id="framePdf" class="embed-responsive embed-responsive-16by9">
+
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

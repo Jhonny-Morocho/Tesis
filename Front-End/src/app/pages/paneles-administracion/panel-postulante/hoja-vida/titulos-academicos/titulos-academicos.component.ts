@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 declare var $:any;
 import {environment} from 'src/environments/environment.prod';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-titulos-academicos',
@@ -16,23 +17,32 @@ export class TitulosAcademicosComponent implements OnInit {
   instanciaTituloAcademico:TituloModel;
   //para imprimir la tabla
   tituloAcademico:TituloModel[]=[];
-  urlEvidencias:string;
+  //frame 
+   frameLimpio:any;
   //data table
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private servicioTitulo:TituloService,private ruta_:Router) { }
+  constructor(private servicioTitulo:TituloService,
+            private sanitizer: DomSanitizer,
+            private ruta_:Router) { }
 
   ngOnInit() {
     this.configurarParametrosDataTable();
+
     this.cargarTabla();
+
+   
 
   }
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
-
-    this.rutaArchivoPdf=environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
-    // this.rutaArchivoPdf="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+    let frameHtml ='<iframe width="977" height="733" src="'+
+    environment.dominio+"/Archivos/Titulos/"+
+    urlEvidencias+
+    '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    $('#framePdf').html(frameHtml)
     $('#mostrarPDF').modal('show');
+    return this.frameLimpio=this.sanitizer.bypassSecurityTrustHtml(frameHtml);
   }
   cargarTabla(){
     //listamos los titulos academicos

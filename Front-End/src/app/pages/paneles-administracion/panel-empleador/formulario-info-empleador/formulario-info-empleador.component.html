@@ -134,7 +134,7 @@
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Teléfono </label><br>
                         <span class="text-danger" *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors">El Telefono es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.telefono" name="telefonoRegistrar" class="form-control" maxlength="9" required>
+                        <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.telefono" name="telefonoRegistrar" class="form-control" maxlength="10" required>
                     </div>
                     <div class="col-md-6 ">
                         <label for="inputPais " class="form-label ">Provincia</label><br>

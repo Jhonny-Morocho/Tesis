@@ -49,13 +49,12 @@ import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administr
 import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
 import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
-import { PostularOfertaLaboralComponent } from './pages/paneles-administracion/panel-postulante/postular-oferta-laboral/postular-oferta-laboral.component';
+import { PostularOfertaLaboralComponent } from './pages/ofertas-postululadas/ofertas-laborales.component';
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import { TemplateHojaVidaComponent } from './pages/paneles-administracion/template-hoja-vida/template-hoja-vida.component';
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
 //============================== Visor PDF ===========
-import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { VisorPdfComponent } from './visor-pdf/visor-pdf.component';
+
 //cursos-capacitacines
 //import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -98,8 +97,7 @@ import { VisorPdfComponent } from './visor-pdf/visor-pdf.component';
     PostularOfertaLaboralComponent,
     TablaFiltroPostulantesComponent,
     TemplateHojaVidaComponent,
-    PostulantesOfertaComponent,
-    VisorPdfComponent
+    PostulantesOfertaComponent
   ],
 
   imports: [
@@ -110,8 +108,7 @@ import { VisorPdfComponent } from './visor-pdf/visor-pdf.component';
     HttpClientModule,
     // DATA TABLE
     DataTablesModule,
-    // VISOR PDF
-    PdfViewerModule
+
 
     // Tostadas
   ],

@@ -6,6 +6,7 @@ import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitacion
 import {PaisesService} from 'src/app/servicios/paises.service';
 import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment.prod';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $:any;
 @Component({
   selector: 'app-cursos-capacitaciones',
@@ -13,6 +14,8 @@ declare var $:any;
 })
 export class CursosCapacitacionesComponent implements OnInit {
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
+  //frame 
+  frameLimpio:any;
   //tabla data que consumo del servicio
   paises:PaisesModel[]=[];
   rutaArchivoPdf:string="";
@@ -20,7 +23,9 @@ export class CursosCapacitacionesComponent implements OnInit {
     //data table
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,private servicioPaises:PaisesService) { 
+  constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,
+              private sanitizer: DomSanitizer,
+              private servicioPaises:PaisesService) { 
     
   }
 
@@ -61,12 +66,15 @@ export class CursosCapacitacionesComponent implements OnInit {
     return nombrePais;
    }
    mostrarPdf(urlEvidencias){
-    console.log(urlEvidencias);
-
-    this.rutaArchivoPdf=environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
-    // this.rutaArchivoPdf="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-    $('#mostrarPDF').modal('show');
-  }
+      console.log(urlEvidencias);
+      let frameHtml ='<iframe width="977" height="733" src="'+
+      environment.dominio+"/Archivos/Cursos/"+
+      urlEvidencias+
+      '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      $('#framePdf').html(frameHtml)
+      $('#mostrarPDF').modal('show');
+      return this.frameLimpio=this.sanitizer.bypassSecurityTrustHtml(frameHtml);
+    }
    cargarPaises(){
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(

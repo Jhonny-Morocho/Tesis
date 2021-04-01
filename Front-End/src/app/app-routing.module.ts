@@ -25,7 +25,7 @@ import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administra
 import {FormularioInfoEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
 import {OfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 //postulante
-import {PostularOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-postulante/postular-oferta-laboral/postular-oferta-laboral.component';
+import {PostularOfertaLaboralComponent} from 'src/app/pages/ofertas-postululadas/ofertas-laborales.component';
 import {FormEditarTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
 import {FormAddTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
 import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
