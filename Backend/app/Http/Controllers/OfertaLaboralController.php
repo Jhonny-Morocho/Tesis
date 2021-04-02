@@ -33,19 +33,24 @@ class OfertaLaboralController extends Controller
             //creamos un objeto de tipo ofertaLaborales para enviar los datos
             $ObjOfertasLaborales=null;
             try {
-                // $ObjOfertasLaborales=new OfertasLaborales();
-                // $ObjOfertasLaborales->fk_empleador=$ObjEmpleador->id;
-                // $ObjOfertasLaborales->puesto=$datos["puesto"];
-                // $ObjOfertasLaborales->descripcion=$datos["descripcion"];
-                // $ObjOfertasLaborales->lugar=$datos["lugar"];
-                // $ObjOfertasLaborales->obervaciones=$datos["obervaciones"];
-                // $ObjOfertasLaborales->requisitos=$datos["requisitos"];
-                // $ObjOfertasLaborales->estado=$datos["estado"];
-                // $ObjOfertasLaborales->external_of="Of".Utilidades\UUID::v4();
-                // $ObjOfertasLaborales->save();
-                die(json_encode( $request->json()->all()));
-                $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($request,$ObjUsuario);
-                return response()->json(["mensaje"=>"Operacion Exitosa",
+                $ObjOfertasLaborales=new OfertasLaborales();
+                $ObjOfertasLaborales->fk_empleador=$ObjEmpleador->id;
+                $ObjOfertasLaborales->puesto=$datos["puesto"];
+                $ObjOfertasLaborales->descripcion=$datos["descripcion"];
+                $ObjOfertasLaborales->lugar=$datos["lugar"];
+                $ObjOfertasLaborales->obervaciones=$datos["obervaciones"];
+                $ObjOfertasLaborales->requisitos=$datos["requisitos"];
+                $ObjOfertasLaborales->estado=$datos["estado"];
+                $ObjOfertasLaborales->external_of="Of".Utilidades\UUID::v4();
+                $ObjOfertasLaborales->save();
+                $datosPlantillaCorreo=array(
+                    "nombreOfertaLaboral"=>$datos["puesto"],
+                    "nombreEmpresa"=>$ObjEmpleador->razon_empresa,
+                    "correoUsuarioEmpleador"=>$ObjUsuario->correo
+                );
+              
+                $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($datosPlantillaCorreo,$ObjUsuario);
+                return response()->json(["mensaje"=>"Registro guardado",
                                             "Siglas"=>"OE",
                                             "estadoCorreoEnviado"=>$arrayEncargado,
                                             "Objeto"=>$ObjOfertasLaborales,200,]);
@@ -183,16 +188,16 @@ class OfertaLaboralController extends Controller
                             <div class="card my-5">
                             <div class="card-body">
                                 <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
+                                <h4 class="fw-bolder text-center">Publicación de oferta laboral</h4>
                                 <br>
                                 <hr>
                                 <div class="alert alert-primary">
-                                    Se ha registrado la oferta laboral 
+                                    Se ha registrado la oferta laboral: 
                                     '.$nombreOfertaLaboral.'
                                     <hr>
-                                    Empresa : '.$Empresa.'
+                                    Pertenece a la Empresa : '.$Empresa.'
                                     <hr>
-                                    Correo del Empleador: '.$correoEmpleador.'
+                                    Correo del usuario Empleador: '.$correoEmpleador.'
                             </div>
                             </div>
                             </div>
@@ -212,17 +217,20 @@ class OfertaLaboralController extends Controller
         ->where("usuario.tipoUsuario",5)
         ->get();
         $arrayEncargado=null;
+        $plantillaCorreo=null;
+        $enviarCorreoBolean=null;
         //recorrer todos los usuario que sean encargado
         foreach ($usuarioEncargado as $key => $value) {
             //tengo q redacatra el menaje a la secretaria
-            $plantillaCorreo=$this->templateCorreoNotificarEncargadoRegistro(
-                                    $datos["nom_representante_legal"],
-                                    $datos["razon_empresa"],
-                                    $ObjUsuario->correo
-                                );
+            $plantillaCorreo=$this
+                            ->templateCorreoNotificarEncargadoRegistro(
+                            $datos["nombreOfertaLaboral"],
+                            $datos["nombreEmpresa"],
+                            $datos["correoUsuarioEmpleador"],
+                            );
             $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
                                                 $value['correo'],
-                                                $this->de,"Nuevo empleador registrado");
+                                                $this->de,"Nueva oferta laboral registrada");
 
             $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
                                         "apellido"=>$value['apellido'],
@@ -230,21 +238,19 @@ class OfertaLaboralController extends Controller
                                         "correo"=>$value['correo'],
                                         );
             $texto="[".date("Y-m-d H:i:s")."]"
-            ." Registro Formulario Empleador:: Estado de correo enviado al empleador : "
+            ." Registrar oferta laboral :: Estado del correo enviado al empleador : "
             .$enviarCorreoBolean
-            ."::: Correo del encargado  es: ".$value['correo']
-            ." Correo del empleador es :"
+            ."::: El Correo del encargado  es: ".$value['correo']
+            ."::: El Correo del empleador es :"
             .$ObjUsuario->correo." ]";
             fwrite($handle, $texto);
             fwrite($handle, "\r\n\n\n\n");
             fclose($handle);
         }
-
         return $arrayEncargado;
     }
     private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
         try {
-   
             $mail=new PHPMailer();
             $mail->CharSet='UTF-8';
             $mail->isMail();

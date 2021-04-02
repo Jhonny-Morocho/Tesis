@@ -1,0 +1,12 @@
+[2021-04-01 18:06:54] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-04-01 18:07:21] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-04-01 18:08:19] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
