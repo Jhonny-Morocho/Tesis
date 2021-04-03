@@ -16,7 +16,8 @@ export class FormAddCursoComponent implements OnInit {
   paises:PaisesModel[]=[];
   tipoCursoCapcitacion:string[]=["Curso","Capacitacion"];
 
-  constructor(private servicioCursoCapacitacion:CursosCapacitacionesService,private servicioPaises:PaisesService) { }
+  constructor(private servicioCursoCapacitacion:CursosCapacitacionesService,
+              private servicioPaises:PaisesService) { }
 
   ngOnInit() {
     this.instanciaCursosCapacitaciones=new CursosCapacitacionesModel();
@@ -88,8 +89,6 @@ export class FormAddCursoComponent implements OnInit {
         console.error(erroSubirFormData);
     });
     //2.guardamos la data
-    
-
   }
   cargarPaises(){
     //listamos los titulos academicos

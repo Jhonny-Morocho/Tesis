@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 import { NgForm } from '@angular/forms';
 declare var JQuery:any;
 declare var $:any;
@@ -11,8 +12,9 @@ declare var $:any;
   templateUrl: './edit-oferta.component.html'
 })
 export class EditOfertaComponent implements OnInit {
+  estadoRevisionform:boolean=false;
   instanciaOfertaLaboral:OfertaLaboralModel;
-  constructor(private _activateRoute:ActivatedRoute,
+  constructor(private _activateRoute:ActivatedRoute,private router:Router,
     private servicioOfertaLaboral:OfertasLaboralesService) { }
 
   ngOnInit() {
@@ -21,7 +23,45 @@ export class EditOfertaComponent implements OnInit {
 
 
   }
-  
+
+  textAreaEditor(estado:boolean){
+    if(estado==true){
+      $(function() {
+        //Add text editor
+        $('#compose-textarea').summernote({
+            placeholder: 'Ingresa los items de requisitos',
+            tabsize: 2,
+            toolbar: [
+                ['style', [false]],
+                ['font', [false, false, false]],
+                ['color', [false]],
+                ['para', ['ul', false, false]],
+                ['table', [false]],
+                ['insert', [false, false, false]],
+                ['view', [false, false, false]]
+            ]
+        })
+       })
+    }else{
+      $(function() {
+        //Add text editor
+        $('#compose-textarea').summernote({
+            placeholder: 'Ingresa los items de requisitos',
+            tabsize: 2,
+            toolbar: [
+                ['style', [false]],
+                ['font', [false, false, false]],
+                ['color', [false]],
+                ['para', ['ul', false, false]],
+                ['table', [false]],
+                ['insert', [false, false, false]],
+                ['view', [false, false, false]]
+            ]
+        })
+        $('#compose-textarea').summernote('disable');
+       })
+    }
+  }
   cargarDatosOfertaLaboral(){
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     //obtener los parametros de la ulr para tener los datos del empleador
@@ -39,22 +79,16 @@ export class EditOfertaComponent implements OnInit {
               this.instanciaOfertaLaboral.lugar=suHacesBien["mensaje"]['lugar'];
               this.instanciaOfertaLaboral.requisitos=suHacesBien["mensaje"]['requisitos'];
               this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
-              $(function() {
-                //Add text editor
-                $('#compose-textarea').summernote({
-                    placeholder: 'Ingresa los items de requisitos',
-                    tabsize: 2,
-                    toolbar: [
-                        ['style', [false]],
-                        ['font', [false, false, false]],
-                        ['color', [false]],
-                        ['para', ['ul', false, false]],
-                        ['table', [false]],
-                        ['insert', [false, false, false]],
-                        ['view', [false, false, false]]
-                    ]
-                })
-              })
+              this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
+              this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
+               // si ahun no esta validada la oferta laboral entonces se pone en disable
+               if(this.instanciaOfertaLaboral.obervaciones.length>0 &&  this.instanciaOfertaLaboral.estado==1){
+                this.estadoRevisionform=true;
+                this.textAreaEditor(this.estadoRevisionform);
+                }else{
+                  this.textAreaEditor(this.estadoRevisionform);
+                }
+              
             }else{
               console.log("no encontrado");
               //this.encontrado=false;
@@ -78,14 +112,15 @@ export class EditOfertaComponent implements OnInit {
     });
     Swal.showLoading();
 
-
+    this.instanciaOfertaLaboral.obervaciones="";
     this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
     this.servicioOfertaLaboral.actulizarDatosOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+          Swal('Registrado', 'Información Registrada con Éxito', 'success');
+          this.router.navigateByUrl("/panel-empleador/oferta-laboral");
         }else{
           Swal('Ups, No se puede realizar el registro'+siHacesBien['mensaje'], 'info')
         }

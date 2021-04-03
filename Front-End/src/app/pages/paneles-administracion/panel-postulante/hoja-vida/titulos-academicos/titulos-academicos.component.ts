@@ -16,8 +16,10 @@ export class TitulosAcademicosComponent implements OnInit {
   rutaArchivoPdf:string="";
   instanciaTituloAcademico:TituloModel;
   //para imprimir la tabla
+  dominio=environment;
   tituloAcademico:TituloModel[]=[];
   //frame 
+  ubicacionArchivo:string="";
    frameLimpio:any;
   //data table
   dtOptions: DataTables.Settings = {};
@@ -36,13 +38,9 @@ export class TitulosAcademicosComponent implements OnInit {
   }
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
-    let frameHtml ='<iframe width="977" height="733" src="'+
-    environment.dominio+"/Archivos/Titulos/"+
-    urlEvidencias+
-    '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    $('#framePdf').html(frameHtml)
+    this.ubicacionArchivo =environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
+    console.log(this.ubicacionArchivo);
     $('#mostrarPDF').modal('show');
-    return this.frameLimpio=this.sanitizer.bypassSecurityTrustHtml(frameHtml);
   }
   cargarTabla(){
     //listamos los titulos academicos

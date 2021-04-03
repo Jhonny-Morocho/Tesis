@@ -25,7 +25,7 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && (ofertaLaboral.estado).toString()=='1'">
-                            <span class=" badge badge-danger ">No validado</span>
+                            <span class=" badge badge-danger " title="TIempo maximo de espera 72 horas">No validado <i class="far fa-clock"></i></span>
                         </td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='2' ">
                             <span class="badge badge-success ">Validado</span>

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.models';
-import { PaisesModel } from 'src/app/models/paises.models';
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
 import {PaisesService} from 'src/app/servicios/paises.service';
 import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment.prod';
-import { DomSanitizer } from '@angular/platform-browser';
+import { PaisesModel } from 'src/app/models/paises.models';
 declare var $:any;
 @Component({
   selector: 'app-cursos-capacitaciones',
@@ -16,6 +15,8 @@ export class CursosCapacitacionesComponent implements OnInit {
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
   //frame 
   frameLimpio:any;
+  ubicacionArchivo:String="";
+  dominio=environment;
   //tabla data que consumo del servicio
   paises:PaisesModel[]=[];
   rutaArchivoPdf:string="";
@@ -24,7 +25,6 @@ export class CursosCapacitacionesComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,
-              private sanitizer: DomSanitizer,
               private servicioPaises:PaisesService) { 
     
   }
@@ -66,15 +66,11 @@ export class CursosCapacitacionesComponent implements OnInit {
     return nombrePais;
    }
    mostrarPdf(urlEvidencias){
-      console.log(urlEvidencias);
-      let frameHtml ='<iframe width="977" height="733" src="'+
-      environment.dominio+"/Archivos/Cursos/"+
-      urlEvidencias+
-      '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-      $('#framePdf').html(frameHtml)
-      $('#mostrarPDF').modal('show');
-      return this.frameLimpio=this.sanitizer.bypassSecurityTrustHtml(frameHtml);
-    }
+    console.log(urlEvidencias);
+    this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
+    console.log(this.ubicacionArchivo);
+    $('#mostrarPDF').modal('show');
+  }
    cargarPaises(){
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(

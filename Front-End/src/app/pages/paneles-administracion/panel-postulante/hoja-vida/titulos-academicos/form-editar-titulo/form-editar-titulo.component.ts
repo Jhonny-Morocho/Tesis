@@ -4,7 +4,7 @@ import {TituloService} from 'src/app/servicios/titulos.service';
 import {TituloModel} from 'src/app/models/titulo.models';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
-import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
+
 
 @Component({
   selector: 'app-form-editar-titulo',
