@@ -1,7 +1,0 @@
-[2021-04-03 20:48:12] Update Oferta laboral validacion Expirado :::
-                ::Correo del empleador :empleador1unl@gmail.com
-                ::Se actualizo el registro de oferta laboral : true
-                :: ↑↑ Estado de envio de correo al empleador: true
-
-
-

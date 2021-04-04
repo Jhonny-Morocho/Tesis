@@ -2,7 +2,7 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitEditarOfertaLaboral(fValidarOfertaLaboral)" #fValidarOfertaLaboral="ngForm" enctype="multipart/form-data">
-                <h3>Publicar Oferta Laboral</h3>
+                <h6>Publicar Oferta Laboral</h6>
 
                 <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/publicar-oferta-gestor']">
@@ -16,7 +16,7 @@
                     <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required disabled>
                 </div>
                 <div class="col-md-12">
-                    <label for="inputDescripcion" class="form-label">Descripcion </label><br>
+                    <label for="inputDescripcion" class="form-label">Descripción </label><br>
                     <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
                     <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required disabled></textarea>
                 </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class=" col-md-6 ">
                     <div class="form-group ">
-                        <label for="exampleFormControlTextarea1 ">Estado de publicacion de oferta laboral</label><br>
+                        <label for="exampleFormControlTextarea1 ">Estado de publicación de oferta laboral</label><br>
                         <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==false " (click)="estadoAprobado(3) ">
                           <i class="fas fa-times-circle "></i>No activo
                       </button>

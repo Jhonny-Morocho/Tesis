@@ -25,18 +25,19 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     //data table
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private servicioOferta:OfertasLaboralesService,
+    constructor(private servicioOferta:OfertasLaboralesService,
     private servicioEmpleador:SerivicioEmpleadorService,
     private ruta_:Router) { }
 
-  ngOnInit() {
-    this.instanciaOfertaVer=new OfertaLaboralModel();
-    this.intanciaOfertaLaboral=new OfertaLaboralModel();
-    this.instanciaEmpleadorModelVer=new EmpleadorModel();
-    this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
-    this.cargarTabla();
-  }
-  cargarTabla(){
+    ngOnInit() {
+      this.instanciaOfertaVer=new OfertaLaboralModel();
+      this.intanciaOfertaLaboral=new OfertaLaboralModel();
+      this.instanciaEmpleadorModelVer=new EmpleadorModel();
+      this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
+      this.configurarParametrosDataTable();
+      this.cargarTabla();
+    }
+   cargarTabla(){
     //listamos los titulos academicos
     this.servicioOferta.listarTodasLasOfertas().subscribe(
       siHacesBien=>{
@@ -130,5 +131,35 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
       }
     }
     //si el tipo de usuario es un gestor entonces el puede solo ver los validados
- 
-  }
+  
+    configurarParametrosDataTable(){
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        responsive: true,
+          /* below is the relevant part, e.g. translated to spanish */ 
+        language: {
+          processing: "Procesando...",
+          search: "Buscar:",
+          lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+          info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+          infoEmpty: "Mostrando ningún elemento.",
+          infoFiltered: "(filtrado _MAX_ elementos total)",
+          infoPostFix: "",
+          loadingRecords: "Cargando registros...",
+          zeroRecords: "No se encontraron registros",
+          emptyTable: "No hay datos disponibles en la tabla",
+          paginate: {
+            first: "Primero",
+            previous: "Anterior",
+            next: "Siguiente",
+            last: "Último"
+          },
+          aria: {
+            sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+            sortDescending: ": Activar para ordenar la tabla en orden descendente"
+          }
+        }
+      };
+    }
+}

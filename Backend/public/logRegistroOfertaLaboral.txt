@@ -1,17 +1,8 @@
-[2021-04-04 00:08:53] Estado de validación de oferta laboral : 1
-            :: Estado del correo enviado al empleador : false::: El Correo enviado al empleador es : empleador1unl@gmail.com]
+[2021-04-04 02:05:28] Oferta lavoral validad por el encargado :: Estado del correo enviado al gestor : false::: El Correo del gestor  es: gestorsistemas.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
 
 
 
-[2021-04-04 00:21:48] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
-
-
-
-[2021-04-04 00:25:41] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
-
-
-
-[2021-04-04 00:25:47] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+[2021-04-04 02:06:24] Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : false::: El Correo del gestor  es: gestorsistemas.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
 
 
 

@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use App\Models\Estudiante;
 use App\Models\Empleador;
 use App\Models\OfertasLaborales;
-use App\Models\Usuario;
+use App\Models\Docente;
 use Carbon\Carbon;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -22,6 +22,7 @@ class NotificarUsuarios extends Command
     private $tiempoValidarFormEstudiante=48;// horas
     private $tiempoValidarFormEmpleador=72;// horas
     private $tiempoValidarOfertaLaboral=72;// horas
+    private $tiempoDePublicacionOfertaLaboralGestor=24;
     private $de='soporte@proeditsclub.com';
     protected $signature = 'command:notificarUsuarios';
 
@@ -55,8 +56,10 @@ class NotificarUsuarios extends Command
      $this->notificarEstudiante();
      $this->notificarEmpleador();
      $this->notificarOfertaLaboralExpirada();
-        
+     $this->notificarOfertaLaboralExpiradaDePublicarGestor();
+    
     }
+
     private function notificarOfertaLaboralExpirada(){
         $texto="";
         $handle = fopen("log.txt", "a");
@@ -223,26 +226,123 @@ class NotificarUsuarios extends Command
             return $emailMensaje;      
         }
 
-        private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
-            try {
-                $mail=new PHPMailer();
-                $mail->CharSet='UTF-8';
-                $mail->isMail();
-                $mail->setFrom($de,'Proceso de Inserccón Laboral');
-                $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
-                $mail->Subject=($tituloCorreo);
-                $mail->addAddress($para);
-                $mail->msgHTML($emailMensaje);
-                $envio=$mail->Send();
-                if ($envio==true) {
-                return $respuestaMensaje="true";
-                }else{
-                    return $respuestaMensaje="false";
-                }
-            } catch (\Throwable $th) {
-            return  $respuestaMensaje=$th;
+    private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
+        try {
+            $mail=new PHPMailer();
+            $mail->CharSet='UTF-8';
+            $mail->isMail();
+            $mail->setFrom($de,'Proceso de Inserccón Laboral');
+            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
+            $mail->Subject=($tituloCorreo);
+            $mail->addAddress($para);
+            $mail->msgHTML($emailMensaje);
+            $envio=$mail->Send();
+            if ($envio==true) {
+            return $respuestaMensaje="true";
+            }else{
+                return $respuestaMensaje="false";
             }
+        } catch (\Throwable $th) {
+        return  $respuestaMensaje=$th;
         }
+    }
+    private function notificarOfertaLaboralExpiradaDePublicarGestor(){
+        //enviar correo del registro el encargado
+        $texto="";
+        $handle = fopen("log.txt", "a");
+        try {
+            //selecinar todas la ofertas laborales que hayan expirado su tiemppo de publicacion por parte del gestor
+            $ObjOfertaLaboral=OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
+            ->join("usuario","usuario.id","empleador.fk_usuario")
+            ->select("usuario.correo",
+                    "empleador.nom_representante_legal",
+                    "empleador.razon_empresa",
+                    "oferta_laboral.*"
+                    )
+            ->where("oferta_laboral.estado","=",2)
+            ->whereDate('oferta_laboral.updated_at',"<=",Carbon::now()
+            ->subHour($this->tiempoDePublicacionOfertaLaboralGestor))
+            ->get();
+
+            //enviamo la notificacion al gestor 
+            $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
+            ->select("docente.*","usuario.correo")
+            ->where("docente.estado",1)
+            ->where("usuario.tipoUsuario",4)
+            ->first();
+            $TituloCorreo="Publicacíon de oferta laboral pendientes ";
+            //recorrer todos los usuario que sean gestor
+       
+            foreach ($ObjOfertaLaboral as $key => $value) {
+                //tengo q redacatra el menaje aL ENCAGRADO
+                $plantillaCorreo=$this
+                                ->templateCorreoNotificarGestorOfertaValidadaExpirada(
+                                $usuarioGestor->correo,
+                                $TituloCorreo,
+                                $value['puesto']
+                                );
+      
+                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
+                                                        $usuarioGestor->correo,
+                                                    $this->de,
+                                                    $TituloCorreo);
+                //ACTUALIZO EL ESTADO PARA QUE SE VUELVA A REENVIAR EL ESTADO DE LA OFERTA
+                $ObjOfertaLaboralUpdate=OfertasLaborales::where("external_of","=", $value['external_of'])
+                ->update(array('estado'=>2));
+                //========================================
+                $texto="[".date("Y-m-d H:i:s")."]"
+                ." Oferta laboral pendiente de publicar expirada por parte del gestor
+                :: Estado del correo enviado al gestor : "
+                .$enviarCorreoBolean
+                ."::: El Correo del gestor  es: ".$usuarioGestor->correo."
+                :::Estado de la oferta actualizado : ".($ObjOfertaLaboralUpdate ? 'true' : 'false')."
+                ::: El nombre de la oferta laboral es: ".$value["puesto"]."
+                ::: El Correo del empleador es :"
+                .$value['correo']." ]";
+                fwrite($handle, $texto);
+                fwrite($handle, "\r\n\n\n\n");
+                fclose($handle);
+            }
+      
+        } catch (\Throwable $th) {
+            $texto="[".date("Y-m-d H:i:s")."]"
+            ." Oferta laboral pendiente de publicar expirada por parte del gestor ERROR :: : "
+            .$th." ]";
+            fwrite($handle, $texto);
+            fwrite($handle, "\r\n\n\n\n");
+            fclose($handle);
+           die("error");
+        }
+    }
+
+    private function templateCorreoNotificarGestorOfertaValidadaExpirada($correoUsuarioGestor,$tituloMensaje,$nombreOfertaLaboral){
+                $emailMensaje='<html>
+                                <head>
+                                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                                <style>
+                                    /* Add custom classes and styles that you want inlined here */
+                                </style>
+                                </head>
+                                <body class="bg-light">
+                                <div class="container">
+                                    <div class="card my-5">
+                                    <div class="card-body">
+                                        <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                        <h4 class="fw-bolder text-center">' .$tituloMensaje. '</h4>
+                                        <br>
+                                        <hr>
+                                            Estimado/a usuario :'.$correoUsuarioGestor.' 
+
+                                            <hr>
+                                            Se le informa que tiene pendiente la aprobación de publicar la oferta laboral : '.$nombreOfertaLaboral.'
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </body>
+                            </html>';
+        return $emailMensaje;      
+    }
 
 }
 

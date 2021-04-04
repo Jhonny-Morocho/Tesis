@@ -59,26 +59,18 @@
                             <li class="nav-item ">
                                 <a routerLinkActive="active " [routerLink]="[ '/panel-admin/tareas'] " class="nav-link ">
                                     <i class="far fa-circle nav-icon "></i>
-                                    <p>Validar Estudiantes</p>
+                                    <p>Validar Postulantes</p>
                                 </a>
                             </li>
                         </div>
                         <!-- ======================= GESTOR ============== -->
                         <div *ngIf="tipoUsuarioGestor==true ">
-                            <a href="# " class="nav-link active ">
-                                <i class="fas fa-tasks mr-1 "></i>
-                                <p>
-                                    Tareas del Gestor
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview " style="display: none; ">
-                                <li class="nav-item ">
-                                    <a routerLinkActive="active " [routerLink]="[ '/panel-admin/publicar-oferta-gestor'] " class="nav-link ">
-                                        <i class="far fa-circle nav-icon "></i>
-                                        <p>Aprobar y publicar ofertas laborales</p>
-                                    </a>
-                                </li>
-                            </ul>
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/publicar-oferta-gestor'] " class="nav-link ">
+                                    <i class="far fa-circle nav-icon "></i>
+                                    <p>Publicar ofertas laborales</p>
+                                </a>
+                            </li>
                         </div>
                     </li>
                 </ul>
