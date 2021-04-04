@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
     <div class="card">
-        <article class="card-body animated animate__animated animate__slideInRight">
+        <article class="card-body animated animate__animated fadeIn">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
@@ -25,7 +25,7 @@
                         <td>{{ ofertaLaboral.correo}}</td>
 
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && estadoConversion(ofertaLaboral.estado)==false  ">
-                            <span class=" badge badge-danger ">No validado</span>
+                            <span class=" badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>
                         </td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==true">
                             <span class="badge badge-success ">Validado</span>
@@ -33,7 +33,7 @@
                         <td *ngIf="ofertaLaboral.estado.toLocaleString()=='3'">
                             <span class="badge badge-primary ">Publicado</span>
                         </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false ">
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false">
                             <span class="badge badge-warning">Revisado</span>
                         </td>
                         <td>{{ ofertaLaboral.obervaciones}}</td>

@@ -49,7 +49,7 @@ export class PanelAdminComponent implements OnInit {
   salirSession(){
     // ocupo el servicio
     Swal({
-      title: 'Estas seguro ?',
+      title: '¿Está seguro ?',
       text: "La sesión se cerrara ",
       type: 'info',
       showCancelButton: true,

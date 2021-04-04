@@ -50,7 +50,7 @@ export class NabPanelEmpleador implements OnInit {
   salirSession(){
     // ocupo el servicio
     Swal({
-      title: 'Esta seguro?',
+      title: '¿Está seguro?',
       text: "Desea cerrar su sesión",
       type: 'warning',
       showCancelButton: true,

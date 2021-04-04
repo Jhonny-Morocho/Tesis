@@ -182,7 +182,7 @@ class UsuarioController extends Controller
                     return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
                 }
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"Error",$th,400]);
+                return response()->json(["mensaje"=>"ERROR","Siglas"=>"Error",$th,400]);
             }
 
         }else{

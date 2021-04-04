@@ -12,6 +12,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -49,7 +50,7 @@ class OfertaLaboralController extends Controller
                     "correoUsuarioEmpleador"=>$ObjUsuario->correo
                 );
               
-                $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($datosPlantillaCorreo,$ObjUsuario);
+                $arrayEncargado=$this->enviarCorreoEncargadoOfertaRegistrado($datosPlantillaCorreo,$ObjUsuario);
                 return response()->json(["mensaje"=>"Registro guardado",
                                             "Siglas"=>"OE",
                                             "estadoCorreoEnviado"=>$arrayEncargado,
@@ -65,6 +66,7 @@ class OfertaLaboralController extends Controller
     // Listar todos las ofertas laborales del empleador 
     public function listarOfertasLaboralesExternal_us( $external_id){
         //obtener todos los usuarios que sean postulante
+        $ObjOfertaLaboral=null;
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
@@ -72,12 +74,18 @@ class OfertaLaboralController extends Controller
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
             //4 estado //0== eliminado,1==activo,2==aprobado,3==rechazado
             $ObjOfertaLaboral=OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
+            ->select("empleador.razon_empresa",
+                        "empleador.nom_representante_legal",
+                        "empleador.razon_empresa",
+                        "empleador.tipo_empresa",
+                        "oferta_laboral.*",
+                    )
             ->where("oferta_laboral.fk_empleador","=",$ObjEmpleador->id)
             ->where("oferta_laboral.estado","!=","0")
             ->orderBy('oferta_laboral.id', 'DESC')->get();
             return response()->json(["mensaje"=>$ObjOfertaLaboral,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"No se puede listar la oferta","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=> $ObjOfertaLaboral,"Siglas"=>"ONE","error"=>$th,400]);
         }
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
@@ -86,6 +94,12 @@ class OfertaLaboralController extends Controller
         try {
             $ObjOfertasLaborales=OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
             ->join("usuario","usuario.id","=","empleador.fk_usuario")
+            ->select("empleador.razon_empresa",
+                        "empleador.nom_representante_legal",
+                        "empleador.razon_empresa",
+                        "empleador.tipo_empresa",
+                        "oferta_laboral.*",
+                    )
             ->where("oferta_laboral.estado",">=",1)
             ->where("oferta_laboral.estado","<=",3)
             ->get();
@@ -119,20 +133,43 @@ class OfertaLaboralController extends Controller
     }
     public function actulizarOfertaLaboral(Request $request,$external_id){
         if($request->json()){
-
-            try {           
-                $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)->update(
-                    array(
-                        'puesto'=>$request['puesto'], 
-                        'descripcion'=>$request['descripcion'],
-                        'estado'=>$request['estado'],
-                        'lugar'=>$request['lugar'],
-                        'obervaciones'=>$request['obervaciones'],
-                        'requisitos'=>$request['requisitos']
-                    ));
-                
-                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjOfertaLaboral,"resques"=>$request->json()->all(),"respuesta"=>$ObjOfertaLaboral,"Siglas"=>"OE",200]);
-                //respuesta exitoso o no en la inserrccion
+            $ObjOfertaLaboral=null;
+            $estadoCorreoEnviado=null;
+            try {
+                $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)
+                ->update(
+                        array(
+                                'puesto'=>$request['puesto'], 
+                                'descripcion'=>$request['descripcion'],
+                                'estado'=>$request['estado'],
+                                'lugar'=>$request['lugar'],
+                                'obervaciones'=>$request['obervaciones'],
+                                'requisitos'=>$request['requisitos']
+                            ));
+                //oferta laboral validada con exito se le informa al gestor
+                if($request['estado']==2){
+                   $estadoCorreoEnviado= $this->enviarCorreoEncargadoEstadoOferta($external_id,$request['estado']);
+                }
+                //oferta revisada pero no validada tiene q corregir oferta// pór parte del encargado
+                if($request['estado']==1 && ($request['obervaciones'])!=""){
+                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoEstadoOferta($external_id,$request['estado']);
+                }
+                  //reenviar la oferta laboral para que la revisen el encargado de nuevo
+                  if($request['estado']==1 && ($request['obervaciones'])==""){
+                    $usuarioEmpleador=$this->buscarUsuarioEmpleador($external_id);
+                    $datos=array(
+                        "nombreOfertaLaboral"=>$request['puesto'],
+                        "nombreEmpresa"=>$usuarioEmpleador->razon_empresa,
+                        "correoUsuarioEmpleador"=>$usuarioEmpleador->correo
+                    );
+                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoOfertaRegistrado($datos,$usuarioEmpleador);
+                }
+                return response()->json(["mensaje"=>"Operacion Exitosa",
+                                        "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
+                                        "resquest"=>$request->json()->all(),
+                                        "estadoCorreoEnviado"=>$estadoCorreoEnviado,
+                                        "respuesta"=>$ObjOfertaLaboral,
+                                        "Siglas"=>"OE",200]);
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);
             }
@@ -174,7 +211,7 @@ class OfertaLaboralController extends Controller
      
     }
 
-    private function templateCorreoNotificarEncargadoRegistro($nombreOfertaLaboral,$Empresa,$correoEmpleador){
+    private function templateCorreoNotificarEncargadoRegistroNuevo($nombreOfertaLaboral,$Empresa,$correoEmpleador){
 
         $emailMensaje='<html>
                         <head>
@@ -206,11 +243,20 @@ class OfertaLaboralController extends Controller
                     </html>';
         return $emailMensaje;      
     }
-    private function enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario){
+
+    private function buscarUsuarioEmpleador($external_oferta){
+       return  Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
+            ->join("oferta_laboral","oferta_laboral.fk_empleador","empleador.id")
+            ->where("empleador.estado",1)
+            ->where("oferta_laboral.external_of",$external_oferta)
+            ->where("usuario.tipoUsuario",6)
+            ->first();
+    }
+    private function enviarCorreoEncargadoOfertaRegistrado($datos,$ObjUsuario){
         //enviar correo del registro el encargado
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
-        //enviamos registro de postulante a la secretaria a la secretaria
+        //enviamos registro de postulante al encargado a la secretaria
         $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
         ->select("docente.*","usuario.*")
         ->where("docente.estado",1)
@@ -223,7 +269,7 @@ class OfertaLaboralController extends Controller
         foreach ($usuarioEncargado as $key => $value) {
             //tengo q redacatra el menaje a la secretaria
             $plantillaCorreo=$this
-                            ->templateCorreoNotificarEncargadoRegistro(
+                            ->templateCorreoNotificarEncargadoRegistroNuevo(
                             $datos["nombreOfertaLaboral"],
                             $datos["nombreEmpresa"],
                             $datos["correoUsuarioEmpleador"],
@@ -249,6 +295,53 @@ class OfertaLaboralController extends Controller
         }
         return $arrayEncargado;
     }
+    private function enviarCorreoEncargadoEstadoOferta($external_oferta,$estadoValidacion){
+        //enviar correo del registro el empleador
+        $texto="";
+        $handle = fopen("logRegistroOfertaLaboral.txt", "a");
+        $arrayEmpleador=null;
+        try {
+            //enviamos el estado de la oferta al empleador
+            $usuarioEmpleador=$this->buscarUsuarioEmpleador($external_oferta);
+            $tituloMensaje="Estado de validación de la oferta laboral ".$usuarioEmpleador->puesto;
+            $plantillaCorreo=$this->templateCorreoValidacionEstado(
+                            $usuarioEmpleador->nom_representante_legal,
+                            $usuarioEmpleador->razon_empresa,
+                            $tituloMensaje,
+                            $usuarioEmpleador->puesto,
+                            $estadoValidacion
+                            );
+
+            $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
+                                                    $usuarioEmpleador['correo'],
+                                                    $this->de,
+                                                    $tituloMensaje
+                                                );
+            $texto="[".date("Y-m-d H:i:s")."]"
+            ." Estado de validación de oferta laboral : ".$estadoValidacion."
+            :: Estado del correo enviado al empleador : "
+            .$enviarCorreoBolean
+            ."::: El Correo enviado al empleador es : ".$usuarioEmpleador['correo']."]";
+            fwrite($handle, $texto);
+            fwrite($handle, "\r\n\n\n\n");
+            fclose($handle);
+            //recorrer todos los usuario que sean encargado
+            $arrayEmpleador=array("razon_empresa"=>$usuarioEmpleador['razon_empresa'],
+                                "nom_representante_legal"=>$usuarioEmpleador['nom_representante_legal'],
+                                "estadoEnvioCorreo"=>$enviarCorreoBolean,
+                                "correoEmpleador"=>$usuarioEmpleador['correo'],
+                                );
+            return $arrayEmpleador;
+            //code...
+        } catch (\Throwable $th) {
+            $texto="[".date("Y-m-d H:i:s")."]"
+            ." Estado de validación de oferta laboral : ".$th."]";
+            fwrite($handle, $th);
+            fwrite($handle, "\r\n\n\n\n");
+            fclose($handle);
+            return  $th;
+        }
+    }
     private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
         try {
             $mail=new PHPMailer();
@@ -269,4 +362,44 @@ class OfertaLaboralController extends Controller
         return  $respuestaMensaje=$th;
         }
     }
+    //templateCorreoValidacionNoExitosa($nombre,$apellido,$estado)
+    private function templateCorreoValidacionEstado($representante,$nombreEmpresa,
+                                                    $HtmlTitulo,$nombreOfertaLaboral,$estadoValidacion){
+        if($estadoValidacion==1){// si el estado es 1, siginifica que el postulante esta validado
+            $tipoAlert="alert-success";
+            $mensaje="ha salido validada exitosamente ";
+        }
+        if($estadoValidacion==0){// si el estado es 0, siginifica que el postulante no esta validado
+            $tipoAlert="alert-warning";
+            $mensaje="tiene algunas inconsistencias por favor revise su información y vuelva a intentar";
+        }
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
+                                <br>
+                                <hr>
+                                <div class="alert '.$tipoAlert.'">
+                                    Estimado/a: '.$representante."  Representante de le empresa: ".$nombreEmpresa. '
+                                    <hr>
+                                 Se le informa que su oferta laboral denominada : '.$nombreOfertaLaboral.' ,  '.$mensaje.'
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+        return $emailMensaje;      
+    }
+
 }

@@ -258,10 +258,12 @@ class EstudianteController extends Controller
                             <div class="card-body">
                                 <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
                                 <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
-                                <br>
                                 <hr>
                                 <div class="alert '.$tipoAlert.'">
-                                    Estimado/a '.$nombre." ".$apellido. ' Se le informa que : '.$mensaje.'
+                                    Estimado/a '.$nombre." 
+                                    ".$apellido. 
+                                    ' Se le informa que : '.$mensaje.'
+                                <div>
                             </div>
                             </div>
                             </div>
