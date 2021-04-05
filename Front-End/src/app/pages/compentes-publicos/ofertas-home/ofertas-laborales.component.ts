@@ -25,7 +25,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
-  ofertasLaborales=[];
+  ofertasLaborales:OfertaLaboralModel[];
 //arrayOfertasPostuladasEstudaite
   arrayofertasPostuladasEstudiante:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaVer:OfertaLaboralModel;
@@ -71,7 +71,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
 
    pintarRequisitos(i){
     $("#"+i).html(this.ofertasLaborales[i]['requisitos']);
-    console.log(this.ofertasLaborales[i]['requisitos']);
+    //console.log(this.ofertasLaborales[i]['requisitos']);
    }
    ngOnDestroy(): void {
 
@@ -83,55 +83,8 @@ export class PostularOfertaLaboralComponent implements OnInit {
         console.warn(error);
       }
     }
-    verOfertaModal(id:Number){
-      console.log("click");
-      //necesito converitr o typescrip me da error
-      var index=parseInt((id).toString(), 10); 
-      this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
-      this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
-      this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
-      this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
-      //this.instanciaOfertaVer.e=this.ofertasLaborales[index]['fk_empleador'];
-      this.instanciaOfertaVer.external_of=this.ofertasLaborales[index]['external_of'];
-      console.log( this.instanciaOfertaVer.descripcion);
-      //obtengo todos los usuarios 
-      this.servicioEmpleador.listarEmpleadores().subscribe(
-        siHaceBien=>{
-            console.log(siHaceBien);
 
-            siHaceBien.forEach(element => {
-              //comparo el fk_empleador con el id de usuario
-              if(element['id']== this.instanciaOfertaVer.fk_empleador){
-                console.log(element);
-                this.instanciaEmpleadorModelVer.fk_ciudad=element['fk_ciudad'];
-                this.instanciaEmpleadorModelVer.direccion=element['direccion'];
-                this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
-                this.instanciaEmpleadorModelVer.actividad_ruc=element['actividad_ruc'];
-                this.instanciaEmpleadorModelVer.tipo_empresa=element['tiposEmpresa'];
-                this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
-                this.instanciaEmpleadorModelVer.nom_representante_legal=element['nom_representante_legal'];
-              }
-    
-            });
-
-            console.log(this.instanciaEmpleadorModelVer);
-        },error=>{
-  
-          console.log(error);
-        });
-      
-      $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
-      console.log(this.instanciaOfertaVer.requisitos);
-      $('#exampleModal').modal('show');
    
-    }
-    cerrarModal(){
-      $('#exampleModal').modal('hide');
-    }
-    abrirModal(){
-      console.log("Xxx");
-      $('#exampleModal').modal('hide');
-    }
     //si esta en la tabla siginica que esta incrito
     //si es tru,entonces ya estoy postulando
     estadoPostulacion(idOferta:Number){
@@ -144,7 +97,11 @@ export class PostularOfertaLaboralComponent implements OnInit {
        });
       return encontrado;
     }
+    comprobarSiEstaRegistrado
     postular(externalOferta:string,nomOferta:string){
+      console.log(externalOferta);
+      console.log(nomOferta);
+      return;
       Swal({
         title: 'Are you sure?',
         text: "Postular a "+nomOferta,
