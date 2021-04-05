@@ -1,0 +1,50 @@
+<div class="container mt-5 mb-5">
+
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Ofertas Laborales</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let instanciaOfertaVer of ofertasLaborales;let i=index">
+                <td>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6 order-2 order-md-1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="post">
+                                            <div class="user-block">
+                                                <img class="img-circle img-bordered-sm" src="{{dominio.dominio}}/Archivos/images/empresa.png" alt="user image">
+                                                <span class="username">
+                                                              <a >{{ instanciaOfertaVer.razon_empresa }}</a>
+                                                          </span>
+                                            </div>
+                                            <br> Descripción de la oferta laboral:
+                                            <hr>
+                                            <p>
+                                                {{instanciaOfertaVer.descripcion}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class=" mt-2 mb-2">
+                                        <a href="#" class="btn btn-sm btn-primary" (click)="abrirModal()">Postular</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6 order-1 order-md-2">
+                                <h3 class="text-primary"> {{ instanciaOfertaVer.puesto }}</h3>
+                                <br>
+                                <h5 class="mt-1 text-muted">Requisitos</h5>
+                                <div id="{{ i }}">{{pintarRequisitos(i) }} </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

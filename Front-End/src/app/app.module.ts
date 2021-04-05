@@ -5,18 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './pages/compentes-publicos/home/home.component';
 
 // vamos a importar la clase de modulos para poder opcuar el ngmodel en los formulkario
 // modulos siempre van en los import
 import {FormsModule} from '@angular/forms';
 // para hacer soliuctudes http necestio el siguiente moduo
 import {HttpClientModule} from '@angular/common/http';
-import { LoginAdminComponent } from './pages/form-registro-login/form-logins/login-admin/login.component';
-import { RegistroPostulanteComponent } from './pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
-import { RegistroEmpleadorComponent } from './pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
+import { LoginAdminComponent } from './pages/compentes-publicos/form-registro-login/form-login/login.component';
+import { RegistroPostulanteComponent } from './pages/compentes-publicos/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
+import { RegistroEmpleadorComponent } from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //import { LoginEmpleadorComponent } from './pages/form-registro-login/form-logins/login-empleador/login-empleador.component';
-import { HeaderComponent } from './pages/header-home/header.component';
+import { HeaderComponent } from './pages/compentes-publicos/header-home/header.component';
 
 
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
@@ -49,7 +49,7 @@ import { TablaValidarOfertasLaboralesComponent } from './pages/paneles-administr
 import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
 import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
-import { PostularOfertaLaboralComponent } from './pages/ofertas-postululadas/ofertas-laborales.component';
+import { PostularOfertaLaboralComponent } from './pages/compentes-publicos/ofertas-home/ofertas-laborales.component';
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
 import { TemplateHojaVidaComponent } from './pages/paneles-administracion/template-hoja-vida/template-hoja-vida.component';
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';

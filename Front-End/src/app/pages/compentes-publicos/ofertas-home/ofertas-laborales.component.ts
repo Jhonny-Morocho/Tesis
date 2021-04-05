@@ -52,17 +52,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
 
 
   cargarTabla(){
-    //listamos toda las ofertas que el estudiante haya postulado//para poner el stado //estatica 
-    // this.servicioOfertaEstudiante.listarTodasOfertaEstudianteExternal_us().subscribe(
-    //   siHaceBien=>{
-    //     this.arrayofertasPostuladasEstudiante=siHaceBien;
-    //     console.log(this.arrayofertasPostuladasEstudiante);
-    //     console.log(siHaceBien);
-    //   },error=>{
-    //     console.log(error);
-    //   }
-    // );
-    //listamos las ofertas laborales
+
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         console.info("TODO BIEN");
@@ -206,7 +196,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
         language: {
           processing: "Procesando...",
           search: "Buscar:",
-          lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+          lengthMenu: "Mostrar _MENU_ elementos",
           info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
           infoEmpty: "Mostrando ningún elemento.",
           infoFiltered: "(filtrado _MAX_ elementos total)",

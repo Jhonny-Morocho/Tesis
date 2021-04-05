@@ -13,4 +13,5 @@ export class AppComponent {
   //   $('.title').slideToggle();
   //   $('#exampleModal').modal('show')
   // }
+  
 }
