@@ -8,6 +8,7 @@ use App\Models\Empleador;
 use App\Models\OfertasLaborales;
 use App\Models\Usuario;
 use App\Models\Docente;
+use App\Models\Estudiante;
 use PHPMailer\PHPMailer\PHPMailer;
 use Error;
 //permite traer la data del apirest
@@ -154,9 +155,13 @@ class OfertaLaboralController extends Controller
                     "nombreEmpresa"=>$usuarioEmpleador->razon_empresa,
                     "correoUsuarioEmpleador"=>$usuarioEmpleador->correo
                 );
+                //esta publicada la oferta laboral
+                if($request['estado']==3){
+                    $estadoCorreoEnviado=$this->notificarPublicacionOfertaLaboral($datos);
+
+                }
                 if($request['estado']==2){
                     $estadoCorreoEnviado= $this->enviarCorreoGestorOfertaValidada($datos,$usuarioEmpleador);
-                    die(json_encode($estadoCorreoEnviado));
          
                 }
                 //oferta revisada pero no validada tiene q corregir oferta// pór parte del encargado
@@ -481,6 +486,122 @@ class OfertaLaboralController extends Controller
                         </body>
                     </html>';
         return $emailMensaje;      
+    }
+    //se notifica la aprobacion de la oferta laboral por parte del getor a los estudiante y empleadores
+    //corresponde al proceso 4
+    private function notificarPublicacionOfertaLaboral($datosOFertaLaboral){
+        $texto="";
+        $handle = fopen("logRegistroOfertaLaboral.txt", "a");
+        $arrayCorreoEstudiantes=array();
+        try {
+            // notificar al empleador que su oferta laboral esta publicada en la plataforma
+            $tituloOfertaLaboralEmpleador="Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." estaa aprobada y publicada";
+             $templateCorreoEmpleador=$this->templateCorreoNotificarEmpleadorOfertaPublicada($datosOFertaLaboral['nombreEmpresa'],
+                                                                        $tituloOfertaLaboralEmpleador,
+                                                                        $datosOFertaLaboral['nombreOfertaLaboral']);
+    
+            $enviarCorreoBoleanEmpleador=$this->enviarCorreo($templateCorreoEmpleador,
+                                                                $datosOFertaLaboral['correoUsuarioEmpleador'],
+                                                            $this->de,$tituloOfertaLaboralEmpleador);
+    
+            // nnotificar de la nueva oferta laboral publicada a todos los postulante que esten inscrito en la pagina
+            $usuarioEstudiante=Estudiante::join("usuario","usuario.id","estudiante.fk_usuario")
+            ->select("usuario.correo","estudiante.*")
+            ->where("estudiante.estado",1)
+            ->get();
+            //crear log
+            $tituloOfertaLaboral="Nueva Oferta laboral publicada ";
+            foreach ($usuarioEstudiante as $key => $value) {
+                $plnatillaCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
+                                                                        $value['apellido'],
+                                                                        $datosOFertaLaboral['nombreOfertaLaboral'],
+                                                                        $tituloOfertaLaboral
+                                                                        );
+                $enviarCorreoBolean=$this->enviarCorreo($plnatillaCorreo,$value['correo'],$this->de,$tituloOfertaLaboral);
+                $arrayCorreoEstudiantes[$key]=array(
+                    "correoPostulante"=>$value['correo'],
+                    "estadoCorreoEnvidaoPostulante"=>$enviarCorreoBolean,
+                    "correoEnviadoEmpleador"=>$datosOFertaLaboral['correoUsuarioEmpleador'],
+                    "estadoCorreoEnviadoEmpleador"=>$enviarCorreoBoleanEmpleador
+                );
+    
+                $texto="[".date("Y-m-d H:i:s")."]"
+                            ." NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES : 
+                            ::Estado de enviar correo a los postulantes: ".$enviarCorreoBolean
+                            ."::: El Correo del postulante  es: ".$value['correo']." 
+                            ::: Estado de correo enviado al empleador : ".$enviarCorreoBoleanEmpleador." El correo del empleador es : ".$datosOFertaLaboral['correoUsuarioEmpleador']." ] ";
+                fwrite($handle, $texto);
+                fwrite($handle, "\r\n\n\n\n");
+                fclose($handle);
+            }
+            return $arrayCorreoEstudiantes;
+        } catch (\Throwable $th) {
+                $texto="[".date("Y-m-d H:i:s")."]"
+                ." NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES ERROR: ".$th."  ]";
+                fwrite($handle, $texto);
+                fwrite($handle, "\r\n\n\n\n");
+                fclose($handle);
+            return $arrayCorreoEstudiantes;
+        }
+    }
+
+    private function templatenotificarEmpleadorOfertaPublicada($nombrePostulante,$apellidoPostulante,$nombreOfertaLaboral,$tituloOfertaLaboral){
+
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">'.$tituloOfertaLaboral.' </h4>
+                                <hr>
+                                    Hola : 
+                                    '.$nombrePostulante.' '.$apellidoPostulante.', existe una nueva oferta lobaral publicada
+                                    <hr>
+                                    Nueva oferta laboral  demominada : <h4 class="fw-bolder">'.$nombreOfertaLaboral.'</h4>
+                                    <hr>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+        return $emailMensaje;      
+    }
+
+    private function templateCorreoNotificarEmpleadorOfertaPublicada($nombreEmpresa,$tituloMensaje,$nombreOfertaLaboral){
+
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">' .$tituloMensaje. '</h4>
+                                <br>
+                                <hr>
+                                    Estimado/a usuario :'.$nombreEmpresa.' 
+                                    <hr>
+                                    Se le informa que su oferta laboral : '.$nombreOfertaLaboral.' ha sido validad y publicada con éxito 
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+    return $emailMensaje;      
     }
 
 }

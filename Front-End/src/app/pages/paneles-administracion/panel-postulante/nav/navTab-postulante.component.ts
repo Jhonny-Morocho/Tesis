@@ -49,8 +49,8 @@ export class PanelPostulanteComponent implements OnInit {
   salirSession(){
     // ocupo el servicio
     Swal({
-      title: 'Esta seguro?',
-      text: "Esta seguro que desea cerrar su session",
+      title: '¿ Está seguro?',
+      text: "La sesión se cerrará",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
