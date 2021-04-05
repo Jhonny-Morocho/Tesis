@@ -55,13 +55,6 @@ import { TemplateHojaVidaComponent } from './pages/paneles-administracion/templa
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
 import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
-//============================== Visor PDF ===========
-
-//cursos-capacitacines
-//import { ModalModule } from 'ngx-bootstrap/modal';
-
-// import { ToastrModule } from 'ngx-toastr';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({

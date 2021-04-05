@@ -26,3 +26,17 @@
 
 
 
+[2021-04-05 00:10:03] Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : false::: El Correo del gestor  es: gestorsistemas.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-04-05 00:39:49] Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : false::: El Correo del gestor  es: gestorsistemas.unl@gmail.com::: El Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-04-05 00:41:06] NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES : 
+                            ::Estado de enviar correo a los postulantes: false::: El Correo del postulante  es: jmmorochoa@unl.edu.ec 
+                            ::: Estado de correo enviado al empleador : false El correo del empleador es : empleador1unl@gmail.com ] 
+
+
+

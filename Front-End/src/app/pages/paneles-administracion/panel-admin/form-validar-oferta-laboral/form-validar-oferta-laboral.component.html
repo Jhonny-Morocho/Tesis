@@ -15,7 +15,7 @@
                     <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required disabled>
                 </div>
                 <div class="col-md-12">
-                    <label for="inputDescripcion" class="form-label">Descripcion </label><br>
+                    <label for="inputDescripcion" class="form-label">Descripción </label><br>
                     <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
                     <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required disabled></textarea>
                 </div>

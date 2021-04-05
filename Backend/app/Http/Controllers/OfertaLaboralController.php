@@ -166,7 +166,7 @@ class OfertaLaboralController extends Controller
                 }
                 //oferta revisada pero no validada tiene q corregir oferta// pór parte del encargado
                 if($request['estado']==1 && ($request['obervaciones'])!=""){
-                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoEstadoOferta($external_id,$request['estado']);
+                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoEstadoOferta($external_id,0);
                 }
                   //reenviar la oferta laboral para que la revisen el encargado de nuevo
                   if($request['estado']==1 && ($request['obervaciones'])==""){
@@ -180,7 +180,10 @@ class OfertaLaboralController extends Controller
                                         "respuesta"=>$ObjOfertaLaboral,
                                         "Siglas"=>"OE",200]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                                            "external_of"=>$external_id,
+                                            "resques"=>$request->json()->all(),
+                                            "Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -297,46 +300,54 @@ class OfertaLaboralController extends Controller
         //enviar correo del registro el encargado
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
-        //enviamos registro de postulante al encargado a la secretaria
-        $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
-        ->select("docente.*","usuario.correo")
-        ->where("docente.estado",1)
-        ->where("usuario.tipoUsuario",4)
-        ->get();
-       
         $plantillaCorreo=null;
         $enviarCorreoBolean=null;
-        //recorrer todos los usuario que sean encargado
-        foreach ($usuarioGestor as $key => $value) {
-            //tengo q redacatra el menaje a la secretaria
-            $plantillaCorreo=$this
-                            ->templateCorreoNotificarGestorOfertaValidada(
-                            $datos["nombreOfertaLaboral"],
-                            $datos["nombreEmpresa"],
-                            $datos["correoUsuarioEmpleador"],
-                            );
-            die($plantillaCorreo);
-            $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
-                                                $value['correo'],
-                                                $this->de,
-            "Nueva oferta laboral pendiente de publicar");
-
-            $arrayGestor[$key]=array("nombre"=>$value['nombre'],
-                                        "apellido"=>$value['apellido'],
-                                        "estadoEnvioCorreo"=>$enviarCorreoBolean,
-                                        "correo"=>$value['correo'],
-                                        );
+        $arrayGestor=array();
+        try {
+            //enviamos registro de postulante al encargado a la secretaria
+            $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
+            ->select("docente.*","usuario.correo")
+            ->where("docente.estado",1)
+            ->where("usuario.tipoUsuario",4)
+            ->get();
+            //recorrer todos los usuario que sean encargado
+            foreach ($usuarioGestor as $key => $value) {
+                //tengo q redacatra el menaje a la secretaria
+                $plantillaCorreo=$this->templateCorreoNotificarGestorOfertaValidada(
+                                $datos["nombreOfertaLaboral"],
+                                $datos["nombreEmpresa"],
+                                $datos["correoUsuarioEmpleador"],
+                                );
+                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
+                                                    $value['correo'],
+                                                    $this->de,
+                "Nueva oferta laboral pendiente de publicar");
+    
+                $arrayGestor[$key]=array("nombre"=>$value['nombre'],
+                                            "apellido"=>$value['apellido'],
+                                            "estadoEnvioCorreo"=>$enviarCorreoBolean,
+                                            "correo"=>$value['correo'],
+                                            );
+                $texto="[".date("Y-m-d H:i:s")."]"
+                ." Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : "
+                .$enviarCorreoBolean
+                ."::: El Correo del gestor  es: ".$value['correo']
+                ."::: El Correo del empleador es :"
+                .$ObjUsuario->correo." ]";
+                fwrite($handle, $texto);
+                fwrite($handle, "\r\n\n\n\n");
+            }
+            fclose($handle);
+            return $arrayGestor;
+        } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]"
-            ." Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : "
-            .$enviarCorreoBolean
-            ."::: El Correo del gestor  es: ".$value['correo']
-            ."::: El Correo del empleador es :"
-            .$ObjUsuario->correo." ]";
+            ." Oferta laboral validada por el encargado pendiente de publicar por parte del gestor ERROR ".$th." ]";
             fwrite($handle, $texto);
             fwrite($handle, "\r\n\n\n\n");
             fclose($handle);
+            return $arrayGestor=array("error"=>$th);
         }
-        return $arrayGestor;
+   
     }
     private function enviarCorreoEncargadoOfertaRegistrado($datos,$ObjUsuario){
         //enviar correo del registro el encargado
@@ -377,8 +388,8 @@ class OfertaLaboralController extends Controller
             .$ObjUsuario->correo." ]";
             fwrite($handle, $texto);
             fwrite($handle, "\r\n\n\n\n");
-            fclose($handle);
         }
+        fclose($handle);
         return $arrayEncargado;
     }
     private function enviarCorreoEncargadoEstadoOferta($external_oferta,$estadoValidacion){
@@ -495,11 +506,11 @@ class OfertaLaboralController extends Controller
         $arrayCorreoEstudiantes=array();
         try {
             // notificar al empleador que su oferta laboral esta publicada en la plataforma
-            $tituloOfertaLaboralEmpleador="Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." estaa aprobada y publicada";
+            $tituloOfertaLaboralEmpleador="Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." esta aprobada y publicada";
              $templateCorreoEmpleador=$this->templateCorreoNotificarEmpleadorOfertaPublicada($datosOFertaLaboral['nombreEmpresa'],
                                                                         $tituloOfertaLaboralEmpleador,
                                                                         $datosOFertaLaboral['nombreOfertaLaboral']);
-    
+            
             $enviarCorreoBoleanEmpleador=$this->enviarCorreo($templateCorreoEmpleador,
                                                                 $datosOFertaLaboral['correoUsuarioEmpleador'],
                                                             $this->de,$tituloOfertaLaboralEmpleador);
@@ -509,15 +520,15 @@ class OfertaLaboralController extends Controller
             ->select("usuario.correo","estudiante.*")
             ->where("estudiante.estado",1)
             ->get();
-            //crear log
+      
             $tituloOfertaLaboral="Nueva Oferta laboral publicada ";
             foreach ($usuarioEstudiante as $key => $value) {
-                $plnatillaCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
+                $plantillaCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
                                                                         $value['apellido'],
                                                                         $datosOFertaLaboral['nombreOfertaLaboral'],
                                                                         $tituloOfertaLaboral
                                                                         );
-                $enviarCorreoBolean=$this->enviarCorreo($plnatillaCorreo,$value['correo'],$this->de,$tituloOfertaLaboral);
+                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,$value['correo'],$this->de,$tituloOfertaLaboral);
                 $arrayCorreoEstudiantes[$key]=array(
                     "correoPostulante"=>$value['correo'],
                     "estadoCorreoEnvidaoPostulante"=>$enviarCorreoBolean,
@@ -529,11 +540,12 @@ class OfertaLaboralController extends Controller
                             ." NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES : 
                             ::Estado de enviar correo a los postulantes: ".$enviarCorreoBolean
                             ."::: El Correo del postulante  es: ".$value['correo']." 
-                            ::: Estado de correo enviado al empleador : ".$enviarCorreoBoleanEmpleador." El correo del empleador es : ".$datosOFertaLaboral['correoUsuarioEmpleador']." ] ";
+                            ::: Estado de correo enviado al empleador : ".$enviarCorreoBoleanEmpleador." 
+                            El correo del empleador es : ".$datosOFertaLaboral['correoUsuarioEmpleador']." ] ";
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
-                fclose($handle);
             }
+            fclose($handle);
             return $arrayCorreoEstudiantes;
         } catch (\Throwable $th) {
                 $texto="[".date("Y-m-d H:i:s")."]"
@@ -541,7 +553,7 @@ class OfertaLaboralController extends Controller
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
                 fclose($handle);
-            return $arrayCorreoEstudiantes;
+            return $arrayCorreoEstudiantes=array("error"=>$th->getMessage());
         }
     }
 
@@ -594,7 +606,7 @@ class OfertaLaboralController extends Controller
                                 <hr>
                                     Estimado/a usuario :'.$nombreEmpresa.' 
                                     <hr>
-                                    Se le informa que su oferta laboral : '.$nombreOfertaLaboral.' ha sido validad y publicada con éxito 
+                                    Se le informa que su oferta laboral : '.$nombreOfertaLaboral.' ha sido validada y publicada con éxito 
                             </div>
                             </div>
                             </div>
