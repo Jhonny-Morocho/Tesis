@@ -56,6 +56,7 @@ import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel
 import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.component';
+import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.compon
     PostulantesOfertaComponent,
     VerOfertaLaboralComponent,
     DomseguroPipe,
-    NavbarComponent
+    NavbarComponent,
+    OfertasPostuladasComponent
   ],
 
   imports: [
