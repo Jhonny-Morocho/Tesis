@@ -22,7 +22,10 @@ class OfertaLaboralEstudianteController extends Controller
     public function listarTodasOfertaEstudianteExternal_us($external_id){
         try {
             $ObjEstudiante=$this->buscarEstudiante($external_id);
-            $ObjOfertaEstudiante=OfertaLaboralEstudiante::where('fk_estudiante',$ObjEstudiante['id'])->get();
+            $ObjOfertaEstudiante=
+            OfertaLaboralEstudiante::join('oferta_laboral','oferta_laboral.id','ofertalaboral_estudiante.fk_oferta_laboral')
+            ->select('oferta_laboral.puesto','ofertalaboral_estudiante.*')
+            ->where('ofertalaboral_estudiante.fk_estudiante',$ObjEstudiante['id'])->get();
             return response()->json(["mensaje"=>$ObjOfertaEstudiante,"Siglas"=>"OE",200]);
             
         } catch (\Throwable $th) {
