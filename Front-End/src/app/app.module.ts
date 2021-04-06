@@ -55,6 +55,7 @@ import { TemplateHojaVidaComponent } from './pages/paneles-administracion/templa
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
 import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
+import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import { DomseguroPipe } from './pipes/domseguro.pipe';
     TemplateHojaVidaComponent,
     PostulantesOfertaComponent,
     VerOfertaLaboralComponent,
-    DomseguroPipe
+    DomseguroPipe,
+    NavbarComponent
   ],
 
   imports: [

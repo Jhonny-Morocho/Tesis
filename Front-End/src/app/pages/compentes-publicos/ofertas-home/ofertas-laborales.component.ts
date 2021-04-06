@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
-import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
+import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
+import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import { Subject } from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
@@ -35,7 +36,8 @@ export class PostularOfertaLaboralComponent implements OnInit {
   
   constructor(private servicioOferta:OfertasLaboralesService,
     private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
-    private servicioEmpleador:SerivicioEmpleadorService,
+    private servicioUsuario:AutenticacionUserService,
+    private servicioPostulante:SerivicioPostulanteService,
     private ruta_:Router) { }
   
   ngOnInit() {
@@ -84,8 +86,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
       }
     }
 
-   
-    //si esta en la tabla siginica que esta incrito
+
     //si es tru,entonces ya estoy postulando
     estadoPostulacion(idOferta:Number){
       let encontrado=false;
@@ -97,52 +98,90 @@ export class PostularOfertaLaboralComponent implements OnInit {
        });
       return encontrado;
     }
-    comprobarSiEstaRegistrado
+    varificarInicioSession(){
+      let estadoAutentificado=this.servicioUsuario.estaAutenticado();
+      let validacion=false;
+      console.log(estadoAutentificado);
+      //debe iniciar session
+      if(estadoAutentificado==true){
+         //verificar si el usuario ya ha llenado el formulario de registro
+          this.servicioPostulante.listarFormPostulante().subscribe(
+            siHaceBien=>{
+              console.log(siHaceBien);
+              if(siHaceBien['Siglas']=="OE"){
+                //debe comprobar si esta aporbado el postulantes
+                console.log("si completo el formulario");
+                validacion= true;
+              }else{
+                 Swal('Información','Debe completar el formulario de registro, para  postular a las  ofertas laborales','info');
+                 validacion= false;
+              }
+            },siHaceMal=>{
+              console.warn(siHaceMal);
+            }
+          );
+        return validacion;
+      }else{
+        Swal('Información','Debe iniciar su sesión ','info');
+        return false;
+
+      }
+    }
+    direccionar(){
+      console.log("Xxx");
+    }
     postular(externalOferta:string,nomOferta:string){
       console.log(externalOferta);
       console.log(nomOferta);
-      return;
-      Swal({
-        title: 'Are you sure?',
-        text: "Postular a "+nomOferta,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.value) {
-      Swal({
-        allowOutsideClick:false,
-        type:'info',
-        text:'Espere por favor'
-        });
-        Swal.showLoading();
-        this.instanciaOfertLaboralEstudiante.estado=1;
-        this.servicioOfertaEstudiante.postularOfertEstudiante(this.instanciaOfertLaboralEstudiante,externalOferta
-        ).subscribe(
-          siHacesBien=>{
-            console.log(siHacesBien);
-            let mensaje=(siHacesBien['mensaje']);
-            console.log(mensaje);
-            if(siHacesBien['Siglas']=='OE'){
-              Swal('Guardado',mensaje,'success');
-              this.cargarTabla();
-              this.ngOnDestroy()
-
-            }else{
-              Swal('Informacion',mensaje,'info');
+      //this.varificarInicioSession();
+      console.log(this.varificarInicioSession());
+      if(this.varificarInicioSession()==true){
+       // return;
+          Swal({
+            title: '¿Está seguro?',
+            text: "Usted seleciono la oferta  "+nomOferta,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+          }).then((result) => {
+            if (result.value) {
+          Swal({
+            allowOutsideClick:false,
+            type:'info',
+            text:'Espere por favor'
+            });
+            Swal.showLoading();
+            this.instanciaOfertLaboralEstudiante.estado=1;
+            this.servicioOfertaEstudiante.postularOfertEstudiante(this.instanciaOfertLaboralEstudiante,externalOferta
+            ).subscribe(
+              siHacesBien=>{
+                console.log(siHacesBien);
+                let mensaje=(siHacesBien['mensaje']);
+                console.log(mensaje);
+                if(siHacesBien['Siglas']=='OE'){
+                  Swal('Guardado',mensaje,'success');
+                  this.cargarTabla();
+                  this.ngOnDestroy()
+    
+                }else{
+                  Swal('Informacion',mensaje,'info');
+                }
+              },error=>{
+                let mensaje=error['mensaje'];
+                console.log(error);
+                Swal('Error',mensaje,'error');
+              }
+            );
+    
             }
-          },error=>{
-            let mensaje=error['mensaje'];
-            console.log(error);
-            Swal('Error',mensaje,'error');
-          }
-        );
+          })
+          console.log(externalOferta);
 
-        }
-      })
-      console.log(externalOferta);
+      }else{
+        console.log("razon del no permitr postular");
+      }
     }
     configurarParametrosDataTable(){
       this.dtOptions = {

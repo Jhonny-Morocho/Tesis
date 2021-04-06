@@ -12,11 +12,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/login']">
+                    <a class="nav-link" [routerLink]="['/login']" *ngIf="estadoInicioSession==false">
                         <i class="fas fa-user"></i> Iniciar Sesión
                     </a>
+                    <a class="nav-link" [routerLink]="[rutaUsuarioPanel]" *ngIf="estadoInicioSession==true">
+                        <i class="fas fa-user"></i> Hola : {{ usuario }}
+                    </a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="estadoInicioSession==false">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-plus"></i> Registrarme</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" [routerLink]="['/registro-empleador']">Empleador</a>

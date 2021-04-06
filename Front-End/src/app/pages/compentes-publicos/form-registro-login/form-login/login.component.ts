@@ -48,7 +48,6 @@ export class LoginAdminComponent implements OnInit {
         console.log(siHacesBien);
         console.log(siHacesBien['Siglas']);
         Swal.close();
-
         //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
 
@@ -62,7 +61,6 @@ export class LoginAdminComponent implements OnInit {
               break;
             case 2:
               this.router.navigateByUrl('/panel-postulante/form-info-postulante');
-              console.log("llegue xxx");
               break;
             case 5:
               this.router.navigateByUrl('/panel-admin/mi-perfil');

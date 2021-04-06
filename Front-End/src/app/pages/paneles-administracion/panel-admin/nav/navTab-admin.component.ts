@@ -20,8 +20,12 @@ export class PanelAdminComponent implements OnInit {
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
+    this.verificarDireccionarTipoUsuario();
 
-    if(localStorage.getItem('correo')){
+  }
+
+  verificarDireccionarTipoUsuario(){
+    if((this.servicioUsuario.estaAutenticado())==true){
       this.instanciaUsuario.correo = localStorage.getItem('correo');
       //console.log(parseInt(localStorage.getItem('tipoUsuario')));
       switch (parseInt(localStorage.getItem('tipoUsuario'))) {
@@ -43,9 +47,7 @@ export class PanelAdminComponent implements OnInit {
     }else{
      // no existe session por lo cual debo direccionar al inicio
     }
-
   }
-
   salirSession(){
     // ocupo el servicio
     Swal({
