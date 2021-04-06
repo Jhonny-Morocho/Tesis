@@ -10,11 +10,10 @@
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Fecha de inscripción</th>
+                        <th style="width: 20px">Fecha de inscripción</th>
                         <th>Oferta Laboral</th>
                         <th>Observaciones</th>
-                        <th style="width: 40px">Estado</th>
-                        <th>Ver</th>
+                        <th style="width: 20px">Estado de contración</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,9 +21,18 @@
                         <td>{{ i +1}}</td>
                         <td>{{ item.created_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ item.puesto }}</td>
-                        <td>{{ item.puesto }}</td>
-                        <td><span class="badge bg-danger">55%</span></td>
-                        <td><span class="badge bg-danger">55%</span></td>
+                        <td>{{ item.observaciones }}</td>
+                        <td>
+                            <span class="badge bg-danger" *ngIf="item.estado=='0' ">
+                                Denegado
+                            </span>
+                            <span class="badge bg-warning " *ngIf="item.estado=='1' " title="tiempo máximo de confirmación 8 dias ">
+                                <i class="far fa-clock " ></i> Postulando
+                            </span>
+                            <span class="badge bg-success " *ngIf="item.estado=='2' ">
+                               Aceptado
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

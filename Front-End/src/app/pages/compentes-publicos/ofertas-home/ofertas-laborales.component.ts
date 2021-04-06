@@ -113,6 +113,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                     });
                     Swal.showLoading();
                     this.instanciaOfertLaboralEstudiante.estado=1;
+                    this.instanciaOfertLaboralEstudiante.observaciones="";
                     this.servicioOfertaEstudiante.postularOfertEstudiante(this.instanciaOfertLaboralEstudiante,externalOferta
                     ).subscribe(
                       siHacesBien=>{

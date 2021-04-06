@@ -4,5 +4,6 @@ export class OfertaLaboralEstudianteModel{
     fk_oferta_laboral:Number;
     estado:Number;
     external_of_est:string;
+    observaciones:string;
     id?:Number;
 }

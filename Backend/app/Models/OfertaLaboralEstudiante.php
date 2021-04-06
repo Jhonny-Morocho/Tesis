@@ -16,6 +16,7 @@ class OfertaLaboralEstudiante extends Model
             "fk_estudiante",
             "fk_oferta_laboral",
             "estado",
+            "observaciones",
             "external_of_est",
             "created_at",
             "updated_at"

@@ -24,6 +24,7 @@ export class OfertaLaboralEstudianteService {
   postularOfertEstudiante(modeloOfertaEstudiante:OfertaLaboralEstudianteModel,external_of:string){
     const autenficacionDatos={
         estado:modeloOfertaEstudiante.estado,
+        observaciones:modeloOfertaEstudiante.observaciones,
         external_of:external_of
      }
      return this._httCliente.post(`${this.urlDominio_}${this.urlBackendPostularOfertaEstudiante}${localStorage.getItem("external_us")}`,autenficacionDatos
