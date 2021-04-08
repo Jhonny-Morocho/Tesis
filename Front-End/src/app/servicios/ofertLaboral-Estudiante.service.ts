@@ -5,6 +5,7 @@ import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import { PostulanteModel } from '../models/postulante.models';
 import { OfertaLaboralModel } from 'src/app/models/oferta-laboral.models';
+import { Console } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -106,28 +107,22 @@ export class OfertaLaboralEstudianteService {
 
 
   //actulizar estado de validacion del postulante//aprobado y no aprobado
-  eliminarPostulanteOfertaLaboral(arrayOfertaPostulante){
-  
-    arrayOfertaPostulante.forEach(elemento=>{
-      const autenficacionDatos={
-        external_of:elemento['external_of_est'],
-        external_us:elemento['external_es'],
-        estado:elemento['estado']
-      }
+  eliminarPostulanteOfertaLaboral(array:any){
+      let  autenficacionDatos;
+      array.forEach(elemento=>{
+      console.log(elemento);
+      });
+      return this._httCliente.post(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,array).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+      console.log(array);
       console.log(autenficacionDatos);
-      // return this._httCliente.post(
-      //   `${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,autenficacionDatos
-      // ).pipe(
-      //   map(
-      //     respuestaBackend=>{
-      //       return respuestaBackend;
-      //     })
-      // );
-    });
-
-    //console.log(autenficacionDatos);
-    //retorna la respuesata
-    // console.log(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`);
+      // console.log(autenficacionDatos);
   }
 }
+
+  
 

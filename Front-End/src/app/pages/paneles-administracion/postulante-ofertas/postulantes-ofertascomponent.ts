@@ -42,6 +42,31 @@ export class PostulanteOfertas implements OnInit {
     this.estudiantesOfertaLaboral();
   }
   filtrarPostulante(){
+    //verifico si el usuario ha hecho check,si no hace check entonces no puede actualizar
+    if(this.arrayAux.length==0){
+      Swal({title:'Atención',type:'info',text:'Ahun no ha realizado ninguna acción en el checklist'}); 
+    }else{
+      Swal({
+        title: '¿Está seguro ?',
+        text: "Se cambiara el estado de los postulantes ",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) {
+      
+          this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
+            siHaceBien =>{
+                console.log(siHaceBien);
+            },siHceMal=>{
+              console.log(siHceMal);
+            }
+          );
+        }
+      })
+    }
 
   }
 
@@ -99,16 +124,7 @@ export class PostulanteOfertas implements OnInit {
       alert("el estado es nullo");
     }
   }
-  actualizarPostOferta(){
-    this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
-      siHaceBien =>{
-          console.log(siHaceBien);
-      },siHceMal=>{
-        console.log(siHceMal);
-      }
-      );
-    
-  }
+
   // }
   //listamos todos los estudiantes que este postulando a esta oferta laboral
   estudiantesOfertaLaboral(){

@@ -145,7 +145,35 @@ class OfertaLaboralEstudianteController extends Controller
      public function eliminarPostulanteOfertaLaboral(Request $request){
          $OfertaLaboralPostulanteBorrar=null;
         try {
-            //buscamos la oferta laboral
+            if($request->json()){
+                $probando=array();
+                foreach ($request->json() as $key => $value) {
+                    $OfertaLaboralPostulanteBorrar=
+                    OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
+                    ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
+                    ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
+                    ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
+                    $probando[$key]=array(
+                        "estudiante"=>$value['external_of_est'],
+                        "estado"=> $OfertaLaboralPostulanteBorrar
+                    );
+                }
+                return  response()->json(["mensaje"=>$probando]);
+            }else{
+                return false;
+            }
+            die(json_encode($request->all()));
+            foreach ($request as $key => $value) {
+                $OfertaLaboralPostulanteBorrar=
+                OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
+                ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
+                ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
+                ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
+
+            }
+            return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",
+                                     "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
+
             $ObjOfertaLaboral=$this->buscarOfertaLaboral($request['external_of']);
             //buscamos al estudiante
             $ObjEstudiante=$this->buscarEstudiante($request['external_us']);
@@ -158,15 +186,17 @@ class OfertaLaboralEstudianteController extends Controller
             //actualizo el estado del estudiante que postulo a una oferta x , estado 0
             $OfertaLaboralPostulanteBorrar=OfertaLaboralEstudiante::where("external_of_est","=", $OfertaLaboralPostulante->external_of_est)->update(
                                 array(
-                                    'estado'=>$request['estado']
+                                    'ofertalaboral_estudiante.estado'=>$request['estado']
                                 ));
 
             return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",
                                      "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
         
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Error no se puede borrar","respuesta"=>$OfertaLaboralPostulanteBorrar,
-                                    "Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>"Error no se puede borrar",
+                                    "resquest"=>$request->json()->all(),
+                                    "respuesta"=>$OfertaLaboralPostulanteBorrar,
+                                    "Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
      
     }
