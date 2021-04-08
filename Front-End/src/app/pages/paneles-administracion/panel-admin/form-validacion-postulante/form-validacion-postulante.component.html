@@ -61,33 +61,30 @@
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
-                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'direcionDomicilio'].errors ">La direccion es obligatorio</span>
-                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio " name="direcionDomicilio " rows="3 " required minlength="5 " disabled></textarea>
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
+                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio " name="direcionDomicilio" rows="3 " required minlength="5 " disabled></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Observaciones</label><br>
 
-                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'observaciones'].errors ">Debe poner un comentario</span>
-                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.observaciones " name="observaciones " rows="3 " required></textarea>
+                        <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['observaciones'].errors">Debe poner un comentario</span>
+                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.observaciones" name="observaciones" rows="3 " required></textarea>
                     </div>
                 </div>
                 <div class=" col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
-                        <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaPostulante.estado)==false " (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i>No Aprobado</button>
-                        <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaPostulante.estado)==true " (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
+                        <button type="button " class="btn btn-outline-danger" *ngIf="estadoAprobado(instanciaPostulante.estado)==false" (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i> No Aprobado</button>
+                        <button type="button " class="btn btn-outline-success" *ngIf="estadoAprobado(instanciaPostulante.estado)==true" (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
                     </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center ">
                     <button type="submit " class="btn btn-primary ">Guardar</button>
                 </div>
-
-
             </form>
-
         </article>
     </div>
 </div>

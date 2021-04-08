@@ -106,23 +106,28 @@ export class OfertaLaboralEstudianteService {
 
 
   //actulizar estado de validacion del postulante//aprobado y no aprobado
-  eliminarPostulanteOfertaLaboral(external_of:string,external_us:string,estado:number){
-    const autenficacionDatos={
-      external_of:external_of,
-      external_us:external_us,
-      estado:estado
-    }
-    console.log(autenficacionDatos);
+  eliminarPostulanteOfertaLaboral(arrayOfertaPostulante){
+  
+    arrayOfertaPostulante.forEach(elemento=>{
+      const autenficacionDatos={
+        external_of:elemento['external_of_est'],
+        external_us:elemento['external_es'],
+        estado:elemento['estado']
+      }
+      console.log(autenficacionDatos);
+      // return this._httCliente.post(
+      //   `${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,autenficacionDatos
+      // ).pipe(
+      //   map(
+      //     respuestaBackend=>{
+      //       return respuestaBackend;
+      //     })
+      // );
+    });
+
+    //console.log(autenficacionDatos);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`);
-      return this._httCliente.post(
-        `${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,autenficacionDatos
-      ).pipe(
-        map(
-          respuestaBackend=>{
-            return respuestaBackend;
-          })
-      );
+    // console.log(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`);
   }
 }
 

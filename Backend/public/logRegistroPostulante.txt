@@ -10,3 +10,23 @@
 
 
 
+[2021-04-07 19:27:37] Registro Postulante Correo : false ]
+
+
+
+[2021-04-07 20:12:17] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-04-08 02:32:58] Registro Postulante Correo : false ]
+
+
+
+[2021-04-08 02:33:28] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-04-08 02:33:46] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+

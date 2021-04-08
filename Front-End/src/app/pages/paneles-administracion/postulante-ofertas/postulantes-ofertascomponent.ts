@@ -16,19 +16,21 @@ declare var $:any;
 declare var bootstrap:any;
 @Component({
   selector: 'app-template-hoja-vida',
-  templateUrl: './template-hoja-vida.component.html'
+  templateUrl: './postulantes-ofertas.component.html'
 })
-export class TemplateHojaVidaComponent implements OnInit {
+export class PostulanteOfertas implements OnInit {
   dominio:any=environment.dominio;
-  external_of_es:string;
   arrayPostulante:PostulanteModel[]=[];
   instanciaVerPostulante:PostulanteModel;
   arrayCursosCapacitaciones:CursosCapacitacionesModel[]=[];
   arrayTitulosAcademicos:TituloModel[]=[];
+  arrayPostulanteOfertAux:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaPostulante:OfertaLaboralEstudianteModel;
   //data table
+  arrayAux=[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+ estadoPostulacion= [];
 
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
               private servicioTitulosAcademicos:TituloService, 
@@ -37,23 +39,90 @@ export class TemplateHojaVidaComponent implements OnInit {
 
   ngOnInit() {
     this.instanciaVerPostulante=new PostulanteModel();
+    this.estudiantesOfertaLaboral();
+  }
+  filtrarPostulante(){
+
+  }
+
+  check(i:Event,fk_postulante,fk_ofertaLaboral,exteral_of,external_es) {
+    let estadoActual=(i.target as HTMLInputElement).value;
+    let estadoActualAux=null;
+    var banderaRepetido=false;
+    //verificar que valor me trae el value del input
+    switch (parseInt(estadoActual)) {
+      case 0:
+        estadoActualAux=1;
+        break;
+      case 1:
+        estadoActualAux=0;
+        break;
+      case 2:
+          alert("estado 2 permitido");
+          break;
+      default:
+        break;
+    }
+    //comprobar que el estado actual solo tenga dos valores 1 <-> 0
+    if(estadoActualAux!=null){
+        const aux={   
+        fk_estudiante:fk_postulante,
+        fk_oferta_laboral:fk_ofertaLaboral,
+        estado:estadoActualAux,
+        external_of_est:exteral_of,
+        external_es:external_es
+      }
+      //antes de guardarlo en el array debemos comprobar si esta ya ingresado
+      if(this.arrayAux.length==0 ){
+        this.arrayAux.push(aux);
+        console.log("cerop");
+      }else{
+        this.arrayAux.forEach(element => {
+          if(element['fk_estudiante']===fk_postulante){
+            console.log(element['fk_estudiante']);
+            //entonce debeo actualizar el estado del arreglo en donde estaba guarado
+            if(element['estado']==1){
+              element['estado']=0;
+            }else{
+              element['estado']=1;
+            }
+            banderaRepetido=true;
+          }
+        });
+        //termine de recorrer todos los datos, si no existe repetidos que se agrege uno nuevo
+        if( banderaRepetido==false){
+          this.arrayAux.push(aux);
+        }
+      }
+    console.log(this.arrayAux);
+    }else{
+      alert("el estado es nullo");
+    }
+  }
+  actualizarPostOferta(){
+    this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
+      siHaceBien =>{
+          console.log(siHaceBien);
+      },siHceMal=>{
+        console.log(siHceMal);
+      }
+      );
+    
+  }
+  // }
+  //listamos todos los estudiantes que este postulando a esta oferta laboral
+  estudiantesOfertaLaboral(){
+    //obtener el external ofert desde la url
     this._activateRoute.params.subscribe(
       params=>{
-        this.external_of_es=params['external_of'];
-        console.log(this.external_of_es);
-        this.cargarTabla(this.external_of_es);
-    });
-    //activar tabs
-    $(function() {
-      var triggerTabList = [].slice.call(document.querySelectorAll('#pills-tab a'));
-      console.log(triggerTabList);
-      triggerTabList.forEach(function (triggerEl) {
-        var tabTrigger = new bootstrap.Tab(triggerEl)
-        triggerEl.addEventListener('click', function (event) {
-          event.preventDefault()
-          tabTrigger.show()
-        })
-      })
+        this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of(params['external_of']).subscribe(
+          siHaceBien=>{
+            console.log(siHaceBien);
+            this.arrayPostulante=siHaceBien;
+          },error=>{
+            console.log(error);
+          }
+        );
     });
 
   }
@@ -109,25 +178,7 @@ export class TemplateHojaVidaComponent implements OnInit {
       return false;
     }
   }
-  cargarTabla(external_of:string){
 
-    console.log("cargue tabla");
-    //el extenrla oferta viene x la url
-    this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of(external_of).subscribe(
-      siHaceBien=>{
-      console.log(siHaceBien);
-      this.arrayPostulante=siHaceBien;
-        //data table
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
-        this.dtTrigger.next();
-      },error=>{
-        console.log(error);
-      }
-    );
-  }
   verHojaVidaModal(id:Number){
     console.log("click");
     var index=parseInt((id).toString(), 10); 
@@ -148,45 +199,45 @@ export class TemplateHojaVidaComponent implements OnInit {
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
  
   }
-  cerrarModal(){
-    $('#exampleModal').modal('hide');
-  }
-  eliminarPostulanteOferta(nombre:string,apellido:string,id:Number){
-    console.log(nombre);
-    console.log(apellido);
-    console.log(id);
-    var index=parseInt((id).toString(), 10); 
-    console.log(this.arrayPostulante[index]);
-    Swal({
-      title: 'Are you sure?',
-      text: "Desvincular a  "+nombre+" "+apellido,
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
-    }).then((result) => {
-      if (result.value) {
-      this.arrayPostulante[index];
-      this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(
-          this.external_of_es,this.arrayPostulante[index]['external_us'],0
-        ).subscribe(
-          siHaceBien=>{
-            console.log(siHaceBien);
-            if(siHaceBien["Siglas"]=="OE"){
-              Swal('Registrado', siHaceBien['mensaje'], 'success');
-              this.cargarTabla(this.external_of_es);
-              this.ngOnDestroy()
-            }else{
-              Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')
-            }
-          },error=>{
-            console.log(error);
-          }
-      );
-      }
-    })
-  }
+  // cerrarModal(){
+  //   $('#exampleModal').modal('hide');
+  // }
+  // eliminarPostulanteOferta(nombre:string,apellido:string,id:Number){
+  //   console.log(nombre);
+  //   console.log(apellido);
+  //   console.log(id);
+  //   var index=parseInt((id).toString(), 10); 
+  //   console.log(this.arrayPostulante[index]);
+  //   Swal({
+  //     title: 'Are you sure?',
+  //     text: "Desvincular a  "+nombre+" "+apellido,
+  //     type: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes'
+  //   }).then((result) => {
+  //     if (result.value) {
+  //     this.arrayPostulante[index];
+  //     this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(
+  //         this.external_of_es,this.arrayPostulante[index]['external_us'],0
+  //       ).subscribe(
+  //         siHaceBien=>{
+  //           console.log(siHaceBien);
+  //           if(siHaceBien["Siglas"]=="OE"){
+  //             Swal('Registrado', siHaceBien['mensaje'], 'success');
+  //             //this.estudiantesInscritosOferta(this.external_of_es);
+  //             this.ngOnDestroy()
+  //           }else{
+  //             Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')
+  //           }
+  //         },error=>{
+  //           console.log(error);
+  //         }
+  //     );
+  //     }
+  //   })
+  // }
   ngOnDestroy(): void {
   // Do not forget to unsubscribe the event
     try {

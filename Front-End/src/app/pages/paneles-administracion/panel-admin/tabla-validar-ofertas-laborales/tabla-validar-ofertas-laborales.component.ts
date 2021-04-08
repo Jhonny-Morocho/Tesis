@@ -44,13 +44,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
         console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
         console.log(this.ofertasLaborales);
-        //data table
-        //cargamos los items o los requisitos
-
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
+        
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
@@ -161,5 +155,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
           }
         }
       };
+
     }
 }

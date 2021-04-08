@@ -93,7 +93,7 @@ export class FormInfoPostulanteComponent implements OnInit {
     );
   }
   //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
-  estadoAprobado(estado:Number){
+  estadoAprobado(estado:Number):boolean{
     if(estado==0){
       this.instanciaPostulante.estado=0;
       return false;
