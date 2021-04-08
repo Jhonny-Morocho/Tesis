@@ -144,61 +144,33 @@ class OfertaLaboralEstudianteController extends Controller
 
      public function eliminarPostulanteOfertaLaboral(Request $request){
          $OfertaLaboralPostulanteBorrar=null;
-        try {
-            if($request->json()){
-                $probando=array();
+         $arrayRespuesta=array();
+         if($request->json()){
+            try {
                 foreach ($request->json() as $key => $value) {
                     $OfertaLaboralPostulanteBorrar=
                     OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
                     ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
                     ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
                     ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
-                    $probando[$key]=array(
+                    $arrayRespuesta[$key]=array(
                         "estudiante"=>$value['external_of_est'],
                         "estado"=> $OfertaLaboralPostulanteBorrar
                     );
                 }
-                return  response()->json(["mensaje"=>$probando]);
-            }else{
-                return false;
+                return  response()->json(["mensaje"=>$arrayRespuesta,"Siglas"=>"OE",
+                                        "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Error no se puede borrar",
+                "resquest"=>$request->json()->all(),
+                "respuesta"=>$OfertaLaboralPostulanteBorrar,
+                "Siglas"=>"ONE",
+                "error"=>$th->getMessage()]);
             }
-            die(json_encode($request->all()));
-            foreach ($request as $key => $value) {
-                $OfertaLaboralPostulanteBorrar=
-                OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
-                ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
-                ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
-                ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
-
-            }
-            return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",
-                                     "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
-
-            $ObjOfertaLaboral=$this->buscarOfertaLaboral($request['external_of']);
-            //buscamos al estudiante
-            $ObjEstudiante=$this->buscarEstudiante($request['external_us']);
-            //buscamos el estudiante que este postulando a esa oferta
-            $OfertaLaboralPostulante=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
-            ->join("oferta_laboral","oferta_laboral.id","=","ofertalaboral_estudiante.fk_oferta_laboral")
-            ->where('ofertalaboral_estudiante.fk_estudiante','=',$ObjEstudiante->id)
-            ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)
-            ->first();
-            //actualizo el estado del estudiante que postulo a una oferta x , estado 0
-            $OfertaLaboralPostulanteBorrar=OfertaLaboralEstudiante::where("external_of_est","=", $OfertaLaboralPostulante->external_of_est)->update(
-                                array(
-                                    'ofertalaboral_estudiante.estado'=>$request['estado']
-                                ));
-
-            return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",
-                                     "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
-        
-        } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Error no se puede borrar",
-                                    "resquest"=>$request->json()->all(),
-                                    "respuesta"=>$OfertaLaboralPostulanteBorrar,
-                                    "Siglas"=>"ONE","error"=>$th->getMessage()]);
+                                        
+        }else{
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
-     
     }
 
     //================ FUNCIONES RECURSIVAS =======================//

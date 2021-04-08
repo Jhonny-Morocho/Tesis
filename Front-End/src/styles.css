@@ -71,6 +71,10 @@
     min-height: 100vh;
 }
 
+.form-check-input:checked[type=checkbox] {
+    font-size: 25px;
+}
+
 
 /* ============= HOME ========================= */
 

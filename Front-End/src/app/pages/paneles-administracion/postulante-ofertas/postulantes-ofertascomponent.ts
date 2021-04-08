@@ -31,6 +31,7 @@ export class PostulanteOfertas implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
  estadoPostulacion= [];
+ existeRegistros:boolean=false;
 
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
               private servicioTitulosAcademicos:TituloService, 
@@ -48,7 +49,7 @@ export class PostulanteOfertas implements OnInit {
     }else{
       Swal({
         title: '¿Está seguro ?',
-        text: "Se cambiara el estado de los postulantes ",
+        text: "Se desvinculara al postulante de la oferta laboral ",
         type: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -60,8 +61,13 @@ export class PostulanteOfertas implements OnInit {
           this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
             siHaceBien =>{
                 console.log(siHaceBien);
+                if(siHaceBien['Siglas']=='OE'){
+                  Swal('Registrado', 'Información Registrada con éxito', 'success');
+                }else{
+                  Swal('Error', siHaceBien['error'], 'error');
+                }
             },siHceMal=>{
-              console.log(siHceMal);
+              Swal('Registrado', siHceMal['error'], 'error');
             }
           );
         }
@@ -135,6 +141,10 @@ export class PostulanteOfertas implements OnInit {
           siHaceBien=>{
             console.log(siHaceBien);
             this.arrayPostulante=siHaceBien;
+            console.log(this.arrayPostulante.length);
+            if(this.arrayPostulante.length>0){
+              this.existeRegistros=true;
+            }
           },error=>{
             console.log(error);
           }
