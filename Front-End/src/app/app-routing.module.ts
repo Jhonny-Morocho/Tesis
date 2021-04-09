@@ -16,7 +16,7 @@ import {TablaValidarOfertasLaboralesComponent} from 'src/app/pages/paneles-admin
 import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
 import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
-import {PostulantesOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
+import {PostulantesOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
 import {EditOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
 import {AddOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
 import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';

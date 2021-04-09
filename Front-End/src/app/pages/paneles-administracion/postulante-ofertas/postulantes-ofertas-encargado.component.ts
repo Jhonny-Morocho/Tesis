@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.models';
-import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
 import {TituloModel} from 'src/app/models/titulo.models';
-import {TituloService} from 'src/app/servicios/titulos.service';
 import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiante.models';
 import Swal from 'sweetalert2';
 //contantes del servidor
 import {environment} from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { TituloService } from 'src/app/servicios/titulos.service';
+import { CursosCapacitacionesService } from 'src/app/servicios/cursos-capacitaciones.service';
 declare var JQuery:any;
 declare var $:any;
 declare var bootstrap:any;
 @Component({
   selector: 'app-template-hoja-vida',
-  templateUrl: './postulantes-ofertas.component.html'
+  templateUrl: './postulantes-ofertas-encargado.component.html'
 })
 export class PostulanteOfertas implements OnInit {
   dominio:any=environment.dominio;
@@ -25,16 +25,15 @@ export class PostulanteOfertas implements OnInit {
   arrayTitulosAcademicos:TituloModel[]=[];
   arrayPostulanteOfertAux:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaPostulante:OfertaLaboralEstudianteModel;
-  //data table
   arrayAux=[];
 
  estadoPostulacion= [];
  existeRegistros:boolean=false;
 
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
-              private servicioTitulosAcademicos:TituloService, 
-              private _activateRoute:ActivatedRoute,
-              private servicioCursosCapacitaciones:CursosCapacitacionesService) { }
+    private servicioTitulosAcademicos:TituloService,
+    private servicioCursosCapacitaciones:CursosCapacitacionesService,
+              private _activateRoute:ActivatedRoute) { }
 
   ngOnInit() {
     this.instanciaVerPostulante=new PostulanteModel();
@@ -71,9 +70,49 @@ export class PostulanteOfertas implements OnInit {
         }
       })
     }
-
+  }
+  cursosCapacitaciones(exteneral_us:string){
+    console.log(exteneral_us);
+    this.servicioCursosCapacitaciones.listarCursosCapacitacionesExternal_usConParametro(exteneral_us).subscribe(
+      siHaceBien=>{
+        this.arrayCursosCapacitaciones=siHaceBien;
+        console.log(this.arrayCursosCapacitaciones);
+      },error=>{
+        console.log(error);
+      }
+    );
+  }
+  verHojaVidaModal(id:Number){
+    console.log("click");
+    var index=parseInt((id).toString(), 10); 
+    $('#motrarHojaVidaGeneral').modal('show');
+    //============= mostamos la informacion personal ========================
+    this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
+    this.instanciaVerPostulante.apellido=this.arrayPostulante[index]['apellido'];
+    this.instanciaVerPostulante.genero=this.arrayPostulante[index]['genero'];
+    this.instanciaVerPostulante.telefono=this.arrayPostulante[index]['telefono'];
+    this.instanciaVerPostulante.cedula=this.arrayPostulante[index]['cedula'];
+    this.instanciaVerPostulante.fecha_nacimiento=this.arrayPostulante[index]['fecha_nacimiento'];
+    this.instanciaVerPostulante.direccion_domicilio=this.arrayPostulante[index]['direccion_domicilio'];
+    this.instanciaVerPostulante.correo=this.arrayPostulante[index]['correo'];
+    console.log(this.instanciaVerPostulante);
+    //============= mostras los curso y capacitaciones ===============
+    console.log(this.arrayPostulante[index]['external_us']);
+    this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
+     //============= mostras los titulos   ===============
+     this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
   }
 
+  titulosAcademicos(exteneral_us:string){
+    this.servicioTitulosAcademicos.listarTitulosExternal_usConParametro(exteneral_us).subscribe(
+      siHaceBien=>{
+        this.arrayTitulosAcademicos=siHaceBien;
+        console.log(this.arrayTitulosAcademicos);
+      },error=>{
+        console.log(error);
+      }
+    );
+  }
   check(i:Event,fk_postulante,fk_ofertaLaboral,exteral_of,external_es) {
     let estadoActual=(i.target as HTMLInputElement).value;
     let estadoActualAux=null;
@@ -134,7 +173,7 @@ export class PostulanteOfertas implements OnInit {
     //obtener el external ofert desde la url
     this._activateRoute.params.subscribe(
       params=>{
-        this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of(params['external_of']).subscribe(
+        this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of_encargado(params['external_of']).subscribe(
           siHaceBien=>{
             console.log(siHaceBien);
             this.arrayPostulante=siHaceBien;
@@ -149,27 +188,6 @@ export class PostulanteOfertas implements OnInit {
     });
 
   }
-  cursosCapacitaciones(exteneral_us:string){
-    this.servicioCursosCapacitaciones.listarCursosCapacitacionesExternal_usConParametro(exteneral_us).subscribe(
-      siHaceBien=>{
-        this.arrayCursosCapacitaciones=siHaceBien;
-        console.log(this.arrayCursosCapacitaciones);
-      },error=>{
-        console.log(error);
-      }
-    );
-  }
-  titulosAcademicos(exteneral_us:string){
-    this.servicioTitulosAcademicos.listarTitulosExternal_usConParametro(exteneral_us).subscribe(
-      siHaceBien=>{
-        this.arrayTitulosAcademicos=siHaceBien;
-        console.log(this.arrayTitulosAcademicos);
-      },error=>{
-        console.log(error);
-      }
-    );
-  }
- 
   carrarModalX(){
     $('#motrarHojaVidaGeneral').modal('hide');
     console.log('cerrarModalX');
@@ -177,26 +195,6 @@ export class PostulanteOfertas implements OnInit {
   carrarModalbotonDanger(){
     $('#motrarHojaVidaGeneral').modal('hide');
     console.log('carrarModalbotonDanger');
-  }
-  verHojaVidaModal(id:Number){
-    console.log("click");
-    var index=parseInt((id).toString(), 10); 
-    $('#motrarHojaVidaGeneral').modal('show');
-    //============= mostamos la informacion personal ========================
-    this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
-    this.instanciaVerPostulante.apellido=this.arrayPostulante[index]['apellido'];
-    this.instanciaVerPostulante.genero=this.arrayPostulante[index]['genero'];
-    this.instanciaVerPostulante.telefono=this.arrayPostulante[index]['telefono'];
-    this.instanciaVerPostulante.cedula=this.arrayPostulante[index]['cedula'];
-    this.instanciaVerPostulante.fecha_nacimiento=this.arrayPostulante[index]['fecha_nacimiento'];
-    this.instanciaVerPostulante.direccion_domicilio=this.arrayPostulante[index]['direccion_domicilio'];
-    this.instanciaVerPostulante.correo=this.arrayPostulante[index]['correo'];
-    console.log(this.instanciaVerPostulante);
-    //============= mostras los curso y capacitaciones ===============
-    console.log(this.arrayPostulante[index]['external_us']);
-    this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
-     //============= mostras los titulos   ===============
-     this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
   }
 
 }

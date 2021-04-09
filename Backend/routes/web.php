@@ -57,7 +57,8 @@ try {
         //ofertasLaboraolesEstuidante
         $router->post('/ofertasLaboralesEstudiantes/eliminarPostulanteOfertaLaboral','OfertaLaboralEstudianteController@eliminarPostulanteOfertaLaboral');
         $router->get('/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/{external_id}','OfertaLaboralEstudianteController@listarTodasOfertaEstudianteExternal_us');
-        $router->get('/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of/{external_id}','OfertaLaboralEstudianteController@listTodasEstudiantePostulanOfertaExternal_of');
+        $router->get('/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_encargado/{external_id}','OfertaLaboralEstudianteController@listTodasEstudiantePostulanOfertaExternal_of_encargado');
+        $router->get('/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_empleador/{external_id}','OfertaLaboralEstudianteController@listTodasEstudiantePostulanOfertaExternal_of_empleador');
         $router->get('/ofertasLaboralesEstudiantes/listTodasOfertasLaboralesEstudiante/{external_id}','OfertaLaboralEstudianteController@listTodasOfertasLaboralesEstudiante');
         $router->post('/ofertasLaboralesEstudiantes/PostularOfertaLaboral/{external_id}','OfertaLaboralEstudianteController@PostularOfertaLaboral');
         //paises

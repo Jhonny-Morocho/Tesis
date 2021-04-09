@@ -9,7 +9,7 @@
             <th><i class="far fa-calendar-alt"></i> Culiminación</th>
             <th>Evento</th>
             <th>País</th>
-            <th>Acciones</th>
+            <th>Evidencias</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
             <td *ngIf="(item.tipo_evento).toString()=='2' ">Capacitacion</td>
             <td>{{buscarPais(item.fk_pais)}} </td>
             <td>
-                <a class="btn btn-light " (click)="mostrarPdf(item.evidencia_url)"><i class="far fa-file-pdf " ></i></a>
+                <a class="btn btn-light " (click)="mostrarPdf(item.evidencia_url)"><i class="fas fa-eye" ></i></a>
 
             </td>
         </tr>

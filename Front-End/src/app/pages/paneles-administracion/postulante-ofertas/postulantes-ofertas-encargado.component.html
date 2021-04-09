@@ -45,71 +45,35 @@
 
 
 
-
-
-
     <!-- Full screen modal -->
-    <div class="modal fade" id="motrarHojaVidaGeneral" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal fade" id="motrarHojaVidaGeneral" tabindex="-1" aria-labelledby="motrarHojaVidaGeneral" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="btn-close" aria-label="Close" (click)="carrarModalX()"></button>
                 </div>
                 <div class="modal-body">
+
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Información personal</a></li>
-                                    <li class="nav-item"><a class="nav-link active" href="#cursosCapacitaciones" data-toggle="tab">Cursos y Capacitaciones</a></li>
+                                    <li class="nav-item"><a class="nav-link active" href="#infPersonal" data-toggle="tab">Información personal</a></li>
+                                    <li class="nav-item"><a class="nav-link " href="#cursosCapacitaciones" data-toggle="tab">Cursos y Capacitaciones</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#titulosAcademicos" data-toggle="tab">Títulos Academicos</a></li>
                                 </ul>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="tab-pane" id="activity">
-
-                                        <div class="card-header text-muted border-bottom-0">
-                                            Postulante
-                                        </div>
-                                        <div class="card-body pt-0">
-                                            <div class="row">
-                                                <div class="col-7">
-                                                    <h2 class="lead"><b>{{ instanciaVerPostulante.nombre }} {{ instanciaVerPostulante.apellido }}</b></h2>
-
-                                                    <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                        <li class="small" *ngIf=" instanciaVerPostulante.genero== 0 ">
-                                                            <span class="fa-li"><i class="fas fa-venus-mars"></i></span> Género: Hombre
-                                                        </li>
-                                                        <li class="small" *ngIf=" instanciaVerPostulante.genero== 1 ">
-                                                            <span class="fa-li"><i class="fas fa-venus-mars"></i></span> Género: Mujer
-                                                        </li>
-                                                        <li class="small">
-                                                            <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfono #: {{ instanciaVerPostulante.telefono }}</li>
-                                                        <li class="small">
-                                                            <span class="fa-li"><i class="fas fa-id-card"></i></span> Cédula: {{ instanciaVerPostulante.cedula }}
-                                                        </li>
-                                                        <li class="small">
-                                                            <span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Dirección de domicilio: {{ instanciaVerPostulante.direccion_domicilio }}
-                                                        </li>
-                                                        <li class="small">
-                                                            <span class="fa-li"><i class="fas fa-envelope"></i></span> Correo: {{ instanciaVerPostulante.correo }}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-5 text-center">
-                                                    <img src="../../dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="tab-pane active" id="infPersonal">
+                                        <app-info-detalles-postulante [instanciaVerPostulante]="instanciaVerPostulante"></app-info-detalles-postulante>
                                     </div>
                                     <!-- /.tab-pane -->
-                                    <div class="tab-pane active" id="cursosCapacitaciones">
+                                    <div class="tab-pane" id="cursosCapacitaciones">
                                         <app-tabla-cursos-capacitaciones [instanciaCursosCapacitaciones]="arrayCursosCapacitaciones"></app-tabla-cursos-capacitaciones>
                                     </div>
                                     <!-- /.tab-pane -->
-
                                     <div class="tab-pane" id="titulosAcademicos">
                                         <app-tabla-titulos-academicos [tituloAcademico]="arrayTitulosAcademicos"></app-tabla-titulos-academicos>
                                         <!-- /.tab-pane -->

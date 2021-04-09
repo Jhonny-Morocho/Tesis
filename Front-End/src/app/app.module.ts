@@ -51,14 +51,15 @@ import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracio
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import { PostularOfertaLaboralComponent } from './pages/compentes-publicos/ofertas-home/ofertas-laborales.component';
 import { TablaFiltroPostulantesComponent } from './pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
-import { PostulanteOfertas } from './pages/paneles-administracion/postulante-ofertas/postulantes-ofertascomponent';
-import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta/postulantes-oferta.component';
+import { PostulanteOfertas } from './pages/paneles-administracion/postulante-ofertas/postulantes-ofertas-encargado.component';
+import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
 import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.component';
 import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
 import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
 import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
+import { VerHojaVidaComponent } from './pages/compentes-publicos/ver-hoja-vida/info-detalles-postulante.component';
 
 
 
@@ -103,7 +104,8 @@ import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/t
     NavbarComponent,
     OfertasPostuladasComponent,
     TablaTitulosAcademicosComponent,
-    TablaCursosCapacitacionesComponent
+    TablaCursosCapacitacionesComponent,
+    VerHojaVidaComponent
   ],
 
   imports: [

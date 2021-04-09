@@ -11,7 +11,7 @@ declare var JQuery:any;
 declare var $:any;
 @Component({
   selector: 'app-oferta-laboral',
-  templateUrl: './oferta-laboral.component.html'
+  templateUrl: './oferta-laboral-empleador.component.html'
 })
 export class OfertaLaboralComponent implements OnInit {
   //visualizar informacion de empleador
@@ -78,8 +78,6 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
     this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
     this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
-    
-
     
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
     console.log(this.instanciaOfertaVer);

@@ -87,7 +87,7 @@ class OfertaLaboralEstudianteController extends Controller
         }
     }
     // listamos todos los estudiante que han postulado a una oferta xxx
-    public function listTodasEstudiantePostulanOfertaExternal_of($external_id){
+    public function listTodasEstudiantePostulanOfertaExternal_of_encargado($external_id){
         //obtener todos los usuarios que sean postulante
         $EstudiantePostulanOfertaExternal_of=null;
         try {
@@ -106,6 +106,36 @@ class OfertaLaboralEstudianteController extends Controller
             "ofertalaboral_estudiante.*",
             "usuario.external_us",
             "usuario.correo")
+            ->where("ofertalaboral_estudiante.estado",">=",0)
+            ->where("ofertalaboral_estudiante.estado","<=",1)
+            ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
+           return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"ONE","error"=>$th,400]);
+        }
+    }
+     // listamos todos los estudiante que han postulado a una oferta xxx
+     public function listTodasEstudiantePostulanOfertaExternal_of_empleador($external_id){
+        //obtener todos los usuarios que sean postulante
+        $EstudiantePostulanOfertaExternal_of=null;
+        try {
+            //buscamos la oferta laboral el id , de la oferta laboral
+            $ObjOfertaLaboral=$this->buscarOfertaLaboral($external_id);
+            $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+            ->join("usuario","usuario.id","=","estudiante.fk_usuario")
+            ->select("estudiante.nombre",
+            "estudiante.external_es",
+            "estudiante.genero",
+            "estudiante.fecha_nacimiento",
+            "estudiante.direccion_domicilio",
+            "estudiante.cedula",
+            "estudiante.telefono",
+            "estudiante.apellido",
+            "ofertalaboral_estudiante.*",
+            "usuario.external_us",
+            "usuario.correo")
+            ->where("ofertalaboral_estudiante.estado",">=",1)
+            ->where("ofertalaboral_estudiante.estado","<=",2)
             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {

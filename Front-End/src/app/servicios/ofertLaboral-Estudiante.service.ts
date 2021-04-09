@@ -14,7 +14,8 @@ export class OfertaLaboralEstudianteService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
   private urlBackendPostularOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/PostularOfertaLaboral/";
-  private urlBackendListTodasEstudiantePostulanOfertaExternal_of="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of/";
+  private urlBackendListTodasEstudiantePostulanOfertaExternal_of_encargado="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_encargado/";
+  private urlBackendListTodasEstudiantePostulanOfertaExternal_of_empleador="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_empleador/";
   private urlListarTodasOfertaEstudianteExternal_us="/Backend/public/index.php/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/";
   private urlELiminarPostulanteOfertaLaboral="/Backend/public/index.php/ofertasLaboralesEstudiantes/eliminarPostulanteOfertaLaboral";
   private urlObtenerCursoCapacitacionExternal_ti="/Backend/public/index.php/cursos-capacitaciones/obtenerCursoCapacitacionExternal_cu/";
@@ -50,10 +51,10 @@ export class OfertaLaboralEstudianteService {
         })
     );
   }
-  listTodasEstudiantePostulanOfertaExternal_of(external_Of:String){
+  listTodasEstudiantePostulanOfertaExternal_of_encargado(external_Of:String){
     console.log(external_Of);
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of}${external_Of}`
+      `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of_encargado}${external_Of}`
     ).pipe(
       map(
         respuestaBackend=>{
@@ -63,7 +64,19 @@ export class OfertaLaboralEstudianteService {
     );
 
   }
+  listTodasEstudiantePostulanOfertaExternal_of_empleador(external_Of:String){
+    console.log(external_Of);
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of_empleador}${external_Of}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return this.crearArregloOfertaEstudiante_ModelPostulante(respuestaBackend['mensaje']);
+        })
+    );
 
+  }
   private crearArregloOfertaEstudiante(ObjTitulos:object){
      const titulos:OfertaLaboralEstudianteModel[]=[];
      //validamos si el objeto tiene informaicon
