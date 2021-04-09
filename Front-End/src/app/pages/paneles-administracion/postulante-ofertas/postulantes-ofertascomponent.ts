@@ -215,45 +215,9 @@ export class PostulanteOfertas implements OnInit {
     this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
      //============= mostras los titulos   ===============
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
- 
   }
 
-  // eliminarPostulanteOferta(nombre:string,apellido:string,id:Number){
-  //   console.log(nombre);
-  //   console.log(apellido);
-  //   console.log(id);
-  //   var index=parseInt((id).toString(), 10); 
-  //   console.log(this.arrayPostulante[index]);
-  //   Swal({
-  //     title: 'Are you sure?',
-  //     text: "Desvincular a  "+nombre+" "+apellido,
-  //     type: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //     this.arrayPostulante[index];
-  //     this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(
-  //         this.external_of_es,this.arrayPostulante[index]['external_us'],0
-  //       ).subscribe(
-  //         siHaceBien=>{
-  //           console.log(siHaceBien);
-  //           if(siHaceBien["Siglas"]=="OE"){
-  //             Swal('Registrado', siHaceBien['mensaje'], 'success');
-  //             //this.estudiantesInscritosOferta(this.external_of_es);
-  //             this.ngOnDestroy()
-  //           }else{
-  //             Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')
-  //           }
-  //         },error=>{
-  //           console.log(error);
-  //         }
-  //     );
-  //     }
-  //   })
-  // }
+
   ngOnDestroy(): void {
   // Do not forget to unsubscribe the event
     try {

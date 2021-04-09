@@ -8,16 +8,16 @@ declare var $:any;
 })
 export class TablaCursosCapacitacionesComponent implements OnInit {
   ubicacionArchivo:string="";
+  @Input() instanciaCursosCapacitaciones:any={};
     //data table
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-  @Input() instanciaCursosCapacitaciones:any=[];
   constructor() {
     this.configurarParametrosDataTable();
    }
 
   ngOnInit() {
-    this.configurarParametrosDataTable();
+    //this.configurarParametrosDataTable();
   }
   configurarParametrosDataTable(){
     this.dtOptions = {
