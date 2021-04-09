@@ -95,9 +95,16 @@ class OfertaLaboralEstudianteController extends Controller
             $ObjOfertaLaboral=$this->buscarOfertaLaboral($external_id);
             $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
             ->join("usuario","usuario.id","=","estudiante.fk_usuario")
-            ->select("estudiante.nombre","estudiante.external_es",
+            ->select("estudiante.nombre",
+            "estudiante.external_es",
+            "estudiante.genero",
+            "estudiante.fecha_nacimiento",
+            "estudiante.direccion_domicilio",
+            "estudiante.cedula",
+            "estudiante.telefono",
             "estudiante.apellido",
             "ofertalaboral_estudiante.*",
+            "usuario.external_us",
             "usuario.correo")
             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);

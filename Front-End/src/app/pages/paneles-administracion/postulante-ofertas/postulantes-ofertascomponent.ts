@@ -131,7 +131,6 @@ export class PostulanteOfertas implements OnInit {
     }
   }
 
-  // }
   //listamos todos los estudiantes que este postulando a esta oferta laboral
   estudiantesOfertaLaboral(){
     //obtener el external ofert desde la url
@@ -172,14 +171,6 @@ export class PostulanteOfertas implements OnInit {
       }
     );
   }
-  generoHombre(tipoGenero){
-    if(tipoGenero==1){
-      return false;
-    }
-    if(tipoGenero==0){
-      return true;
-    }
-  }
   esCurso(tipoCursoCapacitacion:number){
     if(tipoCursoCapacitacion==1){
       return true;
@@ -208,12 +199,13 @@ export class PostulanteOfertas implements OnInit {
   verHojaVidaModal(id:Number){
     console.log("click");
     var index=parseInt((id).toString(), 10); 
-    $('#exampleModal').modal('show');
+    $('#mostrarHojaVida').modal('show');
     //============= mostamos la informacion personal ========================
     this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
     this.instanciaVerPostulante.apellido=this.arrayPostulante[index]['apellido'];
     this.instanciaVerPostulante.genero=this.arrayPostulante[index]['genero'];
     this.instanciaVerPostulante.telefono=this.arrayPostulante[index]['telefono'];
+    this.instanciaVerPostulante.cedula=this.arrayPostulante[index]['cedula'];
     this.instanciaVerPostulante.fecha_nacimiento=this.arrayPostulante[index]['fecha_nacimiento'];
     this.instanciaVerPostulante.direccion_domicilio=this.arrayPostulante[index]['direccion_domicilio'];
     this.instanciaVerPostulante.correo=this.arrayPostulante[index]['correo'];
@@ -225,9 +217,7 @@ export class PostulanteOfertas implements OnInit {
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
  
   }
-  // cerrarModal(){
-  //   $('#exampleModal').modal('hide');
-  // }
+
   // eliminarPostulanteOferta(nombre:string,apellido:string,id:Number){
   //   console.log(nombre);
   //   console.log(apellido);

@@ -57,6 +57,8 @@ import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.component';
 import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
+import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
+import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
 
 
 @NgModule({
@@ -98,7 +100,9 @@ import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel
     VerOfertaLaboralComponent,
     DomseguroPipe,
     NavbarComponent,
-    OfertasPostuladasComponent
+    OfertasPostuladasComponent,
+    TablaTitulosAcademicosComponent,
+    TablaCursosCapacitacionesComponent
   ],
 
   imports: [

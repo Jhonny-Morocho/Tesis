@@ -5,7 +5,7 @@ import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import { PostulanteModel } from '../models/postulante.models';
 import { OfertaLaboralModel } from 'src/app/models/oferta-laboral.models';
-import { Console } from 'console';
+
 
 @Injectable({
   providedIn: 'root'
