@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.models';
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
@@ -28,8 +27,7 @@ export class PostulanteOfertas implements OnInit {
   instanciaOfertaPostulante:OfertaLaboralEstudianteModel;
   //data table
   arrayAux=[];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+
  estadoPostulacion= [];
  existeRegistros:boolean=false;
 
@@ -171,35 +169,19 @@ export class PostulanteOfertas implements OnInit {
       }
     );
   }
-  esCurso(tipoCursoCapacitacion:number){
-    if(tipoCursoCapacitacion==1){
-      return true;
-    }
-    if(tipoCursoCapacitacion==2){
-      return false;
-    }
+ 
+  carrarModalX(){
+    $('#motrarHojaVidaGeneral').modal('hide');
+    console.log('cerrarModalX');
   }
-  esNancional(tipoTitulo:number){
-    if(tipoTitulo==1){
-      return true;
-    }
-    if(tipoTitulo==2){
-      return false;
-    }
+  carrarModalbotonDanger(){
+    $('#motrarHojaVidaGeneral').modal('hide');
+    console.log('carrarModalbotonDanger');
   }
-  esTercerNivel(nivelInstruccion:number){
-    if(nivelInstruccion==1){
-      return true;
-    }
-    if(nivelInstruccion==2){
-      return false;
-    }
-  }
-
   verHojaVidaModal(id:Number){
     console.log("click");
     var index=parseInt((id).toString(), 10); 
-    $('#mostrarHojaVida').modal('show');
+    $('#motrarHojaVidaGeneral').modal('show');
     //============= mostamos la informacion personal ========================
     this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
     this.instanciaVerPostulante.apellido=this.arrayPostulante[index]['apellido'];
@@ -215,17 +197,6 @@ export class PostulanteOfertas implements OnInit {
     this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
      //============= mostras los titulos   ===============
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
-  }
-
-
-  ngOnDestroy(): void {
-  // Do not forget to unsubscribe the event
-    try {
-      this.dtTrigger.unsubscribe();
-    } catch (error) {
-      //le puse x q no uso suscripcion/mas info:/https://l-lin.github.io/angular-datatables/#/basic/angular-way
-      console.warn(error);
-    }
   }
 
 }

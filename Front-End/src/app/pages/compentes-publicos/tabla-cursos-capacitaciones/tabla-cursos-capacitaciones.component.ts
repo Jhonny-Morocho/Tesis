@@ -1,5 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { Subject } from 'rxjs';
+import { PaisesModel } from 'src/app/models/paises.models';
+import { PaisesService } from 'src/app/servicios/paises.service';
 import {environment} from 'src/environments/environment.prod';
 declare var $:any;
 @Component({
@@ -9,51 +11,46 @@ declare var $:any;
 export class TablaCursosCapacitacionesComponent implements OnInit {
   ubicacionArchivo:string="";
   @Input() instanciaCursosCapacitaciones:any={};
-    //data table
-    dtOptions: DataTables.Settings = {};
-    dtTrigger: Subject<any> = new Subject<any>();
-  constructor() {
-    this.configurarParametrosDataTable();
+  paises:PaisesModel[]=[];
+  constructor( private servicioPaises:PaisesService) {
+
    }
 
   ngOnInit() {
-    //this.configurarParametrosDataTable();
+ 
   }
-  configurarParametrosDataTable(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
-      language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
+  cargarPaises(){
+    //listamos los titulos academicos
+    this.servicioPaises.listarPaises().subscribe(
+      siHacesBien=>{
+        //console.log(siHacesBien);
+        //cargo array con la data para imprimir en la tabañ
+        this.paises =siHacesBien;
+    
+      },
+      (peroSiTenemosErro)=>{
+        console.log(peroSiTenemosErro);
+        console.warn("TODO MAL");
       }
-    };
-    this.dtTrigger.next();
+    );
   }
+  buscarPais(idPais){
+    console.log(idPais);
+    let nombrePais="";
+    this.paises.forEach(element => {
+      if(element.id==parseInt(idPais)){
+        console.log(element.nombre);
+        nombrePais=element.nombre;
+      }
+    });
+    console.log(nombrePais);
+    return nombrePais;
+   }
+  
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
     console.log(this.ubicacionArchivo);
-    $('#mostrarPDF').modal('show');
+    $('#mostrarCursos').modal('show');
   }
 }

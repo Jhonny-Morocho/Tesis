@@ -1,5 +1,4 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 declare var $:any;
 @Component({
@@ -20,5 +19,9 @@ export class TablaTitulosAcademicosComponent implements OnInit {
     this.ubicacionArchivo =environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
     console.log(this.ubicacionArchivo);
     $('#mostrarPDFTitulos').modal('show');
+  }
+  carrarModal(){
+    $('#mostrarPDFTitulos').modal('hide');
+    console.log('cerrarModalX');
   }
 }

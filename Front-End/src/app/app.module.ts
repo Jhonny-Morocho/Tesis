@@ -61,6 +61,7 @@ import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabl
 import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
