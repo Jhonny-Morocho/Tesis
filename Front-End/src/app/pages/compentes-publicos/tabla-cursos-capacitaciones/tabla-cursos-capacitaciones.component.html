@@ -22,7 +22,7 @@
             <td>{{item.fecha_culminacion }}</td>
             <td *ngIf="(item.tipo_evento).toString()=='1' ">Curso</td>
             <td *ngIf="(item.tipo_evento).toString()=='2' ">Capacitacion</td>
-            <td>{{buscarPais(item.fk_pais)}}</td>
+            <td>{{buscarPais(item.fk_pais)}} </td>
             <td>
                 <a class="btn btn-light " (click)="mostrarPdf(item.evidencia_url)"><i class="far fa-file-pdf " ></i></a>
 
@@ -36,7 +36,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" aria-label="Close" (click)="carrarModal()"></button>
             </div>
             <div class="modal-body">
                 <div class="embed-responsive embed-responsive-16by9">
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="carrarModal()">Close</button>
             </div>
         </div>
     </div>

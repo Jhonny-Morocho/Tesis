@@ -17,13 +17,13 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
    }
 
   ngOnInit() {
- 
+    this.cargarPaises();
   }
   cargarPaises(){
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        //console.log(siHacesBien);
+        console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
     
@@ -43,7 +43,6 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
         nombrePais=element.nombre;
       }
     });
-    console.log(nombrePais);
     return nombrePais;
    }
   
@@ -52,5 +51,9 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
     this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
     console.log(this.ubicacionArchivo);
     $('#mostrarCursos').modal('show');
+  }
+  carrarModal(){
+    $('#mostrarPDFTitulos').modal('hide');
+    console.log('cerrarModalX');
   }
 }
