@@ -23,7 +23,7 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
+       // console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
     
@@ -53,7 +53,7 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
     $('#mostrarCursos').modal('show');
   }
   carrarModal(){
-    $('#mostrarPDFTitulos').modal('hide');
+    $('#mostrarCursos').modal('hide');
     console.log('cerrarModalX');
   }
 }

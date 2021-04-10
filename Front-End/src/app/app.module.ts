@@ -59,7 +59,7 @@ import { NavbarComponent } from './pages/compentes-publicos/navbar/navbar.compon
 import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
 import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
 import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
-import { VerHojaVidaComponent } from './pages/compentes-publicos/ver-hoja-vida/info-detalles-postulante.component';
+import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-postulante/info-detalles-postulante.component';
 
 
 

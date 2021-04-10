@@ -6,11 +6,12 @@ declare var $:any;
   templateUrl: './tabla-titulos-academicos.component.html'
 })
 export class TablaTitulosAcademicosComponent implements OnInit {
-  @Input() tituloAcademico:any={};
+  @Input() tituloAcademico:any=[];
     //frame 
     frameLimpio:any;
     ubicacionArchivo:String="";
     dominio=environment;
+    existeRegistros:boolean=false;
   ngOnInit() {
 
   }

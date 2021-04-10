@@ -76,6 +76,8 @@ try {
         $router->get('/ofertas-laborales/listarTodasLasOfertasLaborales','OfertaLaboralController@listarTodasLasOfertasLaborales');
         $router->post('/ofertas-laborales/eliminarOfertaLaboral','OfertaLaboralController@eliminarOfertaLaboral');
         $router->post('/ofertas-laborales/actulizarOfertaLaboral/{external_id}','OfertaLaboralController@actulizarOfertaLaboral');
+        $router->post('/ofertas-laborales/finalizarOfertaLaboral/{external_id}','OfertaLaboralController@finalizarOfertaLaboral');
+        $router->post('/ofertasLaboralesEstudiantes/contrarPostulantes','OfertaLaboralEstudianteController@contrarPostulantes');
         $router->get('/ofertas-laborales/obtenerOfertaLaboralExternal_of/{external_id}','OfertaLaboralController@obtenerOfertaLaboralExternal_of');
         $router->post('/ofertas-laborales/registro/{external_id}','OfertaLaboralController@RegistrarOfertaLaboral');
         $router->get('/ofertas-laborales/listarOfertasLaboralesExternal_us/{external_id}','OfertaLaboralController@listarOfertasLaboralesExternal_us');

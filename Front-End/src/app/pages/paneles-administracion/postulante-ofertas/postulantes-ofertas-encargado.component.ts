@@ -192,9 +192,6 @@ export class PostulanteOfertas implements OnInit {
     $('#motrarHojaVidaGeneral').modal('hide');
     console.log('cerrarModalX');
   }
-  carrarModalbotonDanger(){
-    $('#motrarHojaVidaGeneral').modal('hide');
-    console.log('carrarModalbotonDanger');
-  }
+
 
 }

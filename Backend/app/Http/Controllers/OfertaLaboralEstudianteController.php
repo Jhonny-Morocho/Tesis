@@ -210,6 +210,37 @@ class OfertaLaboralEstudianteController extends Controller
         }
     }
 
+    public function contrarPostulantes(Request $request){
+        $OfertaLaboralPostulanteBorrar=null;
+        $arrayRespuesta=array();
+        if($request->json()){
+        try {
+            foreach ($request->json() as $key => $value) {
+                $OfertaLaboralPostulanteBorrar=
+                OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
+                ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
+                ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
+                ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
+                $arrayRespuesta[$key]=array(
+                    "estudiante"=>$value['external_of_est'],
+                    "estado"=> $OfertaLaboralPostulanteBorrar
+                );
+            }
+            return  response()->json(["mensaje"=>$arrayRespuesta,"Siglas"=>"OE",
+                                    "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Error no se puede borrar",
+            "resquest"=>$request->json()->all(),
+            "respuesta"=>$OfertaLaboralPostulanteBorrar,
+            "Siglas"=>"ONE",
+            "error"=>$th->getMessage()]);
+        }
+                                    
+    }else{
+        return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+    }
+}
+
     //================ FUNCIONES RECURSIVAS =======================//
     //bucar estudiante
     private function  buscarEstudiante($external_us){

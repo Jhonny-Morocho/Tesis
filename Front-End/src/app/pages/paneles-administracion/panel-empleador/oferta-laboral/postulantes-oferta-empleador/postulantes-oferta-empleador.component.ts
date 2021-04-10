@@ -6,7 +6,9 @@ import { TituloModel } from 'src/app/models/titulo.models';
 import { CursosCapacitacionesService } from 'src/app/servicios/cursos-capacitaciones.service';
 import { OfertaLaboralEstudianteService } from 'src/app/servicios/ofertLaboral-Estudiante.service';
 import { TituloService } from 'src/app/servicios/titulos.service';
+import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
+import { OfertaLaboralModel } from '../../../../../models/oferta-laboral.models';
 declare var $:any;
 @Component({
   selector: 'app-postulantes-oferta',
@@ -16,18 +18,38 @@ export class PostulantesOfertaComponent implements OnInit {
   instanciaVerPostulante:PostulanteModel;
   arrayPostulante:PostulanteModel[]=[];
   arrayAux=[];
+  estadoOfertaLaboralFinalizada:Boolean=false;
+  externalOferta:string="";
+  nombreOfertaLabroal:string="";
   arrayTitulosAcademicos:TituloModel[]=[];
+  instanciaOfertaLaboral:OfertaLaboralModel;
   arrayCursosCapacitaciones:CursosCapacitacionesModel[]=[];
   existeRegistros:boolean=false;
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
+    private servicioOfertaLabotal:OfertasLaboralesService,
     private servicioCursosCapacitaciones:CursosCapacitacionesService,
     private servicioTitulosAcademicos:TituloService, 
     private _activateRoute:ActivatedRoute) { }
 
   ngOnInit() {
+    this.instanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaVerPostulante=new PostulanteModel();
     this.estudiantesOfertaLaboral();
   
+  }
+  ofertaLaboralFinalizar(external_of:string){
+    console.log(this.externalOferta);
+    this.servicioOfertaLabotal.obtenerOfertaLaboralExternal_of(external_of).subscribe(
+      siHaceBien=>{
+          console.log(siHaceBien);
+          if(parseInt(siHaceBien['mensaje']['estado'])==4){
+            this.estadoOfertaLaboralFinalizada=true;
+            console.log(siHaceBien['mensaje']['estado']);
+          }
+      },siHaceMal=>{
+        console.warn(siHaceMal);
+      }
+    );
   }
   //listamos todos los estudiantes que este postulando a esta oferta laboral
   estudiantesOfertaLaboral(){
@@ -36,9 +58,11 @@ export class PostulantesOfertaComponent implements OnInit {
       params=>{
         this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of_empleador(params['external_of']).subscribe(
           siHaceBien=>{
-            console.log(siHaceBien);
+            //guardo el external oferta para poder enviarlo para cambiar de estado a la oferta
+            this.externalOferta=params['external_of'];
+            this.ofertaLaboralFinalizar(this.externalOferta);
+            console.log(this.externalOferta);
             this.arrayPostulante=siHaceBien;
-            console.log(this.arrayPostulante.length);
             if(this.arrayPostulante.length>0){
               this.existeRegistros=true;
             }
@@ -79,7 +103,10 @@ export class PostulantesOfertaComponent implements OnInit {
       }
     );
   }
- 
+  carrarModalX(){
+    $('#motrarHojaVidaGeneral').modal('hide');
+    console.log('cerrarModalX');
+  }
   cursosCapacitaciones(exteneral_us:string){
     this.servicioCursosCapacitaciones.listarCursosCapacitacionesExternal_usConParametro(exteneral_us).subscribe(
       siHaceBien=>{
@@ -90,10 +117,49 @@ export class PostulantesOfertaComponent implements OnInit {
       }
     );
   }
-  filtrarPostulante(){
-    //verifico si el usuario ha hecho check,si no hace check entonces no puede actualizar
+  contrarFinalizarOfertaLaboral(){
+    this.instanciaOfertaLaboral.estado=4;
+    //finaliza la oferta laboral pero no ha contratado ninugn postulante
+
     if(this.arrayAux.length==0){
-      Swal({title:'Atención',type:'info',text:'Ahun no ha realizado ninguna acción en el checklist'}); 
+      Swal({
+        title: '¿Está seguro en Finalizar la oferta laboral ?',
+        text: "Finalizara la publicación de la oferta laboral en la plataforma, pero usted no ha contratado ningún postulante si desea continuar  haga clic en Si",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) {
+          Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
+          Swal.showLoading();
+          console.log(this.instanciaOfertaLaboral);
+          this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
+            siHaceBien=>{
+                console.log(siHaceBien);
+                Swal.close();
+                Swal('Registrado', 'Información Registrada con éxito', 'success');
+                //desactivo el boton de guardar y finalizar
+                this.estadoOfertaLaboralFinalizada=true;
+            },siHaceMal=>{
+              console.warn(siHaceMal);
+            }
+          );
+          // this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
+          //   siHaceBien =>{
+          //       console.log(siHaceBien);
+          //       if(siHaceBien['Siglas']=='OE'){
+          //         Swal('Registrado', 'Información Registrada con éxito', 'success');
+          //       }else{
+          //         Swal('Error', siHaceBien['error'], 'error');
+          //       }
+          //   },siHceMal=>{
+          //     Swal('Registrado', siHceMal['error'], 'error');
+          //   }
+          // );
+        }
+      })
     }else{
       Swal({
         title: '¿Está seguro ?',

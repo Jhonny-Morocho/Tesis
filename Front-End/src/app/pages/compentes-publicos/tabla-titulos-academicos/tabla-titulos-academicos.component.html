@@ -1,4 +1,7 @@
-<table class="table table-condensed">
+<div class="alert alert-light text-center" *ngIf="tituloAcademico.length==0">
+    <i class="fas fa-exclamation-triangle"></i> No existe registros para mostrar
+</div>
+<table class="table table-condensed" *ngIf="tituloAcademico.length>0">
     <thead>
         <tr>
             <th style="width: 10px">#</th>

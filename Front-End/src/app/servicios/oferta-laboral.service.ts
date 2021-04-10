@@ -17,6 +17,7 @@ export class OfertasLaboralesService {
   private urlELiminarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/eliminarOfertaLaboral";
   private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
   private urlEditarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/actulizarOfertaLaboral/";
+  private urlFinalizarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/finalizarOfertaLaboral/";
   constructor(private _httCliente:HttpClient) { }
 
 
@@ -131,7 +132,23 @@ export class OfertasLaboralesService {
         })
     );
   }
-
+    //actulizar estado de oferta laboral a finalizado estado ==4
+    actulizarEstadoOfertaLaboralFinalizado(modeloOfertasLaborales:OfertaLaboralModel,external_ofert:string){
+      const autenficacionDatos={
+        ...modeloOfertasLaborales
+      }
+      console.log(modeloOfertasLaborales);
+      //retorna la respuesata
+      console.log(`${this.urlDominio_}${this.urlEditarOfertaLaboral}${modeloOfertasLaborales.external_of}`);
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlFinalizarOfertaLaboral}${external_ofert}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+    }
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   eliminarOfertaLaboral(modeloOfertasLaborales:OfertaLaboralModel){
     const autenficacionDatos={

@@ -133,6 +133,36 @@ class OfertaLaboralController extends Controller
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"ONE","error"=>$th,400]);
         }
     }
+
+
+    //estado 4 finalizara la oferta laboral y se la borra de la plataforma
+    public function finalizarOfertaLaboral(Request $request,$external_id){
+        if($request->json()){
+            $estadoOfertaLaboral=null;
+            try {
+                //actualizar el estado de la oferta laboral
+                $estadoOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)
+                ->update(array('estado'=>$request['estado']));
+                //actualizar el estado de los postulantes
+                return response()->json(["mensaje"=>"Operacion Exitosa",
+                        "ObjetaOfertaLaboral"=>$estadoOfertaLaboral,
+                        "external_of"=>$external_id,
+                        "resquest"=>$request->json()->all(),
+                        "Siglas"=>"OE",200]);
+                
+             //die($data);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                                            "external_of"=>$external_id,
+                                            "resques"=>$request->json()->all(),
+                                            "Siglas"=>"ONE",
+                                            "error"=>$th->getMessage()]);
+            }
+
+        }else{
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
     public function actulizarOfertaLaboral(Request $request,$external_id){
         if($request->json()){
             $ObjOfertaLaboral=null;
