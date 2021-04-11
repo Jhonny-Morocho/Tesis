@@ -64,7 +64,7 @@ export class PostulanteOfertas implements OnInit {
                   Swal('Error', siHaceBien['error'], 'error');
                 }
             },siHceMal=>{
-              Swal('Registrado', siHceMal['error'], 'error');
+              Swal('Error', siHceMal['error'], 'error');
             }
           );
         }

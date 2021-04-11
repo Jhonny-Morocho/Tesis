@@ -39,6 +39,7 @@ export class OfertaLaboralEstudianteService {
      );
   }
 
+
   //listammos postulantes activos /no activos / depende del estado
   listarTodasOfertaEstudianteExternal_us(){
     //retorna la respuesata

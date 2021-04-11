@@ -14,7 +14,7 @@
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Puesto</th>
-                        <th style="width: 10px">Estado</th>
+                        <th>Estado</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                         <th>Postulantes</th>
@@ -35,6 +35,9 @@
                         </td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='3' ">
                             <span class="badge badge-primary">Publicada</span>
+                        </td>
+                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='4' ">
+                            <span class="badge badge-secondary">Finalizada</span>
                         </td>
                         <td>{{ ofertaLaboral.obervaciones }}</td>
                         <td>

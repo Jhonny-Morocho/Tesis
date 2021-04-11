@@ -9,7 +9,7 @@
             <i class="fas fa-exclamation-triangle"></i> Debe señalar los postulantes que desea contratar, caso contrario si no seleccionada ningún postulante puede finalizar la publicación de la oferta laboral dando clic en el boton de Contratar y Finalizar
             oferta o esperar mas postulantes para que se inscriban
         </div>
-        <div class="alert alert-warning text-center" role="alert" *ngIf="estadoOfertaLaboralFinalizada==true">
+        <div class="alert alert-light text-center" role="alert" *ngIf="estadoOfertaLaboralFinalizada==true">
             <i class="fas fa-exclamation-triangle"></i> Oferta laboral finalizada
         </div>
         <div class="col-2 mt-3 mb-3">
@@ -49,7 +49,7 @@
                 </tbody>
             </table>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="contrarFinalizarOfertaLaboral()" [disabled]="estadoOfertaLaboralFinalizada==true">Contratar  y Finalizar oferta</button>
+                <button type="button" class="btn btn-primary" (click)="contrarFinalizarOfertaLaboral()" [disabled]="estadoOfertaLaboralFinalizada==true">Finalizar oferta</button>
             </div>
         </div>
     </div>

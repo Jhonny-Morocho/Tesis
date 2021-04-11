@@ -25,6 +25,7 @@ export class PostulantesOfertaComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
   arrayCursosCapacitaciones:CursosCapacitacionesModel[]=[];
   existeRegistros:boolean=false;
+  existeAlgunPostulanteChechado:boolean=false
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioOfertaLabotal:OfertasLaboralesService,
     private servicioCursosCapacitaciones:CursosCapacitacionesService,
@@ -117,14 +118,98 @@ export class PostulantesOfertaComponent implements OnInit {
       }
     );
   }
+  //envia los datos del array del ckeck a guardar
   contrarFinalizarOfertaLaboral(){
-    this.instanciaOfertaLaboral.estado=4;
-    //finaliza la oferta laboral pero no ha contratado ninugn postulante
+      this.instanciaOfertaLaboral.estado=4;
+      if(this.existeAlgunPostulanteChechado==true){
+          Swal({
+            title: '¿Está seguro en realizar la acción? No se podra revertir',
+            text: "Ha seleccionado con éxito los postulantes de su interes, si desea continuar haga clic en Aceptar ",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar'
+          }).then((result) => {
+            if (result.value) {
+              let estadoActualizarDato=true;
+              Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
 
+              console.log(this.instanciaOfertaLaboral);
+              //primero la finalizado a la oferta laboral 
+              this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
+                siHaceBien=>{
+                    console.log(siHaceBien);
+                    Swal.close();
+                    if(siHaceBien['Siglas']=='OE'){
+                      //si se subio
+                      estadoActualizarDato=true;
+                      //desactivo el boton de guardar y finalizar
+                      this.estadoOfertaLaboralFinalizada=true;
+                    }else{
+                      Swal('Error', siHaceBien['error'], 'error');
+                    }
+                },siHaceMal=>{
+                  console.warn(siHaceMal);
+                }
+              );
+              //actualizo el estado de los postulantes 
+              this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
+                siHaceBien =>{
+                    console.log(siHaceBien);
+                    if(siHaceBien['Siglas']=='OE'){
+                     //si se subio
+                     estadoActualizarDato=true;
+                    }else{
+                      Swal('Error', siHaceBien['error'], 'error');
+                    }
+                },siHceMal=>{
+                  Swal('Error', siHceMal['error'], 'error');
+                }
+              );
+              //finalizado la animacion
+              Swal.showLoading();
+              if(estadoActualizarDato==true){
+                Swal('Registrado', 'Información Registrada con éxito', 'success');
+              }
+            }
+          })
+      }
+      //dio check pero despues desmarco
+      if(this.existeAlgunPostulanteChechado==false){
+        Swal({
+          title: '¿Está seguro en realizar la acción? No se podra revertir ',
+          text: "Desmarco algunos postulantes por lo cual no ha contratado ningún postulante, si desea continuar  haga clic en Aceptar",
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar'
+        }).then((result) => {
+          if (result.value) {
+            Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
+            Swal.showLoading();
+            console.log(this.instanciaOfertaLaboral);
+            this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
+              siHaceBien=>{
+                  console.log(siHaceBien);
+                  Swal.close();
+                  Swal('Registrado', 'Información Registrada con éxito', 'success');
+                  //desactivo el boton de guardar y finalizar
+                  this.estadoOfertaLaboralFinalizada=true;
+              },siHaceMal=>{
+                console.warn(siHaceMal);
+              }
+            );
+          }
+        })
+      }
+      //finaliza la oferta laboral pero no ha contratado ninugn postulante
+      //si solo aplasto direccito el boton sin hacer nunguna accion en el check//aplasto directo el boton
     if(this.arrayAux.length==0){
       Swal({
-        title: '¿Está seguro en Finalizar la oferta laboral ?',
-        text: "Finalizara la publicación de la oferta laboral en la plataforma, pero usted no ha contratado ningún postulante si desea continuar  haga clic en Si",
+        title: '¿Está seguro en realizar la acción? No se podra revertir ',
+        text: "No ha seleccionado ahun ningún postulante, si desea continuar haga clic en Aceptar",
         type: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -140,59 +225,21 @@ export class PostulantesOfertaComponent implements OnInit {
                 console.log(siHaceBien);
                 Swal.close();
                 Swal('Registrado', 'Información Registrada con éxito', 'success');
-                //desactivo el boton de guardar y finalizar
                 this.estadoOfertaLaboralFinalizada=true;
             },siHaceMal=>{
               console.warn(siHaceMal);
             }
           );
-          // this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
-          //   siHaceBien =>{
-          //       console.log(siHaceBien);
-          //       if(siHaceBien['Siglas']=='OE'){
-          //         Swal('Registrado', 'Información Registrada con éxito', 'success');
-          //       }else{
-          //         Swal('Error', siHaceBien['error'], 'error');
-          //       }
-          //   },siHceMal=>{
-          //     Swal('Registrado', siHceMal['error'], 'error');
-          //   }
-          // );
-        }
-      })
-    }else{
-      Swal({
-        title: '¿Está seguro ?',
-        text: "Se desvinculara al postulante de la oferta laboral ",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value) {
-      
-          this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
-            siHaceBien =>{
-                console.log(siHaceBien);
-                if(siHaceBien['Siglas']=='OE'){
-                  Swal('Registrado', 'Información Registrada con éxito', 'success');
-                }else{
-                  Swal('Error', siHaceBien['error'], 'error');
-                }
-            },siHceMal=>{
-              Swal('Registrado', siHceMal['error'], 'error');
-            }
-          );
         }
       })
     }
-
   }
 
   check(i:Event,fk_postulante,fk_ofertaLaboral,exteral_of,external_es) {
     console.log(fk_ofertaLaboral);
     let estadoActual=(i.target as HTMLInputElement).value;
+    this.existeAlgunPostulanteChechado=(i.target as HTMLInputElement).checked;
+    console.log(this.existeAlgunPostulanteChechado);
     let estadoActualAux=null;
     var banderaRepetido=false;
     //verificar que valor me trae el value del input

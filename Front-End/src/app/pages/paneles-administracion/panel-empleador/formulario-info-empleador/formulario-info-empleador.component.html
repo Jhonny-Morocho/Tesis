@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
     <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
-        Registro de empleador en proceso de validación, en 72 horas se notificara su aprobación
+        <i class="fas fa-exclamation-triangle"></i> Registro de empleador en proceso de validación, en 72 horas se notificara su aprobación
     </div>
     <div class=" animated fadeIn" *ngIf="booleanFormularioCompletado==true">
         <div class="card">
@@ -10,14 +10,14 @@
                 <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpleadorEditar(fEmpleador)" #fEmpleador="ngForm">
                     <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                     <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
-                        <h4 class="alert-heading">Validación exitosa </h4>
+                        <h4 class="alert-heading"> Validación exitosa </h4>
                         <p>Tu validación ha sido éxitosa, por lo cual ya puedes publicar las ofertas laborales en la plataformas</p>
                         <hr>
                         <p class="mb-0">Obersvaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
                     </div>
                     <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES FALSE  ===============// -->
                     <div class="alert alert-warning" role="alert" *ngIf="formValidado==false && obervaciones==true">
-                        <h4 class="alert-heading">Validación no exitosa </h4>
+                        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Validación no exitosa </h4>
                         <p>{{ instanciaEmpleadorLlenarForm.observaciones }}</p>
                         <hr>
                         <p class="mb-0">Por favor vuelte a intentar</p>

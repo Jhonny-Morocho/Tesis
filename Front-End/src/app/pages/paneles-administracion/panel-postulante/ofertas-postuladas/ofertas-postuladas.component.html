@@ -10,10 +10,11 @@
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th style="width: 20px">Fecha de inscripción</th>
+                        <th>Fecha de inscripción</th>
                         <th>Oferta Laboral</th>
-                        <th>Observaciones</th>
-                        <th style="width: 20px">Estado de postulación</th>
+                        <!-- <th>Observaciones</th> -->
+                        <th>Estado de postulación</th>
+                        <th>Estado de oferta laboral</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,16 +22,31 @@
                         <td>{{ i +1}}</td>
                         <td>{{ item.created_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ item.puesto }}</td>
-                        <td>{{ item.observaciones }}</td>
+                        <!-- <td>
+                            <p *ngIf="item.estado==0">{{ item.observaciones }}</p>
+                            <p *ngIf="item.observaciones==1">{{ item.observaciones }}</p>
+                            <p *ngIf="item.observaciones==2">{{ item.observaciones }}</p>
+                            <p *ngIf="item.estado==3">{{ item.observaciones }}</p>
+                        </td> -->
                         <td>
-                            <span class="badge bg-danger" *ngIf="item.estado=='0' ">
+                            <span class="badge bg-danger" *ngIf="item.estado==0 || item.estadoOfLab==4 && item.estado==1">
                                 Denegado
                             </span>
-                            <span class="badge bg-warning " *ngIf="item.estado=='1' " title="tiempo máximo de confirmación 8 dias ">
+                            <span class="badge bg-warning " *ngIf="item.estado==1 && item.estadoOfLab==3" title="tiempo máximo de confirmación 8 dias ">
                                 <i class="far fa-clock " ></i> Postulando
                             </span>
-                            <span class="badge bg-success " *ngIf="item.estado=='2' ">
-                               Aceptado
+
+                            <span class="badge bg-success " *ngIf="item.estado==2  && item.estadoOfLab==4">
+                               Contratado
+                            </span>
+                        </td>
+                        <!-- ============== ETADO DE LA OFERTA LABORAL ====================== -->
+                        <td>
+                            <span class="badge bg-warning" *ngIf="item.estadoOfLab==4" title="Ha caba de finalizar el proceso de selección">
+                                Finalizada
+                            </span>
+                            <span class="badge bg-success" *ngIf="item.estadoOfLab==3" title="Oferta disponible en la plataforma">
+                                Activa
                             </span>
                         </td>
                     </tr>
