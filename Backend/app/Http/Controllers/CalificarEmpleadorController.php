@@ -52,8 +52,39 @@ class CalificarEmpleadorController extends Controller
              return response()->json(["mensaje"=>$premedio,"Siglas"=>"OE",200]);
             echo $califiacionUnitaria;
          } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$premedio,"Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$premedio,"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
          }  
      }
+     public function promedioCalificacionEmpleadorTodos(){
+        $ObjCalificacion=array();
+        try {
+            //seleccionar todos lo empleadores
+            $ObjEmpleador=Empleador::get();
+            foreach ($ObjEmpleador as $key => $value) {
+                $suma=CalificarEmpleador::where("fk_empleador",$value['id'])->sum('estrellas');
+                $numItem=CalificarEmpleador::where("fk_empleador",$value['id'])->count();
+                //division entre cero
+                if($numItem==0){
+                    $numItem=1;
+                }
+                 $ObjCalificacion[$key]=array(
+                    "empleadorExternal_em"=>$value['external_em'],
+                    "empleadorId"=>$value['id'],
+                    "empleadorCalificacionSuma"=>$suma,
+                    "empleadorCantidad"=>$numItem,
+                    "empleadorPromedio"=>round($suma/$numItem)
+                 );
+                // ->get();
+            } 
+            return response()->json(["mensaje"=>$ObjCalificacion,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+           return response()->json(["mensaje"=>$ObjCalificacion,"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
+        }  
+    }
+  
+
+
+     
+
  
 }

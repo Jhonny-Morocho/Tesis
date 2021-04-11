@@ -69,6 +69,8 @@ try {
         $router->get('/provincias/listarProvincias','ProvinciasController@listarProvincias');
         //calificar empleador
         $router->get('/calificar-empleador/promedioCalificacionEmpleador/{external_id}','CalificarEmpleadorController@promedioCalificacionEmpleador');
+        $router->get('/calificar-empleador/promedioCalificacionEmpleadorTodos','CalificarEmpleadorController@promedioCalificacionEmpleadorTodos');
+        
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');
         //ofertas-laborales
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');

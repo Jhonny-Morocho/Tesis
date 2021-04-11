@@ -111,6 +111,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         if(siHacesBien['Siglas']=="OE"){
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
           console.log(siHacesBien);
+          
           //bloqueo el formulario
           this.booleanFormularioCompletado=true;
           this.obervaciones=false;

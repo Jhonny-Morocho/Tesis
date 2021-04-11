@@ -10,7 +10,8 @@ export class CalificarEmpleadorService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
   private urlObtenerCalifiacionEmpleador="/Backend/public/index.php/calificar-empleador/promedioCalificacionEmpleador/";
-private  urlCalificarEmpleador="/Backend/public/index.php/calificar-empleador/calificarEmpleador";
+  private urlObtenerCalifiacionEmpleadorTodosEmpleadores="/Backend/public/index.php/calificar-empleador/promedioCalificacionEmpleadorTodos";
+  private  urlCalificarEmpleador="/Backend/public/index.php/calificar-empleador/calificarEmpleador";
   constructor(private _httCliente:HttpClient) { }
 
   //calificacion del empleador
@@ -25,6 +26,19 @@ private  urlCalificarEmpleador="/Backend/public/index.php/calificar-empleador/ca
           return respuestaBackend['mensaje'];
         })
     );
+  }
+  obtenerCalificacionTodosEmpleadores(){
+    //retorna la respuesata
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlObtenerCalifiacionEmpleadorTodosEmpleadores}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          console.log(respuestaBackend);
+          return respuestaBackend['mensaje'];
+        })
+    );
+  
   }
   registrarCalificacion(modeloCalificarEmpleador:CalificarEmpleadorModel){
     const autenficacionDatos={

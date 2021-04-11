@@ -162,7 +162,7 @@ class EmpleadorController extends Controller{
         try {
             $ObjeEmpleador=null;
             $ObjeEmpleador=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
-            ->select("usuario.*","empleador.*")
+            ->select("usuario.correo","empleador.*")
             ->where("usuario.tipoUsuario",6)
             ->get();
             return response()->json(["mensaje"=>$ObjeEmpleador,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);

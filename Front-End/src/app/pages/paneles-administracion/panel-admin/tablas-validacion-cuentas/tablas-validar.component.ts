@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
-
 import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { EmpleadorModel } from 'src/app/models/empleador.models';
 import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
 import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
-import { forEach } from '@angular/router/src/utils/collection';
-import { InstantiateExpr } from '@angular/compiler';
+
 declare var JQuery:any;
 // ========= valoracion =========
 
@@ -26,7 +24,8 @@ export class TareaValiar implements OnInit {
   intanciaEmpleadorCalificar:EmpleadorModel;
   estudiante:PostulanteModel[]=[];
   empleador:EmpleadorModel[]=[];
-
+  arrayCalificacionesEmpleadores=[];
+  activarBotonCalificarModal=false;
   intanciaCalifarEmpleador:CalificarEmpleadorModel;
   tipoUsuarioSecretaria:boolean=false;
   tipoUsuarioEncargado:boolean=false;
@@ -36,12 +35,25 @@ export class TareaValiar implements OnInit {
               private servicioEmpleador_:SerivicioEmpleadorService ) { }
   
   ngOnInit():void {
-  this.configurarParametrosDataTable();
-  this.perfilUsuario();
-  this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
-  this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
-  this.intanciaEmpleadorCalificar=new EmpleadorModel();
-  //this.calificarEstrellas();
+    this.obtenerCalificacionesTodosEmpleadores();
+    this.configurarParametrosDataTable();
+    this.perfilUsuario();
+    this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
+    this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
+    this.intanciaEmpleadorCalificar=new EmpleadorModel();
+    //this.calificarEstrellas();
+  }
+
+  obtenerCalificacionesTodosEmpleadores(){
+    this.servicioCalificarEmpleador.obtenerCalificacionTodosEmpleadores().subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        this.arrayCalificacionesEmpleadores=siHacesBien;
+        console.log(this.arrayCalificacionesEmpleadores);
+      },siHacesMal=>{
+        console.warn(siHacesMal);
+      }
+    );
   }
   configurarParametrosDataTable(){
     this.dtOptions = {
@@ -73,18 +85,15 @@ export class TareaValiar implements OnInit {
       }
     };
   }
+  //revisar que tipo de usuario admistrador esta usando la pagina
   perfilUsuario(){
+    //esat usando la pagina la secretaria
+
     if(Number(localStorage.getItem('tipoUsuario'))==3){
       this.tipoUsuarioSecretaria=true;
       this.servicioPostulante_.listarPostulantes().subscribe(
         siHacesBien=>{
           console.warn("TODO BIEN");
-            //data table
-            this.dtOptions = {
-              pagingType: 'full_numbers',
-              pageLength: 2
-            };
-
           this.estudiante =siHacesBien;
           console.log(this.estudiante);
           // Calling the DT trigger to manually render the table
@@ -95,36 +104,31 @@ export class TareaValiar implements OnInit {
          }
       );
     }
+      //esat usando la pagina el encargado
     if(Number(localStorage.getItem('tipoUsuario'))==5){
       this.tipoUsuarioEncargado=true;
       this.servicioEmpleador_.listarEmpleadores().subscribe(
         siHacesBien=>{
-          console.warn("TODO BIEN");
-          //data table
-          this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 2
-          };
+          console.log(siHacesBien);
           //asginamos el array que viene del servicio
           this.empleador =siHacesBien;
           //imprimimos las estrellas
-          let contador=0;
-          let numeroEstrellas=0;
-          this.empleador.forEach(element => {
-            //imprimir las estrellas en el td
-            this.servicioCalificarEmpleador.obeterCalifacionEmpleador(element['id']).subscribe(
-              siHcesBienCal=>{
-                numeroEstrellas=siHcesBienCal;
-                console.log(siHcesBienCal);
-                console.log("Num estrellas",numeroEstrellas);
-                console.log("contador",contador);
-                this.imprimirEstrellasTd(contador,numeroEstrellas);
-                contador++;
-              },errorCal=>{
-                console.log(errorCal);
+          function recorrerEmpleadores(element, index, array) {
+            console.log("[" + index + "] = " + element['empleadorPromedio']);
+            $(function() {
+              $('#'+index).starrr({
+                max: 5,
+                rating: element['empleadorPromedio']
+                // change: function(e, value){
+                //   //calificacion=value;
+                //   this.valor= value;
+                //   console.log(value);
+                //   //console.log(e);
+                // }
               });
-          });
-          ///
+            });
+          }
+          this.arrayCalificacionesEmpleadores.forEach(recorrerEmpleadores);
           console.log(this.empleador);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
@@ -134,21 +138,17 @@ export class TareaValiar implements OnInit {
         }
       );
     }
+  
   }
-
-
 
   valorEstrella(valorEstrella){
     console.log(valorEstrella);
+    this.activarBotonCalificarModal=true;
     this.intanciaCalifarEmpleador.estrellas=valorEstrella;
   }
   
-  calificarEmpleador(idEmpleador,indice){
+  calificarEmpleador(indice){
     $('#CalificarEmpleador').modal('show');
-    console.log(idEmpleador);
-    console.log(indice);
-    //console.log(this.empleador[0]);
-   
     this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
     this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
     this.intanciaEmpleadorCalificar.fk_ciudad=this.empleador[indice]['fk_ciudad'];
@@ -160,15 +160,9 @@ export class TareaValiar implements OnInit {
     this.intanciaEmpleadorCalificar.num_ruc=this.empleador[indice]['num_ruc'];
     this.intanciaEmpleadorCalificar.razon_empresa=this.empleador[indice]['razon_empresa'];
     this.intanciaEmpleadorCalificar.telefono=this.empleador[indice]['telefono'];
-    console.log(this.intanciaEmpleadorCalificar);
-  
-
   }
   guardarCalificacion(){
-    console.log('guardar calificaicon');
-   
     this.intanciaCalifarEmpleador.fk_empleador= this.intanciaEmpleadorCalificar.id;
-
     this.servicioCalificarEmpleador.registrarCalificacion(this.intanciaCalifarEmpleador).subscribe(
       siHaceBien=>{
         console.log(siHaceBien);
@@ -183,25 +177,6 @@ export class TareaValiar implements OnInit {
       });
     this.cerrarModal();
   }
-  //recepto el id del empleador para impromir en los td
-  imprimirEstrellasTd(idNodo,numEstrellasIicio){
-    console.log(idNodo);
-    console.log(numEstrellasIicio);
-    
-    $(function() {
-      $('#'+idNodo).starrr({
-        max: 5,
-        rating: numEstrellasIicio
-        // change: function(e, value){
-        //   //calificacion=value;
-        //   this.valor= value;
-        //   console.log(value);
-        //   //console.log(e);
-        // }
-      });
-    });
-  }
-
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

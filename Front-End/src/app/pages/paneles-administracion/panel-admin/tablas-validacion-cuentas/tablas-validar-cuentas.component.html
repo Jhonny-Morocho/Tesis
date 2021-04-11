@@ -81,7 +81,7 @@
                                 <button type="button " class="btn btn-light" [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
                             </td>
                             <td>
-                                <span (click)="calificarEmpleador(empleadores.id,i)">
+                                <span (click)="calificarEmpleador(i)">
                                      <div class='starrr' id='{{ i }}' style="pointer-events: none;" ></div>  
                                 </span>
                             </td>
@@ -121,82 +121,24 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <form>
-                        <p class="clasificacion">
-                            <input id="radio1" type="radio" (click)="valorEstrella(5)">
-                            <!--
-                          --><label for="radio1" style="font-size: 50px;">★</label>
-                            <!--
-                          --><input id="radio2" type="radio" (click)="valorEstrella(4)">
-                            <!--
-                          --><label for="radio2" style="font-size: 50px;">★</label>
-                            <!--
-                          --><input id="radio3" type="radio" (click)="valorEstrella(3)">
-                            <!--
-                          --><label for="radio3" style="font-size: 50px;">★</label>
-                            <!--
-                          --><input id="radio4" type="radio" (click)="valorEstrella(2)">
-                            <!--
-                          --><label for="radio4" style="font-size: 50px;">★</label>
-                            <!--
-                          --><input id="radio5" type="radio" (click)="valorEstrella(1)">
-                            <!--
-                          --><label for="radio5" style="font-size: 50px;">★</label>
-                        </p>
-                    </form>
+                    <p class="clasificacion ">
+                        <input id="radio1" type="radio" name="estrellas" value="5" (click)="valorEstrella(5)">
+                        <label for="radio1">★</label>
+                        <input id="radio2" type="radio" name="estrellas" value="4" (click)="valorEstrella(4)">
+                        <label for="radio2">★</label>
+                        <input id="radio3" type="radio" name="estrellas" value="3" (click)="valorEstrella(3)">
+                        <label for="radio3">★</label>
+                        <input id="radio4" type="radio" name="estrellas" value="2" (click)="valorEstrella(2)">
+                        <label for="radio4">★</label>
+                        <input id="radio5" type="radio" name="estrellas" value="1" (click)="valorEstrella(1)">
+                        <label for="radio5">★</label>
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="guardarCalificacion()">Guardar</button>
+                    <button type="button" class="btn btn-primary" (click)="guardarCalificacion()" [disabled]="activarBotonCalificarModal==false">Guardar</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- ====================== TEMPLATE PARA VALIDAR===================== -->
-<!-- <div class="content-wrapper">
-    <div class="card">
-        <div class="col-2 mt-2">
-            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/add-ferta-laboral']">
-                <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
-        </div>
-        <article class="card-body animated animate__animated animate__slideInRight">
-
-
-        </article>
-    </div>
-</div> -->
-
-<style>
-    #form p {
-        text-align: center;
-    }
-    
-    #form label {
-        font-size: 30px;
-    }
-    
-    input[type="radio"] {
-        display: none;
-    }
-    
-    label {
-        color: grey;
-    }
-    
-    .clasificacion {
-        direction: rtl;
-        unicode-bidi: bidi-override;
-    }
-    
-    label:hover,
-    label:hover~label {
-        color: orange;
-    }
-    
-    input[type="radio"]:checked~label {
-        color: orange;
-    }
-</style>
