@@ -17,6 +17,7 @@ export class AutenticacionUserService {
   
   private urlDominio_=environment.dominio;
   private urlBackend_Login="/Backend/public/index.php/usuario/login";
+  private urlBackend_recuperarPasword="/Backend/public/index.php/usuario/recuperarPassword";
   private urlBackend_CrearUsuario="/Backend/public/index.php/usuario/registro";
   private nombreUser:string;
   private correo:string;
@@ -43,6 +44,22 @@ export class AutenticacionUserService {
       map(
         respuestaBackend=>{
           console.log(respuestaBackend);
+          return respuestaBackend;
+        }
+      )
+    );
+
+  }
+  recuperarPassword(usuioModel_:UsuarioModel){
+    console.log(usuioModel_);
+     const objetoUsuario={
+       correo:usuioModel_.correo
+     }
+    return this._httCLiente.post(`${this.urlDominio_}${this.urlBackend_recuperarPasword}`,
+                                objetoUsuario
+    ).pipe(
+      map(
+        respuestaBackend=>{
           return respuestaBackend;
         }
       )

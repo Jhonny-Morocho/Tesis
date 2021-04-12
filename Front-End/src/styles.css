@@ -103,6 +103,14 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
 }
 
 
+/* =================== OLVIDE CONTRASEÑA ================ */
+
+.olvideContraseña {
+    color: #007bff !important;
+    cursor: pointer;
+}
+
+
 /* ================ DIBUJAR ESTRELLAS ============== */
 
 p.clasificacion {

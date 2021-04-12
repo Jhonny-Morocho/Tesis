@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  dominio:"http://localhost/Tesis"
+  dominio:"https://proeditsclub.com/Tesis"
 };

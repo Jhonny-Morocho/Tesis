@@ -24,6 +24,7 @@ try {
     //$router->group(['middleware' => 'auth'], function () use ($router) {
         //envaimos a guardar datos (end pint,controladador/)
         $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
+        $router->post('/usuario/recuperarPassword','UsuarioController@recuperarPassword');
         $router->post('/docente/registro/{external_id}','UsuarioController@RegistrarDocente');
         $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
         $router->post('/empleador/registro/{external_id}','EmpleadorController@RegistrarEmpleador');

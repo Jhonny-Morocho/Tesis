@@ -47,7 +47,65 @@ class UsuarioController extends Controller
  
     }
 
+    public function recuperarPassword(Request $request){
+  
+        if($request->json()){
+            $ObjUsuario=nuLL;
+            $correo=null;
+            try {
+                //consultar si existe ese usuario
+                $datos=$request->json()->all();
+                //verificar si existe el usuario
+                if (filter_var($datos['correo'], FILTER_VALIDATE_EMAIL)) {
+                    $correo=Usuario::where("correo",$datos['correo'])->first();
+                }
+                if($correo){
+                    //generamos el nuevo password
+                   $nuevoPassword="";
+                   $patron="1234567890abcdefghijklmnopqrstuvwxyz";
+                   $max=strlen($patron)-1;
+                   for ($i=0; $i < 10; $i++) { 
+                       # code...
+                       $nuevoPassword.=$patron{mt_rand(0,$max)};
+                   }
+                   //actualizar el nuevo password
+                   $updatePasword=Usuario::where("correo",$datos['correo'])
+                   ->update(array(
+                       "password"=>$nuevoPassword
+                   ));
+                   //enviamos al correo el password
+                   $enviarCorreoBolean=$this->enviarCorreo(
+                        $this->templaterecuperarContraseña($datos['correo'],$nuevoPassword),
+                        $datos['correo'],
+                        $this->de,
+                        "Solicitud de nueva contraseña"
+                    );
+                    $texto="";
+                    $handle = fopen("logRegistroPostulante.txt", "a");
+                    $texto="[".date("Y-m-d H:i:s")."]" ." Recuperar contraseña al usuario : 
+                            ".$datos['correo'].":: estado de enviar correo: ".$enviarCorreoBolean." ]";
+                    fwrite($handle, $texto);
+                    fwrite($handle, "\r\n\n\n\n");
+                    fclose($handle);
+                    return response()->json(["mensaje"=>"Contraseña actualizada con éxito",
+                                                "correoUsuario"=>$datos['correo'],
+                                                "Siglas"=>"OE",200]);
+                }else{
+                    return response()->json(["mensaje"=>"Usuario no encontrado",
+                                            "Siglas"=>"ONE",400]);
+                }
 
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>$ObjUsuario,
+                                            "error"=>$th->getMessage(),
+                                            "Siglas"=>"DNF",400]);
+            }
+
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+
+    }
     //Registrar docente
     //(obtengo todos los datos del formulario,el id a comparar)
     public function RegistrarDocente(Request $request,$external_id){
@@ -120,13 +178,15 @@ class UsuarioController extends Controller
                                                 $ObjUsuario->correo
                                             );
 
-                            $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,$value['correo'],
-                                                                $this->de,"Nuevo postulante registrado");
-                            $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
-                                                        "apellido"=>$value['apellido'],
-                                                        "estadoEnvioCorreo"=>$enviarCorreoBolean,
-                                                        "correo"=>$value['correo'],
+                        $enviarCorreoBolean=$this->enviarCorreo(
+                                                            $plantillaCorreo,$value['correo'],
+                                                            $this->de,"Nuevo postulante registrado"
                                                         );
+                        $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
+                                                    "apellido"=>$value['apellido'],
+                                                    "estadoEnvioCorreo"=>$enviarCorreoBolean,
+                                                    "correo"=>$value['correo'],
+                                                    );
                         $texto="[".date("Y-m-d H:i:s")."]" ." Registro Postulante Correo : ".$enviarCorreoBolean." ]";
                         fwrite($handle, $texto);
                         fwrite($handle, "\r\n\n\n\n");
@@ -245,7 +305,37 @@ class UsuarioController extends Controller
                     </html>';
         return $emailMensaje;      
     }
+    private function templaterecuperarContraseña($usuarioCorreo,$passworNuevo){
 
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
+                                <br>
+                                <hr>
+                                <div class="alert alert-primary">
+                                    Solicitud de nueva contraseña usuario :
+                                    '.$usuarioCorreo."
+
+                                    <hr>
+                                    Su nueva contraseña es : ".$passworNuevo.'
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+        return $emailMensaje;      
+    }
   
 
 }

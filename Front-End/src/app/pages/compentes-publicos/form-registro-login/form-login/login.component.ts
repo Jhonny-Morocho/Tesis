@@ -23,7 +23,40 @@ export class LoginAdminComponent implements OnInit {
 
   ngOnInit() {
   }
+  recuperarPassword(){
 
+    Swal({
+      title: 'Recuperar mi contraseña',
+      text: "Se enviara una nueva contraseña temporal a su correo",
+      input: 'email',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Enviar'
+    }).then((result) => {
+      if (result.value) {
+        Swal({
+          allowOutsideClick: false,
+          type: 'info',
+          text: 'Espere por favor...'
+        });
+        Swal.showLoading();
+        this.instanciaModeloUsuarioLogin.correo=result.value;
+        this._servicioAdmin.recuperarPassword(this.instanciaModeloUsuarioLogin).subscribe(
+           siHaceBien=>{
+             console.log(siHaceBien);
+             if (siHaceBien['Siglas']=="OE") {
+                Swal('Contraseña actualizada','Se ha enviado la nueva contraseña a su correo','success')
+             }else{
+                Swal('No se pudo actualizar su contraseña',siHaceBien['mensaje'],'info')
+             }
+           },siHaceMal=>{
+            Swal('ERROR',siHaceMal['error'],'error')
+           }
+         );
+      }
+    })
+  }
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
     console.log(this.instanciaModeloUsuarioLogin);
