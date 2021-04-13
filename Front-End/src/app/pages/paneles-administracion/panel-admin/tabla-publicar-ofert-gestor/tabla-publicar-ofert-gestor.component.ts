@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';

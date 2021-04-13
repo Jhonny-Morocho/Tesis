@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  dominio:"https://proeditsclub.com/Tesis"
+  dominio:"http://localhost/Tesis"
 };
 //domio sanbox http://localhost/Tesis
 //domio produccion https://proeditsclub.com/Tesis

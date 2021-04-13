@@ -66,7 +66,7 @@ class UsuarioController extends Controller
                    $max=strlen($patron)-1;
                    for ($i=0; $i < 10; $i++) { 
                        # code...
-                       $nuevoPassword.=$patron{mt_rand(0,$max)};
+                       $nuevoPassword.=$patron[mt_rand(0,$max)];
                    }
                    //actualizar el nuevo password
                    $updatePasword=Usuario::where("correo",$datos['correo'])

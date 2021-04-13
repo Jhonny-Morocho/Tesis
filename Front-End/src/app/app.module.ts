@@ -60,6 +60,7 @@ import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel
 import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
 import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
 import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-postulante/info-detalles-postulante.component';
+import { TablaEncuestaComponent } from './pages/paneles-administracion/panel-admin/tabla-encuesta/tabla-encuesta.component';
 
 
 
@@ -105,7 +106,8 @@ import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-p
     OfertasPostuladasComponent,
     TablaTitulosAcademicosComponent,
     TablaCursosCapacitacionesComponent,
-    VerHojaVidaComponent
+    VerHojaVidaComponent,
+    TablaEncuestaComponent
   ],
 
   imports: [
