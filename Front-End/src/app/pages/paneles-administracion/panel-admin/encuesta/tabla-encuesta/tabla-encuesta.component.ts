@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
-declare var $:any;
+import {Encuesta} from 'src/app/servicios/encuesta.service';
+import { EncuestaModel } from '../../../../../models/encuesta.models';
+//import * as Survey from "survey-jquery";
+
 @Component({
   selector: 'app-tabla-encuesta',
   templateUrl: './tabla-encuesta.component.html'
@@ -9,14 +12,20 @@ declare var $:any;
 export class TablaEncuestaComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
+  arrayEncuestas:EncuestaModel[]=[];
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor() { }
+  // ============ encuesta ============
+  constructor(private servicioEncuesta:Encuesta) { }
 
   ngOnInit() {
     this.configurarParametrosDataTable();
-    this.dtTrigger.next();
+    this.cargarTabla();
+
+
   }
+
  
+// ================================
   crearEncuesta(){
     Swal({
       title: 'Nueva encuesta',
@@ -37,6 +46,20 @@ export class TablaEncuestaComponent implements OnInit {
       }
     })
   }
+  cargarTabla(){
+    //listamos los titulos academicos
+    this.servicioEncuesta.listarTodasEncuestas().subscribe(
+      siHacesBien=>{
+        console.warn("TODO BIEN");
+        this.arrayEncuestas =siHacesBien;
+        console.log(this.arrayEncuestas);
+        this.dtTrigger.next();
+      },
+      (peroSiTenemosErro)=>{
+        console.warn(peroSiTenemosErro);
+      }
+    );
+   }
   configurarParametrosDataTable(){
     this.dtOptions = {
       pagingType: 'full_numbers',

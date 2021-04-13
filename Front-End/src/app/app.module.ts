@@ -62,9 +62,10 @@ import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/t
 import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-postulante/info-detalles-postulante.component';
 import { TablaEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
 import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
-
-
-
+import { DemoComponent } from './demo/demo.component';
+import { Survey } from 'survey-angular';
+import {Observable} from 'knockout';
+// import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +110,8 @@ import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admi
     TablaCursosCapacitacionesComponent,
     VerHojaVidaComponent,
     TablaEncuestaComponent,
-    FormEncuestaComponent
+    FormEncuestaComponent,
+    DemoComponent
   ],
 
   imports: [
@@ -120,6 +122,7 @@ import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admi
     HttpClientModule,
     // DATA TABLE
     DataTablesModule,
+    Survey
 
 
     // Tostadas

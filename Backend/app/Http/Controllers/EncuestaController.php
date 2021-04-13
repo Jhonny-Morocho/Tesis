@@ -14,8 +14,6 @@ use function PHPUnit\Framework\isEmpty;
 class EncuestaController extends Controller
 {
   
-  
-    //registrar curso y capacitaciones
     public function registrar(Request $request){
         if($request->json()){
             try {
@@ -45,18 +43,18 @@ class EncuestaController extends Controller
  
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
-    public function listarCursosCapacitaciones( $external_id){
-        $titulosAcademicos=null;
-        //obtener todos los usuarios que sean postulante
+    public function listarTodasEncuestas(){
+        $ObjEncuesta=null;
         try {
             //buscar si existe el usuario que realiza la peticion
-            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            //busco si ese usuario es un estudiante 
-            $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
-            $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
+            $ObjEncuesta=Encuesta::where("estado",1)->get();
+          
+            return response()->json(["mensaje"=>$ObjEncuesta,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$ObjEncuesta,
+                                    "Siglas"=>"ONE",
+                                    "error"=>$th->getMessage(),
+                                    400]);
         }
     }
     public function actulizarCursoCapacitaciones(Request $request,$external_id){

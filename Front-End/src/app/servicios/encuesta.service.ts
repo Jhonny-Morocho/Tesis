@@ -10,7 +10,7 @@ export class Encuesta {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
   private urlCrearEncuesta="/Backend/public/index.php/encuesta/registrar";
-  private urlListarTitulo="/Backend/public/index.php/titulos-academicos/listarTitulosEstudiante/";
+  private urlListarTodasEncuestas="/Backend/public/index.php/encuesta/listarTodasEncuestas";
   private urlELiminarTitulo="/Backend/public/index.php/titulos-academicos/eliminarTitulo";
   private urlObtenerTitUloExternal_ti="/Backend/public/index.php/titulos-academicos/obtenerTituloExternal_ti/";
   private urlEditarTitulo="/Backend/public/index.php/titulos-academicos/actulizarTitulo/";
@@ -30,45 +30,40 @@ export class Encuesta {
   }
 
   //listammos postulantes activos /no activos / depende del estado
-  listarTitulos(){
-
-    //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`);
+  listarTodasEncuestas(){
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`
+      `${this.urlDominio_}${this.urlListarTodasEncuestas}`
     ).pipe(
       map(
         respuestaBackend=>{
           console.log(respuestaBackend);
-          return this.crearArregloTitulo(respuestaBackend['mensaje']);
+          return this.crearArregloEncuestas(respuestaBackend['mensaje']);
         })
     );
   }
   listarTitulosExternal_usConParametro(external_us:string){
-
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarTitulo}${external_us}`
+      `${this.urlDominio_}${this.urlListarTodasEncuestas}${external_us}`
     ).pipe(
       map(
         respuestaBackend=>{
           console.log(respuestaBackend);
-          return this.crearArregloTitulo(respuestaBackend['mensaje']);
+          return this.crearArregloEncuestas(respuestaBackend['mensaje']);
         })
     );
   }
 
-  private crearArregloTitulo(ObjTitulos:object){
-    return;
-     const titulos:Encuesta[]=[];
+  private crearArregloEncuestas(ObjTitulos:object){
+     const encuesta:EncuestaModel[]=[];
      //validamos si el objeto tiene informaicon
      if(ObjTitulos===null){
          return [];
      }else{
        Object.keys(ObjTitulos).forEach(key=>{
-         const titulo:Encuesta=ObjTitulos[key];
-         titulos.push(titulo);
+         const _encuesta:EncuestaModel=ObjTitulos[key];
+         encuesta.push(_encuesta);
        })
-       return titulos;
+       return encuesta;
      }
   }
 

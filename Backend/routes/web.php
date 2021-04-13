@@ -73,6 +73,7 @@ try {
         $router->get('/calificar-empleador/promedioCalificacionEmpleadorTodos','CalificarEmpleadorController@promedioCalificacionEmpleadorTodos');
         //encuesta
         $router->post('/encuesta/registrar','EncuestaController@registrar');
+        $router->get('/encuesta/listarTodasEncuestas','EncuestaController@listarTodasEncuestas');
 
         //calificar empleador
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');

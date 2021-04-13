@@ -60,7 +60,7 @@ export class TitulosAcademicosComponent implements OnInit {
         console.warn("TODO MAL");
       }
     );
-   }
+  }
    eliminarTitulo(external_ti:string,nombreTitulo:string,nombreArchivoPDF:string,index:number){
      console.log(nombreArchivoPDF);
      console.log(external_ti);

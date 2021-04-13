@@ -1,12 +1,12 @@
 <navTab-admin></navTab-admin>
 <div class="content-wrapper">
-    <h6 class="container mt-4">Encuestas</h6>
-    <hr>
-    <div class="col-2 mt-2">
-        <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/form-encuesta']">
-            <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
-    </div>
     <div class="card">
+        <h6 class="container mt-4">Títulos Académicos</h6>
+        <hr>
+        <div class="col-2 mt-2">
+            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/form-encuesta']">
+                <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+        </div>
         <article class="card-body animated animate__animated fadeIn">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
@@ -15,24 +15,32 @@
                         <th>Fecha de creación</th>
                         <th>Nombre de la encuesta</th>
                         <th>Tipo de encuesta</th>
+                        <th>Añadir Preguntas</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2020-10-11</td>
-                        <td>Encuesta empleador</td>
-                        <td>Empleador</td>
+                    <tr *ngFor="let item of arrayEncuestas;let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ item.created_at | date :'yyyy-MM-dd' }}</td>
+                        <td>{{ item.nombre_encuesta }}</td>
+                        <td>
+                            <p *ngIf="item.tipo_encuesta==0">Postulante</p>
+                            <p *ngIf="item.tipo_encuesta==1">Empleador</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-light" [routerLink]="[ '/panel-admin/preguntas'] ">
+                                <i class="fas fa-chevron-right "></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-
         </article>
     </div>
 </div>
 
 <!-- Full screen modal -->
-<div class="modal fade" id="mostrarForm" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="mostrarForm" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,4 +59,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

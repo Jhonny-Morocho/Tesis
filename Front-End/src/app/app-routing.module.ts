@@ -35,6 +35,7 @@ import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracio
 import {FormEditarCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
 import {FormAddCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
 //publicar ofertas
+import {DemoComponent} from 'src/app/demo/demo.component';
 
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'panel-admin/filtrar-postulantes/:external_of' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
   //encuesta
   { path: 'panel-admin/encuesta' , component: TablaEncuestaComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/preguntas' , component: DemoComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-encuesta' , component: FormEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
