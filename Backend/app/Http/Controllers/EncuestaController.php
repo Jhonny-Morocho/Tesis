@@ -19,29 +19,28 @@ class EncuestaController extends Controller
     public function registrar(Request $request){
         if($request->json()){
             try {
-                //code...
+                //convierto en array
                 $datos=$request->json()->all();
-                $ObjCusosCapacitaciones=new Encuesta();
-                die("ya llegue perro");
-                $ObjCusosCapacitaciones->fk_pais=1;
-                $ObjCusosCapacitaciones->nom_evento=$datos["nom_evento"];
-                $ObjCusosCapacitaciones->tipo_evento=$datos["tipo_evento"];
-                $ObjCusosCapacitaciones->auspiciante=$datos["auspiciante"];
-                $ObjCusosCapacitaciones->horas=$datos["horas"];
-                $ObjCusosCapacitaciones->estado=$datos["estado"];
-                $ObjCusosCapacitaciones->fecha_inicio=$datos["fecha_inicio"];
-                $ObjCusosCapacitaciones->fecha_culminacion=$datos["fecha_culminacion"];
-                $ObjCusosCapacitaciones->evidencia_url=$datos["evidencia_url"];
-                $ObjCusosCapacitaciones->external_en="En".Utilidades\UUID::v4();
-                $ObjCusosCapacitaciones->save();
-                //die(json_encode($ObjCusosCapacitaciones));
-                //respuesta exitoso o no en la inserrccion
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE","Objeto"=>$ObjCusosCapacitaciones,200,]);
+                $ObjEncuesta=new Encuesta();
+                $ObjEncuesta->nombre_encuesta=$datos["nombre_encuesta"];
+                $ObjEncuesta->tipo_encuesta=$datos["tipo_encuesta"];
+                $ObjEncuesta->estado=$datos["estado"];
+                $ObjEncuesta->external_en="En".Utilidades\UUID::v4();
+                $ObjEncuesta->save();
+                return response()->json(["mensaje"=>"Operacion Exitosa",
+                                            "Siglas"=>"OE",
+                                            "ObjetoEncuesta"=>$ObjEncuesta,200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                                            "Siglas"=>"ONE",
+                                            "reques"=>$request->json()->all(),
+                                            "error"=>$th->getMessage(),400]);
             }
         }else{
-            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado",
+                                        "Siglas"=>"DNF",
+                                        "reques"=>$request->json()->all(),
+                                        400]);
         }
  
     }

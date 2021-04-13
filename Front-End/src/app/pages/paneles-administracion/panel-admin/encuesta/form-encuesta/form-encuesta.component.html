@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <div class="card">
+        <article class="card-body animated animate__animated animate__slideInRight">
+            <form class="row g-3" (ngSubmit)="onSubmitRegistrar(fEncuesta)" #fEncuesta="ngForm" enctype="multipart/form-data">
+                <h6>Encuesta</h6>
+
+                <div class="col-2">
+                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/encuesta']">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+                </div>
+
+                <hr>
+                <div class="col-md-12">
+                    <label for="inputPuesto" class="form-label">Id</label><br>
+                    <input type="text" [(ngModel)]="instanciaEncuesta.id" name="id" class="form-control" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputPuesto" class="form-label">Nombre de la encuesta</label><br>
+                    <span class="text-danger " *ngIf="fEncuesta.submitted && fEncuesta.controls['nombre_encuesta'].errors">El Nombre de la encuesta es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaEncuesta.nombre_encuesta" name="nombre_encuesta" class="form-control" required [disabled]="estadoFormularioregistroNuevo==false">
+                </div>
+                <div class="col-md-12">
+                    <label for="inputDescripcion" class="form-label">Tipo de encuesta </label><br>
+                    <span class="text-danger " *ngIf="fEncuesta.submitted && fEncuesta.controls['tipo_encuesta'].errors">El tipo de encuesta obligatorio</span>
+                    <select class="form-control" name="tipo_encuesta" [(ngModel)]="instanciaEncuesta.tipo_encuesta" required [disabled]="estadoFormularioregistroNuevo==false">
+                      <option [value]="i"*ngFor="let item of arrayTipoEncuesta;let i=index">{{item}}</option>
+                    </select>
+                </div>
+                <div class="col-12 ">
+                    <button type="submit " class="btn btn-primary ">Guardar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+
+</div>

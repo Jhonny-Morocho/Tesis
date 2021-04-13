@@ -16,6 +16,7 @@ export class TablaEncuestaComponent implements OnInit {
     this.configurarParametrosDataTable();
     this.dtTrigger.next();
   }
+ 
   crearEncuesta(){
     Swal({
       title: 'Nueva encuesta',

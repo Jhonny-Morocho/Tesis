@@ -71,7 +71,10 @@ try {
         //calificar empleador
         $router->get('/calificar-empleador/promedioCalificacionEmpleador/{external_id}','CalificarEmpleadorController@promedioCalificacionEmpleador');
         $router->get('/calificar-empleador/promedioCalificacionEmpleadorTodos','CalificarEmpleadorController@promedioCalificacionEmpleadorTodos');
-        
+        //encuesta
+        $router->post('/encuesta/registrar','EncuestaController@registrar');
+
+        //calificar empleador
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');
         //ofertas-laborales
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');

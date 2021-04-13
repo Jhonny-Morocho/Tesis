@@ -26,9 +26,7 @@ export class OfertaLaboralComponent implements OnInit {
     //data table
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private servicioOferta:OfertasLaboralesService,
-              private servicioEmpleador:SerivicioEmpleadorService,
-              private ruta_:Router) { }
+  constructor(private servicioOferta:OfertasLaboralesService) { }
 
   ngOnInit() {
     this.instanciaOfertaVer=new OfertaLaboralModel();
@@ -56,7 +54,7 @@ export class OfertaLaboralComponent implements OnInit {
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn("TODO MAL");
+        console.warn(peroSiTenemosErro);
       }
     );
    }
