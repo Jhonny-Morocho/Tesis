@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Survey } from 'survey-angular';
-
+declare var $:any,survey:any,Survey:any,window:any;
 // import * as Survey  from 'survey-jquery';
  //declare var window:any,survey:any,$:any,JQuery:any;
 @Component({
@@ -12,20 +11,21 @@ export class DemoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    //this.cargar();
+    this.cargar();
 
    
   }
   cargar(){
     //Survey.Survey.cssType = "bootstrap";
     //Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
-    return;
+
     $(function() {
     Survey.Survey.cssType = "bootstrap";
     Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
     window.survey = new Survey.Model({
         pages: [{
-            questions: [{
+            questions: [
+                {
                     type: "matrix",
                     name: "Quality",
                     title: "Indique si está de acuerdo o en desacuerdo con las siguientes afirmaciones",
