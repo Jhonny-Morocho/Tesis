@@ -92,8 +92,10 @@ class OfertaLaboralController extends Controller
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarTodasLasOfertasLaborales(){
         //obtener todos los usuarios que sean postulante
+        $ObjOfertasLaborales=null;
         try {
-            $ObjOfertasLaborales=OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
+            $ObjOfertasLaborales=
+            OfertasLaborales::join("empleador","empleador.id","=","oferta_laboral.fk_empleador")
             ->join("usuario","usuario.id","=","empleador.fk_usuario")
             ->select("empleador.razon_empresa",
                         "usuario.correo",
@@ -103,11 +105,15 @@ class OfertaLaboralController extends Controller
                         "oferta_laboral.*"
                     )
             ->where("oferta_laboral.estado",">=",1)
-            ->where("oferta_laboral.estado","<=",3)
+            ->where("oferta_laboral.estado","<=",4)
             ->get();
-            return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
+            return response()->json(["mensaje"=>$ObjOfertasLaborales,
+                                        "Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"No se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$ObjOfertasLaborales,
+                                    "Siglas"=>"ONE",
+                                    "error"=>$th->getMessage(),
+                                    400]);
         }
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario

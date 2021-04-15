@@ -6,8 +6,15 @@
             <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/validar-oferta-laboral']">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
         </div>
+        <h6 class="text-center">OFERTA LABORAL</h6>
+        <hr>
+        <app-ver-oferta-laboral [instanciaOfertaVer]="instanciaOfertaLaboral"></app-ver-oferta-laboral>
+
         <div class="alert alert-light text-center" role="alert" *ngIf="!existeRegistros">
-            <i class="fas fa-exclamation-triangle"></i> No existe registros para mostrar
+            <i class="fas fa-exclamation-triangle"></i> No existe postulantes para mostrar
+        </div>
+        <div class="alert alert-light text-center" role="alert" *ngIf="ofertaLaboralActiva==false">
+            <i class="fas fa-exclamation-triangle"></i> La oferta laboral a finalizado
         </div>
         <div *ngIf="existeRegistros">
             <table class="table">
@@ -32,13 +39,15 @@
                         </td>
                         <td>{{ postulantes.correo }}</td>
                         <td>
-                            <input class="form-check-input me-1" type="checkbox" (change)="check($event,postulantes.fk_estudiante,postulantes.fk_oferta_laboral,postulantes.external_of_est,postulantes.external_es)" [checked]="postulantes.estado=='1'" [value]="postulantes.estado">
+
+                            <input class="form-check-input me-1" type="checkbox" (change)="check($event,postulantes.fk_estudiante,postulantes.fk_oferta_laboral,postulantes.external_of_est,postulantes.external_es)" [checked]="postulantes.estado=='1'" [value]="postulantes.estado"
+                                [disabled]="ofertaLaboralActiva==false">
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="filtrarPostulante()">Guardar</button>
+                <button type="button" class="btn btn-primary" (click)="filtrarPostulante()" [disabled]="ofertaLaboralActiva==false">Guardar</button>
             </div>
         </div>
     </div>

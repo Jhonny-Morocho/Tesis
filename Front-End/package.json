@@ -28,6 +28,7 @@
         "install": "^0.13.0",
         "ng-starrating": "^1.0.20",
         "ng2-pdf-viewer": "^6.1.2",
+        "pdfmake": "^0.1.71",
         "rxjs": "~6.3.3",
         "sweetalert2": "^7.0.0",
         "tslib": "^1.9.0",

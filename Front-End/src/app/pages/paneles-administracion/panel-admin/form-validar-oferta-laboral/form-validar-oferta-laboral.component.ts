@@ -12,7 +12,7 @@ declare var $:any;
 })
 export class FormValidarOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
-
+  desactivarBotonGuardar=false;
   constructor(private _activateRoute:ActivatedRoute,
     private servicioOfertaLaboral:OfertasLaboralesService) { }
 
@@ -99,6 +99,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
   //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
   estadoAprobado(estado:Number){
     //console.log(estado);
+
     if(estado==1){
       this.instanciaOfertaLaboral.estado=1;
       console.log(this.instanciaOfertaLaboral.estado);
@@ -109,6 +110,9 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
       console.log(this.instanciaOfertaLaboral.estado);
       return true;
     }
-
+    if(estado==3 || estado==4 ){
+      this.desactivarBotonGuardar=true;
+    }
+   
   }
 }

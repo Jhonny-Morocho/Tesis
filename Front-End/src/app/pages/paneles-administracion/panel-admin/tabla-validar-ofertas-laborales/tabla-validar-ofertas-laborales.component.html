@@ -5,28 +5,28 @@
         <article class="card-body animated animate__animated fadeIn">
             <h6>Validar ofertas laborales</h6>
             <hr>
-
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <!-- <button (click)="generatePdf()">Generate PDF</button> -->
+            <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
                         <th style="width: 5px">#</th>
+                        <th>Creado</th>
+                        <th>Modificado</th>
                         <th>Oferta Laboral</th>
-                        <th>Correo</th>
                         <th>Estado</th>
-                        <th>Observaciones</th>
                         <th>Ver</th>
-                        <th>Validar</th>
+                        <th>Validar Oferta</th>
                         <th title="Preseleccionar Postulantes">
-                            Postulantes
+                            Preseleccionar
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
                         <td>{{ i+1 }}</td>
+                        <td>{{ ofertaLaboral.created_at | date: 'yyyy/MM/dd'}}</td>
+                        <td>{{ ofertaLaboral.updated_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
-                        <td>{{ ofertaLaboral.correo}}</td>
-
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && estadoConversion(ofertaLaboral.estado)==false  ">
                             <span class=" badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>
                         </td>
@@ -36,10 +36,12 @@
                         <td *ngIf="ofertaLaboral.estado.toLocaleString()=='3'">
                             <span class="badge badge-primary ">Publicado</span>
                         </td>
+                        <td *ngIf="ofertaLaboral.estado==4">
+                            <span class="badge badge-secondary">Finalizada</span>
+                        </td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false">
                             <span class="badge badge-warning">Revisado</span>
                         </td>
-                        <td>{{ ofertaLaboral.obervaciones}}</td>
                         <td>
                             <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
                         </td>
@@ -50,11 +52,12 @@
                         </td>
                         <td>
                             <a class="btn btn-light" [routerLink]="['/panel-admin/filtrar-postulantes',ofertaLaboral.external_of] ">
-                                <i class="fas fa-chevron-right "></i>
+                                <i class="fas fa-chevron-right "> </i>
                             </a>
                         </td>
                     </tr>
                 </tbody>
+
             </table>
 
         </article>

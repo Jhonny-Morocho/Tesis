@@ -8,7 +8,11 @@ import Swal from 'sweetalert2';
 //contantes del servidor
 import {environment} from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
+import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import { TituloService } from 'src/app/servicios/titulos.service';
+import {EmpleadorModel} from 'src/app/models/empleador.models';
+import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import { CursosCapacitacionesService } from 'src/app/servicios/cursos-capacitaciones.service';
 declare var JQuery:any;
 declare var $:any;
@@ -23,20 +27,29 @@ export class PostulanteOfertas implements OnInit {
   instanciaVerPostulante:PostulanteModel;
   arrayCursosCapacitaciones:CursosCapacitacionesModel[]=[];
   arrayTitulosAcademicos:TituloModel[]=[];
+  instanciaOfertaLaboral:OfertaLaboralModel;
+  arrayEmpleadores:EmpleadorModel[]=[];
+  instanciaEmpleador:EmpleadorModel;
   arrayPostulanteOfertAux:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaPostulante:OfertaLaboralEstudianteModel;
   arrayAux=[];
-
+  
  estadoPostulacion= [];
  existeRegistros:boolean=false;
+ ofertaLaboralActiva:boolean=true;
 
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioTitulosAcademicos:TituloService,
+    private servicioOfertaLaboral:OfertasLaboralesService,
+    private servicioEmpleador:SerivicioEmpleadorService,
     private servicioCursosCapacitaciones:CursosCapacitacionesService,
               private _activateRoute:ActivatedRoute) { }
 
   ngOnInit() {
     this.instanciaVerPostulante=new PostulanteModel();
+    this.instanciaEmpleador=new EmpleadorModel();
+    this.instanciaOfertaLaboral=new OfertaLaboralModel();
+    this.obtenerOfertaLaboral();
     this.estudiantesOfertaLaboral();
   }
   filtrarPostulante(){
@@ -46,7 +59,6 @@ export class PostulanteOfertas implements OnInit {
     }else{
       Swal({
         title: '¿Está seguro ?',
-        text: "Se desvinculara al postulante de la oferta laboral ",
         type: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -167,6 +179,55 @@ export class PostulanteOfertas implements OnInit {
       alert("el estado es nullo");
     }
   }
+  obtenerOfertaLaboral(){
+    this._activateRoute.params.subscribe(
+      params=>{
+        this.servicioOfertaLaboral.obtenerOfertaLaboralExternal_of(params['external_of']).subscribe(
+          siHaceBien=>{
+            console.log(siHaceBien);
+            this.instanciaOfertaLaboral.puesto=siHaceBien['mensaje']['puesto'];
+            this.instanciaOfertaLaboral.correo=siHaceBien['mensaje']['correo'];
+            this.instanciaOfertaLaboral.descripcion=siHaceBien['mensaje']['descripcion'];
+            this.instanciaOfertaLaboral.estado=siHaceBien['mensaje']['estado'];
+            this.instanciaOfertaLaboral.lugar=siHaceBien['mensaje']['lugar'];
+            this.instanciaOfertaLaboral.fk_empleador=siHaceBien['mensaje']['fk_empleador'];
+            this.instanciaOfertaLaboral.razon_empresa=siHaceBien['mensaje']['razon_empresa'];
+            this.instanciaOfertaLaboral.requisitos=siHaceBien['mensaje']['requisitos'];
+            if(this.instanciaOfertaLaboral.estado==4){
+              this.ofertaLaboralActiva=false;
+            }
+            
+            $("#itemRequisitos").html(this.instanciaOfertaLaboral.requisitos);
+            console.log(this.instanciaOfertaLaboral);
+
+            //obtener todos los empleadores para poder obtener los datos de los empleadores
+            this.servicioEmpleador.listarEmpleadores().subscribe(
+              siHaceBien=>{
+                  console.log(siHaceBien);
+                  this.arrayEmpleadores
+                  siHaceBien.forEach(element => {
+                    //comparo el fk_empleador con el id de usuario
+                    if(element['id']== this.instanciaOfertaLaboral.fk_empleador){
+               
+                      this.instanciaOfertaLaboral.razon_empresa=element['razon_empresa'];
+                    }
+                  });
+        
+                  console.log(this.instanciaEmpleador);
+              },error=>{
+        
+                console.log(error);
+              });
+
+          },siHaceMal=>{
+            console.warn(siHaceMal);
+          }
+        );
+
+      }
+    );
+  }
+
 
   //listamos todos los estudiantes que este postulando a esta oferta laboral
   estudiantesOfertaLaboral(){
