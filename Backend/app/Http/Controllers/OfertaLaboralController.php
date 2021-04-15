@@ -116,6 +116,8 @@ class OfertaLaboralController extends Controller
                                     400]);
         }
     }
+ 
+
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante

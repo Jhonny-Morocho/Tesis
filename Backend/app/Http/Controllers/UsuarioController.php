@@ -69,9 +69,11 @@ class UsuarioController extends Controller
                        $nuevoPassword.=$patron[mt_rand(0,$max)];
                    }
                    //actualizar el nuevo password
+                   $opciones=array('cost'=>12);
+                   $password_hashed=password_hash($nuevoPassword,PASSWORD_BCRYPT,$opciones);
                    $updatePasword=Usuario::where("correo",$datos['correo'])
                    ->update(array(
-                       "password"=>$nuevoPassword
+                       "password"=>$password_hashed
                    ));
                    //enviamos al correo el password
                    $enviarCorreoBolean=$this->enviarCorreo(

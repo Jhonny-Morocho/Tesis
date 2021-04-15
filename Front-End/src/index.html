@@ -60,6 +60,17 @@
 <!-- <link href="css/smoothness/jquery-ui-1.9.0.custom.css" rel="stylesheet"> -->
 <script src="https://surveyjs.azureedge.net/0.12.35/survey.jquery.js"></script>
 <script>
+    $(function() {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
 </script>
 
 </html>

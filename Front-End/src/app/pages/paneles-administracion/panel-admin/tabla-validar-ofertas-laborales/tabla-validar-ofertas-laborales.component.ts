@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren  } from '@angular/core';
 import Swal from 'sweetalert2';
 
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -10,6 +10,11 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
+import { DatePipe } from '@angular/common';
+
+
 
 declare var JQuery:any;
 declare var $:any;
@@ -17,7 +22,11 @@ declare var $:any;
   selector: 'app-tabla-validar-ofertas-laborales',
   templateUrl: './tabla-validar-ofertas-laborales.component.html'
 })
-export class TablaValidarOfertasLaboralesComponent implements OnInit {
+export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  {
+   //@ViewChild(DataTableDirective, {static: false})
+   @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
     //visualizar informacion de empleador
     instanciaEmpleadorModelVer:EmpleadorModel;
     booleanGestor:boolean=false;
@@ -30,22 +39,35 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     column:any;
     value:any;
     rows=[];
+ 
     instanciaOfertaVer:OfertaLaboralModel;
     //data table
+    //filtros personalizados con codigo
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
+
+    //Probando nuevos codigo para renicnair dat table
+
+
+
+    fechaFiltro:string=null;
+    estadoOfertaFiltro:any=null;
     constructor(private servicioOferta:OfertasLaboralesService,
+      private datePipe: DatePipe,
     private servicioEmpleador:SerivicioEmpleadorService,
+
     private ruta_:Router) { }
 
+  
     ngOnInit() {
       this.instanciaOfertaVer=new OfertaLaboralModel();
       this.intanciaOfertaLaboral=new OfertaLaboralModel();
       this.instanciaEmpleadorModelVer=new EmpleadorModel();
       this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
       this.configurarParametrosDataTable();
-      this.cargarTabla();
-      // playground requires you to assign document definition to a variable called dd
+      this.cargarTodasOfertas();
+
+     
     }
     funcionPreparData(data:[]){
       this.rows=[];
@@ -304,25 +326,25 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
        
       pdfMake.createPdf(documentDefinition).open();
     }
-   cargarTabla(){
-    //listamos los titulos academicos
+   cargarTodasOfertas(){
+    //listamos todas las ofertas
     this.servicioOferta.listarTodasLasOfertas().subscribe(
       siHacesBien=>{
         console.log("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
         console.log(this.ofertasLaborales);
-        let contador=1;
-        this.ofertasLaborales.forEach(element => {
-          console.log(element);
-          this.ofertasLaborales.forEach(element => {
-            console.log(element);
-              this.rows.push([contador, element['created_at'], element['updated_at'], element['puesto'], element['correo'], element['estado']]);
-              contador++;
-          });
-        });
+        //reportes
+        // let contador=1;
+        // this.ofertasLaborales.forEach(element => {
+        //   console.log(element);
+        //   this.ofertasLaborales.forEach(element => {
+        //     console.log(element);
+        //       this.rows.push([contador, element['created_at'], element['updated_at'], element['puesto'], element['correo'], element['estado']]);
+        //       contador++;
+        //   });
+        // });
         this.dtTrigger.next();
         //this.itemTabla.push(['1', '20201-sa', '2020','correo@aa','activo']);
-
       },
       (peroSiTenemosErro)=>{
         console.warn(peroSiTenemosErro);
@@ -330,20 +352,10 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
     );
     console.log(this.itemTabla);
    }
-   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-      try {
-        //this.dtTrigger.unsubscribe();
-      } catch (error) {
-        //le puse x q no uso suscripcion/mas info:/https://l-lin.github.io/angular-datatables/#/basic/angular-way
-        console.warn(error);
-      }
-    }
+
     verOfertaModal(id:Number){
-      console.log("click");
       //necesito converitr o typescrip me da error
       var index=parseInt((id).toString(), 10); 
-
       this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
@@ -351,16 +363,14 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
       this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
       this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
       this.instanciaOfertaVer.correo=this.ofertasLaborales[index]['correo'];
-      console.log( this.instanciaOfertaVer.descripcion);
+      
       //obtengo todos los usuarios 
       this.servicioEmpleador.listarEmpleadores().subscribe(
         siHaceBien=>{
             console.log(siHaceBien);
-
             siHaceBien.forEach(element => {
               //comparo el fk_empleador con el id de usuario
               if(element['id']== this.instanciaOfertaVer.fk_empleador){
-                console.log(element);
                 this.instanciaEmpleadorModelVer.nom_representante_legal=element['nom_representante_legal'];
                 this.instanciaEmpleadorModelVer.direccion=element['direccion'];
                 this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
@@ -369,23 +379,94 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
                 this.instanciaEmpleadorModelVer.tipo_empresa=element['tiposEmpresa'];
                 this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
               }
-    
             });
-
-            console.log(this.instanciaEmpleadorModelVer);
         },error=>{
-  
           console.log(error);
         });
       
       $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
-      console.log(this.instanciaOfertaVer.requisitos);
       $('#exampleModal').modal('show');
-   
     }
+
     cerrarModal(){
       $('#exampleModal').modal('hide');
     }
+    reiniciarValoresTablaOfertas(){
+      this.dtTrigger.unsubscribe();
+      this.configurarParametrosDataTable();
+      this.cargarTodasOfertas();
+    }
+
+    filtrarDatosFecha(fecha:String,estado:Number){
+      console.log(fecha);
+      this.servicioOferta.listarTodasLasOfertas().subscribe(
+        siHacesBien=>{
+          //creamos una arreglo auxiliar
+          let aux=[];
+
+          //recorreo todo el array y compara los datos
+      
+          siHacesBien.forEach(element => {
+              if(this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
+                estado==null){
+                console.log("si son igulaes");
+                aux.push(element);
+              }
+
+              //estado 1   revisado
+              if(estado==element['estado'] && 
+                fecha==null && (element['obervaciones']).length>0){
+                aux.push(element);
+              }
+              //estado 1 no revisado //le puse el 9 para que no debe problemas 
+              if(estado==9 && 
+                  fecha==null && (element['obervaciones']).length==0 ){
+                aux.push(element);
+              }
+
+              //=================consultas convinadas======================
+              if(this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
+              estado==element['estado']){
+              aux.push(element);
+              }
+
+              if(estado==9 && 
+                this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
+                (element['obervaciones']).length==0 ){
+                aux.push(element);
+              }
+          });
+          this.ofertasLaborales=aux;
+          this.dtTrigger.next();
+        },
+        (peroSiTenemosErro)=>{
+          console.warn(peroSiTenemosErro);
+        }
+      );
+    }
+    saverange(evento:Event){
+      let valorInput=(evento.target as HTMLInputElement).value;
+      let nombreCampo=(evento.target as HTMLInputElement).name;
+
+      //destruir la data table para poder reiinicarlar
+      this.dtTrigger.unsubscribe();
+      //asiganar los valores dinamicament a las variables globales
+      switch (nombreCampo) {
+        case 'fecha':
+          this.fechaFiltro=valorInput;
+          break;
+        case 'estado':
+          this.estadoOfertaFiltro=valorInput;
+          break;
+        default:
+          alert("Filtro no encontrado");
+          break;
+      }
+
+      this.filtrarDatosFecha(this.fechaFiltro,this.estadoOfertaFiltro);
+    }
+   
+
     //conversion de estado
     estadoConversion(numeroEstado:Number):boolean{
       if(numeroEstado==1){
@@ -437,4 +518,8 @@ export class TablaValidarOfertasLaboralesComponent implements OnInit {
       };
 
     }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
 }

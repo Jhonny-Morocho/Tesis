@@ -63,7 +63,7 @@ import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-p
 import { TablaEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
 import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import { DemoComponent } from './demo/demo.component';
-
+import { DatePipe } from '@angular/common';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
@@ -126,7 +126,7 @@ import { DemoComponent } from './demo/demo.component';
     // Tostadas
   ],
   providers: [
-
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

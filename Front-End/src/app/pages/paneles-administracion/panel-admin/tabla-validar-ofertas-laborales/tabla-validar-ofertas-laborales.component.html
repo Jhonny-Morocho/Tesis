@@ -5,26 +5,58 @@
         <article class="card-body animated animate__animated fadeIn">
             <h6>Validar ofertas laborales</h6>
             <hr>
-            <!-- <button (click)="generatePdf()">Generate PDF</button> -->
+
+            <!-- <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm"> -->
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="inputName">Fecha</label>
+                        <input type="date" class="form-control" (change)="saverange($event)" name="fecha">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="inputStatus">Estado</label>
+                        <select class="form-control custom-select" (change)="saverange($event)" name="estado">
+                                <option selected="" disabled=""></option>
+                                <option value="1">Revisado</option>
+                                <option value="9">No validados</option>
+                                <option value="2">Validado</option>
+                                <option value="3">Publicado</option>
+                                <option value="4">Finalizado</option>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label for="inputStatus">Reiniciar</label>
+                    <div class="form-group ">
+                        <button type="button" (click)="reiniciarValoresTablaOfertas()" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i></button>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label for="inputStatus">PDF</label>
+                    <div class="form-group ">
+                        <button type="button" class="btn btn-outline-success"><i class="far fa-file-pdf"></i></button>
+                    </div>
+                </div>
+            </div>
             <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
                         <th style="width: 5px">#</th>
-                        <th>Creado</th>
-                        <th>Modificado</th>
+                        <th>Fecha</th>
                         <th>Oferta Laboral</th>
                         <th>Estado</th>
                         <th>Ver</th>
                         <th>Validar Oferta</th>
                         <th title="Preseleccionar Postulantes">
-                            Preseleccionar
+                            Postulantes
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
                         <td>{{ i+1 }}</td>
-                        <td>{{ ofertaLaboral.created_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ ofertaLaboral.updated_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
                         <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && estadoConversion(ofertaLaboral.estado)==false  ">
@@ -57,13 +89,16 @@
                         </td>
                     </tr>
                 </tbody>
-
             </table>
-
         </article>
     </div>
 </div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">DataTable with default features</h3>
+    </div>
 
+</div>
 <!-- Modal  VISUALIZAR OFERTA LABORAL-->
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

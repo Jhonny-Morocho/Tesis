@@ -200,3 +200,13 @@
 
 
 
+[2021-04-15 05:58:52] Recuperar contraseña al usuario : 
+                            jhonny@hotmail.com:: estado de enviar correo: false ]
+
+
+
+[2021-04-15 06:00:08] Recuperar contraseña al usuario : 
+                            jmmorochoa@unl.edu.ec:: estado de enviar correo: false ]
+
+
+
