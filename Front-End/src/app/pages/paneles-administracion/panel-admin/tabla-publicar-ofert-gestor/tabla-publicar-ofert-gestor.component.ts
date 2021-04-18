@@ -46,11 +46,6 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
         console.log(this.ofertasLaborales);
         //data table
         //cargamos los items o los requisitos
-
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{

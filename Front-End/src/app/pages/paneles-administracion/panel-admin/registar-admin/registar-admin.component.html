@@ -1,0 +1,44 @@
+<div class="content-wrapper">
+    <div class="mt-5 animated fadeIn" style="padding-bottom: 100px;">
+        <div class="card">
+            <article class="card-body">
+                <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpledor(fEmpleadorRegistrar)" #fEmpleadorRegistrar="ngForm">
+                    <h3>Registro Administradores</h3>
+                    <hr>
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">Nombre</label><br>
+                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['razonSocialRegistrar'].errors">La razón social de la empresa es obligatorio</span>
+                        <input type="texto" [(ngModel)]="instanciaEmpleadorRegistrar.razon_empresa" name="razonSocialRegistrar" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">Apellido</label><br>
+                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['tipoEmpresaRegistrar'].errors">El tipo de institución o empresa es obligatorio</span>
+                        <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.tipo_empresa" name="tipoEmpresaRegistrar" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Correo</label><br>
+                            <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['actividadRucRegistrar'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
+                            <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.tipo_empresa" name="tipoEmpresaRegistrar" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">Contraseña</label><br>
+                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors">El Numero de RUC es obligatoria</span>
+                        <input type="text" [(ngModel)]="instanciaEmpleadorRegistrar.num_ruc" name="numeroRucRegistrar" class="form-control" required maxlength="13">
+                    </div>
+                    <div class=" col-md-6 ">
+                        <div class="form-group ">
+                            <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
+                            <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaEmpleador.estado)==false " (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i>No Aprobado</button>
+                            <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaEmpleador.estado)==true " (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
+                        </div>
+                    </div>
+                    <div class="col-12 ">
+                        <button type="submit " class="btn btn-primary ">Registrar</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </div>
+</div>

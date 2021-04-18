@@ -64,6 +64,8 @@ import { TablaEncuestaComponent } from './pages/paneles-administracion/panel-adm
 import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import { DemoComponent } from './demo/demo.component';
 import { DatePipe } from '@angular/common';
+import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import { RegistarAdminComponent } from './pages/paneles-administracion/panel-admin/registar-admin/registar-admin.component';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
@@ -110,7 +112,9 @@ import { DatePipe } from '@angular/common';
     VerHojaVidaComponent,
     TablaEncuestaComponent,
     FormEncuestaComponent,
-    DemoComponent
+    DemoComponent,
+    TablaUsuariosAdminComponent,
+    RegistarAdminComponent
   ],
 
   imports: [

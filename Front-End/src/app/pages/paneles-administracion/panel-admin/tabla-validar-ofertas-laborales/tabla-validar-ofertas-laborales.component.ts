@@ -325,6 +325,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
       console.log(this.ofertasLaborales);
         //reportes
         let contador=1;
+        this.rows=[];
         this.maquetarCabezeraTablaPdf();
         this.ofertasLaborales.forEach(element => {
            console.log(element);

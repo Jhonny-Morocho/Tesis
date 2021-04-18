@@ -8,6 +8,8 @@ import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 import {RegistroEmpleadorComponent} from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
+import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/registar-admin/registar-admin.component';
+import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import {FormEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import {TablaEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
 import {TablaFiltroPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
@@ -53,6 +55,8 @@ const routes: Routes = [
   { path: 'panel-admin/filtrar-postulantes/:external_of' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
   //encuesta
   { path: 'panel-admin/encuesta' , component: TablaEncuestaComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/registar-admin' , component: RegistarAdminComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/gestionar-usuarios-admin' , component:  TablaUsuariosAdminComponent,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/preguntas' , component: DemoComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-encuesta' , component: FormEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},

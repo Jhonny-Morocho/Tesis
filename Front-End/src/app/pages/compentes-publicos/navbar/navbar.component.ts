@@ -11,10 +11,15 @@ import {environment} from 'src/environments/environment';
 export class NavbarComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   domininio=environment;
+  tipoUsuarioAdmin:boolean=false;
   constructor(private servicioUsuario:AutenticacionUserService,
               private _router:Router) { }
 
   ngOnInit() {
+    if(localStorage.getItem('tipoUsuario')=='4'){
+      this.tipoUsuarioAdmin=true;
+    }
+
   }
   salirSession(){
     // ocupo el servicio
@@ -25,7 +30,7 @@ export class NavbarComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: 'Si'
     }).then((result) => {
       if (result.value) {
         this.servicioUsuario.cerrarSession();
