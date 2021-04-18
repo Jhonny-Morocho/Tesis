@@ -49,7 +49,7 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn("TODO MAL");
+        console.warn("TODO MAL",peroSiTenemosErro);
       }
     );
    }

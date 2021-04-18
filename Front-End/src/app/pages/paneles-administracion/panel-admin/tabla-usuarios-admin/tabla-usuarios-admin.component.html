@@ -13,28 +13,33 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Creado</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
+                        <th>Correo</th>
                         <th>Tipo de Usuario</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let titulosAcademicos of tituloAcademico;let i=index">
+                    <tr *ngFor="let docentes of arrayDocentes;let i=index">
                         <td>{{ i+1 }}</td>
-                        <td>{{ titulosAcademicos.titulo_obtenido }}</td>
-
-                        <td>{{ titulosAcademicos.numero_registro }}</td>
-
-                        <td>{{ titulosAcademicos.detalles_adiciones }}</td>
+                        <td>{{ docentes.updated_at | date: 'yyyy/MM/dd' }}</td>
+                        <td>{{ docentes.nombre }}</td>
+                        <td>{{ docentes.apellido }}</td>
+                        <td>{{ docentes.correo }}</td>
                         <td>
-                            <a class="btn btn-light" (click)="mostrarPdf(titulosAcademicos.evidencias_url)">
-                                <i class="far fa-file-pdf "></i>
-                            </a>
-
-                            <a class="btn btn-light" [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a>
-                            <a class="btn btn-light" (click)="eliminarTitulo(titulosAcademicos.external_ti,titulosAcademicos.titulo_obtenido,titulosAcademicos.evidencias_url,i)"><i class="fas fa-trash-alt "></i></a>
+                            <span class="badge bg-info text-dark" *ngIf="docentes.tipoUsuario==3">Secretaria</span>
+                            <span class="badge bg-primary" *ngIf="docentes.tipoUsuario==5">Encargado</span>
+                            <span class="badge bg-success" *ngIf="docentes.tipoUsuario==4">Admin</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-success" *ngIf="docentes.estado==1">Activo</span>
+                            <span class="badge bg-danger" *ngIf="docentes.estado==0">Inactivo</span>
+                        </td>
+                        <td>
+                            <a class="btn btn-light" [routerLink]="[ '/panel-postulante/edit-titulo',docentes.external_us] "><i class="fas fa-pencil-alt " ></i></a>
                         </td>
                     </tr>
                 </tbody>

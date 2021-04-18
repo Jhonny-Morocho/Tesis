@@ -13,7 +13,9 @@ class Docente extends Model
     //lista blanca campos publicos
     protected $fillable=[
         "fk_usuario",
-        "tipo_docente",
+        "nombre",
+        "apellido",
+        "estado",
         "external_do",
         "created_at",
         "updated_at"

@@ -1,31 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {PostulanteModel} from '../models/postulante.models';
+import {DocenteModel} from 'src/app/models/docente.models';
 import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SerivicioPostulanteService {
+export class SerivicioDocente {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
-  private urlBackendCrearPostulante="/Backend/public/index.php/estudiante/registro/";
+  private urlBackendCrearDocente="/Backend/public/index.php/docente/registro/";
   private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
-  private urlListarPostulantes="/Backend/public/index.php/estudiante/listarEstudiantes";
+  private urlListarDocentes="/Backend/public/index.php/docente/listarDocentes";
   private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
 
-  crearPostulante(modeloPostulante:PostulanteModel){
+  crearDocente(modeloDocente:DocenteModel){
     const autenficacionDatos={
-      ...modeloPostulante
-      //external_es:localStorage.getItem("external_us")
+      ...modeloDocente
     }
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlBackendCrearPostulante}${localStorage.getItem("external_us")}`);
+    console.log(`${this.urlDominio_}${this.urlBackendCrearDocente}${localStorage.getItem("external_us")}`);
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlBackendCrearPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlBackendCrearDocente}${localStorage.getItem("external_us")}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{
@@ -51,30 +50,30 @@ export class SerivicioPostulanteService {
     );
   }
   //listammos postulantes activos /no activos / depende del estado
-  listarPostulantes(){
+  listarDocentes(){
 
     //retorna la respuesata
     return this._httCliente.get(
-      `${this.urlDominio_}${this.urlListarPostulantes}`
+      `${this.urlDominio_}${this.urlListarDocentes}`
     ).pipe(
       map(
         respuestaBackend=>{
-          return this.crearArregloEstudiantes(respuestaBackend['mensaje']);
+          return this.crearArregloDocentes(respuestaBackend['mensaje']);
         })
     );
   }
 
-  private crearArregloEstudiantes(ObjEstudiante:object){
-    const estudiantex:PostulanteModel[]=[];
+  private crearArregloDocentes(ObjDocente:object){
+    const arraydocente:DocenteModel[]=[];
     //validamos si el objeto tiene informaicon
-    if(ObjEstudiante===null){
+    if(ObjDocente===null){
         return [];
     }else{
-      Object.keys(ObjEstudiante).forEach(key=>{
-        const estudiante:PostulanteModel=ObjEstudiante[key];
-        estudiantex.push(estudiante);
+      Object.keys(ObjDocente).forEach(key=>{
+        const docente:DocenteModel=ObjDocente[key];
+        arraydocente.push(docente);
       })
-      return estudiantex;
+      return arraydocente;
     }
   }
 
@@ -111,16 +110,9 @@ export class SerivicioPostulanteService {
     );
   }
     //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarDatosPostulante(modeloPostulante:PostulanteModel){
+  actulizarDatosPostulante(modeloPostulante:DocenteModel){
       const autenficacionDatos={
-        cedula:modeloPostulante.cedula,
-        telefono:modeloPostulante.telefono,
-        nombre:modeloPostulante.nombre,
-        apellido:modeloPostulante.apellido,
-        genero:modeloPostulante.genero,
-        fecha_nacimiento:modeloPostulante.fecha_nacimiento,
-        direccion_domicilio:modeloPostulante.direccion_domicilio,
-        observaciones:modeloPostulante.observaciones,
+            ...modeloPostulante
       }
     //retorna la respuesata
       return this._httCliente.post(

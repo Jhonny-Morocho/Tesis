@@ -22,7 +22,7 @@
                         <div class="col-md-6">
                             <label for="inputPassword4" class="form-label">Contraseña</label><br>
                             <span class="text-danger" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors">El password es obligatorio</span>
-                            <input type="password" [(ngModel)]="usuarioModel.password" name="password" class="form-control" id="inputPassword4" required minlength="6">
+                            <input type="password" [(ngModel)]="usuarioModel.password" name="password" class="form-control" id="inputPassword4" required maxlength="6">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Ingresar</button>

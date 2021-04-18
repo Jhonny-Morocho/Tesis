@@ -39,7 +39,7 @@ class UsuarioController extends Controller
                 //respuesta exitoso o no en la inserrccion
                 return response()->json(["mensaje"=>$ObjUsuario,"Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"Operacion No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -107,33 +107,6 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
 
-    }
-    //Registrar docente
-    //(obtengo todos los datos del formulario,el id a comparar)
-    public function RegistrarDocente(Request $request,$external_id){
-  
-        if($request->json()){
-   
-            $datos=$request->json()->all();
-            $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-
-           // die(json_encode($ObjUsuario));
-            // tipo de usuario decente ==1
-            if($ObjUsuario->tipoUsuario==1 && $ObjUsuario->tipoUsuario !=null){
-                //creo un objeto Docente para guardar el nuevo decente
-                $ObjDocente=new Docente();
-                $ObjDocente->fk_usuario=$ObjUsuario->id;
-                $ObjDocente->tipo_docente=$datos["tipo_docente"];
-                $ObjDocente->external_do="Doc".Utilidades\UUID::v4();
-                $ObjDocente->save();
-           
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE"]);
-            }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa, el usuario no se encontro","Siglas"=>"ONE"]);
-            }
-        }else{
-            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
-        }
     }
     public function RegistrarEstudiante(Request $request,$external_id){
         if($request->json()){

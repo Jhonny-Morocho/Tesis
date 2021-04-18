@@ -9,9 +9,9 @@ import { SerivicioPostulanteService } from 'src/app/servicios/serivicio-postulan
 })
 export class TablaFiltroPostulantesComponent implements OnInit {
   estudiante:PostulanteModel[]=[];
-    //data table
-    dtOptions: DataTables.Settings = {};
-    dtTrigger: Subject<any> = new Subject<any>();
+  //data table
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioPostulante_:SerivicioPostulanteService) { }
 
   ngOnInit() {

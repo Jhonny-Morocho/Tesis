@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
-//import {} from 'src/app/servicios/';
+import {SerivicioDocente} from 'src/app/servicios/docente.service';
+import {DocenteModel} from 'src/app/models/docente.models';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-tabla-usuarios-admin',
   templateUrl: './tabla-usuarios-admin.component.html'
 })
 export class TablaUsuariosAdminComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
-  constructor(private servicioUsuario:AutenticacionUserService) { }
+  arrayDocentes:DocenteModel[]=[];
+  dtTrigger: Subject<any> = new Subject<any>();
+  constructor(private SerivicioDocente:SerivicioDocente) { }
 
   ngOnInit() {
     this.configurarParametrosDataTable();
+    this.cargarTabla();
   }
   configurarParametrosDataTable(){
     this.dtOptions = {
@@ -43,7 +47,16 @@ export class TablaUsuariosAdminComponent implements OnInit {
     };
   }
   cargarTabla(){
-    //listamos los titulos academicos
+    //listar todos los usuarioas admistradores
+    this.SerivicioDocente.listarDocentes().subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        this.arrayDocentes=siHacesBien;
+        this.dtTrigger.next();
+      },siHacesMal=>{
+        console.log(siHacesMal);
+      }
+    );
     
   //   this.servicioOferta.listarOfertasValidadasEncargado().subscribe(
   //     siHacesBien=>{
