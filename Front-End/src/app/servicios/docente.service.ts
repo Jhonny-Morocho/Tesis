@@ -13,7 +13,7 @@ export class SerivicioDocente {
   private urlListarDocentes="/Backend/public/index.php/docente/listarDocentes";
   private urlObtenerDocenteExternal_us="/Backend/public/index.php/docente/obtenerDocente_external_us/";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
-  private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
+  private urlEditarFormPostulante="/Backend/public/index.php/docente/editarDocentes/";
   constructor(private _httCliente:HttpClient) { }
 
   crearDocente(modeloDocente:DocenteModel){
@@ -34,7 +34,6 @@ export class SerivicioDocente {
   
   //listammos postulantes activos /no activos / depende del estado
   listarDocentes(){
-
     //retorna la respuesata
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarDocentes}`
@@ -62,9 +61,8 @@ export class SerivicioDocente {
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
   obtenerDocenteExternal_us(external_us:string){
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlObtenerDocenteExternal_us}`,external_us
-    ).pipe(
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlObtenerDocenteExternal_us}${external_us}`).pipe(
       map(
         respuestaBackend=>{
           return respuestaBackend;
@@ -72,31 +70,15 @@ export class SerivicioDocente {
     );
  
   }
-  //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarAprobacionPostulante(estado:Number,external_es:string,observaciones:string){
-    console.log("Xxx");
-    const autenficacionDatos={
-      estado:estado,
-      observaciones:observaciones
-    }
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlValidarPostulante}${external_es}`,autenficacionDatos
-    ).pipe(
-      map(
-        respuestaBackend=>{
-          console.log(respuestaBackend);
-          return respuestaBackend;
-        })
-    );
-  }
-    //actulizar estado de validacion del postulante//aprobado y no aprobado
-  actulizarDatosPostulante(modeloPostulante:DocenteModel){
+
+  //actulizar docente
+  actulizarDatosDocente(modeloDocente:DocenteModel,external_us){
       const autenficacionDatos={
-            ...modeloPostulante
+            ...modeloDocente
       }
     //retorna la respuesata
       return this._httCliente.post(
-        `${this.urlDominio_}${this.urlEditarFormPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
+        `${this.urlDominio_}${this.urlEditarFormPostulante}${external_us}`,autenficacionDatos
       ).pipe(
         map(
           respuestaBackend=>{

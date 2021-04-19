@@ -4,8 +4,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import { Router } from '@angular/router';
-import { single } from 'rxjs/operators';
-import { empty } from 'rxjs';
+
 @Component({
   selector: 'app-formulario-info-postulante',
   templateUrl: './formulario-info-postulante.component.html'

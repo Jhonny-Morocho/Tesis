@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use App\Models\Docente;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Isset_;
 
 class DocenteController extends Controller
 {
@@ -53,7 +54,7 @@ class DocenteController extends Controller
                     return response()->json(["mensaje"=>"Solo el administrador puede realizar esta operación","Siglas"=>"ONE",200]);
                 }
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Error","Siglas"=>"ONE","error"=>$th->getMessage()]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -80,11 +81,12 @@ class DocenteController extends Controller
     public function editarDocente_external_us(Request $request, $external_id){
         if($request->json()){
             $data=$request->json()->all();
+            $objUsuario=null;
             try {
                 //actualizar los datos del usuario
                 //verificar si quiere actulaizar el password
                 $booleanActualizoPassword=false;
-                if($data["password"]){
+                if($data["password"]){//comprobamos si esta variable existe
                     $opciones=array('cost'=>12);
                     $password_hashed=password_hash($data["password"],PASSWORD_BCRYPT,$opciones);
                     $objUsuario=Usuario::where("usuario.external_us",$external_id)
@@ -106,15 +108,15 @@ class DocenteController extends Controller
                 $objDocente=Docente::join("usuario","usuario.id","docente.fk_usuario")
                 ->where("usuario.external_us",$external_id)
                 ->update(array(
-                    "nombre"=>"Nuevo Nombre",
-                    "apellido"=>"Nuevo Nombre"
+                    "nombre"=>$data["nombre"],
+                    "apellido"=>$data["apellido"]
                 ));
                 $arrayUsuarioDocente=array("estadoRegistro"=>$objUsuario,
                                             "actualizoPassword"=>$booleanActualizoPassword,
                                             "estadoDocente"=>$objDocente);
                 return response()->json(["mensaje"=>$arrayUsuarioDocente,"Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Error",
+                return response()->json(["mensaje"=>$th->getMessage(),
                                             "Siglas"=>"ONE",
                                             "error"=>$th->getMessage(),
                                         400]);
@@ -136,8 +138,7 @@ class DocenteController extends Controller
             )
             ->where("usuario.external_us",$external_id)
             ->first();
-            echo $objDocente;
-            die("obtenerner docente");
+            return response()->json(["mensaje"=>$objDocente,"Siglas"=>"OE",200,]);
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Error",
             "Siglas"=>"ONE",

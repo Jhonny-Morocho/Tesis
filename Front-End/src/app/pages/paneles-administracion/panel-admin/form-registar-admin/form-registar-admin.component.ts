@@ -36,7 +36,7 @@ export class RegistarAdminComponent implements OnInit {
           Swal({position: 'center',type: 'success',title: 'Registro éxitoso',showConfirmButton: false,timer: 1500})
           this.servicioRouter.navigateByUrl('/panel-admin/gestionar-usuarios-admin');
         }else{
-          Swal({title:siHacesBien['mensaje'],type:'error',text:siHacesBien['error']}); 
+          Swal({title:'Error',type:'error',text:siHacesBien['mensaje']}); 
         }
       },siHacesMal=>{
         console.log(siHacesMal);
@@ -45,10 +45,7 @@ export class RegistarAdminComponent implements OnInit {
     
 
   }
-  eventHandler(event:Event){
-    let escribir=(event.target as HTMLInputElement).value;
-    console.log(escribir);
-  }
+
   estadoUsuarioAdmin(estado:Number){
     if(estado==1){
       this.instanciaDocente.estado=1;

@@ -5,13 +5,13 @@
                 <i class="fa fa-arrow-left " aria-hidden="true "></i> Regresar</a>
         </div>
         <article class="card-body ">
-            <h3>Registrar Administradores</h3>
+            <h3>Registrar Administrador</h3>
             <hr>
             <form class="row g-3 " (ngSubmit)="onSubmitRegistrarAdmin(fRegistrarAdmin) " #fRegistrarAdmin="ngForm">
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Nombre</label><br>
                     <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors">El nombre es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required (keypress)=eventHandler($event)>
+                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required>
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Apellido</label><br>

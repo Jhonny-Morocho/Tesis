@@ -5,30 +5,30 @@
                 <i class="fa fa-arrow-left " aria-hidden="true "></i> Regresar</a>
         </div>
         <article class="card-body ">
-            <h3>Registrar Administradores</h3>
+            <h3>Actualizar Administrador</h3>
             <hr>
-            <form class="row g-3 " (ngSubmit)="onSubmitRegistrarAdmin(fRegistrarAdmin) " #fRegistrarAdmin="ngForm">
+            <form class="row g-3 " (ngSubmit)="onSubmitEditarAdmin(fEditarAdmin) " #fEditarAdmin="ngForm">
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Nombre</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors">El nombre es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required (keypress)=eventHandler($event)>
+                    <span class="text-danger " *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['nombre'].errors">El nombre es obligatorio</span>
+                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required>
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Apellido</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">El Apellido es obligatorio</span>
+                    <span class="text-danger " *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['apellido'].errors">El Apellido es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaDocente.apellido" name="apellido" class="form-control " required>
                 </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Correo</label><br>
-                        <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['correo'].errors">El Correo es obligatoro</span>
-                        <input type="text" [(ngModel)]="instanciaDocente.correo" name="correo" class="form-control" required>
+                        <span class="text-danger " *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['correo'].errors">El Correo es obligatoro</span>
+                        <input type="text" [(ngModel)]="instanciaDocente.correo" name="correo" class="form-control" disabled>
                     </div>
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
-                    <span class="text-danger" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors">La Contraseña es obligatoria</span>
-                    <input type="password" [(ngModel)]="instanciaDocente.password" name="password" class="form-control" required maxlength="10">
+                    <span class="text-danger" *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['password'].errors">La Contraseña es obligatoria</span>
+                    <input type="password" [(ngModel)]="instanciaDocente.password" name="password" class="form-control" maxlength="10">
                 </div>
                 <div class=" col-md-6 ">
                     <div class="form-group">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo Usuario</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
+                    <span class="text-danger " *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
                     <select class="form-control" name="tipoUsuario" [(ngModel)]="instanciaDocente.tipoUsuario" required>
                       <option [value]="3" >Secretaria</option>
                       <option [value]="4" >Administrador</option>
@@ -47,7 +47,7 @@
                     </select>
                 </div>
                 <div class="col-12 ">
-                    <button type="submit " class="btn btn-primary ">Registrar</button>
+                    <button type="submit " class="btn btn-primary ">Actualizar</button>
                 </div>
             </form>
         </article>
