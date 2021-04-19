@@ -8,7 +8,7 @@ import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 import {RegistroEmpleadorComponent} from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
-import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/registar-admin/registar-admin.component';
+import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
 import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import {FormEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import {TablaEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';

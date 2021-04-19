@@ -118,9 +118,9 @@ export class LoginAdminComponent implements OnInit {
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
         Swal({
-          title:'Error al autenticar',
+          title:'Error',
           type:'error',
-          text:peroSiTenemosErro['mensaje']
+          text:peroSiTenemosErro['error']
         }); 
       }
     );

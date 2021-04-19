@@ -21,7 +21,7 @@
                         <div class="col-md-6">
                             <label for="inputPasswordAdmin" class="form-label">Contraseña</label><br>
                             <span class="text-danger" *ngIf="fLoginAdmin.submitted && fLoginAdmin.controls['password'].errors">El password es obligatorio</span>
-                            <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" required maxlength="6">
+                            <input type="password" [(ngModel)]="instanciaModeloUsuarioLogin.password" name="password" class="form-control" required maxlength="10">
                         </div>
                         <div class="col-12">
                             <p class="mb-4 mt-2">

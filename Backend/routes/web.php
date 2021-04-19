@@ -27,6 +27,7 @@ try {
         $router->post('/usuario/recuperarPassword','UsuarioController@recuperarPassword');
         $router->post('/docente/registro/{external_id}','DocenteController@registrarDocente');
         $router->get('/docente/listarDocentes','DocenteController@listarDocentes');
+        $router->get('/docente/editarDocentes','DocenteController@editarDocente_external_do');
         $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
         $router->post('/empleador/registro/{external_id}','EmpleadorController@RegistrarEmpleador');
         $router->post('/usuario/login','UsuarioController@login');

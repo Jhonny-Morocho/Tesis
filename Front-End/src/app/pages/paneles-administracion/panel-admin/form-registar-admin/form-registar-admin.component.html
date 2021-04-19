@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Apellido</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">El Apellido</span>
+                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">El Apellido es obligatorio</span>
                     <input type="text" [(ngModel)]="instanciaDocente.apellido" name="apellido" class="form-control " required>
                 </div>
                 <div class="col-md-6 ">
@@ -28,10 +28,10 @@
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
                     <span class="text-danger" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors">La Contraseña es obligatoria</span>
-                    <input type="text " [(ngModel)]="instanciaDocente.password" name="password" class="form-control" required maxlength="6">
+                    <input type="password" [(ngModel)]="instanciaDocente.password" name="password" class="form-control" required maxlength="10">
                 </div>
                 <div class=" col-md-6 ">
-                    <div class="form-group ">
+                    <div class="form-group">
                         <label for="exampleFormControlTextarea1 ">Estado</label><br>
                         <button type="button" class="btn btn-outline-danger" *ngIf="estadoAcestadoUsuariotivo==false" (click)="estadoUsuarioAdmin(1) "><i class="fas fa-times-circle "></i>No Activo</button>
                         <button type="button" class="btn btn-outline-success" *ngIf="estadoAcestadoUsuariotivo==true" (click)="estadoUsuarioAdmin(0) "><i class="fas fa-check "></i> Activo</button>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo Usuario</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">El titpo de usuario</span>
+                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
                     <select class="form-control" name="tipoUsuario" [(ngModel)]="instanciaDocente.tipoUsuario" required>
                         <option [value]="3" >Secretaria</option>
                         <option [value]="4" >Administrador</option>

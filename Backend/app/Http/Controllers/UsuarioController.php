@@ -197,7 +197,9 @@ class UsuarioController extends Controller
             $usuario=null;
             try {
                 $datos=$request->json()->all();
-                $usuario=Usuario::where("correo",$datos['correo'])->first();
+                $usuario=Usuario::where("correo",$datos['correo'])
+                ->where("estado",1)
+                ->first();
                 if($usuario){
                     if(password_verify($datos['password'],$usuario['password'])){
                         // preguntamos que tipo de usuario es 
@@ -206,7 +208,7 @@ class UsuarioController extends Controller
     
                         } catch (\Throwable $th) {
                             //throw $th;
-                            return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"request"=>$th]);
+                            return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"error"=>$th->getMessage()]);
                         }
                     }else{
                         return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
@@ -217,7 +219,7 @@ class UsuarioController extends Controller
                     return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
                 }
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"ERROR","Siglas"=>"Error",$th,400]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
             }
 
         }else{
