@@ -10,9 +10,8 @@ export class SerivicioDocente {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
   private urlBackendCrearDocente="/Backend/public/index.php/docente/registro/";
-  private urlListarFormPostulante="/Backend/public/index.php/estudiante/FormEstudiante";
   private urlListarDocentes="/Backend/public/index.php/docente/listarDocentes";
-  private urlObtenerPostulanteExternal_es="/Backend/public/index.php/estudiante/obtenerPostulanteExternal_es";
+  private urlObtenerDocenteExternal_us="/Backend/public/index.php/docente/obtenerDocente_external_us/";
   private urlValidarPostulante="/Backend/public/index.php/estudiante/actulizarAprobacionEstudiante/";
   private urlEditarFormPostulante="/Backend/public/index.php/estudiante/actulizarFormEstudiante/";
   constructor(private _httCliente:HttpClient) { }
@@ -33,22 +32,6 @@ export class SerivicioDocente {
     );
   }
   
-  //el postulante en su session puede ver sus datos registrados
-  listarFormPostulante(){
-    const autenficacionDatos={
-      external_us:localStorage.getItem("external_us")
-    }
-    //retorna la respuesata
-    //console.log(`${this.urlDominio_}${this.urlListarFormPostulante}`);
-    return this._httCliente.post(
-      `${this.urlDominio_}${this.urlListarFormPostulante}`,autenficacionDatos
-    ).pipe(
-      map(
-        respuestaBackend=>{
-          return respuestaBackend;
-        })
-    );
-  }
   //listammos postulantes activos /no activos / depende del estado
   listarDocentes(){
 
@@ -78,12 +61,9 @@ export class SerivicioDocente {
   }
 
   //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerPostulanteExternal_es(external_es:string){
-    const autenficacionDatos={
-      external_es:external_es
-    }
+  obtenerDocenteExternal_us(external_us:string){
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlObtenerPostulanteExternal_es}`,autenficacionDatos
+      `${this.urlDominio_}${this.urlObtenerDocenteExternal_us}`,external_us
     ).pipe(
       map(
         respuestaBackend=>{

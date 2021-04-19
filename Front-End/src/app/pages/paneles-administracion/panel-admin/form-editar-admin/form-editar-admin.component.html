@@ -1,0 +1,56 @@
+<div class="container mt-5 animate__animated    animate__slideInRight">
+    <div class="card ">
+        <div class="col-2">
+            <a [routerLink]="[ '/panel-admin/gestionar-usuarios-admin/'] " class="float-right btn btn-outline-primary ">
+                <i class="fa fa-arrow-left " aria-hidden="true "></i> Regresar</a>
+        </div>
+        <article class="card-body ">
+            <h3>Registrar Administradores</h3>
+            <hr>
+            <form class="row g-3 " (ngSubmit)="onSubmitRegistrarAdmin(fRegistrarAdmin) " #fRegistrarAdmin="ngForm">
+                <div class="col-md-6 ">
+                    <label for="inputEmail4 " class="form-label ">Nombre</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors">El nombre es obligatorio</span>
+                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required (keypress)=eventHandler($event)>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4 " class="form-label ">Apellido</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">El Apellido es obligatorio</span>
+                    <input type="text" [(ngModel)]="instanciaDocente.apellido" name="apellido" class="form-control " required>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Correo</label><br>
+                        <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['correo'].errors">El Correo es obligatoro</span>
+                        <input type="text" [(ngModel)]="instanciaDocente.correo" name="correo" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
+                    <span class="text-danger" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors">La Contraseña es obligatoria</span>
+                    <input type="password" [(ngModel)]="instanciaDocente.password" name="password" class="form-control" required maxlength="10">
+                </div>
+                <div class=" col-md-6 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1 ">Estado</label><br>
+                        <button type="button" class="btn btn-outline-danger" *ngIf="estadoAcestadoUsuariotivo==false" (click)="estadoUsuarioAdmin(1) "><i class="fas fa-times-circle "></i>No Activo</button>
+                        <button type="button" class="btn btn-outline-success" *ngIf="estadoAcestadoUsuariotivo==true" (click)="estadoUsuarioAdmin(0) "><i class="fas fa-check "></i> Activo</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Tipo Usuario</label><br>
+                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
+                    <select class="form-control" name="tipoUsuario" [(ngModel)]="instanciaDocente.tipoUsuario" required>
+                      <option [value]="3" >Secretaria</option>
+                      <option [value]="4" >Administrador</option>
+                      <option [value]="5" >Encargado</option>
+                    </select>
+                </div>
+                <div class="col-12 ">
+                    <button type="submit " class="btn btn-primary ">Registrar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+
+</div>

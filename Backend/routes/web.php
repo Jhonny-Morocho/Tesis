@@ -27,7 +27,8 @@ try {
         $router->post('/usuario/recuperarPassword','UsuarioController@recuperarPassword');
         $router->post('/docente/registro/{external_id}','DocenteController@registrarDocente');
         $router->get('/docente/listarDocentes','DocenteController@listarDocentes');
-        $router->get('/docente/editarDocentes','DocenteController@editarDocente_external_do');
+        $router->post('/docente/editarDocentes/{external_id}','DocenteController@editarDocente_external_us');
+        $router->get('/docente/obtenerDocente_external_us/{external_id}','DocenteController@obtenerDocente_external_us');
         $router->post('/estudiante/registro/{external_id}','UsuarioController@RegistrarEstudiante');
         $router->post('/empleador/registro/{external_id}','EmpleadorController@RegistrarEmpleador');
         $router->post('/usuario/login','UsuarioController@login');

@@ -17,32 +17,32 @@ class EstudianteController extends Controller
     //correo de le emplesa
     private $de='soporte@proeditsclub.com';
     //obtener el formulario del postulante
-     public function FormEstudiante(Request $request){
-         if($request->json()){
-             //validar si el usuario existe
-             $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
+    public function FormEstudiante(Request $request){
+        if($request->json()){
+            //validar si el usuario existe
+            $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
 
-             if($ObjUsuario!=null){
-                 
-                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-                 
-                 if($ObjEstudiante !=null){
+            if($ObjUsuario!=null){
+                
+                $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
+                
+                if($ObjEstudiante !=null){
 
-                     return response()->json(["mensaje"=> $ObjEstudiante,
-                                              
-                                                "Siglas"=>"OE"]);
-                 }else{
-                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
-                 }
-    
-            }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
-            }
+                    return response()->json(["mensaje"=> $ObjEstudiante,
+                                            
+                                            "Siglas"=>"OE"]);
+                }else{
+                return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                }
 
-         }else{
-            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
-         }
-     }
+        }else{
+            return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+        }
+
+        }else{
+        return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
      //actulizar dato de postulante//estudainte
     public function actulizarAprobacionEstudiante(Request $request,$external_id){
          if($request->json()){

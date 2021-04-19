@@ -66,7 +66,7 @@ import { DemoComponent } from './demo/demo.component';
 import { DatePipe } from '@angular/common';
 import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import { RegistarAdminComponent } from './pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
-import { FormEditarAdminComponent } from './pages/paneles-administracion/form-editar-admin/form-editar-admin.component';
+import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [

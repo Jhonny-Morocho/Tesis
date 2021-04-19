@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 //llamar los modelos q voy a ocupar
 use App\Models\Usuario;
 use App\Models\Docente;
-use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-use PHPMailer\PHPMailer\PHPMailer;
-use SebastianBergmann\Template\Template;
 
 class DocenteController extends Controller
 {
@@ -79,6 +76,74 @@ class DocenteController extends Controller
             return response()->json(["mensaje"=>"Error","Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
 
+    }
+    public function editarDocente_external_us(Request $request, $external_id){
+        if($request->json()){
+            $data=$request->json()->all();
+            try {
+                //actualizar los datos del usuario
+                //verificar si quiere actulaizar el password
+                $booleanActualizoPassword=false;
+                if($data["password"]){
+                    $opciones=array('cost'=>12);
+                    $password_hashed=password_hash($data["password"],PASSWORD_BCRYPT,$opciones);
+                    $objUsuario=Usuario::where("usuario.external_us",$external_id)
+                    ->update(array(
+                        "password"=>$password_hashed,
+                        "estado"=>$data["estado"],
+                        "tipoUsuario"=>$data["tipoUsuario"]
+                    ));
+                    $booleanActualizoPassword=true;
+                }else{
+                    $objUsuario=Usuario::where("usuario.external_us",$external_id)
+                    ->update(array(
+                        "password"=>$data["password"],
+                        "estado"=>$data["estado"],
+                        "tipoUsuario"=>$data["tipoUsuario"]
+                    ));
+                }
+                //actualizar los datos del docente
+                $objDocente=Docente::join("usuario","usuario.id","docente.fk_usuario")
+                ->where("usuario.external_us",$external_id)
+                ->update(array(
+                    "nombre"=>"Nuevo Nombre",
+                    "apellido"=>"Nuevo Nombre"
+                ));
+                $arrayUsuarioDocente=array("estadoRegistro"=>$objUsuario,
+                                            "actualizoPassword"=>$booleanActualizoPassword,
+                                            "estadoDocente"=>$objDocente);
+                return response()->json(["mensaje"=>$arrayUsuarioDocente,"Siglas"=>"OE",200,]);
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>"Error",
+                                            "Siglas"=>"ONE",
+                                            "error"=>$th->getMessage(),
+                                        400]);
+            }
+            //die($data);
+
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+    public function obtenerDocente_external_us($external_id){
+        try {
+            $objDocente=Docente::join("usuario","usuario.id","docente.fk_usuario")
+            ->select("usuario.correo",
+            "usuario.estado",
+            "usuario.tipoUsuario",
+            "docente.nombre",
+            "docente.apellido"
+            )
+            ->where("usuario.external_us",$external_id)
+            ->first();
+            echo $objDocente;
+            die("obtenerner docente");
+        } catch (\Throwable $th) {
+            return response()->json(["mensaje"=>"Error",
+            "Siglas"=>"ONE",
+            "error"=>$th->getMessage(),
+            400]);
+        }
     }
 
 }
