@@ -20,6 +20,7 @@ export class PanelAdminComponent implements OnInit {
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
+   
     this.verificarDireccionarTipoUsuario();
 
   }
@@ -65,6 +66,7 @@ export class PanelAdminComponent implements OnInit {
       }
     })
   }
+ 
 }
 
 

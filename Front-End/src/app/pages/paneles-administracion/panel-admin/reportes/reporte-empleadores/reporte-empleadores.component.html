@@ -1,0 +1,45 @@
+<navTab-admin></navTab-admin>
+<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
+<!-- ====================== VALIDAR AL EMPLEADOR ==================================== -->
+<!-- ============== TOSTATADA ====================== -->
+<div class="content-wrapper">
+    <div class="card">
+        <article class="card-body animated animate__animated fadeIn">
+            <div class="container ">
+                <h6>Reporte de empleadores</h6>
+                <hr>
+                <div class="container ">
+                </div>
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha Inscripcion</th>
+                            <th title="Empresa">Empresa</th>
+                            <th title="Empresa">Representante</th>
+                            <th>Correo</th>
+                            <th>Estado</th>
+                            <th>Calificacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empleadores of empleador;let i=index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ empleadores.updated_at | date: 'yyyy/MM/dd' }}</td>
+                            <td>{{ empleadores.razon_empresa }}</td>
+                            <td>{{ empleadores.correo }}</td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==false && estadoConversion(empleadores.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==true "><span class="badge badge-success ">Validado</span></td>
+                            <td *ngIf="estadoRevision(empleadores.observaciones)==true && estadoConversion(empleadores.estado)==false "><span class="badge badge-warning">Revisado</span></td>
+                            <td>
+                                <span (click)="calificarEmpleador(i)">
+                                   <div class='starrr' id='{{ i }}' style="pointer-events: none;" ></div>  
+                              </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</div>

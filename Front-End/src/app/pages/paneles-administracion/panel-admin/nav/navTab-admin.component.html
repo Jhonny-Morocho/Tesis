@@ -21,29 +21,55 @@
             </div>
             <!-- Sidebar Menu -->
             <nav class="mt-2 ">
+                <ul class="nav nav-pills nav-sidebar flex-column" id="acordeon" data-widget="treeview" role="menu" data-accordion="false" *ngIf="tipoUsuarioEncargado==true ">
+                    <li class=" nav-item has-treeview menu-open ">
+                        <a href="# " class="nav-link active ">
+
+                            <i class="nav-icon fas fa-file "></i>
+                            <p>
+                                Reportes
+                                <i class="right fas fa-angle-left "></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview " style="display: block; ">
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/reporte-empleador'] " class="nav-link ">
+                                    <i class="nav-icon far fa-file-pdf "></i>
+                                    <p>Empleadores</p>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/reporte-ofertas'] " class="nav-link ">
+                                    <i class="nav-icon far fa-file-pdf "></i>
+                                    <p>Ofertas</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
                 <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview " role="menu " data-accordion="false ">
                     <li class="nav-item ">
                         <!-- ======================= ENCARGADO ============== -->
                         <div *ngIf="tipoUsuarioEncargado==true ">
                             <li class="nav-item ">
                                 <a routerLinkActive="active " [routerLink]="[ '/panel-admin/tareas'] " class="nav-link ">
-                                    <i class="far fa-circle nav-icon "></i>
+                                    <i class="far fas fa-users nav-icon "></i>
                                     <p>Empleadores</p>
                                 </a>
                             </li>
 
                             <li class="nav-item ">
                                 <a routerLinkActive="active " [routerLink]="[ '/panel-admin/validar-oferta-laboral'] " class="nav-link ">
-                                    <i class="far fa-circle nav-icon "></i>
+                                    <i class="far fas fa-briefcase nav-icon "></i>
                                     <p>Ofertas laborales </p>
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a routerLinkActive="active " [routerLink]="[ '/panel-admin/encuesta'] " class="nav-link ">
                                     <i class="far fa-circle nav-icon "></i>
                                     <p>Encuestas</p>
                                 </a>
-                            </li>
+                            </li> -->
                         </div>
                         <!-- ======================= SECRETARIA ============== -->
                         <div *ngIf="tipoUsuarioSecretaria==true ">

@@ -67,6 +67,8 @@ import { DatePipe } from '@angular/common';
 import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import { RegistarAdminComponent } from './pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
 import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
+import { ReporteEmpleadoresComponent } from './pages/paneles-administracion/panel-admin/reportes/reporte-empleadores/reporte-empleadores.component';
+import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
@@ -116,7 +118,9 @@ import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-a
     DemoComponent,
     TablaUsuariosAdminComponent,
     RegistarAdminComponent,
-    FormEditarAdminComponent
+    FormEditarAdminComponent,
+    ReporteEmpleadoresComponent,
+    ReporteOfertasComponent
   ],
 
   imports: [
