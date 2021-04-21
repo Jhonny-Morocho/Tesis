@@ -4,7 +4,9 @@ import{OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import {ReporteOfertaModel} from 'src/app/models/reporteOfertas.models';
+import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-reporte-ofertas',
   templateUrl: './reporte-ofertas.component.html'
@@ -13,6 +15,7 @@ export class ReporteOfertasComponent implements OnInit {
   ofertasLaborales:OfertaLaboralModel[]=[];
   rows=[];
   itemTabla:any=[];
+  instanciaFiltro:OfertasFiltroModel;
   intanciaReporte:ReporteOfertaModel[]=[];
   //data table
   dtOptions: DataTables.Settings = {};
@@ -22,6 +25,7 @@ export class ReporteOfertasComponent implements OnInit {
               private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.instanciaFiltro=new OfertasFiltroModel();
     this.configurarParametrosDataTable();
     this.cargarTablareporte();
   }
@@ -58,6 +62,52 @@ export class ReporteOfertasComponent implements OnInit {
   }
   generatePdf(){
 
+  }
+  filtrarOfertas(formFiltro:NgForm){
+    console.log(formFiltro);
+    if(formFiltro.invalid){
+      return;
+    }
+    if(this.instanciaFiltro.estado==0){
+      this.reiniciarValoresTablaOfertas();
+    }else{
+      this.filtrarDatosFecha(this.instanciaFiltro.de,
+        this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
+    }
+  }
+  private filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
+    console.log(fechade);
+    console.log(fechaHasta);
+    console.log(estado);
+    this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
+      siHacesBien=>{
+        console.log(siHacesBien);
+        //creamos una arreglo auxiliar
+        let aux=[];
+        //recorreo todo el array y compara los datos
+        siHacesBien.forEach(element => {
+            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") && 
+              fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
+              estado==element['estadoValidacionOferta'] && estado!=9 && (element['obervaciones']).length>0){
+              aux.push(element);
+              console.log("xx");
+            }
+            //no validado
+            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") && 
+            fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
+             estado==9 && (element['obervaciones']).length==0){
+            aux.push(element);
+            console.log("xx");
+            }
+        });
+        this.intanciaReporte=aux;
+        this.dtTrigger.unsubscribe();
+        this.dtTrigger.next();
+      },
+      (peroSiTenemosErro)=>{
+        console.warn(peroSiTenemosErro);
+      }
+    );
   }
   cargarTablareporte(){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(

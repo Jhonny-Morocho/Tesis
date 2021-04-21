@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 //importo mi archivo de rutas
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+//import {TemplatePdf} from 'src/app/templatePdf/probando';
 
 import { HomeComponent } from './pages/compentes-publicos/home/home.component';
 
@@ -120,7 +120,7 @@ import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-ad
     RegistarAdminComponent,
     FormEditarAdminComponent,
     ReporteEmpleadoresComponent,
-    ReporteOfertasComponent
+    ReporteOfertasComponent,
   ],
 
   imports: [
