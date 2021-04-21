@@ -11,13 +11,13 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="inputName">Fecha</label>
-                        <input type="date" class="form-control" (change)="saverange($event)" name="fecha">
+                        <input type="date" class="form-control" name="fecha">
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
                         <label for="inputStatus">Estado</label>
-                        <select class="form-control custom-select" (change)="saverange($event)" name="estado">
+                        <select class="form-control custom-select" name="estado">
                                 <option selected="" disabled=""></option>
                                 <option value="1">Revisado</option>
                                 <option value="9">No validados</option>
@@ -47,36 +47,36 @@
                         <th>Fecha</th>
                         <th>Oferta Laboral</th>
                         <th>Estado</th>
-                        <th>Postulantes</th>
-                        <th>Rechazados</th>
-                        <th>Contratados</th>
+                        <th>#Postulantes</th>
+                        <th>#Desvinculados</th>
+                        <th style="width: 5px">#No contratados</th>
+                        <th style="width: 5px">#Contratados</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
+                    <tr *ngFor="let reporteOfertaEstudiante of intanciaReporte;let i=index">
                         <td>{{ i+1 }}</td>
-                        <td>{{ ofertaLaboral.updated_at | date: 'yyyy/MM/dd'}}</td>
-                        <td>{{ ofertaLaboral.puesto}}</td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && estadoConversion(ofertaLaboral.estado)==false  ">
-                            <span class=" badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>
+                        <td>{{ reporteOfertaEstudiante.updatedAtOferta | date: 'yyyy/MM/dd'}}</td>
+                        <td>{{ reporteOfertaEstudiante.puesto}}</td>
+                        <td>
+                            <span *ngIf="(reporteOfertaEstudiante.obervaciones).length==0 && reporteOfertaEstudiante.estadoValidacionOferta==1" class="badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>
+                            <span *ngIf="(reporteOfertaEstudiante.obervaciones).length>0 && reporteOfertaEstudiante.estadoValidacionOferta==2" class="badge badge-success ">Validado</span>
+                            <span *ngIf="reporteOfertaEstudiante.estadoValidacionOferta==3" class="badge badge-primary ">Publicado</span>
+                            <span *ngIf="reporteOfertaEstudiante.estadoValidacionOferta==4" class="badge badge-secondary">Finalizada</span>
+                            <span *ngIf="(reporteOfertaEstudiante.obervaciones).length>0 && reporteOfertaEstudiante.estadoValidacionOferta==1" class="badge badge-warning">Revisado</span>
                         </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==true">
-                            <span class="badge badge-success ">Validado</span>
+                        <td>
+                            <span class="badge badge-primary">{{ reporteOfertaEstudiante.numeroPostulantes }}</span>
                         </td>
-                        <td *ngIf="ofertaLaboral.estado.toLocaleString()=='3'">
-                            <span class="badge badge-primary ">Publicado</span>
+                        <td>
+                            <span class="badge badge-danger"> {{ reporteOfertaEstudiante.desvinculados }}</span>
                         </td>
-                        <td *ngIf="ofertaLaboral.estado==4">
-                            <span class="badge badge-secondary">Finalizada</span>
+                        <td>
+                            <span class="badge badge-warning">{{ reporteOfertaEstudiante.noContratados }}</span>
+
                         </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false">
-                            <span class="badge badge-warning">Revisado</span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false">
-                            <span class="badge badge-warning">Revisado</span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && estadoConversion(ofertaLaboral.estado)==false">
-                            <span class="badge badge-warning">Revisado</span>
+                        <td>
+                            <span class="badge badge-success">{{ reporteOfertaEstudiante.contratados }}</span>
                         </td>
                     </tr>
                 </tbody>

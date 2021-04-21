@@ -6,38 +6,56 @@
             <h6>Validar ofertas laborales</h6>
             <hr>
 
-            <!-- <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm"> -->
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <label for="inputName">Fecha</label>
-                        <input type="date" class="form-control" (change)="saverange($event)" name="fecha">
+            <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="inputName">De </label>
+                            <input type="date" class="form-control" name="de" [(ngModel)]="instanciaFiltro.de" required>
+                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['de'].errors">Debe seleccionar fecha</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group">
-                        <label for="inputStatus">Estado</label>
-                        <select class="form-control custom-select" (change)="saverange($event)" name="estado">
-                                <option selected="" disabled=""></option>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="inputName">Hasta </label>
+                            <input type="date" class="form-control" name="hasta" [(ngModel)]="instanciaFiltro.hasta" required>
+                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['hasta'].errors">Debe seleccionar fecha</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="inputStatus">Estado</label>
+                            <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
+                                <option selected="" disabled></option>
+                                <!-- <option value="0">Todo</option> -->
                                 <option value="1">Revisado</option>
                                 <option value="9">No validados</option>
                                 <option value="2">Validado</option>
                                 <option value="3">Publicado</option>
                                 <option value="4">Finalizado</option>
                             </select>
+                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['estado'].errors">Debe seleccionar estado</span>
+                        </div>
                     </div>
+                    <div class="col-2">
+                        <label for="inputStatus">Filtrar</label>
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-2">
+                        <label for="inputStatus">PDF</label>
+                        <div class="form-group ">
+                            <button type="button" class="btn btn-outline-success" (click)="generatePdf()"><i class="far fa-file-pdf"></i></button>
+                        </div>
+                    </div> -->
                 </div>
-                <div class="col-2">
-                    <label for="inputStatus">Reiniciar</label>
-                    <div class="form-group ">
-                        <button type="button" (click)="reiniciarValoresTablaOfertas()" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i></button>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <label for="inputStatus">PDF</label>
-                    <div class="form-group ">
-                        <button type="button" class="btn btn-outline-success" (click)="generatePdf()"><i class="far fa-file-pdf"></i></button>
-                    </div>
+            </form>
+            <div class="col-2">
+                <label for="inputStatus">Reiniciar</label>
+                <div class="form-group ">
+                    <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
                 </div>
             </div>
             <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">

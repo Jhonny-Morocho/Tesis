@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { DatePipe } from '@angular/common';
-
+import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 
 
 declare var JQuery:any;
@@ -41,6 +41,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     rows=[];
  
     instanciaOfertaVer:OfertaLaboralModel;
+    instanciaFiltro:OfertasFiltroModel;
     //data table
     //filtros personalizados con codigo
     dtOptions: DataTables.Settings = {};
@@ -48,12 +49,8 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
 
     //Probando nuevos codigo para renicnair dat table
 
-
-
-    fechaFiltro:string=null;
-    estadoOfertaFiltro:any=null;
     constructor(private servicioOferta:OfertasLaboralesService,
-      private datePipe: DatePipe,
+    private datePipe: DatePipe,
     private servicioEmpleador:SerivicioEmpleadorService,
 
     private ruta_:Router) { }
@@ -64,6 +61,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
+    this.instanciaFiltro=new OfertasFiltroModel();
     this.configurarParametrosDataTable();
     this.cargarTodasOfertas();
   }
@@ -316,6 +314,19 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
   maquetarCabezeraTablaPdf(){
     this.rows.push(['#','Fecha','Oferta Laboral','Estado']);
   }
+  filtrarOfertas(formFiltro:NgForm){
+    console.log(formFiltro);
+    console.log("xx");
+    if(formFiltro.invalid){
+      return;
+    }
+    if(this.instanciaFiltro.estado==0){
+      this.reiniciarValoresTablaOfertas();
+    }else{
+      this.filtrarDatosFecha(this.instanciaFiltro.de,
+        this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
+    }
+  }
   cargarTodasOfertas(){
   //listamos todas las ofertas
   this.servicioOferta.listarTodasLasOfertas().subscribe(
@@ -390,42 +401,50 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.cargarTodasOfertas();
   }
 
-  filtrarDatosFecha(fecha:String,estado:Number){
+  filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
+    console.log(fechade);
+    console.log(fechaHasta);
+    console.log(estado);
     this.servicioOferta.listarTodasLasOfertas().subscribe(
       siHacesBien=>{
         //creamos una arreglo auxiliar
         let aux=[];
         //recorreo todo el array y compara los datos
         siHacesBien.forEach(element => {
-            if(this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
-              estado==null){
-              console.log("si son igulaes");
+            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+              fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+              estado==element['estado'] && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
+              console.log("xx");
             }
-            //estado 1   revisado
-            if(estado==element['estado'] && 
-              fecha==null && (element['obervaciones']).length>0){
-              aux.push(element);
-            }
-            //estado 1 no revisado //le puse el 9 para que no debe problemas 
-            if(estado==9 && 
-                fecha==null && (element['obervaciones']).length==0 ){
-              aux.push(element);
-            }
-
-            //=================consultas convinadas======================
-            if(this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
-            estado==element['estado']){
+            //no validado
+            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+            fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+             estado==9 && (element['obervaciones']).length==0){
             aux.push(element);
+            console.log("xx");
             }
-
-            if(estado==9 && 
-              this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")==fecha && 
-              (element['obervaciones']).length==0 ){
-              aux.push(element);
-            }
+            // if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+            //   fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+            //   estado==element['estado'] && estado!=9){
+            //   aux.push(element);
+            // console.log("xx");
+            // }
+            // if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+            // fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+            // estado==element['estado'] && (element['obervaciones']).length==0){
+            // aux.push(element);
+            // console.log("yy");
+            // }
+            // if(estado==9 && 
+            //   fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") || 
+            //   fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd")&&
+            //   (element['obervaciones']).length==0 ){
+            //   aux.push(element);
+            // }
         });
         this.ofertasLaborales=aux;
+        this.dtTrigger.unsubscribe();
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
@@ -433,25 +452,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
       }
     );
   }
-  saverange(evento:Event){
-    let valorInput=(evento.target as HTMLInputElement).value;
-    let nombreCampo=(evento.target as HTMLInputElement).name;
-    //destruir la data table para poder reiinicarlar
-    this.dtTrigger.unsubscribe();
-    //asiganar los valores dinamicament a las variables globales
-    switch (nombreCampo) {
-      case 'fecha':
-        this.fechaFiltro=valorInput;
-        break;
-      case 'estado':
-        this.estadoOfertaFiltro=valorInput;
-        break;
-      default:
-        alert("Filtro no encontrado");
-        break;
-    }
-    this.filtrarDatosFecha(this.fechaFiltro,this.estadoOfertaFiltro);
-  }
+ 
    
     //conversion de estado
   estadoConversion(numeroEstado:Number):boolean{

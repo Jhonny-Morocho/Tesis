@@ -4,7 +4,7 @@ import {OfertaLaboralEstudianteModel} from 'src/app/models/oferLaboral-Estudiant
 import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import { PostulanteModel } from '../models/postulante.models';
-import { OfertaLaboralModel } from 'src/app/models/oferta-laboral.models';
+import {ReporteOfertaModel } from 'src/app/models/reporteOfertas.models';
 
 
 @Injectable({
@@ -13,13 +13,12 @@ import { OfertaLaboralModel } from 'src/app/models/oferta-laboral.models';
 export class OfertaLaboralEstudianteService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
+  private urlReporteOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/reporteOfertaEstudiante";
   private urlBackendPostularOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/PostularOfertaLaboral/";
   private urlBackendListTodasEstudiantePostulanOfertaExternal_of_encargado="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_encargado/";
   private urlBackendListTodasEstudiantePostulanOfertaExternal_of_empleador="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_empleador/";
   private urlListarTodasOfertaEstudianteExternal_us="/Backend/public/index.php/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/";
   private urlELiminarPostulanteOfertaLaboral="/Backend/public/index.php/ofertasLaboralesEstudiantes/eliminarPostulanteOfertaLaboral";
-  private urlObtenerCursoCapacitacionExternal_ti="/Backend/public/index.php/cursos-capacitaciones/obtenerCursoCapacitacionExternal_cu/";
-  private urlEditarCursoCapacitacion="/Backend/public/index.php/cursos-capacitaciones/actulizarCursoCapacitaciones/";
   constructor(private _httCliente:HttpClient) { }
 
 
@@ -40,7 +39,7 @@ export class OfertaLaboralEstudianteService {
   }
 
 
-  //listammos postulantes activos /no activos / depende del estado
+  //llistar todas las ofertas del estudiante que esta postulando
   listarTodasOfertaEstudianteExternal_us(){
     //retorna la respuesata
     return this._httCliente.get(
@@ -78,18 +77,31 @@ export class OfertaLaboralEstudianteService {
     );
 
   }
-  private crearArregloOfertaEstudiante(ObjTitulos:object){
-     const titulos:OfertaLaboralEstudianteModel[]=[];
+  private crearArregloOfertaEstudiante(ObjOfertaEstudiante:object){
+     const ofertaEstudiante:OfertaLaboralEstudianteModel[]=[];
      //validamos si el objeto tiene informaicon
-     if(ObjTitulos===null){
+     if(ObjOfertaEstudiante===null){
          return [];
      }else{
-       Object.keys(ObjTitulos).forEach(key=>{
-         const titulo:OfertaLaboralEstudianteModel=ObjTitulos[key];
-         titulos.push(titulo);
+       Object.keys(ObjOfertaEstudiante).forEach(key=>{
+         const ofertaEs:OfertaLaboralEstudianteModel=ObjOfertaEstudiante[key];
+         ofertaEstudiante.push(ofertaEs);
        })
-       return titulos;
+       return ofertaEstudiante;
      }
+  }
+  private crearArregloReportOfertaEstudiante(ObjReporte:object){
+    const reporteOfertaEstu:ReporteOfertaModel[]=[];
+    if(ObjReporte===null){
+      return [];
+    }else{
+      Object.keys(ObjReporte).forEach(key=>{
+        const reportofertaEstudiante:ReporteOfertaModel=ObjReporte[key];
+        reporteOfertaEstu.push(reportofertaEstudiante);
+      })
+      return reporteOfertaEstu;
+    }
+
   }
   private crearArregloOfertaEstudiante_ModelPostulante(ObjTitulos:object){
     const postulanteOfertaEstudiante:PostulanteModel[]=[];
@@ -105,21 +117,6 @@ export class OfertaLaboralEstudianteService {
     }
  }
 
-  //obetnemos los estudiantes aprobado/no aprobandos dependenidendo del estado
-  obtenerCursoCapacitacionExternal_es(external_cu:string){
-    return this._httCliente.get(
-      `${this.urlDominio_}${this.urlObtenerCursoCapacitacionExternal_ti}${external_cu}`,
-    ).pipe(
-      map(
-        respuestaBackend=>{
-          return respuestaBackend;
-        })
-    );
- 
-  }
-
-
-
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   eliminarPostulanteOfertaLaboral(array:any){
       let  autenficacionDatos;
@@ -132,9 +129,16 @@ export class OfertaLaboralEstudianteService {
             return respuestaBackend;
           })
       );
-      console.log(array);
-      console.log(autenficacionDatos);
-      // console.log(autenficacionDatos);
+  }
+  reportOfertaEstudiante(){
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlReporteOfertaEstudiante}`
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          return respuestaBackend['mensaje'];
+        })
+    );
   }
 }
 

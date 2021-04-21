@@ -12,6 +12,7 @@ use App\Models\Usuario;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -180,7 +181,28 @@ class OfertaLaboralEstudianteController extends Controller
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
     }
-
+    public function reporteOfertaEstudiante(){
+        try {
+            $arrayReporte=array();
+            $objOfertaLaboral=OfertasLaborales::get();
+            foreach ($objOfertaLaboral as $key => $value) {
+                $arrayReporte[$key]=array(
+                    "updatedAtOferta"=>$value['updated_at'],
+                    "puesto"=>$value['puesto'],
+                    "idOferta"=>$value['id'],
+                    "estadoValidacionOferta"=>$value['estado'],
+                    "obervaciones"=>$value['obervaciones'],
+                    "numeroPostulantes"=>OfertaLaboralEstudiante::where("fk_oferta_laboral",$value['id'])->count(),
+                    "desvinculados"=>OfertaLaboralEstudiante::where("estado",0)->where("fk_oferta_laboral",$value['id'])->count(),
+                    "noContratados"=>OfertaLaboralEstudiante::where("estado",1)->where("fk_oferta_laboral",$value['id'])->count(),
+                    "contratados"=>OfertaLaboralEstudiante::where("estado",2)->where("fk_oferta_laboral",$value['id'])->count()
+                );
+            }
+            return  response()->json(["mensaje"=>$arrayReporte,"Siglas"=>"OE",200]);
+        } catch (\Throwable $th) {
+            return  response()->json(["mensaje"=>$th,"Siglas"=>"ONE","error"=>$th,400]);
+        }
+    }
 
      public function eliminarPostulanteOfertaLaboral(Request $request){
          $OfertaLaboralPostulanteBorrar=null;
