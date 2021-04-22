@@ -210,3 +210,7 @@
 
 
 
+[2021-04-22 16:12:44] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+

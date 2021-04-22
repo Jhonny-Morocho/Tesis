@@ -4,6 +4,7 @@ export class ReporteOfertaModel{
     obervaciones:String;
     puesto:String;
     idOferta:Number;
+    empleador:String;
     estadoValidacionOferta:Number;
     numeroPostulantes:Number;
     desvinculados:Number;

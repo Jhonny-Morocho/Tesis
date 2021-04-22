@@ -21,11 +21,9 @@
                                                               <a >{{ instanciaOfertaVer.razon_empresa }}</a>
                                                           </span>
                                             </div>
-                                            <br> Descripción de la oferta laboral:
+                                            <br>
+                                            <h5 class="text-primary">{{ instanciaOfertaVer.puesto }} </h5>{{instanciaOfertaVer.descripcion}} Descripción de la oferta laboral:
                                             <hr>
-                                            <p>
-                                                {{instanciaOfertaVer.descripcion}}
-                                            </p>
                                         </div>
                                     </div>
                                     <div class=" mt-2 mb-2">
@@ -35,8 +33,6 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6 order-1 order-md-2">
-                                <h3 class="text-primary"> {{ instanciaOfertaVer.puesto }}</h3>
-                                <br>
                                 <h5 class="mt-1 text-muted">Requisitos</h5>
                                 <div id="{{ i }}">{{pintarRequisitos(i) }} </div>
                             </div>

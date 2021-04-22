@@ -12,21 +12,18 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Creación</th>
-                            <th>Modificado</th>
+                            <th>Fecha</th>
                             <th>Nombre</th>
                             <th>Apellido </th>
                             <th>Cédula</th>
                             <th>Correo</th>
                             <th title="Estado de validación del estudiante">Estado</th>
-                            <th>Observaciones</th>
                             <th>Validar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let estudiantes of estudiante;let i=index">
                             <td>{{ i+1 }}</td>
-                            <td>{{ estudiantes.created_at | date: 'yyyy/MM/dd' }}</td>
                             <td>{{ estudiantes.updated_at | date: 'yyyy/MM/dd'}}</td>
                             <td>{{ estudiantes.nombre }}</td>
                             <td>{{ estudiantes.apellido }}</td>
@@ -35,7 +32,6 @@
                             <td *ngIf="estadoRevision(estudiantes.observaciones)==false && estadoConversion(estudiantes.estado)==false"><span class=" badge badge-danger ">No validado</span></td>
                             <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==true "><span class="badge badge-success ">Validado</span></td>
                             <td *ngIf="estadoRevision(estudiantes.observaciones)==true && estadoConversion(estudiantes.estado)==false "><span class="badge badge-warning">Revisado</span></td>
-                            <td>{{ estudiantes.observaciones }}</td>
                             <td>
                                 <button type="button " class="btn btn-light " [routerLink]="[ '/panel-admin/tareas/postulante',estudiantes.external_es] "><i class="fas fa-chevron-right "></i></button>
                             </td>
@@ -62,8 +58,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Creación</th>
-                            <th>Modificado</th>
+                            <th>Fecha</th>
                             <th title="Empresa">Empresa</th>
                             <th>Correo</th>
                             <th>Estado</th>
@@ -74,7 +69,6 @@
                     <tbody>
                         <tr *ngFor="let empleadores of empleador;let i=index">
                             <td>{{ i+1 }}</td>
-                            <td>{{ empleadores.created_at | date: 'yyyy/MM/dd' }}</td>
                             <td>{{ empleadores.updated_at | date: 'yyyy/MM/dd' }}</td>
                             <td>{{ empleadores.razon_empresa }}</td>
                             <td>{{ empleadores.correo }}</td>

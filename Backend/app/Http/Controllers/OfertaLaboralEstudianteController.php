@@ -186,10 +186,12 @@ class OfertaLaboralEstudianteController extends Controller
             $arrayReporte=array();
             $objOfertaLaboral=OfertasLaborales::get();
             foreach ($objOfertaLaboral as $key => $value) {
+                $empleador=Empleador::select("razon_empresa")->where("id",$value['fk_empleador'])->first();
                 $arrayReporte[$key]=array(
                     "updatedAtOferta"=>$value['updated_at'],
                     "puesto"=>$value['puesto'],
                     "idOferta"=>$value['id'],
+                    "empleador"=>$empleador->razon_empresa,
                     "estadoValidacionOferta"=>$value['estado'],
                     "obervaciones"=>$value['obervaciones'],
                     "numeroPostulantes"=>OfertaLaboralEstudiante::where("fk_oferta_laboral",$value['id'])->count(),

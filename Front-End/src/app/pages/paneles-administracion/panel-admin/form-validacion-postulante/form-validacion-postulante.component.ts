@@ -43,6 +43,7 @@ export class FormInfoPostulanteComponent implements OnInit {
             this.instanciaPostulante.genero=suHacesBien['mensaje']['genero'];
             this.instanciaPostulante.telefono=suHacesBien['mensaje']['telefono'];
             this.instanciaPostulante.estado=suHacesBien['mensaje']['estado'];
+            this.instanciaPostulante.observaciones=suHacesBien['mensaje']['observaciones'];
             console.log(this.instanciaPostulante.estado);
             this.encontrado=true;
           }

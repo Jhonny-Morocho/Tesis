@@ -57,11 +57,12 @@
                     </div>
                 </div>
             </form>
-            <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
                         <th class="col">#</th>
                         <th class="col">Fecha</th>
+                        <th class="col">Empleador</th>
                         <th class="col">Oferta Laboral</th>
                         <th class="col">Estado</th>
                         <th class="col">#Postulantes</th>
@@ -74,6 +75,7 @@
                     <tr *ngFor="let reporteOfertaEstudiante of intanciaReporte;let i=index">
                         <td>{{ i+1 }}</td>
                         <td>{{ reporteOfertaEstudiante.updatedAtOferta | date: 'yyyy/MM/dd'}}</td>
+                        <td>{{ reporteOfertaEstudiante.empleador}}</td>
                         <td>{{ reporteOfertaEstudiante.puesto}}</td>
                         <td>
                             <span *ngIf="(reporteOfertaEstudiante.obervaciones).length==0 && reporteOfertaEstudiante.estadoValidacionOferta==1" class="badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>

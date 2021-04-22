@@ -75,7 +75,9 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
     this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
     this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
+    this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
     this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
+    this.instanciaOfertaVer.correo=localStorage.getItem("correo");
     
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
     console.log(this.instanciaOfertaVer);

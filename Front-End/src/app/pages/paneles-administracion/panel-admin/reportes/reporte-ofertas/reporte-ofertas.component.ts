@@ -41,6 +41,7 @@ export class ReporteOfertasComponent implements OnInit {
     let arrayCabezera=[
                       '#',
                       'Fecha',
+                      'Empleador',
                       'Oferta Laboral',
                       'Estado',
                       '#Postulantes',
@@ -300,6 +301,7 @@ export class ReporteOfertasComponent implements OnInit {
         this.rowsItemsReporte.push([
                         contador,
                         this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"), 
+                        element['empleador'], 
                         element['puesto'], 
                         this.estadoOferta(element['estadoValidacionOferta'],element['obervaciones']), 
                         element['numeroPostulantes'], 

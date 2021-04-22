@@ -18,7 +18,7 @@ declare var JQuery:any;
 declare var $:any;
 declare var bootstrap:any;
 @Component({
-  selector: 'app-template-hoja-vida',
+  selector: 'app-postulanteOfertas',
   templateUrl: './postulantes-ofertas-encargado.component.html'
 })
 export class PostulanteOfertas implements OnInit {
@@ -179,6 +179,9 @@ export class PostulanteOfertas implements OnInit {
       alert("el estado es nullo");
     }
   }
+  mostrarResumenContracion(){
+    //this.servicioOfertaEstudiante.
+  }
   obtenerOfertaLaboral(){
     this._activateRoute.params.subscribe(
       params=>{
@@ -195,6 +198,7 @@ export class PostulanteOfertas implements OnInit {
             this.instanciaOfertaLaboral.requisitos=siHaceBien['mensaje']['requisitos'];
             if(this.instanciaOfertaLaboral.estado==4){
               this.ofertaLaboralActiva=false;
+              this.mostrarResumenContracion();
             }
             
             $("#itemRequisitos").html(this.instanciaOfertaLaboral.requisitos);

@@ -5,7 +5,6 @@
         <article class="card-body animated animate__animated fadeIn">
             <h6>Validar ofertas laborales</h6>
             <hr>
-
             <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm">
                 <div class="row">
                     <div class="col-3">
@@ -22,7 +21,7 @@
                             <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['hasta'].errors">Debe seleccionar fecha</span>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <div class="form-group">
                             <label for="inputStatus">Estado</label>
                             <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
@@ -51,7 +50,7 @@
                     </div>
                 </div>
             </form>
-            <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
                         <th style="width: 5px">#</th>
