@@ -5,9 +5,9 @@ import { SerivicioPostulanteService } from 'src/app/servicios/serivicio-postulan
 
 @Component({
   selector: 'app-tabla-filtro-postulantes',
-  templateUrl: './tabla-filtro-postulantes.component.html'
+  templateUrl: './form-preseleccionar-postulantes.component.html'
 })
-export class TablaFiltroPostulantesComponent implements OnInit {
+export class FormPreseleccionarPostulantesComponent implements OnInit {
   estudiante:PostulanteModel[]=[];
   //data table
   dtOptions: DataTables.Settings = {};

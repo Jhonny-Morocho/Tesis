@@ -15,7 +15,7 @@ import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel
 import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import {FormEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import {TablaEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
-import {TablaFiltroPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-filtro-postulantes/tabla-filtro-postulantes.component';
+import {FormPreseleccionarPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-preseleccionar-postulantes/form-preseleccionar-postulantes.component';
 import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
@@ -55,7 +55,7 @@ const routes: Routes = [
   { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
   
-  { path: 'panel-admin/filtrar-postulantes/:external_of' , component: TablaFiltroPostulantesComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-admin/filtrar-postulantes/:external_of' , component: FormPreseleccionarPostulantesComponent ,canActivate:[AutentificacionGuard]},
   //encuesta
   { path: 'panel-admin/encuesta' , component: TablaEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/reporte-empleador' , component: ReporteEmpleadoresComponent ,canActivate:[AutentificacionGuard]},
