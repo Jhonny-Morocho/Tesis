@@ -22,7 +22,7 @@
                             <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['hasta'].errors">Debe seleccionar fecha</span>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <label for="inputStatus">Estado</label>
                             <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
@@ -37,22 +37,15 @@
                             <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['estado'].errors">Debe seleccionar estado</span>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         <label for="inputStatus">Filtrar</label>
                         <div class="form-group ">
                             <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
-
-                    <div class="col-2">
-                        <label for="inputStatus">PDF</label>
-                        <div class="form-group ">
-                            <button type="button" class="btn btn-outline-success" (click)="generatePdf()"><i class="far fa-file-pdf"></i></button>
-                        </div>
-                    </div>
                 </div>
             </form>
-            <div class="col-2">
+            <div class="col-1">
                 <label for="inputStatus">Reiniciar</label>
                 <div class="form-group ">
                     <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
@@ -112,12 +105,7 @@
         </article>
     </div>
 </div>
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
-    </div>
 
-</div>
 <!-- Modal  VISUALIZAR OFERTA LABORAL-->
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

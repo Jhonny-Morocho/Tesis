@@ -1,4 +1,5 @@
-export const estilosTablaResumenLayaut={
+export const estilosTablaResumenLayaut=
+{
     defaultBorder: false,
     hLineWidth: function(i, node) {
       return 1;

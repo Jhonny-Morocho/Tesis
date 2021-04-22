@@ -1,9 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren  } from '@angular/core';
-import Swal from 'sweetalert2';
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { Router } from '@angular/router';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
@@ -14,10 +10,6 @@ import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { DatePipe } from '@angular/common';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
-import {logoUnl} from 'src/app/templatePdf/logoUnl';
-import {logoCarrera} from 'src/app/templatePdf/logoCarrera';
-import {estilosTablaResumenLayaut} from 'src/app/templatePdf/estilosTablaResumenLayaut';
-
 
 declare var JQuery:any;
 declare var $:any;
@@ -41,7 +33,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     itemTabla:any=[];
     column:any;
     value:any;
-    rows=[];
  
     instanciaOfertaVer:OfertaLaboralModel;
     instanciaFiltro:OfertasFiltroModel;
@@ -69,211 +60,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.cargarTodasOfertas();
   }
 
-  generatePdf(){
-    
-    console.log(this.rows);
-    //return;
-    var documentDefinition = {
-      //horienzacion vertical
-      //pageSize: 'A5',
 
-      // by default we use portrait, you can change it to landscape if you wish
-      pageOrientation: 'landscape',
-
-      // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-     // pageMargins: [ 40, 60, 40, 60 ],
-      //end horientacion vertical
-    content: [
-          {
-            columns: [
-               {
-                 image:logoUnl,
-                 width: 180,
-                 height:60
-               },
-              [
-                {
-                  image:logoCarrera,
-                  width: 175,
-                  height:60,
-                  alignment: 'right',
-                  margin: [0, 0, 0, 15],
-                },
-              ],
-            ],
-          },
-
-          '\n\n',
-          {
-            width: '100%',
-            alignment: 'center',
-            text: 'FACULTAD DE LA ENERGÍA LAS INDUSTRIAS Y LOS RECURSOS NO RENOVABLES',
-            bold: true,
-            margin: [0, 10, 0, 10],
-            fontSize: 15,
-          },
-          '\n\n',
-          {
-            width: '100%',
-            alignment: 'center',
-            text: 'REPORTE DE OFERTAS LABORALES',
-            bold: true,
-            margin: [0, 10, 0, 10],
-            fontSize: 15,
-          },
-          '\n',
-        {
-          layout: {
-            defaultBorder: true,
-            hLineWidth: function(i, node) {
-              return 1;
-            },
-            vLineWidth: function(i, node) {
-              return 2;
-            },
-            hLineColor: function(i, node) {
-              if (i === 1 || i === 0) {
-                return '#bfdde8';
-              }
-              return '#eaeaea';
-            },
-            vLineColor: function(i, node) {
-              return '#eaeaea';
-            },
-            hLineStyle: function(i, node) {
-              // if (i === 0 || i === node.table.body.length) {
-              return null;
-              //}
-            },
-            // vLineStyle: function (i, node) { return {dash: { length: 10, space: 4 }}; },
-            paddingLeft: function(i, node) {
-              return 10;
-            },
-            paddingRight: function(i, node) {
-              return 10;
-            },
-            paddingTop: function(i, node) {
-              return 2;
-            },
-            paddingBottom: function(i, node) {
-              return 2;
-            },
-            fillColor: function(rowIndex, node, columnIndex) {
-              return '#fff';
-            },
-          },
-          table: 
-          { 
-            width: '100%',
-            body: this.rows
-          }
-        },
-          
-    '\n',
-    '\n\n',
-    {
-      layout: estilosTablaResumenLayaut,
-      table: {
-        headerRows: 1,
-        widths: ['*', 'auto'],
-        body: [
-          [
-            {
-              text: 'Ofertas no validadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Revisadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Publicadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Finalizadas',
-              border: [false, false, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              text: '$999.99',
-              border: [false, false, false, true],
-              fillColor: '#f5f5f5',
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-          ]
-        ],
-      },
-    },
-    '\n\n',
-      {
-        text: 'Firma: .............................................................',
-        style: 'notesTitle',
-      },
-      '\n\n',
-      {
-        text: 'Módulo de software para la Vinculación Laboral de Actores de la Carrera de \n  Ingeniería en Sistemas/Computación.',
-        style: 'notesText',
-      },
-    ],
-        
-      styles: {
-        notesTitle: {
-          fontSize: 10,
-          bold: true,
-          margin: [0, 50, 0, 3],
-        },
-        notesText: {
-          fontSize: 10,
-        },
-      },
-      defaultStyle: {
-        columnGap: 20,
-        //font: 'Quicksand',
-      },
-    };
-      
-    pdfMake.createPdf(documentDefinition).open();
-  }
-
-  maquetarCabezeraTablaPdf(){
-    this.rows.push(['#','Fecha','Oferta Laboral','Estado']);
-  }
   filtrarOfertas(formFiltro:NgForm){
     console.log(formFiltro);
     if(formFiltro.invalid){
@@ -295,20 +82,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
       this.ofertasLaborales =siHacesBien;
       console.log(this.ofertasLaborales);
         //reportes
-        let contador=1;
-        this.rows=[];
-        this.maquetarCabezeraTablaPdf();
-        this.ofertasLaborales.forEach(element => {
-           console.log(element);
-             this.rows.push([contador,
-                            this.datePipe.transform(element['updated_at'],"yyyy-MM-dd"), 
-                            element['puesto'], 
-                            element['estado']]);
-             contador++;
-        });
-
       this.dtTrigger.next();
-      //this.itemTabla.push(['1', '20201-sa', '2020','correo@aa','activo']);
     },
     (peroSiTenemosErro)=>{
       console.warn(peroSiTenemosErro);
