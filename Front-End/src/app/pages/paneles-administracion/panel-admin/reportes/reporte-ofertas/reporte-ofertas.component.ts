@@ -20,8 +20,10 @@ import { NgForm } from '@angular/forms';
   templateUrl: './reporte-ofertas.component.html'
 })
 export class ReporteOfertasComponent implements OnInit {
-  rows=[];
-  itemTabla:any=[];
+  //reporte
+  rowsItemsReporte=[];
+  rowsResumenTabla=[];
+  //filtrar
   instanciaFiltro:OfertasFiltroModel;
   intanciaReporte:ReporteOfertaModel[]=[];
   //data table
@@ -36,155 +38,167 @@ export class ReporteOfertasComponent implements OnInit {
     this.cargarTablaReporte();
   }
   maquetarCabezeraTablaPdf(){
-    this.rows.push(
-                    [
-                    '#',
-                    'Fecha',
-                    'Oferta Laboral',
-                    'Estado',
-                    '#Postulantes',
-                    '#Desvinculados',
-                    '#No contratados',
-                    '#Contratados'
-                    ]
-                  );
+    let arrayCabezera=[
+                      '#',
+                      'Fecha',
+                      'Oferta Laboral',
+                      'Estado',
+                      '#Postulantes',
+                      '#Desvinculados',
+                      '#No contratados',
+                      '#Contratados'
+                      ];
+    return arrayCabezera;
+  }
+  resumenTabla(noVal:number,rev:number,publ:number,final:number){
+    let array= 
+  [
+    //no validadas
+    [
+      {
+        text: 'Ofertas no validadas',
+        border: [false, true, false, true],
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      },
+      {
+        border: [false, true, false, true],
+        text: noVal,
+        alignment: 'right',
+        fillColor: '#f5f5f5',
+        margin: [0, 5, 0, 5],
+      },
+    ],
+    //revisadas
+    [
+      {
+        text: 'Ofertas Revisadas',
+        border: [false, true, false, true],
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      },
+      {
+        border: [false, true, false, true],
+        text: rev,
+        alignment: 'right',
+        fillColor: '#f5f5f5',
+        margin: [0, 5, 0, 5],
+      }
+    ],
+    //publicadas
+    [
+      {
+        text: 'Ofertas Publicadas',
+        border: [false, true, false, true],
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      },
+      {
+        border: [false, true, false, true],
+        text: publ,
+        alignment: 'right',
+        fillColor: '#f5f5f5',
+        margin: [0, 5, 0, 5],
+      }
+    ],
+    //finalizadas
+    [
+      {
+        text: 'Ofertas Finalizadas',
+        border: [false, false, false, true],
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      },
+      {
+        text: final,
+        border: [false, false, false, true],
+        fillColor: '#f5f5f5',
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      }
+    ]
+  ];
+
+  return array;
+
   }
   generatePdf(){
-    var documentDefinition = {
-        //horientacion vertical
-    pageOrientation: 'landscape',
-      //end horientacion vertical
-    content: [
-          {
-            columns: [
-               {
-                 image:logoUnl,
-                 width: 180,
-                 height:60
-               },
-              [
-                {
-                  image:logoCarrera,
-                  width: 175,
-                  height:60,
-                  alignment: 'right',
-                  margin: [0, 0, 0, 15],
-                },
-              ],
+    var documentDefinition = 
+    {
+      //horientacion vertical
+      pageOrientation: 'landscape',
+        //end horientacion vertical
+      content: 
+      [
+        {
+          columns: [
+            {
+              image:logoUnl,
+              width: 180,
+              height:60
+            },
+            [
+              {
+                image:logoCarrera,
+                width: 175,
+                height:60,
+                alignment: 'right',
+                margin: [0, 0, 0, 15],
+              },
             ],
-          },
-
-          '\n\n',
-          {
-            width: '100%',
-            alignment: 'center',
-            text: 'FACULTAD DE LA ENERGÍA LAS INDUSTRIAS Y LOS RECURSOS NO RENOVABLES',
-            bold: true,
-            margin: [0, 10, 0, 10],
-            fontSize: 15,
-          },
-          '\n\n',
-          {
-            width: '100%',
-            alignment: 'center',
-            text: 'REPORTE DE OFERTAS LABORALES',
-            bold: true,
-            margin: [0, 10, 0, 10],
-            fontSize: 15,
-          },
-          '\n',
+          ],
+        },
+        '\n\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: 'FACULTAD DE LA ENERGÍA LAS INDUSTRIAS Y LOS RECURSOS NO RENOVABLES',
+          bold: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 15,
+        },
+        '\n\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: 'REPORTE DE OFERTAS LABORALES',
+          bold: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 15,
+        },
+        '\n',
         {
           layout:estilosTablaPrincipalLayaut,
           table: 
           { 
             width: '100%',
-            body: this.rows
+            body: this.rowsItemsReporte
           }
         },
-          
-    '\n',
-    '\n\n',
-    {
-      layout: estilosTablaResumenLayaut,
-      table: {
-        headerRows: 1,
-        widths: ['*', 'auto'],
-        body: [
-          [
-            {
-              text: 'Ofertas no validadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Revisadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Publicadas',
-              border: [false, true, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              border: [false, true, false, true],
-              text: '$999.99',
-              alignment: 'right',
-              fillColor: '#f5f5f5',
-              margin: [0, 5, 0, 5],
-            },
-          ],
-          [
-            {
-              text: 'Ofertas Finalizadas',
-              border: [false, false, false, true],
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-            {
-              text: '$999.99',
-              border: [false, false, false, true],
-              fillColor: '#f5f5f5',
-              alignment: 'right',
-              margin: [0, 5, 0, 5],
-            },
-          ]
-        ],
-      },
-    },
-    '\n\n',
+            
+      '\n',
+      '\n\n',
+      //contador resuemen de la ofertas 
       {
-        text: 'Firma: .............................................................',
-        style: 'notesTitle',
+        layout: estilosTablaResumenLayaut,
+        table: {
+          headerRows: 1,
+          widths: ['*', 'auto'],
+          body:this.rowsResumenTabla,
+        },
       },
       '\n\n',
-      {
-        text: 'Módulo de software para la Vinculación Laboral de Actores de la Carrera de \n  Ingeniería en Sistemas/Computación.',
-        style: 'notesText',
-      },
-    ],
-        
+        {
+          text: 'Firma: .............................................................',
+          style: 'notesTitle',
+        },
+        '\n\n',
+        {
+          text: 'Módulo de software para la Vinculación Laboral de Actores de la Carrera de \n  Ingeniería en Sistemas/Computación.',
+          style: 'notesText',
+        },
+      ],
+      //end content
       styles: {
         notesTitle: {
           fontSize: 10,
@@ -218,9 +232,6 @@ export class ReporteOfertasComponent implements OnInit {
     }
   }
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
-    console.log(fechade);
-    console.log(fechaHasta);
-    console.log(estado);
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
@@ -243,6 +254,8 @@ export class ReporteOfertasComponent implements OnInit {
             }
         });
         this.intanciaReporte=aux;
+        //genero el reporte con el nuevo array de la busqueda
+        this.contruirDatosPdf(this.intanciaReporte);
         this.dtTrigger.unsubscribe();
         this.dtTrigger.next();
       },
@@ -269,30 +282,64 @@ export class ReporteOfertasComponent implements OnInit {
     }
 
   }
+
+  contruirDatosPdf(reporteModelArray:ReporteOfertaModel[]){
+      //reporte
+      let contador=1;
+      let numOfertasNoValidas=0;
+      let numOfertValidadas=0;
+      let numOfertasPublicadas=0;
+      let numOfertasFinalizadas=0;
+      let numOfertRevisadas=0;
+      //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
+      this.rowsItemsReporte=[];
+      this.rowsItemsReporte.unshift(this.maquetarCabezeraTablaPdf());
+      console.log(this.maquetarCabezeraTablaPdf());
+      reporteModelArray.forEach(element => {
+        //cargo la tabla para generar reporte
+        this.rowsItemsReporte.push([
+                        contador,
+                        this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"), 
+                        element['puesto'], 
+                        this.estadoOferta(element['estadoValidacionOferta'],element['obervaciones']), 
+                        element['numeroPostulantes'], 
+                        element['desvinculados'], 
+                        element['noContratados'], 
+                        element['contratados']
+                      ]);
+        contador++;
+        //catadores de ofertas
+        if((element['obervaciones']).length==0 && element['estadoValidacionOferta']==1){
+          numOfertasNoValidas ++;
+        }
+        if((element['obervaciones']).length>0 && element['estadoValidacionOferta']==2){
+          numOfertValidadas ++;
+        }
+        if(element['estadoValidacionOferta']==3){
+          numOfertasPublicadas++;
+        }
+        if(element['estadoValidacionOferta']==4){
+          numOfertasFinalizadas++;
+        }
+        if((element['obervaciones']).length>0 && element['estadoValidacionOferta']==1){
+          numOfertRevisadas++;
+        }
+     });
+      //asigno los contadores de resumen al documento
+      this.rowsResumenTabla=this.resumenTabla(
+                        numOfertasNoValidas,
+                        numOfertRevisadas,
+                        numOfertasPublicadas,
+                        numOfertasFinalizadas
+                        );
+  }
   cargarTablaReporte(){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         this.intanciaReporte=siHacesBien;
-        //reporte
-        let contador=1;
-        this.rows=[];
-        this.maquetarCabezeraTablaPdf();
-        this.intanciaReporte.forEach(element => {
-          console.log(element);
-            this.rows.push([
-                           contador,
-                           this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"), 
-                           element['puesto'], 
-                           this.estadoOferta(element['estadoValidacionOferta'],element['obervaciones']), 
-                           element['numeroPostulantes'], 
-                           element['desvinculados'], 
-                           element['noContratados'], 
-                           element['contratados']
-                          ]);
-            contador++;
-       });
         this.dtTrigger.next();
+        this.contruirDatosPdf(this.intanciaReporte);
       },siHacesMal=>{
         console.log(siHacesMal);
       }
@@ -303,6 +350,7 @@ export class ReporteOfertasComponent implements OnInit {
   reiniciarValoresTablaOfertas(){
     this.dtTrigger.unsubscribe();
     this.configurarParametrosDataTable();
+    this.cargarTablaReporte();
   }
   configurarParametrosDataTable(){
     this.dtOptions = {

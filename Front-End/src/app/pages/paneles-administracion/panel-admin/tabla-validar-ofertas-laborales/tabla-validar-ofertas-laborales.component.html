@@ -44,13 +44,13 @@
                         </div>
                     </div>
                 </div>
-            </form>
-            <div class="col-1">
-                <label for="inputStatus">Reiniciar</label>
-                <div class="form-group ">
-                    <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
+                <div class="col-1">
+                    <label for="inputStatus">Reiniciar</label>
+                    <div class="form-group ">
+                        <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <table id="tablaOfertasLaborales" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
