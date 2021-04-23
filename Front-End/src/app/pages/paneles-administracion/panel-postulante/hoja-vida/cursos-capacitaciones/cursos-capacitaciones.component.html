@@ -35,7 +35,6 @@
                         <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='1' ">Curso</td>
                         <td *ngIf="(cursoCapatiacionesArray.tipo_evento).toString()=='2' ">Capacitacion</td>
                         <td>{{buscarPais(cursoCapatiacionesArray.fk_pais)}}</td>
-
                         <td>
                             <a class="btn btn-light " (click)="mostrarPdf(cursoCapatiacionesArray.evidencia_url)"><i class="far fa-file-pdf " ></i></a>
                             <a class="btn btn-light " [routerLink]="[ '/panel-postulante/edit-curso-capacitacion',cursoCapatiacionesArray.external_cu] "><i class="fas fa-pencil-alt " ></i></a>

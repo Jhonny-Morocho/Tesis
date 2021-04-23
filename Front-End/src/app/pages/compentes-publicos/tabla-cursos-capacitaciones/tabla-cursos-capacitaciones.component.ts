@@ -26,7 +26,6 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
        // console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
-    
       },
       (peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
@@ -45,7 +44,7 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
     });
     return nombrePais;
    }
-  
+
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;

@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 declare var $:any;
 @Component({
@@ -7,7 +7,7 @@ declare var $:any;
 })
 export class TablaTitulosAcademicosComponent implements OnInit {
   @Input() tituloAcademico:any=[];
-    //frame 
+    //frame
     frameLimpio:any;
     ubicacionArchivo:String="";
     dominio=environment;

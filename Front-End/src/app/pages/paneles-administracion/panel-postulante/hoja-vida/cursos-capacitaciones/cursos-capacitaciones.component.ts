@@ -41,11 +41,6 @@ export class CursosCapacitacionesComponent implements OnInit {
       siHacesBien=>{
         this.cursosCapacitaciones =siHacesBien;
         console.log(this.cursosCapacitaciones);
-
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{

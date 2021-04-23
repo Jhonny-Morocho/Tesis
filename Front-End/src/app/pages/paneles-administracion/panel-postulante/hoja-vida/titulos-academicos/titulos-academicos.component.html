@@ -37,7 +37,6 @@
                                 <i class="far fa-file-pdf "></i>
                             </a>
                             <!-- ==================== MOSTRAR MODAL ======================== -->
-                            <!-- <a class="btn btn-light " href="http://localhost/Tesis/Archivos/Titulos/{{ titulosAcademicos.evidencias_url }} " target="alt "><i class="far fa-file-pdf " ></i></a> -->
                             <a class="btn btn-light" [routerLink]="[ '/panel-postulante/edit-titulo',titulosAcademicos.external_ti] "><i class="fas fa-pencil-alt " ></i></a>
                             <a class="btn btn-light" (click)="eliminarTitulo(titulosAcademicos.external_ti,titulosAcademicos.titulo_obtenido,titulosAcademicos.evidencias_url,i)"><i class="fas fa-trash-alt "></i></a>
                         </td>

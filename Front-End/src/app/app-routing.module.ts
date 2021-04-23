@@ -8,6 +8,7 @@ import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 import {RegistroEmpleadorComponent} from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
+import {PostulanteOfertas} from 'src/app/pages/paneles-administracion/panel-admin/postulante-ofertas/postulantes-ofertas-encargado.component';
 import {ReporteEmpleadoresComponent} from 'src/app/pages/paneles-administracion/panel-admin/reportes/reporte-empleadores/reporte-empleadores.component';
 import {ReporteOfertasComponent} from 'src/app/pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
 import {FormEditarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
@@ -15,7 +16,6 @@ import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel
 import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import {FormEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import {TablaEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
-import {FormPreseleccionarPostulantesComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-preseleccionar-postulantes/form-preseleccionar-postulantes.component';
 import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
@@ -47,15 +47,15 @@ const routes: Routes = [
   { path: 'registro-postulante', component: RegistroPostulanteComponent },
   { path: 'registro-empleador', component: RegistroEmpleadorComponent },
   { path: 'login' , component: LoginAdminComponent },
-  
+
   { path: 'panel-empleador/postulante-oferta/:external_of' , component: PostulantesOfertaComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/edit-oferta-laboral/:external_of' , component: EditOfertaComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/form-info-empleador' , component: FormularioInfoEmpleadorComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/oferta-laboral' , component: OfertaLaboralComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-empleador/add-ferta-laboral' , component: AddOfertaComponent,canActivate:[AutentificacionGuard] },
   //rutas del admistrador
-  
-  { path: 'panel-admin/filtrar-postulantes/:external_of' , component: FormPreseleccionarPostulantesComponent ,canActivate:[AutentificacionGuard]},
+
+  { path: 'panel-admin/filtrar-postulantes/:external_of' , component: PostulanteOfertas ,canActivate:[AutentificacionGuard]},
   //encuesta
   { path: 'panel-admin/encuesta' , component: TablaEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/reporte-empleador' , component: ReporteEmpleadoresComponent ,canActivate:[AutentificacionGuard]},
@@ -72,7 +72,7 @@ const routes: Routes = [
   { path: 'panel-admin/validar-oferta-laboral' , component: TablaValidarOfertasLaboralesComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiar,canActivate:[AutentificacionGuard] },
   //{ path: 'panel-admin/tareas' , component: TareaValiarEmpleadorComponent,canActivate:[AutentificacionGuard] },
- 
+
   { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas/empleador/:external_em' , component: FormValidacionEmpleadorComponent,canActivate:[AutentificacionGuard] },
   //rutas del postulante
@@ -88,12 +88,12 @@ const routes: Routes = [
   { path: 'panel-postulante/edit-curso-capacitacion/:external_cu' , component: FormEditarCursoComponent,canActivate:[AutentificacionGuard] },
   //{ path: 'panel-postulante/cursos-capacitaciones' , component: CursosCapacitacionesComponent,canActivate:[AutentificacionGuard] },
   { path: '**', redirectTo: 'home' }
-  
+
 ];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes,{useHash:true}) ],
-  // si quiero exportar estas rutas para usarlas en otro modulo entonces coloco esto 
+  // si quiero exportar estas rutas para usarlas en otro modulo entonces coloco esto
   exports: [ RouterModule ]
-}) 
+})
 export class AppRoutingModule { }

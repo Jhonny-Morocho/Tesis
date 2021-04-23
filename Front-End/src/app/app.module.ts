@@ -50,8 +50,7 @@ import { FormValidarOfertaLaboralComponent } from './pages/paneles-administracio
 import { TablaPublicarOfertGestorComponent } from './pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from './pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import { PostularOfertaLaboralComponent } from './pages/compentes-publicos/ofertas-home/ofertas-laborales.component';
-import { FormPreseleccionarPostulantesComponent } from './pages/paneles-administracion/panel-admin/form-preseleccionar-postulantes/form-preseleccionar-postulantes.component';
-import { PostulanteOfertas } from './pages/paneles-administracion/postulante-ofertas/postulantes-ofertas-encargado.component';
+import { PostulanteOfertas } from './pages/paneles-administracion/panel-admin/postulante-ofertas/postulantes-ofertas-encargado.component';
 import { PostulantesOfertaComponent } from './pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
 import { VerOfertaLaboralComponent } from './pages/compentes-publicos/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
@@ -103,7 +102,6 @@ import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-ad
     TablaPublicarOfertGestorComponent,
     FormPublicarOfertaGestorComponent,
     PostularOfertaLaboralComponent,
-    FormPreseleccionarPostulantesComponent,
     PostulanteOfertas,
     PostulantesOfertaComponent,
     VerOfertaLaboralComponent,

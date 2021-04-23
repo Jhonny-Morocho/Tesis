@@ -251,12 +251,9 @@ export class PostulanteOfertas implements OnInit {
           }
         );
     });
-
   }
   carrarModalX(){
     $('#motrarHojaVidaGeneral').modal('hide');
     console.log('cerrarModalX');
   }
-
-
 }

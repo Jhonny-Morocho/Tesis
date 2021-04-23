@@ -30,11 +30,7 @@ export class TitulosAcademicosComponent implements OnInit {
 
   ngOnInit() {
     this.configurarParametrosDataTable();
-
     this.cargarTabla();
-
-   
-
   }
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
@@ -50,10 +46,6 @@ export class TitulosAcademicosComponent implements OnInit {
         this.tituloAcademico =siHacesBien;
         console.log(this.tituloAcademico);
         //data table
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 2
-        };
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
@@ -97,7 +89,6 @@ export class TitulosAcademicosComponent implements OnInit {
         }
       })
      //alert("estoy eliminado");
-
    }
    ngOnDestroy(): void {
       // Do not forget to unsubscribe the event
