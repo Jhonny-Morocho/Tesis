@@ -6,13 +6,15 @@
             <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/validar-oferta-laboral']">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
         </div>
+        {{     instanciaVerPostulante.correo }}
         <app-ver-oferta-laboral [instanciaOfertaVer]="instanciaOfertaLaboral"></app-ver-oferta-laboral>
 
-        <div class="alert alert-light text-center" role="alert" *ngIf="!existeRegistros">
+        <div class="alert alert-light text-center" role="alert" *ngIf="!existeRegistros && ofertaLaboralActiva==true">
             <i class="fas fa-exclamation-triangle"></i> No existe postulantes para mostrar
         </div>
         <div class="alert alert-light text-center" role="alert" *ngIf="ofertaLaboralActiva==false">
-            <i class="fas fa-clipboard-list" style="font-size: 2em;"></i> La oferta laboral a finalizado
+            <i class="fas fa-clipboard-list" style="font-size: 2em;"></i>
+            La oferta laboral a finalizado
         </div>
         <div *ngIf=" existeRegistros ">
             <table class="table ">

@@ -18,7 +18,7 @@ use function PHPUnit\Framework\isEmpty;
 
 class OfertaLaboralEstudianteController extends Controller
 {
-  
+
     //el estudiante postula a una oferta laboral//
     public function listarTodasOfertaEstudianteExternal_us($external_id){
         try {
@@ -31,7 +31,7 @@ class OfertaLaboralEstudianteController extends Controller
                 'ofertalaboral_estudiante.*')
             ->where('ofertalaboral_estudiante.fk_estudiante',$ObjEstudiante['id'])->get();
             return response()->json(["mensaje"=>$ObjOfertaEstudiante,"Siglas"=>"OE",200]);
-            
+
         } catch (\Throwable $th) {
             return response()->json(["mensaje"=>"Operacion No Exitosa",
                                         "Siglas"=>"ONE","error"=>$th]);
@@ -73,7 +73,7 @@ class OfertaLaboralEstudianteController extends Controller
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
         }
- 
+
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarOfertasLaboralesExternal_us( $external_id){
@@ -81,7 +81,7 @@ class OfertaLaboralEstudianteController extends Controller
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            //busco si ese usuario es un estudiante 
+            //busco si ese usuario es un estudiante
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
             //4 estado //0== eliminado,1==activo,2==aprobado,3==rechazado
             $ObjOfertaLaboral=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->where("estado","!=","0")->orderBy('id', 'DESC')->get();
@@ -90,6 +90,31 @@ class OfertaLaboralEstudianteController extends Controller
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar la oferta","Siglas"=>"ONE","error"=>$th,400]);
         }
     }
+    public function resumenOfertaEstudiantesFinalizada_external_of($external_id){
+         //obtener todos los usuarios que sean postulante
+         $EstudiantePostulanOfertaExternal_of=null;
+         try {
+             //buscamos la oferta laboral el id , de la oferta laboral
+             $ObjOfertaLaboral=$this->buscarOfertaLaboral($external_id);
+             $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+             ->join("usuario","usuario.id","=","estudiante.fk_usuario")
+             ->select("estudiante.nombre",
+             "estudiante.external_es",
+             "estudiante.genero",
+             "estudiante.fecha_nacimiento",
+             "estudiante.direccion_domicilio",
+             "estudiante.cedula",
+             "estudiante.telefono",
+             "estudiante.apellido",
+             "ofertalaboral_estudiante.*",
+             "usuario.external_us",
+             "usuario.correo")
+             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
+            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
+         } catch (\Throwable $th) {
+             return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"ONE","error"=>$th,400]);
+         }
+    }
     // listamos todos los estudiante que han postulado a una oferta xxx
     public function listTodasEstudiantePostulanOfertaExternal_of_encargado($external_id){
         //obtener todos los usuarios que sean postulante
@@ -97,7 +122,8 @@ class OfertaLaboralEstudianteController extends Controller
         try {
             //buscamos la oferta laboral el id , de la oferta laboral
             $ObjOfertaLaboral=$this->buscarOfertaLaboral($external_id);
-            $EstudiantePostulanOfertaExternal_of=OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
+            $EstudiantePostulanOfertaExternal_of=
+            OfertaLaboralEstudiante::join("estudiante","estudiante.id","=","ofertalaboral_estudiante.fk_estudiante")
             ->join("usuario","usuario.id","=","estudiante.fk_usuario")
             ->select("estudiante.nombre",
             "estudiante.external_es",
@@ -115,7 +141,7 @@ class OfertaLaboralEstudianteController extends Controller
             ->where("ofertalaboral_estudiante.fk_oferta_laboral", "=", $ObjOfertaLaboral->id)->get();
            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$EstudiantePostulanOfertaExternal_of,"Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
         }
     }
      // listamos todos los estudiante que han postulado a una oferta xxx
@@ -150,7 +176,7 @@ class OfertaLaboralEstudianteController extends Controller
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante
         try {
-            
+
             //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
             $ObjOfertasLaborales=OfertaLaboralEstudiante::get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
@@ -161,17 +187,17 @@ class OfertaLaboralEstudianteController extends Controller
     public function actulizarOfertaLaboral(Request $request,$external_id){
         if($request->json()){
 
-            try {           
+            try {
                 $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)->update(
                     array(
-                        'puesto'=>$request['puesto'], 
+                        'puesto'=>$request['puesto'],
                         'descripcion'=>$request['descripcion'],
                         'estado'=>$request['estado'],
                         'lugar'=>$request['lugar'],
                         'obervaciones'=>$request['obervaciones'],
                         'requisitos'=>$request['requisitos']
                     ));
-                
+
                 return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjOfertaLaboral,"resques"=>$request->json()->all(),"respuesta"=>$ObjOfertaLaboral,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
@@ -181,19 +207,29 @@ class OfertaLaboralEstudianteController extends Controller
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
     }
+    //reporte de las ofertas//cuando se contraton//cuando desvinculados//cuandots no cotratado
     public function reporteOfertaEstudiante(){
         try {
             $arrayReporte=array();
             $objOfertaLaboral=OfertasLaborales::get();
             foreach ($objOfertaLaboral as $key => $value) {
-                $empleador=Empleador::select("razon_empresa")->where("id",$value['fk_empleador'])->first();
+                $empleador=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
+                ->select("empleador.razon_empresa",
+                "empleador.id",
+                "usuario.correo")
+                ->where("empleador.id",$value['fk_empleador'])->first();
                 $arrayReporte[$key]=array(
                     "updatedAtOferta"=>$value['updated_at'],
                     "puesto"=>$value['puesto'],
                     "idOferta"=>$value['id'],
                     "empleador"=>$empleador->razon_empresa,
+                    "correo"=>$empleador->correo,
+                    "external_of"=>$value['external_of'],
+                    "requisitos"=>$value['requisitos'],
+                    "fk_empleador"=>$empleador->id,
                     "estadoValidacionOferta"=>$value['estado'],
                     "obervaciones"=>$value['obervaciones'],
+                    "descripcion"=>$value['descripcion'],
                     "numeroPostulantes"=>OfertaLaboralEstudiante::where("fk_oferta_laboral",$value['id'])->count(),
                     "desvinculados"=>OfertaLaboralEstudiante::where("estado",0)->where("fk_oferta_laboral",$value['id'])->count(),
                     "noContratados"=>OfertaLaboralEstudiante::where("estado",1)->where("fk_oferta_laboral",$value['id'])->count(),
@@ -231,7 +267,7 @@ class OfertaLaboralEstudianteController extends Controller
                 "Siglas"=>"ONE",
                 "error"=>$th->getMessage()]);
             }
-                                        
+
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
@@ -262,7 +298,7 @@ class OfertaLaboralEstudianteController extends Controller
             "Siglas"=>"ONE",
             "error"=>$th->getMessage()]);
         }
-                                    
+
     }else{
         return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
     }

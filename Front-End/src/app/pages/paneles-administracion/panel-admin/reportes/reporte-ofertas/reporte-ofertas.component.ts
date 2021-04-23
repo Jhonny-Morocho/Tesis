@@ -10,16 +10,26 @@ import {logoUnl} from 'src/app/templatePdf/logoUnl';
 import {logoCarrera} from 'src/app/templatePdf/logoCarrera';
 import {estilosTablaPrincipalLayaut} from 'src/app/templatePdf/estilosTablaPrincipalLayaut';
 import {estilosTablaResumenLayaut} from 'src/app/templatePdf/estilosTablaResumenLayaut';
-
+import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {ReporteOfertaModel} from 'src/app/models/reporteOfertas.models';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
 import { NgForm } from '@angular/forms';
+import { OfertaLaboralModel } from '../../../../../models/oferta-laboral.models';
+import { SerivicioEmpleadorService } from '../../../../../servicios/servicio-empleador.service';
+import { ActivatedRoute } from '@angular/router';
+import { PostulanteModel } from 'src/app/models/postulante.models';
+import { OfertaLaboralEstudianteModel } from 'src/app/models/oferLaboral-Estudiante.models';
+declare var $:any;
 @Component({
   selector: 'app-reporte-ofertas',
   templateUrl: './reporte-ofertas.component.html'
 })
 export class ReporteOfertasComponent implements OnInit {
+  instanciaOfertaVer:OfertaLaboralModel;
+  instanciaEmpleadorModelVer:EmpleadorModel;
+  existeRegistros:boolean=false;
+  arrayOfertaPostulante:OfertaLaboralEstudianteModel[]=[];
   //reporte
   rowsItemsReporte=[];
   rowsResumenTabla=[];
@@ -30,10 +40,14 @@ export class ReporteOfertasComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
+              private servicioEmpelador:SerivicioEmpleadorService,
+              private _activateRoute:ActivatedRoute,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.instanciaFiltro=new OfertasFiltroModel();
+    this.instanciaOfertaVer=new OfertaLaboralModel();
+    this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.configurarParametrosDataTable();
     this.cargarTablaReporte();
   }
@@ -44,15 +58,15 @@ export class ReporteOfertasComponent implements OnInit {
                       'Empleador',
                       'Oferta Laboral',
                       'Estado',
-                      '#Postulantes',
-                      '#Desvinculados',
-                      '#No contratados',
-                      '#Contratados'
+                      'Inscritos',
+                      'Rechazados',
+                      'No Aprobados',
+                      'Aprobados'
                       ];
     return arrayCabezera;
   }
   resumenTabla(noVal:number,rev:number,publ:number,final:number){
-    let array= 
+    let array=
   [
     //no validadas
     [
@@ -124,12 +138,12 @@ export class ReporteOfertasComponent implements OnInit {
 
   }
   generatePdf(){
-    var documentDefinition = 
+    var documentDefinition =
     {
       //horientacion vertical
       pageOrientation: 'landscape',
         //end horientacion vertical
-      content: 
+      content:
       [
         {
           columns: [
@@ -170,16 +184,16 @@ export class ReporteOfertasComponent implements OnInit {
         '\n',
         {
           layout:estilosTablaPrincipalLayaut,
-          table: 
-          { 
+          table:
+          {
             width: '100%',
             body: this.rowsItemsReporte
           }
         },
-            
+
       '\n',
       '\n\n',
-      //contador resuemen de la ofertas 
+      //contador resuemen de la ofertas
       {
         layout: estilosTablaResumenLayaut,
         table: {
@@ -215,11 +229,44 @@ export class ReporteOfertasComponent implements OnInit {
         //font: 'Quicksand',
       },
     };
-      
+
     pdfMake.createPdf(documentDefinition).open();
   }
 
-
+  verOfertaLaboral(id:Number){
+    var index=parseInt((id).toString(), 10);
+    this.instanciaOfertaVer.puesto=(this.intanciaReporte[index]['puesto']).toString();
+    this.instanciaOfertaVer.requisitos=this.intanciaReporte[index]['requisitos'];
+    this.instanciaOfertaVer.descripcion=this.intanciaReporte[index]['descripcion'];
+    $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
+    this.instanciaOfertaVer.fk_empleador=this.intanciaReporte[index]['fk_empleador'];
+    this.instanciaOfertaVer.razon_empresa=(this.intanciaReporte[index]['empleador']).toString();
+    this.instanciaOfertaVer.obervaciones=(this.intanciaReporte[index]['obervaciones']).toString();
+    this.instanciaOfertaVer.correo=this.intanciaReporte[index]['correo'];
+    //obtengo el external_of
+    this.instanciaOfertaVer.external_of=this.intanciaReporte[index]['external_of'];
+    this.estudiantesOfertaLaboral(this.instanciaOfertaVer.external_of);
+    //obtengo todos los usuarios
+    this.servicioEmpelador.listarEmpleadores().subscribe(
+      siHaceBien=>{
+          console.log(siHaceBien);
+          siHaceBien.forEach(element => {
+            //comparo el fk_empleador con el id de usuario
+            if(element['id']== this.instanciaOfertaVer.fk_empleador){
+              this.instanciaEmpleadorModelVer.nom_representante_legal=element['nom_representante_legal'];
+              this.instanciaEmpleadorModelVer.direccion=element['direccion'];
+              this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
+              this.instanciaEmpleadorModelVer.fk_ciudad=element['fk_ciudad'];
+              this.instanciaEmpleadorModelVer.actividad_ruc=element['actividad_ruc'];
+              this.instanciaEmpleadorModelVer.tipo_empresa=element['tiposEmpresa'];
+              this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
+            }
+          });
+      },error=>{
+        console.log(error);
+      });
+    $('#verOfertaReporte').modal('show');
+  }
   filtrarOfertas(formFiltro:NgForm){
     console.log(formFiltro);
     if(formFiltro.invalid){
@@ -240,14 +287,14 @@ export class ReporteOfertasComponent implements OnInit {
         let aux=[];
         //recorreo todo el array y compara los datos
         siHacesBien.forEach(element => {
-            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") && 
+            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
               fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
               estado==element['estadoValidacionOferta'] && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
               console.log("xx");
             }
             //no validado
-            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") && 
+            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
             fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
              estado==9 && (element['obervaciones']).length==0){
             aux.push(element);
@@ -300,13 +347,13 @@ export class ReporteOfertasComponent implements OnInit {
         //cargo la tabla para generar reporte
         this.rowsItemsReporte.push([
                         contador,
-                        this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"), 
-                        element['empleador'], 
-                        element['puesto'], 
-                        this.estadoOferta(element['estadoValidacionOferta'],element['obervaciones']), 
-                        element['numeroPostulantes'], 
-                        element['desvinculados'], 
-                        element['noContratados'], 
+                        this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"),
+                        element['empleador'],
+                        element['puesto'],
+                        this.estadoOferta(element['estadoValidacionOferta'],element['obervaciones']),
+                        element['numeroPostulantes'],
+                        element['desvinculados'],
+                        element['noContratados'],
                         element['contratados']
                       ]);
         contador++;
@@ -348,7 +395,24 @@ export class ReporteOfertasComponent implements OnInit {
     );
 
   }
-
+  //listamos todos los estudiantes que este postulando a esta oferta laboral
+  estudiantesOfertaLaboral(external_of:string){
+    this.servicioOfertaEstudiante.resumenOfertaEstudiantesFinalizada_external_of(external_of).subscribe(
+      siHaceBien=>{
+        console.log(siHaceBien);
+        this.arrayOfertaPostulante=siHaceBien;
+        console.log(this.arrayOfertaPostulante.length);
+        if(this.arrayOfertaPostulante.length>0){
+          this.existeRegistros=true;
+        }
+      },error=>{
+        console.log(error);
+      }
+    );
+  }
+  reportePdfOfertaEstudiante(){
+    
+  }
   reiniciarValoresTablaOfertas(){
     this.dtTrigger.unsubscribe();
     this.configurarParametrosDataTable();
@@ -359,7 +423,7 @@ export class ReporteOfertasComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
+        /* below is the relevant part, e.g. translated to spanish */
       language: {
         processing: "Procesando...",
         search: "Buscar:",

@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
 import {CiudadesModel} from 'src/app/models/ciudades.models';
 import {ServicioCiudades} from 'src/app/servicios/ciudades.service';
 import {ServicioProvincias} from 'src/app/servicios/provincias.service';
-import {ProvinciasModels} from 'src/app/models/provincias.models'; 
+import {ProvinciasModels} from 'src/app/models/provincias.models';
 @Component({
   selector: 'app-form-validacion-empleador',
   templateUrl: './form-validacion-empleador.component.html'
@@ -23,9 +23,9 @@ export class FormValidacionEmpleadorComponent implements OnInit {
   constructor(private servicioEmpleador:SerivicioEmpleadorService,
               private servicioCiudades:ServicioCiudades,
               private servicioProvincias:ServicioProvincias,
-              private _activateRoute:ActivatedRoute) { 
+              private _activateRoute:ActivatedRoute) {
                 //obtener los parametros de la ulr para tener los datos del empleador
-               
+
 
   }
 
@@ -40,23 +40,24 @@ export class FormValidacionEmpleadorComponent implements OnInit {
       //consumir el servicio
       this.externalEmpleador=params['external_em'];
       this.servicioEmpleador.obtenerEmpleadorExternal_em(params['external_em']).subscribe(
-        suHacesBien=>{
-          console.log(suHacesBien);
+        siHacesBien=>{
+          console.log(siHacesBien);
           //encontro estudiante estado==0
-          if(suHacesBien["Siglas"]=="OE"){
-            console.log( suHacesBien['Siglas']);
-            this.instanciaEmpleador.razon_empresa=suHacesBien['mensaje']['razon_empresa'];
-            this.instanciaEmpleador.actividad_ruc=suHacesBien['mensaje']['actividad_ruc'];
-            this.instanciaEmpleador.cedula=suHacesBien['mensaje']['cedula'];
-            this.instanciaEmpleador.tipo_empresa=suHacesBien['mensaje']['tipo_empresa'];
-            this.instanciaEmpleador.fk_provincia=suHacesBien['mensaje']['fk_provincia'];
-            this.instanciaEmpleador.telefono=suHacesBien['mensaje']['telefono'];
-            this.instanciaEmpleador.fk_ciudad=suHacesBien['mensaje']['fk_ciudad'];
+          if(siHacesBien["Siglas"]=="OE"){
+            console.log( siHacesBien['Siglas']);
+            this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
+            this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
+            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaEmpleador.tipo_empresa=siHacesBien['mensaje']['tipo_empresa'];
+            this.instanciaEmpleador.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
+            this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
+            this.instanciaEmpleador.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
             this.escucharSelectProvincia(this.instanciaEmpleador.fk_provincia);
-            this.instanciaEmpleador.direccion=suHacesBien['mensaje']['direccion'];
-            this.instanciaEmpleador.estado=suHacesBien['mensaje']['estado'];
-            this.instanciaEmpleador.nom_representante_legal=suHacesBien['mensaje']['nom_representante_legal'];
-            this.instanciaEmpleador.num_ruc=suHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
+            this.instanciaEmpleador.estado=siHacesBien['mensaje']['estado'];
+            this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
+            this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
             console.log(this.instanciaEmpleador.estado);
             this.encontrado=true;
           }
@@ -65,7 +66,7 @@ export class FormValidacionEmpleadorComponent implements OnInit {
             this.encontrado=false;
           }
         },peroSiTenemosErro=>{
-     
+
           console.log(peroSiTenemosErro);
         }
       );
@@ -117,13 +118,13 @@ export class FormValidacionEmpleadorComponent implements OnInit {
           console.log(siHacesBien);
           Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
         }
-    
+
     },(peroSiTenemosErro)=>{
      Swal({
          title:'Error al registrar informacion',
          type:'error',
          text:peroSiTenemosErro['mensaje']
-       }); 
+       });
     }
   );
 }

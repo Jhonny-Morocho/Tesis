@@ -60,23 +60,25 @@
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
-                        <th class="col">#</th>
+                        <!-- <th class="col">#</th> -->
                         <th class="col">Fecha</th>
                         <th class="col">Empleador</th>
                         <th class="col">Oferta Laboral</th>
+                        <th class="col">Ver</th>
                         <th class="col">Estado</th>
-                        <th class="col">#Postulantes</th>
-                        <th class="col">#Desvinculados</th>
-                        <th class="col">#No contratados</th>
-                        <th class="col">#Contratados</th>
+                        <th class="col">Inscritos</th>
+                        <th class="col">Rechazados</th>
+                        <th class="col">No Aprobados</th>
+                        <th class="col">Aprobados</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let reporteOfertaEstudiante of intanciaReporte;let i=index">
-                        <td>{{ i+1 }}</td>
+                        <!-- <td>{{ i+1 }}</td> -->
                         <td>{{ reporteOfertaEstudiante.updatedAtOferta | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ reporteOfertaEstudiante.empleador}}</td>
                         <td>{{ reporteOfertaEstudiante.puesto}}</td>
+                        <td><a class="btn btn-light" (click)="verOfertaLaboral(i)"><i class="fas fa-eye"></i></a></td>
                         <td>
                             <span *ngIf="(reporteOfertaEstudiante.obervaciones).length==0 && reporteOfertaEstudiante.estadoValidacionOferta==1" class="badge badge-danger " title="Tiempo máximo para validar es de 72 horas"><i class="far fa-clock"></i> No validado</span>
                             <span *ngIf="(reporteOfertaEstudiante.obervaciones).length>0 && reporteOfertaEstudiante.estadoValidacionOferta==2" class="badge badge-success ">Validado</span>
@@ -106,4 +108,61 @@
             </table>
         </article>
     </div>
+</div>
+<!-- Modal  VISUALIZAR OFERTA LABORAL-->
+<div class="modal fade bd-example-modal-lg" id="verOfertaReporte" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <app-ver-oferta-laboral [instanciaOfertaVer]="instanciaOfertaVer"></app-ver-oferta-laboral>
+        <div class="container">
+          <div class="col-1">
+            <label for="inputStatus">PDF</label>
+            <div class="form-group ">
+              <button type="button" class="btn btn-outline-success"
+                (click)="reportePdfOfertaEstudiante()"
+                ><i class="far fa-file-pdf"></i>
+              </button>
+            </div>
+          </div>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Postulante</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let postulantes of arrayOfertaPostulante; index as i ">
+                <th scope="row">
+                  {{ i+1 }}
+                </th>
+                <td>
+                  {{ postulantes.created_at| date: 'yyy/MM/dd' }}
+
+                </td>
+                <td>
+                  {{ postulantes.nombre }} {{ postulantes.apellido }}
+                </td>
+                <td>
+                  {{ postulantes.correo }}
+
+                </td>
+                <td>
+                  <span class="badge badge-danger" *ngIf="postulantes.estado==0">Rechazado</span>
+                  <span class="badge badge-primary" *ngIf="postulantes.estado==1">Postulando</span>
+                  <span class="badge badge-success" *ngIf="postulantes.estado==2">Contratado</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+      </div>
+  </div>
 </div>

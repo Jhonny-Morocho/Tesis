@@ -6,3 +6,7 @@
 
 
 
+[2021-04-23 11:01:49] Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador1unl@gmail.com ]
+
+
+

@@ -33,10 +33,10 @@ export class PostulanteOfertas implements OnInit {
   arrayPostulanteOfertAux:OfertaLaboralEstudianteModel[]=[];
   instanciaOfertaPostulante:OfertaLaboralEstudianteModel;
   arrayAux=[];
-  
- estadoPostulacion= [];
- existeRegistros:boolean=false;
- ofertaLaboralActiva:boolean=true;
+
+  estadoPostulacion= [];
+  existeRegistros:boolean=false;
+  ofertaLaboralActiva:boolean=true;
 
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioTitulosAcademicos:TituloService,
@@ -55,7 +55,7 @@ export class PostulanteOfertas implements OnInit {
   filtrarPostulante(){
     //verifico si el usuario ha hecho check,si no hace check entonces no puede actualizar
     if(this.arrayAux.length==0){
-      Swal({title:'Atención',type:'info',text:'Ahun no ha realizado ninguna acción en el checklist'}); 
+      Swal({title:'Atención',type:'info',text:'Ahun no ha realizado ninguna acción en el checklist'});
     }else{
       Swal({
         title: '¿Está seguro ?',
@@ -66,7 +66,7 @@ export class PostulanteOfertas implements OnInit {
         confirmButtonText: 'Si'
       }).then((result) => {
         if (result.value) {
-      
+
           this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
             siHaceBien =>{
                 console.log(siHaceBien);
@@ -96,7 +96,7 @@ export class PostulanteOfertas implements OnInit {
   }
   verHojaVidaModal(id:Number){
     console.log("click");
-    var index=parseInt((id).toString(), 10); 
+    var index=parseInt((id).toString(), 10);
     $('#motrarHojaVidaGeneral').modal('show');
     //============= mostamos la informacion personal ========================
     this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
@@ -145,7 +145,7 @@ export class PostulanteOfertas implements OnInit {
     }
     //comprobar que el estado actual solo tenga dos valores 1 <-> 0
     if(estadoActualAux!=null){
-        const aux={   
+        const aux={
         fk_estudiante:fk_postulante,
         fk_oferta_laboral:fk_ofertaLaboral,
         estado:estadoActualAux,
@@ -179,9 +179,7 @@ export class PostulanteOfertas implements OnInit {
       alert("el estado es nullo");
     }
   }
-  mostrarResumenContracion(){
-    //this.servicioOfertaEstudiante.
-  }
+
   obtenerOfertaLaboral(){
     this._activateRoute.params.subscribe(
       params=>{
@@ -198,9 +196,8 @@ export class PostulanteOfertas implements OnInit {
             this.instanciaOfertaLaboral.requisitos=siHaceBien['mensaje']['requisitos'];
             if(this.instanciaOfertaLaboral.estado==4){
               this.ofertaLaboralActiva=false;
-              this.mostrarResumenContracion();
             }
-            
+
             $("#itemRequisitos").html(this.instanciaOfertaLaboral.requisitos);
             console.log(this.instanciaOfertaLaboral);
 
@@ -212,14 +209,14 @@ export class PostulanteOfertas implements OnInit {
                   siHaceBien.forEach(element => {
                     //comparo el fk_empleador con el id de usuario
                     if(element['id']== this.instanciaOfertaLaboral.fk_empleador){
-               
+
                       this.instanciaOfertaLaboral.razon_empresa=element['razon_empresa'];
                     }
                   });
-        
+
                   console.log(this.instanciaEmpleador);
               },error=>{
-        
+
                 console.log(error);
               });
 

@@ -13,6 +13,7 @@ import {ReporteOfertaModel } from 'src/app/models/reporteOfertas.models';
 export class OfertaLaboralEstudianteService {
   //el url del servicio o del backend
   private urlDominio_=environment.dominio;
+  private urlResumenOfertaEstudiantesFinalizada_external_of="/Backend/public/index.php/ofertasLaboralesEstudiantes/resumenOfertaEstudiantesFinalizada_external_of/";
   private urlReporteOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/reporteOfertaEstudiante";
   private urlBackendPostularOfertaEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/PostularOfertaLaboral/";
   private urlBackendListTodasEstudiantePostulanOfertaExternal_of_encargado="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_encargado/";
@@ -49,6 +50,15 @@ export class OfertaLaboralEstudianteService {
         respuestaBackend=>{
           return this.crearArregloOfertaEstudiante(respuestaBackend['mensaje']);
         })
+    );
+  }
+  resumenOfertaEstudiantesFinalizada_external_of(external_Of:String){
+    return this._httCliente.get(
+      `${this.urlDominio_}${this.urlResumenOfertaEstudiantesFinalizada_external_of}${external_Of}`
+    ).pipe(
+      map(respuestaBackend=>{
+        return this.crearArregloOfertaEstudiante(respuestaBackend['mensaje'])
+      })
     );
   }
   listTodasEstudiantePostulanOfertaExternal_of_encargado(external_Of:String){
@@ -142,5 +152,5 @@ export class OfertaLaboralEstudianteService {
   }
 }
 
-  
+
 
