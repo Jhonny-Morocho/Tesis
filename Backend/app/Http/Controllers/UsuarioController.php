@@ -9,7 +9,6 @@ use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 use PHPMailer\PHPMailer\PHPMailer;
-use SebastianBergmann\Template\Template;
 
 class UsuarioController extends Controller
 {
@@ -44,11 +43,11 @@ class UsuarioController extends Controller
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
- 
+
     }
 
     public function recuperarPassword(Request $request){
-  
+
         if($request->json()){
             $ObjUsuario=nuLL;
             $correo=null;
@@ -64,7 +63,7 @@ class UsuarioController extends Controller
                    $nuevoPassword="";
                    $patron="1234567890abcdefghijklmnopqrstuvwxyz";
                    $max=strlen($patron)-1;
-                   for ($i=0; $i < 10; $i++) { 
+                   for ($i=0; $i < 10; $i++) {
                        # code...
                        $nuevoPassword.=$patron[mt_rand(0,$max)];
                    }
@@ -84,7 +83,7 @@ class UsuarioController extends Controller
                     );
                     $texto="";
                     $handle = fopen("logRegistroPostulante.txt", "a");
-                    $texto="[".date("Y-m-d H:i:s")."]" ." Recuperar contraseña al usuario : 
+                    $texto="[".date("Y-m-d H:i:s")."]" ." Recuperar contraseña al usuario :
                             ".$datos['correo'].":: estado de enviar correo: ".$enviarCorreoBolean." ]";
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
@@ -135,14 +134,14 @@ class UsuarioController extends Controller
                     $ObjEstudiante->external_es="Es".Utilidades\UUID::v4();
                     $ObjEstudiante->estado=$datos["estado"];
                     $ObjEstudiante->save();
-                    
+
                     //enviamos registro de postulante a la secretaria a la secretaria
                     $usuarioSecrataria=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
                     ->select("docente.*","usuario.*")
                     ->where("docente.estado",1)
                     ->where("usuario.tipoUsuario",3)
                     ->get();
-                
+
                     //recorremo todoss los usuario que sean secretaria
                     $arrayEncargado=null;
                     foreach ($usuarioSecrataria as $key => $value) {
@@ -189,11 +188,11 @@ class UsuarioController extends Controller
     }
      //REGISTRO DE LOGIN
      public function login(Request $request){
-        
+
         if($request->json()){
-      
+
             // ========= VALIDACION DEL USUARIO ANTES DE INICIAR EL LOGIN ====
-            //existe el usuario 
+            //existe el usuario
             $usuario=null;
             try {
                 $datos=$request->json()->all();
@@ -202,10 +201,10 @@ class UsuarioController extends Controller
                 ->first();
                 if($usuario){
                     if(password_verify($datos['password'],$usuario['password'])){
-                        // preguntamos que tipo de usuario es 
+                        // preguntamos que tipo de usuario es
                      try {
                             return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
-    
+
                         } catch (\Throwable $th) {
                             //throw $th;
                             return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"error"=>$th->getMessage()]);
@@ -213,7 +212,7 @@ class UsuarioController extends Controller
                     }else{
                         return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
                     }
-    
+
                 } // usuario no encontrado
                 else{
                     return response()->json(["mensaje"=>"El usuario no existe","Siglas"=>"UNE",400]);
@@ -232,7 +231,7 @@ class UsuarioController extends Controller
      //================== funciones privadas =======================//
      private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
         try {
-   
+
             $mail=new PHPMailer();
             $mail->CharSet='UTF-8';
             $mail->isMail();
@@ -270,7 +269,7 @@ class UsuarioController extends Controller
                                 <hr>
                                 <div class="alert alert-primary">
                                     Se ha registrado el nuevo postulante
-                                    '.$nombre." ".$apellido. ' 
+                                    '.$nombre." ".$apellido. '
 
                                     <hr>
                                     Correo del Postulante: '.$correoPostulante.'
@@ -280,7 +279,7 @@ class UsuarioController extends Controller
                         </div>
                         </body>
                     </html>';
-        return $emailMensaje;      
+        return $emailMensaje;
     }
     private function templaterecuperarContraseña($usuarioCorreo,$passworNuevo){
 
@@ -311,8 +310,8 @@ class UsuarioController extends Controller
                         </div>
                         </body>
                     </html>';
-        return $emailMensaje;      
+        return $emailMensaje;
     }
-  
+
 
 }

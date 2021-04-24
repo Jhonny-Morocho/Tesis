@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         "App\Console\Commands\NotificarUsuarios"
     ];
- 
+
     /**
      * Define the application's command schedule.
      *
@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {   
+    {
         $schedule->command('command:notificarUsuarios')->everyMinute();
         //$schedule->command('command:eliminarMensaje')->everyMinute();
     }

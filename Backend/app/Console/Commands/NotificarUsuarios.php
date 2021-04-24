@@ -9,7 +9,7 @@ use App\Models\Empleador;
 use App\Models\OfertasLaborales;
 use App\Models\Docente;
 use Carbon\Carbon;
-use PHPMailer\PHPMailer\PHPMailer;
+use App\Traits\TemplateCorreo;
 
 class NotificarUsuarios extends Command
 
@@ -25,6 +25,8 @@ class NotificarUsuarios extends Command
     private $tiempoDePublicacionOfertaLaboralGestor=24;
     private $de='soporte@proeditsclub.com';
     protected $signature = 'command:notificarUsuarios';
+    //reutilizando el codigo con los correos
+    use TemplateCorreo;
 
     /**
      * The console command description.
@@ -42,7 +44,7 @@ class NotificarUsuarios extends Command
     {
 
         parent::__construct();
-       
+
     }
 
     /**
@@ -51,13 +53,13 @@ class NotificarUsuarios extends Command
      * @return mixed
      */
     public function handle()
-    {   
-        
+    {
+
      $this->notificarEstudiante();
-     $this->notificarEmpleador();
-     $this->notificarOfertaLaboralExpirada();
-     $this->notificarOfertaLaboralExpiradaDePublicarGestor();
-    
+    //  $this->notificarEmpleador();
+    //  $this->notificarOfertaLaboralExpirada();
+    //  $this->notificarOfertaLaboralExpiradaDePublicarGestor();
+
     }
 
     private function notificarOfertaLaboralExpirada(){
@@ -84,7 +86,7 @@ class NotificarUsuarios extends Command
                 $ofertaLaboralBoleand=OfertasLaborales::where("id","=",$value['id'])
                 ->update(array( "obervaciones"=>$observaciones));
                 //preparamos la plantilla html para enviar al correo
-                $plantillaCorreo=$this->templateHtmlOfertaExpirada($value['nom_representante_legal'],$value['razon_empresa'],$TituloCorreo);
+                $plantillaCorreo=$this->templateHtmlCorreo($value['nom_representante_legal'],$value['razon_empresa'],$TituloCorreo);
                 //enviamos el corrreo
                 $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
                 $texto="[".date("Y-m-d H:i:s")."]" ." Update Oferta laboral validacion Expirado :::
@@ -95,7 +97,7 @@ class NotificarUsuarios extends Command
                 fwrite($handle, "\r\n\n\n\n");
             }
             fclose($handle);
-   
+
         } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]" ." Update Oferta laboral validacion Expirado :::"
             ."::ERROR del empleador :".$th." ]";
@@ -115,7 +117,7 @@ class NotificarUsuarios extends Command
             ->where("estudiante.observaciones","")
             ->whereDate('estudiante.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
             ->get();
-            
+
             $TituloCorreo="Proceso de registro del Postulante";
             $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
@@ -191,7 +193,7 @@ class NotificarUsuarios extends Command
                             </div>
                             </body>
                         </html>';
-            return $emailMensaje;      
+            return $emailMensaje;
         }
 
         private function templateHtmlOfertaExpirada($nombreRepresentante,$nombreEmprea,$HtmlTitulo){
@@ -212,7 +214,7 @@ class NotificarUsuarios extends Command
                                     <hr>
                                     <div class="alert alert-warning">
 
-                                        Estimado/a:'.$nombreRepresentante." 
+                                        Estimado/a:'.$nombreRepresentante."
 
                                         Representante de la empresa: ".$nombreEmprea. '
                                         <hr>
@@ -223,29 +225,10 @@ class NotificarUsuarios extends Command
                             </div>
                             </body>
                         </html>';
-            return $emailMensaje;      
+            return $emailMensaje;
         }
 
-    private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
-        try {
-            $mail=new PHPMailer();
-            $mail->CharSet='UTF-8';
-            $mail->isMail();
-            $mail->setFrom($de,'Proceso de Inserccón Laboral');
-            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
-            $mail->Subject=($tituloCorreo);
-            $mail->addAddress($para);
-            $mail->msgHTML($emailMensaje);
-            $envio=$mail->Send();
-            if ($envio==true) {
-            return $respuestaMensaje="true";
-            }else{
-                return $respuestaMensaje="false";
-            }
-        } catch (\Throwable $th) {
-        return  $respuestaMensaje=$th;
-        }
-    }
+
     private function notificarOfertaLaboralExpiradaDePublicarGestor(){
         //enviar correo del registro el encargado
         $texto="";
@@ -264,7 +247,7 @@ class NotificarUsuarios extends Command
             ->subHour($this->tiempoDePublicacionOfertaLaboralGestor))
             ->get();
 
-            //enviamo la notificacion al gestor 
+            //enviamo la notificacion al gestor
             $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
             ->select("docente.*","usuario.correo")
             ->where("docente.estado",1)
@@ -272,7 +255,7 @@ class NotificarUsuarios extends Command
             ->first();
             $TituloCorreo="Publicacíon de oferta laboral pendientes ";
             //recorrer todos los usuario que sean gestor
-       
+
             foreach ($ObjOfertaLaboral as $key => $value) {
                 //tengo q redacatra el menaje aL ENCAGRADO
                 $plantillaCorreo=$this
@@ -281,7 +264,7 @@ class NotificarUsuarios extends Command
                                 $TituloCorreo,
                                 $value['puesto']
                                 );
-      
+
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
                                                         $usuarioGestor->correo,
                                                     $this->de,
@@ -303,7 +286,7 @@ class NotificarUsuarios extends Command
                 fwrite($handle, "\r\n\n\n\n");
                 fclose($handle);
             }
-      
+
         } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]"
             ." Oferta laboral pendiente de publicar expirada por parte del gestor ERROR :: : "
@@ -331,7 +314,7 @@ class NotificarUsuarios extends Command
                                         <h4 class="fw-bolder text-center">' .$tituloMensaje. '</h4>
                                         <br>
                                         <hr>
-                                            Estimado/a usuario :'.$correoUsuarioGestor.' 
+                                            Estimado/a usuario :'.$correoUsuarioGestor.'
 
                                             <hr>
                                             Se le informa que tiene pendiente la aprobación de publicar la oferta laboral : '.$nombreOfertaLaboral.'
@@ -341,9 +324,8 @@ class NotificarUsuarios extends Command
                                 </div>
                                 </body>
                             </html>';
-        return $emailMensaje;      
+        return $emailMensaje;
     }
 
 }
 
-  

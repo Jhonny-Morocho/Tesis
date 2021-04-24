@@ -9,12 +9,8 @@ use App\Models\OfertasLaborales;
 use App\Models\Estudiante;
 use App\Models\OfertaLaboralEstudiante;
 use App\Models\Usuario;
-use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-
-use function PHPUnit\Framework\isEmpty;
 
 class OfertaLaboralEstudianteController extends Controller
 {

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleador;
 use App\Models\OfertasLaborales;
+use App\Traits\TemplateCorreo;
 use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Estudiante;
@@ -19,9 +20,11 @@ use function PHPUnit\Framework\isEmpty;
 
 class OfertaLaboralController extends Controller
 {
+    //reutilizando el codigo con los correos
+    use TemplateCorreo;
 
    //correo de le empresa
-   private $de='soporte@proeditsclub.com';
+   public $de='soporte@proeditsclub.com';
     //registrar oferta laboral
     public function RegistrarOfertaLaboral(Request $request,$external_id){
 
@@ -145,6 +148,9 @@ class OfertaLaboralController extends Controller
 
     //estado 4 finalizara la oferta laboral y se la borra de la plataforma
     public function finalizarOfertaLaboral(Request $request,$external_id){
+        echo $this->templateHtmlCorreo("Jhonny Morocho","El estudiante acaba de inscribir en la oferta");
+
+        die("xx");
         if($request->json()){
             $estadoOfertaLaboral=null;
             try {
