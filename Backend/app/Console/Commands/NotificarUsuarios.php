@@ -23,7 +23,6 @@ class NotificarUsuarios extends Command
     private $tiempoValidarFormEmpleador=72;// horas
     private $tiempoValidarOfertaLaboral=72;// horas
     private $tiempoDePublicacionOfertaLaboralGestor=24;
-    private $de='soporte@proeditsclub.com';
     protected $signature = 'command:notificarUsuarios';
     //reutilizando el codigo con los correos
     use TemplateCorreo;
@@ -56,9 +55,9 @@ class NotificarUsuarios extends Command
     {
 
      $this->notificarEstudiante();
-    //  $this->notificarEmpleador();
-    //  $this->notificarOfertaLaboralExpirada();
-    //  $this->notificarOfertaLaboralExpiradaDePublicarGestor();
+     $this->notificarEmpleador();
+     $this->notificarOfertaLaboralExpirada();
+    $this->notificarOfertaLaboralExpiradaDePublicarGestor();
 
     }
 
@@ -79,6 +78,11 @@ class NotificarUsuarios extends Command
             ->whereDate('oferta_laboral.updated_at',"<=",Carbon::now()
             ->subHour($this->tiempoValidarOfertaLaboral))
             ->get();
+            //
+            $parrafoMensaje="Se le informa que la validación de su
+                            oferta laboral ha expirado, porfavor vuelva a
+                            insistir ingresando a su cuenta y reenviando la oferta";
+
             $TituloCorreo="Proceso de publicacion de oferta laboral";
             $observaciones="La validación de su oferta laboral ha expirado, porfavor vuelva a insistir reenviando el formulario";
             foreach ($ObjOfertaLaboral as $key => $value) {
@@ -86,9 +90,9 @@ class NotificarUsuarios extends Command
                 $ofertaLaboralBoleand=OfertasLaborales::where("id","=",$value['id'])
                 ->update(array( "obervaciones"=>$observaciones));
                 //preparamos la plantilla html para enviar al correo
-                $plantillaCorreo=$this->templateHtmlCorreo($value['nom_representante_legal'],$value['razon_empresa'],$TituloCorreo);
+                $plantillaCorreo=$this->templateHtmlCorreo($value['nom_representante_legal'],$parrafoMensaje);
                 //enviamos el corrreo
-                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
+                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],getenv("TITULO_CORREO_OFERTA_LABORAL"));
                 $texto="[".date("Y-m-d H:i:s")."]" ." Update Oferta laboral validacion Expirado :::
                 ::Correo del empleador :".$value['correo']."
                 ::Se actualizo el registro de oferta laboral : ".( $ofertaLaboralBoleand ? 'true' : 'false') ."
@@ -106,7 +110,7 @@ class NotificarUsuarios extends Command
             fclose($handle);
         }
     }
-
+    //nofiticar al postulante que su registro ha expirado
     private function notificarEstudiante(){
         $handle = fopen("log.txt", "a");
         try {
@@ -117,14 +121,18 @@ class NotificarUsuarios extends Command
             ->where("estudiante.observaciones","")
             ->whereDate('estudiante.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
             ->get();
-
-            $TituloCorreo="Proceso de registro del Postulante";
+            //
+            $parrafoMensaje="Se le informa que la validación de su
+                            información ha expirado, porfavor vuelva a
+                            insistir ingresando a su cuenta y reenviando el
+                            formulario de registro";
+            //
             $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
                 $estudianteBooleand=Estudiante::where("fk_usuario","=",$value['fk_usuario'])
                 ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
-                $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['nombre'],$value['apellido'],$TituloCorreo);
-                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
+                $plantillaCorreo=$this->templateHtmlCorreo(($value['nombre'].' '.$value['apellido']),$parrafoMensaje);
+                $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],getenv("TITULO_CORREO_POSTULANTE"));
                 $texto="[".date("Y-m-d H:i:s")."]" ." Update Estudiante Registro Expirado :".$value['correo']." = ".( $estudianteBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
@@ -137,6 +145,7 @@ class NotificarUsuarios extends Command
             fclose($handle);
         }
     }
+    //el tiempo de validacion del formulario re registro del empleador expiro
     private function notificarEmpleador(){
             $texto="";
             $handle = fopen("log.txt", "a");
@@ -150,13 +159,18 @@ class NotificarUsuarios extends Command
                 ->whereDate('empleador.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
                 ->get();
 
-                $TituloCorreo="Proceso de inscripción del empleador";
+                $parrafoMensaje="Se le informa que la validación de su
+                información ha expirado, porfavor vuelva a
+                insistir ingresando a su cuenta y reenviando el
+                formulario de registro";
+
                 $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
                 foreach ($usuario as $key => $value) {
-                    $empleadorBooleand=Empleador::where("fk_usuario","=",$value['fk_usuario'])
-                    ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
-                    $plantillaCorreo=$this->templateCorreoValidacionExpirada($value['razon_empresa'],"",$TituloCorreo);
-                    $enviarCorreoBolean=$this->enviarCorreo( $plantillaCorreo,$value['correo'],$this->de,$TituloCorreo);
+                    $empleadorBooleand=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
+                    ->where("empleador.fk_usuario","=",$value['fk_usuario'])
+                    ->update(array( 'empleador.estado'=>0,"empleador.observaciones"=>$observaciones));
+                    $plantillaHtml=$this->templateHtmlCorreo($value['nom_representante_legal'],"",$parrafoMensaje);
+                    $enviarCorreoBolean=$this->enviarCorreo( $plantillaHtml,$value['correo'],getenv("TITULO_CORREO_POSTULANTE"));
                     $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $empleadorBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
@@ -169,66 +183,40 @@ class NotificarUsuarios extends Command
                 fclose($handle);
             }
         }
-        private function templateCorreoValidacionExpirada($nombre,$apellido,$HtmlTitulo){
-            $emailMensaje='<html>
-                            <head>
-                            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                            <style>
-                                /* Add custom classes and styles that you want inlined here */
-                            </style>
-                            </head>
-                            <body class="bg-light">
-                            <div class="container">
-                                <div class="card my-5">
-                                <div class="card-body">
-                                    <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                    <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
-                                    <br>
+
+    private function templateHtmlOfertaExpirada($nombreRepresentante,$nombreEmprea,$HtmlTitulo){
+        $emailMensaje='<html>
+                        <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                        <style>
+                            /* Add custom classes and styles that you want inlined here */
+                        </style>
+                        </head>
+                        <body class="bg-light">
+                        <div class="container">
+                            <div class="card my-5">
+                            <div class="card-body">
+                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
+                                <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
+                                <br>
+                                <hr>
+                                <div class="alert alert-warning">
+
+                                    Estimado/a:'.$nombreRepresentante."
+
+                                    Representante de la empresa: ".$nombreEmprea. '
                                     <hr>
-                                    <div class="alert alert-warning">
-                                        Estimado/a '.$nombre." ".$apellido. ' Se le informa que la validación de su información ha expirado, porfavor vuelva a insistir ingresando a su cuenta y reenviando el formulario
-                                </div>
-                                </div>
-                                </div>
+                                    Se le informa que la validación de su oferta laboral ha expirado, porfavor vuelva a insistir  reenviando el formulario
                             </div>
-                            </body>
-                        </html>';
-            return $emailMensaje;
-        }
-
-        private function templateHtmlOfertaExpirada($nombreRepresentante,$nombreEmprea,$HtmlTitulo){
-            $emailMensaje='<html>
-                            <head>
-                            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                            <style>
-                                /* Add custom classes and styles that you want inlined here */
-                            </style>
-                            </head>
-                            <body class="bg-light">
-                            <div class="container">
-                                <div class="card my-5">
-                                <div class="card-body">
-                                    <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                    <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
-                                    <br>
-                                    <hr>
-                                    <div class="alert alert-warning">
-
-                                        Estimado/a:'.$nombreRepresentante."
-
-                                        Representante de la empresa: ".$nombreEmprea. '
-                                        <hr>
-                                        Se le informa que la validación de su oferta laboral ha expirado, porfavor vuelva a insistir  reenviando el formulario
-                                </div>
-                                </div>
-                                </div>
                             </div>
-                            </body>
-                        </html>';
-            return $emailMensaje;
-        }
+                            </div>
+                        </div>
+                        </body>
+                    </html>';
+        return $emailMensaje;
+    }
 
-
+    //comunicar al gestor para que publique la oferta
     private function notificarOfertaLaboralExpiradaDePublicarGestor(){
         //enviar correo del registro el encargado
         $texto="";
@@ -253,17 +241,13 @@ class NotificarUsuarios extends Command
             ->where("docente.estado",1)
             ->where("usuario.tipoUsuario",4)
             ->first();
+            $parrafoMensaje="";
             $TituloCorreo="Publicacíon de oferta laboral pendientes ";
             //recorrer todos los usuario que sean gestor
 
             foreach ($ObjOfertaLaboral as $key => $value) {
                 //tengo q redacatra el menaje aL ENCAGRADO
-                $plantillaCorreo=$this
-                                ->templateCorreoNotificarGestorOfertaValidadaExpirada(
-                                $usuarioGestor->correo,
-                                $TituloCorreo,
-                                $value['puesto']
-                                );
+                $plantillaCorreo=$this->templateHtmlCorreo($usuarioGestor->correo,$parrafoMensaje);
 
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
                                                         $usuarioGestor->correo,
