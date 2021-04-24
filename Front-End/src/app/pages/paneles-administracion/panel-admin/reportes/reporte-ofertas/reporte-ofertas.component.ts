@@ -17,8 +17,6 @@ import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Est
 import { NgForm } from '@angular/forms';
 import { OfertaLaboralModel } from '../../../../../models/oferta-laboral.models';
 import { SerivicioEmpleadorService } from '../../../../../servicios/servicio-empleador.service';
-import { ActivatedRoute } from '@angular/router';
-import { PostulanteModel } from 'src/app/models/postulante.models';
 import { OfertaLaboralEstudianteModel } from 'src/app/models/oferLaboral-Estudiante.models';
 declare var $:any;
 @Component({
@@ -31,7 +29,8 @@ export class ReporteOfertasComponent implements OnInit {
   existeRegistros:boolean=false;
   arrayOfertaPostulante:OfertaLaboralEstudianteModel[]=[];
   //reporte
-  rowsItemsReporte=[];
+  rowsItemsReporteOfertas=[];
+  rowsItemsReporteOfertasEstudiante=[];
   rowsResumenTabla=[];
   //filtrar
   instanciaFiltro:OfertasFiltroModel;
@@ -41,7 +40,6 @@ export class ReporteOfertasComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
               private servicioEmpelador:SerivicioEmpleadorService,
-              private _activateRoute:ActivatedRoute,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -49,9 +47,9 @@ export class ReporteOfertasComponent implements OnInit {
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.configurarParametrosDataTable();
-    this.cargarTablaReporte();
+    this.cargarTablaReporteOfertas();
   }
-  maquetarCabezeraTablaPdf(){
+  maquetarCabezeraTablaOfertaLaboralesPdf(){
     let arrayCabezera=[
                       '#',
                       'Fecha',
@@ -62,6 +60,16 @@ export class ReporteOfertasComponent implements OnInit {
                       'Rechazados',
                       'No Aprobados',
                       'Aprobados'
+                      ];
+    return arrayCabezera;
+  }
+  maquetarCabezeraTablaOfertaLaboraleEstudiantePdf(){
+    let arrayCabezera=[
+                      '#',
+                      'Fecha',
+                      'Postulante',
+                      'Correo',
+                      'Estado'
                       ];
     return arrayCabezera;
   }
@@ -137,7 +145,7 @@ export class ReporteOfertasComponent implements OnInit {
   return array;
 
   }
-  generatePdf(){
+  generatePdfOfertas(){
     var documentDefinition =
     {
       //horientacion vertical
@@ -187,7 +195,7 @@ export class ReporteOfertasComponent implements OnInit {
           table:
           {
             width: '100%',
-            body: this.rowsItemsReporte
+            body: this.rowsItemsReporteOfertas
           }
         },
 
@@ -266,6 +274,7 @@ export class ReporteOfertasComponent implements OnInit {
         console.log(error);
       });
     $('#verOfertaReporte').modal('show');
+
   }
   filtrarOfertas(formFiltro:NgForm){
     console.log(formFiltro);
@@ -303,7 +312,7 @@ export class ReporteOfertasComponent implements OnInit {
         });
         this.intanciaReporte=aux;
         //genero el reporte con el nuevo array de la busqueda
-        this.contruirDatosPdf(this.intanciaReporte);
+        this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
         this.dtTrigger.unsubscribe();
         this.dtTrigger.next();
       },
@@ -331,7 +340,7 @@ export class ReporteOfertasComponent implements OnInit {
 
   }
 
-  contruirDatosPdf(reporteModelArray:ReporteOfertaModel[]){
+  contruirDatosPdfReporteOfertas(reporteModelArray:ReporteOfertaModel[]){
       //reporte
       let contador=1;
       let numOfertasNoValidas=0;
@@ -340,12 +349,12 @@ export class ReporteOfertasComponent implements OnInit {
       let numOfertasFinalizadas=0;
       let numOfertRevisadas=0;
       //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
-      this.rowsItemsReporte=[];
-      this.rowsItemsReporte.unshift(this.maquetarCabezeraTablaPdf());
-      console.log(this.maquetarCabezeraTablaPdf());
+      this.rowsItemsReporteOfertas=[];
+      this.rowsItemsReporteOfertas.unshift(this.maquetarCabezeraTablaOfertaLaboralesPdf());
+      console.log(this.maquetarCabezeraTablaOfertaLaboralesPdf());
       reporteModelArray.forEach(element => {
         //cargo la tabla para generar reporte
-        this.rowsItemsReporte.push([
+        this.rowsItemsReporteOfertas.push([
                         contador,
                         this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd"),
                         element['empleador'],
@@ -382,13 +391,44 @@ export class ReporteOfertasComponent implements OnInit {
                         numOfertasFinalizadas
                         );
   }
-  cargarTablaReporte(){
+  contruirDatosPdfReporteOfertaEstudiante(reporteModelArray:OfertaLaboralEstudianteModel[]){
+      //reporte
+      let contador=1;
+      let estadoOferta="";
+      //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
+      this.rowsItemsReporteOfertasEstudiante=[];
+      this.rowsItemsReporteOfertasEstudiante.unshift(this.maquetarCabezeraTablaOfertaLaboraleEstudiantePdf());
+      console.log(this.maquetarCabezeraTablaOfertaLaboraleEstudiantePdf());
+      reporteModelArray.forEach(element => {
+        console.log(element);
+        //cargo la tabla para generar reporte
+        if(element['estado']==0){
+          estadoOferta="Rechazado";
+        }
+        if(element['estado']==1){
+          estadoOferta="Postulando";
+        }
+        if(element['estado']==2){
+          estadoOferta="Contratado";
+        }
+        this.rowsItemsReporteOfertasEstudiante.push([
+                        contador,
+                        this.datePipe.transform(element['created_at'],"yyyy-MM-dd"),
+                        element['nombre']+" "+element['apellido'],
+                        element['correo'],
+                        estadoOferta
+                      ]);
+        contador++;
+        //catadores de ofertas
+     });
+  }
+  cargarTablaReporteOfertas(){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         this.intanciaReporte=siHacesBien;
         this.dtTrigger.next();
-        this.contruirDatosPdf(this.intanciaReporte);
+        this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
       },siHacesMal=>{
         console.log(siHacesMal);
       }
@@ -402,6 +442,9 @@ export class ReporteOfertasComponent implements OnInit {
         console.log(siHaceBien);
         this.arrayOfertaPostulante=siHaceBien;
         console.log(this.arrayOfertaPostulante.length);
+        //construyo la tabla con los postulantes inscritos en la oferta
+        this.contruirDatosPdfReporteOfertaEstudiante(this.arrayOfertaPostulante);
+
         if(this.arrayOfertaPostulante.length>0){
           this.existeRegistros=true;
         }
@@ -410,13 +453,106 @@ export class ReporteOfertasComponent implements OnInit {
       }
     );
   }
-  reportePdfOfertaEstudiante(){
-    
+  generatePdfOfertasPostulante(puestoOferta:string){
+    var documentDefinition =
+    {
+      //horientacion vertical
+      pageOrientation: 'landscape',
+        //end horientacion vertical
+      content:
+      [
+        {
+          columns: [
+            {
+              image:logoUnl,
+              width: 180,
+              height:60
+            },
+            [
+              {
+                image:logoCarrera,
+                width: 175,
+                height:60,
+                alignment: 'right',
+                margin: [0, 0, 0, 15],
+              },
+            ],
+          ],
+        },
+        '\n\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: 'FACULTAD DE LA ENERGÍA LAS INDUSTRIAS Y LOS RECURSOS NO RENOVABLES',
+          bold: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 15,
+        },
+        '\n\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: 'REPORTE DE POSTULANTES INSCRITOS EN LA OFERTA LABORAL ',
+          bold: true,
+          uppercase: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 15,
+        },
+        '\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: puestoOferta,
+          bold: true,
+          uppercase: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 15,
+        },
+        '\n',
+        {
+          layout:estilosTablaPrincipalLayaut,
+          table:
+          {
+            width: '100%',
+            body: this.rowsItemsReporteOfertasEstudiante
+          }
+        },
+      '\n',
+      '\n\n',
+        {
+          text: 'Firma: .............................................................',
+          style: 'notesTitle',
+        },
+        '\n\n',
+        {
+          text: 'Módulo de software para la Vinculación Laboral de Actores de la Carrera de \n  Ingeniería en Sistemas/Computación.',
+          style: 'notesText',
+        },
+      ],
+      //end content
+      styles: {
+        notesTitle: {
+          fontSize: 10,
+          bold: true,
+          margin: [0, 50, 0, 3],
+        },
+        notesText: {
+          fontSize: 10,
+        },
+      },
+      defaultStyle: {
+        columnGap: 20,
+        //font: 'Quicksand',
+      },
+    };
+
+    pdfMake.createPdf(documentDefinition).open();
+
   }
   reiniciarValoresTablaOfertas(){
     this.dtTrigger.unsubscribe();
     this.configurarParametrosDataTable();
-    this.cargarTablaReporte();
+    this.cargarTablaReporteOfertas();
   }
   configurarParametrosDataTable(){
     this.dtOptions = {

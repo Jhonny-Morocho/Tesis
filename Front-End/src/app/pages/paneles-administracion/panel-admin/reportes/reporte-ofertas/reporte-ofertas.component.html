@@ -46,7 +46,7 @@
                     <div class="col-1">
                         <label for="inputStatus">PDF</label>
                         <div class="form-group ">
-                            <button type="button" class="btn btn-outline-success" (click)="generatePdf()"><i class="far fa-file-pdf"></i></button>
+                            <button type="button" class="btn btn-outline-success" (click)="generatePdfOfertas()"><i class="far fa-file-pdf"></i></button>
                         </div>
                     </div>
                     <div class="col-1">
@@ -115,16 +115,19 @@
       <div class="modal-content">
           <app-ver-oferta-laboral [instanciaOfertaVer]="instanciaOfertaVer"></app-ver-oferta-laboral>
         <div class="container">
-          <div class="col-1">
+          <div class="alert alert-light text-center" role="alert" *ngIf="existeRegistros==false">
+            <i class="fas fa-exclamation-triangle"></i> No existen registro para mostrar
+          </div>
+          <div class="col-1" *ngIf="existeRegistros==true">
             <label for="inputStatus">PDF</label>
             <div class="form-group ">
               <button type="button" class="btn btn-outline-success"
-                (click)="reportePdfOfertaEstudiante()"
+                (click)="generatePdfOfertasPostulante(instanciaOfertaVer.puesto)"
                 ><i class="far fa-file-pdf"></i>
               </button>
             </div>
           </div>
-          <table class="table table-sm">
+          <table class="table table-sm" *ngIf="existeRegistros==true">
             <thead>
               <tr>
                 <th scope="col">#</th>
