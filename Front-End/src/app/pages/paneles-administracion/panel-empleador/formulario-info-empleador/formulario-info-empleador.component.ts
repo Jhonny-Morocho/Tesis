@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import {ServicioProvincias} from 'src/app/servicios/provincias.service';
-import {ProvinciasModels} from 'src/app/models/provincias.models'; 
+import {ProvinciasModels} from 'src/app/models/provincias.models';
 import {CiudadesModel} from 'src/app/models/ciudades.models';
 import {ServicioCiudades} from 'src/app/servicios/ciudades.service';
 import Swal from 'sweetalert2';
@@ -18,6 +18,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   instanciaEmpleadorLlenarForm:EmpleadorModel;
   instanciaEmpleadorRegistrar:EmpleadorModel;
   booleanFormularioCompletado=false;
+  booleanFormRegistro=false;
   arrayProvincias:ProvinciasModels []=[];
   arrayCiudad:CiudadesModel []=[];
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
@@ -34,7 +35,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
     this.instanciaEmpleadorLlenarForm=new EmpleadorModel();
     this.provincias();
     this.formEmpleador();
- 
+
   }
   escucharSelectProvincia(idProvincia){
     console.log(idProvincia);
@@ -111,16 +112,22 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         if(siHacesBien['Siglas']=="OE"){
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
           console.log(siHacesBien);
-          
+          localStorage.setItem("actividad_ruc", this.instanciaEmpleadorRegistrar.actividad_ruc);
+          localStorage.setItem("cedula", this.instanciaEmpleadorRegistrar.cedula);
+          localStorage.setItem("direccion",this.instanciaEmpleadorRegistrar.direccion);
+          localStorage.setItem("estado",(this.instanciaEmpleadorRegistrar.estado).toString());
+          localStorage.setItem("nom_representante_legal",this.instanciaEmpleadorRegistrar.nom_representante_legal);
+          localStorage.setItem("num_ruc",this.instanciaEmpleadorRegistrar.num_ruc);
+          localStorage.setItem("external_em",this.instanciaEmpleadorRegistrar.external_em);
+
           //bloqueo el formulario
-          this.booleanFormularioCompletado=true;
-          this.obervaciones=false;
+          this.booleanFormRegistro=true;
            //this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
             console.warn(siHacesBien);
             Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
           }
-      
+
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro['error']);
         console.log(this.instanciaEmpleadorRegistrar);
@@ -128,11 +135,11 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
           title:'Error al registrar informacion',
           type:'error',
           text:peroSiTenemosErro['mensaje']
-        }); 
+        });
     });
 
   }
-  
+
   //editar form de empleador
   onSubmitFormularioEmpleadorEditar(formRegistroEmpleadorEditar:NgForm){
     console.log("Editar formRegistroEmpleadorEditar");
@@ -167,7 +174,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
           title:'Error al registrar informacion',
           type:'error',
           text:peroSiTenemosErro['mensaje']
-         }); 
+         });
     });
   }
 

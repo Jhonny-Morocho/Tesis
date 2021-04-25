@@ -139,24 +139,26 @@ class UsuarioController extends Controller
                     //enviamos registro de postulante a la secretaria a la secretaria
                     $usuarioSecrataria=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
                     ->select("docente.*","usuario.*")
-                    ->where("docente.estado",1)
+                    ->where("usuario.estado",1)
                     ->where("usuario.tipoUsuario",3)
                     ->get();
 
                     //recorremo todoss los usuario que sean secretaria
                     $arrayEncargado=null;
+                    $parrafo="Se ha registrado el nuevo postulante ".$datos["nombre"]." ".$datos["apellido"].". Con correo: ". $ObjUsuario->correo;
                     foreach ($usuarioSecrataria as $key => $value) {
                         //tengo q redacatra el menaje a la secretaria
-                        $plantillaCorreo=$this->templateCorreoNotificarSecretariaRegistro(
-                                                $datos["nombre"],
-                                                $datos["apellido"],
-                                                $ObjUsuario->correo
+                        $plantillaCorreo=$this->templateHtmlCorreo(
+                                                $value["nombre"]." ".$value["apellido"],
+                                                $parrafo
                                             );
 
-                        $enviarCorreoBolean=$this->enviarCorreo(
-                                                            $plantillaCorreo,$value['correo'],
-                                                            $this->de,"Nuevo postulante registrado"
-                                                        );
+                        $enviarCorreoBolean=
+                                $this->enviarCorreo(
+                                    $plantillaCorreo,
+                                    $value['correo'],
+                                    getenv("TITULO_CORREO_POSTULANTE")
+                                    );
                         $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
                                                     "apellido"=>$value['apellido'],
                                                     "estadoEnvioCorreo"=>$enviarCorreoBolean,
@@ -165,8 +167,8 @@ class UsuarioController extends Controller
                         $texto="[".date("Y-m-d H:i:s")."]" ." Registro Postulante Correo : ".$enviarCorreoBolean." ]";
                         fwrite($handle, $texto);
                         fwrite($handle, "\r\n\n\n\n");
-                        fclose($handle);
                     }
+                    fclose($handle);
                     return response()->json(["mensaje"=>$ObjEstudiante,
                                             "estadoCorreoEnviado"=>$arrayEncargado,
                                             "Siglas"=>"OE"]);
@@ -175,9 +177,10 @@ class UsuarioController extends Controller
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
                     fclose($handle);
-                    return response()->json(["mensaje"=>"Operacion No Exitosa",
+
+                    return response()->json(["mensaje"=>$th->getMessage(),
                     "request"=>$request->json()->all(),
-                    "Siglas"=>"ONE","error"=>$th]);
+                    "Siglas"=>"ONE","error"=>$th->getMessage()]);
                 }
 
             }else{
@@ -187,8 +190,8 @@ class UsuarioController extends Controller
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
-     //REGISTRO DE LOGIN
-     public function login(Request $request){
+    //REGISTRO DE LOGIN
+    public function login(Request $request){
 
         if($request->json()){
 
@@ -203,7 +206,7 @@ class UsuarioController extends Controller
                 if($usuario){
                     if(password_verify($datos['password'],$usuario['password'])){
                         // preguntamos que tipo de usuario es
-                     try {
+                        try {
                             return response()->json(["mensaje"=>$usuario,"Siglas"=>"OE",200]);
 
                         } catch (\Throwable $th) {
@@ -225,42 +228,6 @@ class UsuarioController extends Controller
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
-     }
-
-     //================== funciones privadas =======================//
-     //================== funciones privadas =======================//
-     //================== funciones privadas =======================//
-
-     private function templateCorreoNotificarSecretariaRegistro($nombre,$apellido,$correoPostulante){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-primary">
-                                    Se ha registrado el nuevo postulante
-                                    '.$nombre." ".$apellido. '
-
-                                    <hr>
-                                    Correo del Postulante: '.$correoPostulante.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
     }
 
 }

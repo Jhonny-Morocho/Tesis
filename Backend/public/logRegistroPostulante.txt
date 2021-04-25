@@ -1,9 +1,0 @@
-[2021-04-24 23:26:10] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
-
-
-
-[2021-04-25 00:28:27] Recuperar contraseña al usuario :
-                            kevin02cy@hotmail.es:: estado de enviar correo: false ]
-
-
-

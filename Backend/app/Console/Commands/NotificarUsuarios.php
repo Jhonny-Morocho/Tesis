@@ -55,10 +55,10 @@ class NotificarUsuarios extends Command
     public function handle()
     {
 
-     $this->notificarEstudiante();
+     //$this->notificarEstudiante();
      $this->notificarEmpleador();
-     $this->notificarOfertaLaboralExpirada();
-     $this->notificarOfertaLaboralExpiradaDePublicarGestor();
+     //$this->notificarOfertaLaboralExpirada();
+     //$this->notificarOfertaLaboralExpiradaDePublicarGestor();
 
     }
 
@@ -149,42 +149,48 @@ class NotificarUsuarios extends Command
     }
     //el tiempo de validacion del formulario re registro del empleador expiro
     private function notificarEmpleador(){
-            $texto="";
-            $handle = fopen("log.txt", "a");
-            try {
+        $texto="";
+        $handle = fopen("log.txt", "a");
+        try {
 
-                $usuario=Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
-                ->select("empleador.*","usuario.*")
-                ->where("usuario.estado",0)
-                ->where("usuario.tipoUsuario",6)
-                ->where("empleador.observaciones","")
-                ->whereDate('empleador.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
-                ->get();
+            $usuario=Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
+            ->select("empleador.*","usuario.*")
+            ->where("usuario.estado",1)
+            ->where("usuario.tipoUsuario",6)
+            ->where("empleador.observaciones","")
+            ->whereDate('empleador.updated_at',"<=",
+                Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
+            ->get();
+            $parrafoMensaje="Se le informa que la validación de su
+            información ha expirado, porfavor vuelva a
+            insistir ingresando a su cuenta y reenviando el
+            formulario de registro";
 
-                $parrafoMensaje="Se le informa que la validación de su
-                información ha expirado, porfavor vuelva a
-                insistir ingresando a su cuenta y reenviando el
-                formulario de registro";
+            $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
+            foreach ($usuario as $key => $value) {
+                $empleadorBooleand=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
+                ->where("empleador.fk_usuario","=",$value['fk_usuario'])
+                ->update(array( 'empleador.estado'=>0,"empleador.observaciones"=>$observaciones));
 
-                $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
-                foreach ($usuario as $key => $value) {
-                    $empleadorBooleand=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
-                    ->where("empleador.fk_usuario","=",$value['fk_usuario'])
-                    ->update(array( 'empleador.estado'=>0,"empleador.observaciones"=>$observaciones));
-                    $plantillaHtml=$this->templateHtmlCorreo($value['nom_representante_legal'],"",$parrafoMensaje);
-                    $enviarCorreoBolean=$this->enviarCorreo( $plantillaHtml,$value['correo'],getenv("TITULO_CORREO_POSTULANTE"));
-                    $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $empleadorBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
-                    fwrite($handle, $texto);
-                    fwrite($handle, "\r\n\n\n\n");
-                }
-                fclose($handle);
-            } catch (\Throwable $th) {
-                $texto="[".date("Y-m-d H:i:s")."]" ." Error : ".$th." ]";
+                $plantillaHtml=
+                                $this->templateHtmlCorreo(
+                                    $value['nom_representante_legal'],
+                                    $parrafoMensaje
+                                );
+                $enviarCorreoBolean=$this->enviarCorreo( $plantillaHtml,$value['correo'],getenv("TITULO_CORREO_POSTULANTE"));
+                $texto="[".date("Y-m-d H:i:s")."]" ." Update Empleador registro Expirado :".$value['correo']." = ".( $empleadorBooleand ? 'true' : 'false') ." ↑↑ Enviar Correo : ".($enviarCorreoBolean ? 'true' : 'false');
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
-                fclose($handle);
             }
+            fclose($handle);
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+            $texto="[".date("Y-m-d H:i:s")."]" ." Error : ".$th->getMessage()." ]";
+            fwrite($handle, $texto);
+            fwrite($handle, "\r\n\n\n\n");
+            fclose($handle);
         }
+    }
 
 
 

@@ -85,7 +85,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           localStorage.setItem("fecha_nacimiento",this.instanciaPostulante.fecha_nacimiento);
           localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
           this.booleanFormularioCompletado=true;
-          }else{
+        }else{
             console.warn(siHacesBien);
             Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
           }

@@ -1,0 +1,9 @@
+
+[2021-04-25 02:00:06] Update Empleador registro Expirado :empresa2@hotmail.com = true ↑↑ Enviar Correo : true
+
+
+
+[2021-04-25 02:00:08] Update Empleador registro Expirado :empleador10@hotmail.com = true ↑↑ Enviar Correo : true
+
+
+
