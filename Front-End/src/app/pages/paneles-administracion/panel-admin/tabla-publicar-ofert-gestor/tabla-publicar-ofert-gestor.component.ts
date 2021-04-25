@@ -19,7 +19,7 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
     intanciaOfertaLaboral:OfertaLaboralModel;
     //array de data ofertas labarales
     ofertasLaborales:OfertaLaboralModel[]=[];
-  
+
     instanciaOfertaVer:OfertaLaboralModel;
     //data table
     dtOptions: DataTables.Settings = {};
@@ -65,14 +65,16 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
     verOfertaModal(id:Number){
       console.log("click");
       //necesito converitr o typescrip me da error
-      var index=parseInt((id).toString(), 10); 
+      var index=parseInt((id).toString(), 10);
 
       this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
       this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
       this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
       this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
+      this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
+      this.instanciaOfertaVer.correo=this.ofertasLaborales[index]['correo'];
       console.log( this.instanciaOfertaVer.descripcion);
-      //obtengo todos los usuarios 
+      //obtengo todos los usuarios
       this.servicioEmpleador.listarEmpleadores().subscribe(
         siHaceBien=>{
             console.log(siHaceBien);
@@ -89,19 +91,19 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
                 this.instanciaEmpleadorModelVer.tipo_empresa=element['tiposEmpresa'];
                 this.instanciaEmpleadorModelVer.razon_empresa=element['razon_empresa'];
               }
-    
+
             });
 
             console.log(this.instanciaEmpleadorModelVer);
         },error=>{
-  
+
           console.log(error);
         });
-      
+
       $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
       console.log(this.instanciaOfertaVer.requisitos);
       $('#exampleModal').modal('show');
-   
+
     }
     cerrarModal(){
       $('#exampleModal').modal('hide');
@@ -129,7 +131,7 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
         pagingType: 'full_numbers',
         pageLength: 10,
         responsive: true,
-          /* below is the relevant part, e.g. translated to spanish */ 
+          /* below is the relevant part, e.g. translated to spanish */
         language: {
           processing: "Procesando...",
           search: "Buscar:",

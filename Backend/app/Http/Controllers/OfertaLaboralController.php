@@ -123,12 +123,23 @@ class OfertaLaboralController extends Controller
     // Listar todos las ofertas validadas por el encargado
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante
+        $ObjOfertasLaborales=null;
         try {
             //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
-            $ObjOfertasLaborales=OfertasLaborales::where("estado", ">=", 2)->where("estado", "<=", 3)->get();
+
+            $ObjOfertasLaborales=
+            OfertasLaborales::join("empleador","empleador.id","oferta_laboral.fk_empleador")
+            ->join("usuario","usuario.id","empleador.fk_usuario")
+            ->select("usuario.correo","oferta_laboral.*")
+            ->where("oferta_laboral.estado", ">=", 2)
+            ->where("oferta_laboral.estado", "<=", 3)
+            ->get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
+            return response()->json(["mensaje"=>$ObjOfertasLaborales,
+                                    "Siglas"=>"ONE",
+                                    "error"=>$th->getMessage(),
+                                    400]);
         }
     }
     // Listar todos las oferta validadas validadas por el gestor
@@ -209,15 +220,15 @@ class OfertaLaboralController extends Controller
 
                     $estadoCorreoEnviado= $this->enviarCorreoEncargadoOfertaRegistrado($datos,$usuarioEmpleador);
                 }
+                //oferta validada por el encargado
+                if($request['estado']==2){
+                    $estadoCorreoEnviado= $this->enviarCorreoGestorOfertaValidada($datos,$usuarioEmpleador);
+                }
 
                 //esta publicada la oferta laboral
                 if($request['estado']==3){
                     $estadoCorreoEnviado=$this->notificarPublicacionOfertaLaboral($datos);
 
-                }
-                //oferta validada por el encargado
-                if($request['estado']==2){
-                    $estadoCorreoEnviado= $this->enviarCorreoGestorOfertaValidada($datos,$usuarioEmpleador);
                 }
                 return response()->json(["mensaje"=>"Operacion Exitosa",
                                         "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
@@ -242,7 +253,9 @@ class OfertaLaboralController extends Controller
             $ObjOfertaLaboral=null;
             $ObjOfertaLaboral=OfertasLaborales::join("empleador","empleador.id","oferta_laboral.fk_empleador")
             ->join("usuario","usuario.id","empleador.fk_usuario")
-            ->select("oferta_laboral.*","usuario.correo")
+            ->select("oferta_laboral.*",
+            "usuario.correo",
+            "empleador.nom_representante_legal")
             ->where("oferta_laboral.external_of","=",$external_id)->first();
             return $this->retornarOfertaLaboralEncontrado($ObjOfertaLaboral);
         } catch (\Throwable $th) {
@@ -438,17 +451,19 @@ class OfertaLaboralController extends Controller
     private function notificarPublicacionOfertaLaboral($datosOFertaLaboral){
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
-        $arrayCorreoEstudiantes=array();
         try {
-            // notificar al empleador que su oferta laboral esta publicada en la plataforma
-            $tituloOfertaLaboralEmpleador="Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." esta aprobada y publicada";
-             $templateCorreoEmpleador=$this->templateCorreoNotificarEmpleadorOfertaPublicada($datosOFertaLaboral['nombreEmpresa'],
-                                                                        $tituloOfertaLaboralEmpleador,
-                                                                        $datosOFertaLaboral['nombreOfertaLaboral']);
 
-            $enviarCorreoBoleanEmpleador=$this->enviarCorreo($templateCorreoEmpleador,
-                                                                $datosOFertaLaboral['correoUsuarioEmpleador'],
-                                                            $this->de,$tituloOfertaLaboralEmpleador);
+            // notificar al empleador que su oferta laboral esta publicada en la plataforma
+            $parrafo="La Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." esta aprobada y publicada con éxito";
+            $templateCorreoHmtlEmpleador=
+                                    $this->templateHtmlCorreo($datosOFertaLaboral['nombreEmpresa'],
+                                                                $parrafo
+                                                            );
+
+            $enviarCorreoBoleanEmpleador=
+                                    $this->enviarCorreo($templateCorreoHmtlEmpleador,
+                                                        $datosOFertaLaboral['correoUsuarioEmpleador'],
+                                                        getenv('TITULO_CORREO_PUBLICACION_OFERTA'));
 
             // nnotificar de la nueva oferta laboral publicada a todos los postulante que esten inscrito en la pagina
             $usuarioEstudiante=Estudiante::join("usuario","usuario.id","estudiante.fk_usuario")
@@ -456,12 +471,11 @@ class OfertaLaboralController extends Controller
             ->where("estudiante.estado",1)
             ->get();
 
-            $tituloOfertaLaboral="Nueva Oferta laboral publicada ";
+            $parrafoEstudiante="Existe una nueva oferta laboal publicada denominada ".$datosOFertaLaboral['nombreOfertaLaboral'];
             foreach ($usuarioEstudiante as $key => $value) {
-                $plantillaHmtlCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
-                                                                        $value['apellido'],
-                                                                        $datosOFertaLaboral['nombreOfertaLaboral'],
-                                                                        $tituloOfertaLaboral
+                $plantillaHmtlCorreo=
+                                    $this->templateHtmlCorreo($value['nombre']." ".$value['apellido'],
+                                                                        $parrafoEstudiante
                                                                         );
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaHmtlCorreo,$value['correo'],getenv("TITULO_CORREO_PUBLICACION_OFERTA"));
                 $arrayCorreoEstudiantes[$key]=array(

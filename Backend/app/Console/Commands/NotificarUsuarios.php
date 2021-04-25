@@ -224,15 +224,12 @@ class NotificarUsuarios extends Command
                 $extnernal_of=$value['external_of'];
                 $puesto=$value['puesto'];
                 foreach ($usuarioGestor as $key => $value) {
-                    $parrafoMensaje=$value['correo']."
-                                    ".$value['apellido']."
-                                    tiene pendiente publicar la  oferta
-                                    ".$nombreOferta;
+                    $parrafoMensaje=" tiene pendiente publicar la  oferta ".$nombreOferta;
                     //tengo q redacatra el menaje aL ENCAGRADO
                     $plantillaHtmlCorreo=
                                     $this->templateHtmlCorreo(
                                                                 $value['nombre']." ".$value['apellido'],
-                                                                $value
+                                                                $parrafoMensaje
                                                             );
                     $enviarCorreoBolean=
                                         $this->enviarCorreo($plantillaHtmlCorreo,
