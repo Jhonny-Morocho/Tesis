@@ -180,7 +180,7 @@ class EstudianteController extends Controller
                         ->where("usuario.estado",1)
                         ->where("usuario.tipoUsuario",3)
                         ->get();
-                        $parrafo="Se ha registrado un nuevo postulante ";
+                        $parrafo="Existe un nuevo registro de postulante pendiente en validar información";
                         foreach ($usuarioSecrataria as $key => $value) {
                             //tengo q redacatra el menaje a la secretaria
                             $plantillaHmtlCorreo=$this->templateHtmlCorreo(
@@ -201,9 +201,9 @@ class EstudianteController extends Controller
                                                         );
                             $texto="[".date("Y-m-d H:i:s")."]" ." Reenviando Formulario a la secretaria con los datos corregidos Correo  : ".$enviarCorreoBolean." ]";
                             fwrite($handle, $texto);
-                            fwrite($handle, "\r\n\n\n\n");
-                            fclose($handle);
                         }
+                        fwrite($handle, "\r\n\n\n\n");
+                        fclose($handle);
 
                     return response()->json(["mensaje"=> $ObjEstudiante,
                                                 "etadoCorreo"=> $arraycorreoRespuesta,
@@ -215,9 +215,10 @@ class EstudianteController extends Controller
                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
                }
             } catch (\Throwable $th) {
-               return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante",
+               return response()->json(["mensaje"=>$th->getMessage(),
                                             "request"=>$request->json()->all(),
-                                            "Siglas"=>"ONE","error"=>$th]);
+                                            "Siglas"=>"ONE",
+                                            "error"=>$th->getMessage()]);
             }
 
         }else{

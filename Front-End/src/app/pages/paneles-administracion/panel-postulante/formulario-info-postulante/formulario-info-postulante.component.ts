@@ -16,8 +16,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
    obervaciones=false;
    //validacion de formulario true/false
    formValidado=false;
-  
-   
+
+
 
   constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
 
@@ -26,7 +26,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     //consultar si el postulante ha llenado el formulario
     this.formMotrarFormularioCompletado();
   }
-  
+
   formMotrarFormularioCompletado(){
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
@@ -89,7 +89,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             console.warn(siHacesBien);
             Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
           }
-      
+
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro['error']);
         console.log(this.instanciaPostulante);
@@ -97,7 +97,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           title:'Error al registrar informacion',
           type:'error',
           text:peroSiTenemosErro['mensaje']
-        }); 
+        });
     });
   }
 
@@ -106,12 +106,13 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     if(formRegistroPostulanteDatosCompletos.invalid){
       return;
      }
-     
+
      Swal({
       allowOutsideClick:false,
       type:'info',
       text:'Espere por favor'
     });
+    Swal.showLoading();
     //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
     this.instanciaPostulante.observaciones="";
     this.servicioPostulante_.actulizarDatosPostulante(this.instanciaPostulante).subscribe(
@@ -126,15 +127,16 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           this.formValidado=false;
           }else{
             console.log(siHacesBien);
-             Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+             Swal('Info', siHacesBien['mensaje'], 'info')
           }
       },(peroSiTenemosErro)=>{
+        console.log(peroSiTenemosErro);
          Swal({
-          title:'Error al registrar informacion',
+          title:'Error',
           type:'error',
           text:peroSiTenemosErro['mensaje']
-         }); 
+         });
     });
- 
+
   }
 }

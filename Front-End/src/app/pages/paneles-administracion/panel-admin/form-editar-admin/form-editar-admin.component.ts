@@ -62,7 +62,6 @@ export class FormEditarAdminComponent implements OnInit {
       text:'Espere por favor'
     });
 
-    Swal.showLoading();
     //this.instanciaDocente.estado=1;
     this.servicioDocente.actulizarDatosDocente(this.instanciaDocente,this.external_usuario).subscribe(
       siHacesBien=>{
@@ -71,13 +70,13 @@ export class FormEditarAdminComponent implements OnInit {
           Swal({position: 'center',type: 'success',title: 'Registro éxitoso',showConfirmButton: false,timer: 1500})
           //this.servicioRouter.navigateByUrl('/panel-admin/gestionar-usuarios-admin');
         }else{
-          Swal({title:'Error',type:'error',text:siHacesBien['mensaje']}); 
+          Swal({title:'Error',type:'error',text:siHacesBien['mensaje']});
         }
       },siHacesMal=>{
         console.log(siHacesMal);
       }
     );
-    
+
 
   }
 
