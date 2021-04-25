@@ -55,14 +55,13 @@ class EmpleadorController extends Controller{
                  ->first();
                  // NOTIFICAR EL EMPLEADOR LA NO VALIDACION DEL FORMUARIO
                  if($request['estado']==0 ){
-                    $plantillaCorreo=$this
-                    ->templateCorreoValidacionNoExitosa( $usuarioEmpleador['nom_representante_legal'],
-                                                        $usuarioEmpleador['razon_empresa'],
-                                                        $request['estado']);
-
-                    $enviarCorreoBolean=$this
-                    ->enviarCorreo( $plantillaCorreo,$usuarioEmpleador['correo'],$this
-                    ->de,"Proceso de registro de Empleador");
+                    $parrafo="Su información de registro tiene algunas inconsistencias por favor revise su informacion y vuelva a intentar";
+                    $plantillaCorreo=
+                        $this
+                    ->templateHtmlCorreo($usuarioEmpleador['nom_representante_legal'],$parrafo);
+                    $enviarCorreoBolean=
+                        $this
+                    ->enviarCorreo($plantillaCorreo,$usuarioEmpleador['correo'],getenv("TITULO_CORREO_EMPLEADOR"));
 
                     $texto="[".date("Y-m-d H:i:s")."]"
                     ." Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : "
@@ -75,13 +74,14 @@ class EmpleadorController extends Controller{
                 }
                 // NOTIFICAR EL EMPLEADOR LA VALIDACION DEL FORMULARIO
                 if($request['estado']==1){//
-                    $plantillaCorreo=$this
-                    ->templateCorreoValidacionNoExitosa($usuarioEmpleador['nom_representante_legal'],
-                                                            $usuarioEmpleador['razon_empresa'],
-                                                          1);
+                    $parrafo="Su información de registro tiene algunas inconsistencias por favor revise su informacion y vuelva a intentar";
+                    $plantillaHtmlCorreo=$this
+                    ->templateHtmlCorreo(
+                                        $usuarioEmpleador['nom_representante_legal'],
+                                        $parrafo
+                                        );
                     $enviarCorreoBolean=$this
-                    ->enviarCorreo( $plantillaCorreo,$usuarioEmpleador['correo'],$this
-                    ->de,"Proceso de registro de Empleador");
+                    ->enviarCorreo($plantillaHtmlCorreo,$usuarioEmpleador['correo'],getenv("TITULO_CORREO_EMPLEADOR"));
 
                     $texto="[".date("Y-m-d H:i:s")."]"
                     ." Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : "
@@ -99,7 +99,7 @@ class EmpleadorController extends Controller{
 
                                         "respuesta"=>"Operacion Exitosa"]);
              } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"No se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
              }
 
          }else{
@@ -173,7 +173,7 @@ class EmpleadorController extends Controller{
 
 
     }
-    //obtener postulante por url //external_us
+    //obtener empleador por url //external_us
     public function obtenerEmpleadorExternal_em(Request $request){
         if($request->json()){
             try {
@@ -290,38 +290,5 @@ class EmpleadorController extends Controller{
 
             return $arrayEncargado;
     }
-    private function templateCorreoValidacionNoExitosa($nombreRepresentanteLegal,$nombreEmpresa,$estado){
-        if($estado==1){// si el estado es 1, siginifica que el postulante esta validado
-            $tipoAlert="alert-success";
-            $mensaje="Su información ha salido validado exitosamente ";
-        }
-        if($estado==0){// si el estado es 0, siginifica que el postulante no esta validado
-            $tipoAlert="alert-warning";
-            $mensaje="Su  información tiene algunas inconsistencias por favor revise su informacion y vuelva a intentar";
-        }
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
-                                <br>
-                                <hr>
-                                <div class="alert '.$tipoAlert.'">
-                                    Estimado/a '.$nombreRepresentanteLegal." representante de la Empresa : ".$nombreEmpresa. ' Se le informa que : '.$mensaje.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
+
 }
