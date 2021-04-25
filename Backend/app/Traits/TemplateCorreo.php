@@ -65,7 +65,7 @@ trait TemplateCorreo {
                 return $respuestaMensaje="false";
             }
         } catch (\Throwable $th) {
-        return  $respuestaMensaje=$th;
+        return  $respuestaMensaje=$th->getMessage();
         }
     }
 }

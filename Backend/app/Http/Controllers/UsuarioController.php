@@ -8,13 +8,14 @@ use App\Models\Docente;
 use App\Models\Estudiante;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-use PHPMailer\PHPMailer\PHPMailer;
+//template para correo
+use App\Traits\TemplateCorreo;
 
 class UsuarioController extends Controller
 {
     //Registrar Usuario
     //correo de le emplesa
-    private $de='soporte@proeditsclub.com';
+    use TemplateCorreo;
 
     public function RegistrarUsuario(Request $request){
         //code...
@@ -75,12 +76,12 @@ class UsuarioController extends Controller
                        "password"=>$password_hashed
                    ));
                    //enviamos al correo el password
-                   $enviarCorreoBolean=$this->enviarCorreo(
-                        $this->templaterecuperarContraseña($datos['correo'],$nuevoPassword),
-                        $datos['correo'],
-                        $this->de,
-                        "Solicitud de nueva contraseña"
-                    );
+                   $parrafo="Su nueva contraseña es ".$nuevoPassword;
+                   $templateHtmlCorreo= $this->templateHtmlCorreo($datos['correo'],$parrafo);
+                   $enviarCorreoBolean=
+                        $this->enviarCorreo($templateHtmlCorreo,$datos['correo'],
+                                            getenv("TITULO_RECUPERAR_PASSWORD")
+                                            );
                     $texto="";
                     $handle = fopen("logRegistroPostulante.txt", "a");
                     $texto="[".date("Y-m-d H:i:s")."]" ." Recuperar contraseña al usuario :
@@ -229,27 +230,7 @@ class UsuarioController extends Controller
      //================== funciones privadas =======================//
      //================== funciones privadas =======================//
      //================== funciones privadas =======================//
-     private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
-        try {
 
-            $mail=new PHPMailer();
-            $mail->CharSet='UTF-8';
-            $mail->isMail();
-            $mail->setFrom($de,'Proceso de Inserccón Laboral');
-            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
-            $mail->Subject=($tituloCorreo);
-            $mail->addAddress($para);
-            $mail->msgHTML($emailMensaje);
-            $envio=$mail->Send();
-            if ($envio==true) {
-            return $respuestaMensaje="true";
-            }else{
-                return $respuestaMensaje="false";
-            }
-        } catch (\Throwable $th) {
-        return  $respuestaMensaje=$th;
-        }
-    }
      private function templateCorreoNotificarSecretariaRegistro($nombre,$apellido,$correoPostulante){
 
         $emailMensaje='<html>
@@ -281,37 +262,5 @@ class UsuarioController extends Controller
                     </html>';
         return $emailMensaje;
     }
-    private function templaterecuperarContraseña($usuarioCorreo,$passworNuevo){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-primary">
-                                    Solicitud de nueva contraseña usuario :
-                                    '.$usuarioCorreo."
-
-                                    <hr>
-                                    Su nueva contraseña es : ".$passworNuevo.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
-
 
 }

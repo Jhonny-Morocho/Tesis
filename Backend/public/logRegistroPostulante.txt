@@ -2,3 +2,8 @@
 
 
 
+[2021-04-25 00:28:27] Recuperar contraseña al usuario :
+                            kevin02cy@hotmail.es:: estado de enviar correo: false ]
+
+
+

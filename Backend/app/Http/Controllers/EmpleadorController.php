@@ -6,14 +6,15 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Empleador;
-use PHPMailer\PHPMailer\PHPMailer;
-use App\Models\Estudiante;
+//template para correo
+use App\Traits\TemplateCorreo;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
-class EmpleadorController extends Controller{   
-    private $de='soporte@proeditsclub.com';
-    //obtener los datos del formulario del empleador
-     public function FormEmpleador(Request $request){
+class EmpleadorController extends Controller{
+    //reutilizando el codigo con los correos
+    use TemplateCorreo;
+    //obtener los datos del formulario del empleador para presentarlos o imprimir
+    public function FormEmpleador(Request $request){
          if($request->json()){
              //validar si el usuario existe
              $ObjUsuario = Usuario::where("external_us",$request['external_us'])->first();
@@ -24,7 +25,7 @@ class EmpleadorController extends Controller{
                  }else{
                     return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
                  }
-    
+
             }else{
                 return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
             }
@@ -33,9 +34,9 @@ class EmpleadorController extends Controller{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
      }
-     //aqui aprobamos o no al empleador 
+     //aqui aprobamos o no al empleador
      public function actulizarAprobacionEmpleador(Request $request,$external_id){
- 
+
          if($request->json()){
             $texto="";
             $handle = fopen("logRegistroEmpleador.txt", "a");
@@ -43,7 +44,7 @@ class EmpleadorController extends Controller{
              try {
                  // ACTUALIZAR EL ESTADO DE VALIDACION DEL EMPLEADO
                  $ObjEmleador = Empleador::where("external_em","=",$external_id)
-                ->update(array( 'estado'=>$request['estado'], 
+                ->update(array( 'estado'=>$request['estado'],
                 'observaciones'=>$request['observaciones']));
 
                  //NOTIFICAR FORMULARIO APROBADO/ NO APROBADO AL EMPLEADOR
@@ -58,12 +59,12 @@ class EmpleadorController extends Controller{
                     ->templateCorreoValidacionNoExitosa( $usuarioEmpleador['nom_representante_legal'],
                                                         $usuarioEmpleador['razon_empresa'],
                                                         $request['estado']);
-                    
+
                     $enviarCorreoBolean=$this
                     ->enviarCorreo( $plantillaCorreo,$usuarioEmpleador['correo'],$this
                     ->de,"Proceso de registro de Empleador");
 
-                    $texto="[".date("Y-m-d H:i:s")."]" 
+                    $texto="[".date("Y-m-d H:i:s")."]"
                     ." Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : "
                     .$enviarCorreoBolean.
                     " Correo del empleador ".$usuarioEmpleador['correo'].
@@ -72,8 +73,8 @@ class EmpleadorController extends Controller{
                     fwrite($handle, "\r\n\n\n\n");
                     fclose($handle);
                 }
-                // NOTIFICAR EL EMPLEADOR LA VALIDACION DEL FORMULARIO 
-                if($request['estado']==1){// 
+                // NOTIFICAR EL EMPLEADOR LA VALIDACION DEL FORMULARIO
+                if($request['estado']==1){//
                     $plantillaCorreo=$this
                     ->templateCorreoValidacionNoExitosa($usuarioEmpleador['nom_representante_legal'],
                                                             $usuarioEmpleador['razon_empresa'],
@@ -81,8 +82,8 @@ class EmpleadorController extends Controller{
                     $enviarCorreoBolean=$this
                     ->enviarCorreo( $plantillaCorreo,$usuarioEmpleador['correo'],$this
                     ->de,"Proceso de registro de Empleador");
-    
-                    $texto="[".date("Y-m-d H:i:s")."]" 
+
+                    $texto="[".date("Y-m-d H:i:s")."]"
                     ." Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : "
                     .$enviarCorreoBolean.
                     " Correo del empleador ".$usuarioEmpleador['correo'].
@@ -107,17 +108,17 @@ class EmpleadorController extends Controller{
 
     }
     public function actulizarFormEmpleador(Request $request,$external_id){
-        //die(json_encode($request->json()->all()));
         if($request->json()){
             $ObjUsuario=null;
             try {
                 $ObjUsuario = usuario::where("external_us",$external_id)->first();
                 if($ObjUsuario!=null){
-                    $ObjEstudiante = 
+                    //actualizamos los datos del formulario
+                    $ObjEstudiante =
                         Empleador::where("fk_usuario","=", $ObjUsuario->id)
                         ->update(
-                                array( 
-                                'razon_empresa'=>$request['razon_empresa'], 
+                                array(
+                                'razon_empresa'=>$request['razon_empresa'],
                                 'tipo_empresa'=>$request['tipo_empresa'],
                                 'actividad_ruc'=>$request['actividad_ruc'],
                                 'num_ruc'=>$request['num_ruc'],
@@ -129,35 +130,35 @@ class EmpleadorController extends Controller{
                                 'direccion'=>$request['direccion'],
                                 'observaciones'=>$request['observaciones']
                             ));
-                    //debe exitir un usuario y a la vez la respuesta de al consulta sea true 
+                    //debe exitir un usuario y a la vez la respuesta de al consulta sea true
                     if($ObjEstudiante !=null || $ObjEstudiante==true){
                         //enviarmos correo al encargado
-
-                        $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($request,$ObjUsuario);
+                        $parrafo="Existe un nuevo registro de empleador pendiente en validar información";
+                        $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($request,$ObjUsuario,$parrafo);
                         return response()->json(["mensaje"=>$ObjEstudiante,
                                                  "estadoCorreoEnviado"=>$arrayEncargado,
                                                     "Siglas"=>"OE"]);
                     }else{
                        return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
                     }
-       
+
                }else{
                    return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_em","Siglas"=>"ONE"]);
                }
             } catch (\Throwable $th) {
-               return response()->json(["mensaje"=>"No se puede actulizar el empleador",
+               return response()->json(["mensaje"=>$th->getMessage(),
                                         "respuestaObjUsuario"=> $ObjUsuario,
                                         "objEmpelador"=>$request->json()->all(),
-                                        "Siglas"=>"ONE","error"=>$th]);
+                                        "Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
 
         }else{
            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
 
-   }
+    }
      // Listar todos los postulante estado cero y no cero//con sus datos de formulario
-     public function listarEmpleadores(){
+    public function listarEmpleadores(){
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEmpleador=null;
@@ -170,7 +171,7 @@ class EmpleadorController extends Controller{
             return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
         }
 
-  
+
     }
     //obtener postulante por url //external_us
     public function obtenerEmpleadorExternal_em(Request $request){
@@ -179,7 +180,7 @@ class EmpleadorController extends Controller{
                 $ObjeEmpleador=null;
                 $ObjeEmpleador=Empleador::where("external_em","=",$request['external_em'])->first();
                 return $this->retornarRespuestaEstudianteEncontrado($ObjeEmpleador);
-                 
+
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el empleador "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
             }
@@ -225,78 +226,30 @@ class EmpleadorController extends Controller{
                 $ObjEmpleador->estado=$datos["estado"];
                 $ObjEmpleador->external_em="Em".Utilidades\UUID::v4();
                 $ObjEmpleador->save();
-                $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario);
-            
+                $parrafo="Existe un nuevo registro de empleador pendiente en validar información";
+                $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario,$parrafo);
+
                 return response()->json(["mensaje"=> "Registro Exitoso","Siglas"=>"OE",
                                             "estadoCorreoEnviado"=>$arrayEncargado,
                                             "respuestaEmpleador"=>$ObjEmpleador,200]);
             } catch (\Throwable $th) {
                 //throw $th;
-                return response()->json(["mensaje"=>"Error en el servidor",
-                "respuestaObjUsuario"=>$ObjUsuario,
-                "respuestaObjEmpleador"=>$ObjEmpleador,
-                "Siglas"=>"ONE",
-                "error"=>$th]);
+                return response()->json(
+                [
+                    "mensaje"=>$th->getMessage(),
+                    "Error en el servidor",
+                    "respuestaObjUsuario"=>$ObjUsuario,
+                    "respuestaObjEmpleador"=>$ObjEmpleador,
+                    "Siglas"=>"ONE",
+                    "error"=>$th->getMessage()
+                ]);
             }
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
-    private function templateCorreoNotificarEncargadoRegistro($nombreRepresentanteLegal,$Empresa,$correoEmpleador){
 
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Proceso de registro del Postulante</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-primary">
-                                    Se ha registrado el empleador 
-                                    '.$nombreRepresentanteLegal.'
-                                    <hr>
-                                    Empresa : '.$Empresa.'
-                                    <hr>
-                                    Correo del Empleador: '.$correoEmpleador.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;      
-    }
-    private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
-        try {
-   
-            $mail=new PHPMailer();
-            $mail->CharSet='UTF-8';
-            $mail->isMail();
-            $mail->setFrom($de,'Proceso de Inserccón Laboral');
-            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
-            $mail->Subject=($tituloCorreo);
-            $mail->addAddress($para);
-            $mail->msgHTML($emailMensaje);
-            $envio=$mail->Send();
-            if ($envio==true) {
-            return $respuestaMensaje="true";
-            }else{
-                return $respuestaMensaje="false";
-            }
-        } catch (\Throwable $th) {
-        return  $respuestaMensaje=$th;
-        }
-    }
-
-    private function enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario){
+    private function enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario,$parrafo){
             //enviar correo del registro el encargado
             $texto="";
             $handle = fopen("logRegistroEmpleador.txt", "a");
@@ -310,14 +263,14 @@ class EmpleadorController extends Controller{
             //recorrer todos los usuario que sean encargado
             foreach ($usuarioEncargado as $key => $value) {
                 //tengo q redacatra el menaje a la secretaria
-                $plantillaCorreo=$this->templateCorreoNotificarEncargadoRegistro(
+                $plantillaHmtlCorreo=
+                            $this->templateHtmlCorreo(
                                         $datos["nom_representante_legal"],
-                                        $datos["razon_empresa"],
-                                        $ObjUsuario->correo
+                                        $parrafo
                                     );
-                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
+                $enviarCorreoBolean=$this->enviarCorreo($plantillaHmtlCorreo,
                                                     $value['correo'],
-                                                    $this->de,"Nuevo empleador registrado");
+                                                    getenv("TITULO_CORREO_EMPLEADOR"));
 
                 $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
                                             "apellido"=>$value['apellido'],
@@ -332,8 +285,8 @@ class EmpleadorController extends Controller{
                 .$ObjUsuario->correo." ]";
                 fwrite($handle, $texto);
                 fwrite($handle, "\r\n\n\n\n");
-                fclose($handle);
             }
+            fclose($handle);
 
             return $arrayEncargado;
     }
@@ -369,6 +322,6 @@ class EmpleadorController extends Controller{
                         </div>
                         </body>
                     </html>';
-        return $emailMensaje;      
+        return $emailMensaje;
     }
 }

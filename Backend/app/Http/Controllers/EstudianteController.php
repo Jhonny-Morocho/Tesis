@@ -131,8 +131,8 @@ class EstudianteController extends Controller
                         $texto="[".date("Y-m-d H:i:s")."]" ." Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : ".$enviarCorreoBolean." El correo del encargado es : ".$value['correo']."  ]";
                         fwrite($handle, $texto);
                         fwrite($handle, "\r\n\n\n\n");
-                        fclose($handle);
-                     }
+                    }
+                    fclose($handle);
                 }
                  // si la validacion no es exitosa se le comina al estudiante que revise su informaicon
                 return response()->json(["mensaje"=>$ObjEstudiante,"Siglas"=>"OE",
@@ -225,10 +225,10 @@ class EstudianteController extends Controller
            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
 
-   }
+    }
 
      // Listar todos los postulante estado cero y no cero//con sus datos de formulario
-     public  function listarEstudiantes(){
+    public  function listarEstudiantes(){
         //obtener todos los usuarios que sean postulante
         try {
             $ObjeEstudiante=null;
