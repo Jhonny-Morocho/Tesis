@@ -9,6 +9,7 @@ use App\Models\Empleador;
 use App\Models\OfertasLaborales;
 use App\Models\Docente;
 use Carbon\Carbon;
+//template para correo
 use App\Traits\TemplateCorreo;
 
 class NotificarUsuarios extends Command
@@ -57,7 +58,7 @@ class NotificarUsuarios extends Command
      $this->notificarEstudiante();
      $this->notificarEmpleador();
      $this->notificarOfertaLaboralExpirada();
-    $this->notificarOfertaLaboralExpiradaDePublicarGestor();
+     $this->notificarOfertaLaboralExpiradaDePublicarGestor();
 
     }
 
@@ -119,7 +120,8 @@ class NotificarUsuarios extends Command
             ->where("estudiante.estado",0)
             ->where("usuario.tipoUsuario",2)
             ->where("estudiante.observaciones","")
-            ->whereDate('estudiante.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
+            ->whereDate('estudiante.updated_at',"<=",
+            Carbon::now()->subHour($this->tiempoValidarFormEstudiante))
             ->get();
             //
             $parrafoMensaje="Se le informa que la validación de su
@@ -153,7 +155,7 @@ class NotificarUsuarios extends Command
 
                 $usuario=Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
                 ->select("empleador.*","usuario.*")
-                ->where("empleador.estado",0)
+                ->where("usuario.estado",0)
                 ->where("usuario.tipoUsuario",6)
                 ->where("empleador.observaciones","")
                 ->whereDate('empleador.updated_at',"<=",Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
@@ -184,37 +186,7 @@ class NotificarUsuarios extends Command
             }
         }
 
-    private function templateHtmlOfertaExpirada($nombreRepresentante,$nombreEmprea,$HtmlTitulo){
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-warning">
 
-                                    Estimado/a:'.$nombreRepresentante."
-
-                                    Representante de la empresa: ".$nombreEmprea. '
-                                    <hr>
-                                    Se le informa que la validación de su oferta laboral ha expirado, porfavor vuelva a insistir  reenviando el formulario
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
 
     //comunicar al gestor para que publique la oferta
     private function notificarOfertaLaboralExpiradaDePublicarGestor(){
@@ -238,7 +210,7 @@ class NotificarUsuarios extends Command
             //enviamo la notificacion al gestor
             $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
             ->select("docente.*","usuario.correo")
-            ->where("docente.estado",1)
+            ->where("usuario.estado",1)
             ->where("usuario.tipoUsuario",4)
             ->first();
             $parrafoMensaje="";
@@ -281,35 +253,5 @@ class NotificarUsuarios extends Command
            die("error");
         }
     }
-
-    private function templateCorreoNotificarGestorOfertaValidadaExpirada($correoUsuarioGestor,$tituloMensaje,$nombreOfertaLaboral){
-                $emailMensaje='<html>
-                                <head>
-                                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                                <style>
-                                    /* Add custom classes and styles that you want inlined here */
-                                </style>
-                                </head>
-                                <body class="bg-light">
-                                <div class="container">
-                                    <div class="card my-5">
-                                    <div class="card-body">
-                                        <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                        <h4 class="fw-bolder text-center">' .$tituloMensaje. '</h4>
-                                        <br>
-                                        <hr>
-                                            Estimado/a usuario :'.$correoUsuarioGestor.'
-
-                                            <hr>
-                                            Se le informa que tiene pendiente la aprobación de publicar la oferta laboral : '.$nombreOfertaLaboral.'
-                                    </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </body>
-                            </html>';
-        return $emailMensaje;
-    }
-
 }
 
