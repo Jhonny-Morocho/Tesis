@@ -61,7 +61,7 @@ export class AddOfertaComponent implements OnInit {
             this.router.navigateByUrl('/panel-empleador/oferta-laboral');
           }else{
             console.warn(siHaceBien);
-            Swal('Ups, No se puede realizar el registro'+siHaceBien['mensaje'], 'info')
+            Swal('Ups', siHaceBien['mensaje'], 'info')
           }
        },error=>{
          console.log(error);

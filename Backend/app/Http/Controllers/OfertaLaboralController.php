@@ -10,7 +10,6 @@ use App\Traits\TemplateCorreo;
 use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Estudiante;
-use PHPMailer\PHPMailer\PHPMailer;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
@@ -23,8 +22,6 @@ class OfertaLaboralController extends Controller
     //reutilizando el codigo con los correos
     use TemplateCorreo;
 
-   //correo de le empresa
-   public $de='soporte@proeditsclub.com';
     //registrar oferta laboral
     public function RegistrarOfertaLaboral(Request $request,$external_id){
 
@@ -60,7 +57,10 @@ class OfertaLaboralController extends Controller
                                             "estadoCorreoEnviado"=>$arrayEncargado,
                                             "Objeto"=>$ObjOfertasLaborales,200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),
+                                            "Siglas"=>"ONE",
+                                            "reques"=>$request->json()->all(),
+                                        "error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
@@ -89,10 +89,10 @@ class OfertaLaboralController extends Controller
             ->orderBy('oferta_laboral.id', 'DESC')->get();
             return response()->json(["mensaje"=>$ObjOfertaLaboral,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=> $ObjOfertaLaboral,"Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=> $ObjOfertaLaboral,"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
         }
     }
-    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    // Listar todos las ofertas laborales
     public function listarTodasLasOfertasLaborales(){
         //obtener todos los usuarios que sean postulante
         $ObjOfertasLaborales=null;
@@ -120,8 +120,7 @@ class OfertaLaboralController extends Controller
         }
     }
 
-
-    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    // Listar todos las ofertas validadas por el encargado
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante
         try {
@@ -129,10 +128,10 @@ class OfertaLaboralController extends Controller
             $ObjOfertasLaborales=OfertasLaborales::where("estado", ">=", 2)->where("estado", "<=", 3)->get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
         }
     }
-    // Listar todos los titulos estado cero y no cero//con sus datos de formulario
+    // Listar todos las oferta validadas validadas por el gestor
     public function listarOfertasLaboralesValidadasGestor(){
         //obtener todos los usuarios que sean postulante
         $ObjOfertasLaborales=null;
@@ -178,6 +177,7 @@ class OfertaLaboralController extends Controller
         }
     }
     public function actulizarOfertaLaboral(Request $request,$external_id){
+
         if($request->json()){
             $ObjOfertaLaboral=null;
             $estadoCorreoEnviado=null;
@@ -199,23 +199,25 @@ class OfertaLaboralController extends Controller
                     "nombreEmpresa"=>$usuarioEmpleador->razon_empresa,
                     "correoUsuarioEmpleador"=>$usuarioEmpleador->correo
                 );
+                //oferta revisada pero no validada tiene q corregir oferta// pór parte del encargado
+                if($request['estado']==1 && ($request['obervaciones'])!=""){
+                    //
+                    $estadoCorreoEnviado=$this->enviarCorreoEncargadoEstadoOferta($external_id,0);
+                }
+                //reenviar la oferta laboral para que la revisen el encargado de nuevo
+                if($request['estado']==1 && ($request['obervaciones'])==""){
+
+                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoOfertaRegistrado($datos,$usuarioEmpleador);
+                }
+
                 //esta publicada la oferta laboral
                 if($request['estado']==3){
                     $estadoCorreoEnviado=$this->notificarPublicacionOfertaLaboral($datos);
 
                 }
+                //oferta validada por el encargado
                 if($request['estado']==2){
                     $estadoCorreoEnviado= $this->enviarCorreoGestorOfertaValidada($datos,$usuarioEmpleador);
-
-                }
-                //oferta revisada pero no validada tiene q corregir oferta// pór parte del encargado
-                if($request['estado']==1 && ($request['obervaciones'])!=""){
-                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoEstadoOferta($external_id,0);
-                }
-                  //reenviar la oferta laboral para que la revisen el encargado de nuevo
-                  if($request['estado']==1 && ($request['obervaciones'])==""){
-
-                    $estadoCorreoEnviado= $this->enviarCorreoEncargadoOfertaRegistrado($datos,$usuarioEmpleador);
                 }
                 return response()->json(["mensaje"=>"Operacion Exitosa",
                                         "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
@@ -270,70 +272,6 @@ class OfertaLaboralController extends Controller
 
     }
 
-    private function templateCorreoNotificarEncargadoRegistroNuevo($nombreOfertaLaboral,$Empresa,$correoEmpleador){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="100" height="200" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Publicación de oferta laboral</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-primary">
-                                    Se ha registrado la oferta laboral:
-                                    '.$nombreOfertaLaboral.'
-                                    <hr>
-                                    Pertenece a la Empresa : '.$Empresa.'
-                                    <hr>
-                                    Correo del usuario Empleador: '.$correoEmpleador.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
-    private function templateCorreoNotificarGestorOfertaValidada($nombreOfertaLaboral,$Empresa,$correoEmpleador){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">Publicación de oferta laboral</h4>
-                                <br>
-                                <hr>
-                                <div class="alert alert-primary">
-                                    Se ha validado la oferta laboral :
-                                    '.$nombreOfertaLaboral.', debe aprobar la publicación de la oferta laboral
-                                    <hr>
-                                    Pertenece a la Empresa : '.$Empresa.'
-                                    <hr>
-                                    Correo del usuario Empleador: '.$correoEmpleador.'
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
 
     private function buscarUsuarioEmpleador($external_oferta){
        return  Empleador::join("usuario","usuario.id","=","empleador.fk_usuario")
@@ -354,21 +292,22 @@ class OfertaLaboralController extends Controller
             //enviamos registro de postulante al encargado a la secretaria
             $usuarioGestor=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
             ->select("docente.*","usuario.correo")
-            ->where("docente.estado",1)
+            ->where("usuario.estado",1)
             ->where("usuario.tipoUsuario",4)
             ->get();
             //recorrer todos los usuario que sean encargado
+            $parrafo="Se ha validado la oferta laboral ".$datos["nombreOfertaLaboral"].
+                        " perteneciente a la empresa ".
+                        $datos["nombreEmpresa"]. ", debe realizar la publicación de la misma para que pueda ser visualizada en la plataforma";
             foreach ($usuarioGestor as $key => $value) {
                 //tengo q redacatra el menaje a la secretaria
-                $plantillaCorreo=$this->templateCorreoNotificarGestorOfertaValidada(
-                                $datos["nombreOfertaLaboral"],
-                                $datos["nombreEmpresa"],
-                                $datos["correoUsuarioEmpleador"],
+                $plantillaCorreo=$this->templateHtmlCorreo(
+                                $value["nombre"]." ".$value["apellido"],
+                                $parrafo
                                 );
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
                                                     $value['correo'],
-                                                    $this->de,
-                "Nueva oferta laboral pendiente de publicar");
+                                                    getenv("TITULO_CORREO_PUBLICACION_OFERTA"));
 
                 $arrayGestor[$key]=array("nombre"=>$value['nombre'],
                                             "apellido"=>$value['apellido'],
@@ -392,10 +331,11 @@ class OfertaLaboralController extends Controller
             fwrite($handle, $texto);
             fwrite($handle, "\r\n\n\n\n");
             fclose($handle);
-            return $arrayGestor=array("error"=>$th);
+            return $arrayGestor=array("error"=>$th->getMessage());
         }
 
     }
+    //funcion para enviar correo de todo tipó de notifiacion en la oferta laboral
     private function enviarCorreoEncargadoOfertaRegistrado($datos,$ObjUsuario){
         //enviar correo del registro el encargado
         $texto="";
@@ -403,7 +343,7 @@ class OfertaLaboralController extends Controller
         //enviamos registro de postulante al encargado a la secretaria
         $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
         ->select("docente.*","usuario.*")
-        ->where("docente.estado",1)
+        ->where("usuario.estado",1)
         ->where("usuario.tipoUsuario",5)
         ->get();
         $arrayEncargado=null;
@@ -412,15 +352,18 @@ class OfertaLaboralController extends Controller
         //recorrer todos los usuario que sean encargado
         foreach ($usuarioEncargado as $key => $value) {
             //tengo q redacatra el menaje a la secretaria
-            $plantillaCorreo=$this
-                            ->templateCorreoNotificarEncargadoRegistroNuevo(
-                            $datos["nombreOfertaLaboral"],
-                            $datos["nombreEmpresa"],
-                            $datos["correoUsuarioEmpleador"],
-                            );
-            $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
+            $parrafo="Se ha registrado la oferta laboral: ".
+                        $datos["nombreOfertaLaboral"].
+                        " del usuario ".$datos["correoUsuarioEmpleador"].
+                        "Representante de la empresa ".$datos["nombreEmpresa"];
+            $plantillaHtmlCorreo=
+                $this->templateHtmlCorreo(
+                                            $value["nombre"]." ".$value["apellido"],
+                                            $parrafo
+                                        );
+            $enviarCorreoBolean=$this->enviarCorreo($plantillaHtmlCorreo,
                                                 $value['correo'],
-                                                $this->de,"Nueva oferta laboral registrada");
+                                                getenv("TITULO_CORREO_PUBLICACION_OFERTA"));
 
             $arrayEncargado[$key]=array("nombre"=>$value['nombre'],
                                         "apellido"=>$value['apellido'],
@@ -441,25 +384,28 @@ class OfertaLaboralController extends Controller
     }
     private function enviarCorreoEncargadoEstadoOferta($external_oferta,$estadoValidacion){
         //enviar correo del registro el empleador
+        if($estadoValidacion==1){// si el estado es 1, siginifica que el postulante esta validado
+            $mensaje="ha salido validada exitosamente ";
+        }
+        if($estadoValidacion==0){// si el estado es 0, siginifica que el postulante no esta validado
+            $mensaje="tiene algunas inconsistencias por favor revise su información y vuelva a intentar";
+        }
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
         $arrayEmpleador=null;
         try {
             //enviamos el estado de la oferta al empleador
             $usuarioEmpleador=$this->buscarUsuarioEmpleador($external_oferta);
+            $nombreUsuario= $usuarioEmpleador->nom_representante_legal.
+                            " representante de la empresa ".$usuarioEmpleador->razon_empresa;
             $tituloMensaje="Estado de validación de la oferta laboral ".$usuarioEmpleador->puesto;
-            $plantillaCorreo=$this->templateCorreoValidacionEstado(
-                            $usuarioEmpleador->nom_representante_legal,
-                            $usuarioEmpleador->razon_empresa,
-                            $tituloMensaje,
-                            $usuarioEmpleador->puesto,
-                            $estadoValidacion
-                            );
+
+            $parrafoMensaje="La oferta ".$usuarioEmpleador->puesto." ".$mensaje;
+            $plantillaCorreo=$this->templateHtmlCorreo($nombreUsuario,$parrafoMensaje);
 
             $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
                                                     $usuarioEmpleador['correo'],
-                                                    $this->de,
-                                                    $tituloMensaje
+                                                    getenv("TITULO_CORREO_PUBLICACION_OFERTA")
                                                 );
             $texto="[".date("Y-m-d H:i:s")."]"
             ." Estado de validación de oferta laboral : ".$estadoValidacion."
@@ -479,72 +425,14 @@ class OfertaLaboralController extends Controller
             //code...
         } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]"
-            ." Estado de validación de oferta laboral : ".$th."]";
+            ." Estado de validación de oferta laboral : ".$th->getMessage()." ]";
             fwrite($handle, $th);
             fwrite($handle, "\r\n\n\n\n");
             fclose($handle);
-            return  $th;
+            return  $th->getMessage();
         }
     }
-    private function enviarCorreo($emailMensaje,$para,$de,$tituloCorreo){
-        try {
-            $mail=new PHPMailer();
-            $mail->CharSet='UTF-8';
-            $mail->isMail();
-            $mail->setFrom($de,'Proceso de Inserccón Laboral');
-            $mail->addReplyTo($de,'Proceso de Inserccón Laboral');
-            $mail->Subject=($tituloCorreo);
-            $mail->addAddress($para);
-            $mail->msgHTML($emailMensaje);
-            $envio=$mail->Send();
-            if ($envio==true) {
-            return $respuestaMensaje="true";
-            }else{
-                return $respuestaMensaje="false";
-            }
-        } catch (\Throwable $th) {
-        return  $respuestaMensaje=$th;
-        }
-    }
-    //templateCorreoValidacionNoExitosa($nombre,$apellido,$estado)
-    private function templateCorreoValidacionEstado($representante,$nombreEmpresa,
-                                                    $HtmlTitulo,$nombreOfertaLaboral,$estadoValidacion){
-        if($estadoValidacion==1){// si el estado es 1, siginifica que el postulante esta validado
-            $tipoAlert="alert-success";
-            $mensaje="ha salido validada exitosamente ";
-        }
-        if($estadoValidacion==0){// si el estado es 0, siginifica que el postulante no esta validado
-            $tipoAlert="alert-warning";
-            $mensaje="tiene algunas inconsistencias por favor revise su información y vuelva a intentar";
-        }
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">' .$HtmlTitulo. '</h4>
-                                <br>
-                                <hr>
-                                <div class="alert '.$tipoAlert.'">
-                                    Estimado/a: '.$representante."  Representante de le empresa: ".$nombreEmpresa. '
-                                    <hr>
-                                 Se le informa que su oferta laboral denominada : '.$nombreOfertaLaboral.' ,  '.$mensaje.'
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
+
     //se notifica la aprobacion de la oferta laboral por parte del getor a los estudiante y empleadores
     //corresponde al proceso 4
     private function notificarPublicacionOfertaLaboral($datosOFertaLaboral){
@@ -570,12 +458,12 @@ class OfertaLaboralController extends Controller
 
             $tituloOfertaLaboral="Nueva Oferta laboral publicada ";
             foreach ($usuarioEstudiante as $key => $value) {
-                $plantillaCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
+                $plantillaHmtlCorreo= $this->templatenotificarEmpleadorOfertaPublicada($value['nombre'],
                                                                         $value['apellido'],
                                                                         $datosOFertaLaboral['nombreOfertaLaboral'],
                                                                         $tituloOfertaLaboral
                                                                         );
-                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,$value['correo'],$this->de,$tituloOfertaLaboral);
+                $enviarCorreoBolean=$this->enviarCorreo($plantillaHmtlCorreo,$value['correo'],getenv("TITULO_CORREO_PUBLICACION_OFERTA"));
                 $arrayCorreoEstudiantes[$key]=array(
                     "correoPostulante"=>$value['correo'],
                     "estadoCorreoEnvidaoPostulante"=>$enviarCorreoBolean,
@@ -603,64 +491,4 @@ class OfertaLaboralController extends Controller
             return $arrayCorreoEstudiantes=array("error"=>$th->getMessage());
         }
     }
-
-    private function templatenotificarEmpleadorOfertaPublicada($nombrePostulante,$apellidoPostulante,$nombreOfertaLaboral,$tituloOfertaLaboral){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">'.$tituloOfertaLaboral.' </h4>
-                                <hr>
-                                    Hola :
-                                    '.$nombrePostulante.' '.$apellidoPostulante.', existe una nueva oferta lobaral publicada
-                                    <hr>
-                                    Nueva oferta laboral  demominada : <h4 class="fw-bolder">'.$nombreOfertaLaboral.'</h4>
-                                    <hr>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-        return $emailMensaje;
-    }
-
-    private function templateCorreoNotificarEmpleadorOfertaPublicada($nombreEmpresa,$tituloMensaje,$nombreOfertaLaboral){
-
-        $emailMensaje='<html>
-                        <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                        <style>
-                            /* Add custom classes and styles that you want inlined here */
-                        </style>
-                        </head>
-                        <body class="bg-light">
-                        <div class="container">
-                            <div class="card my-5">
-                            <div class="card-body">
-                                <img class="img-fluid" width="500" height="500" src="http://www.proeditsclub.com/Tesis/Archivos/Correo/logo-cis.jpg" alt="Some Image" />
-                                <h4 class="fw-bolder text-center">' .$tituloMensaje. '</h4>
-                                <br>
-                                <hr>
-                                    Estimado/a usuario :'.$nombreEmpresa.'
-                                    <hr>
-                                    Se le informa que su oferta laboral : '.$nombreOfertaLaboral.' ha sido validada y publicada con éxito
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        </body>
-                    </html>';
-    return $emailMensaje;
-    }
-
 }

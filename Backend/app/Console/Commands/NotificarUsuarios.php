@@ -55,10 +55,10 @@ class NotificarUsuarios extends Command
     public function handle()
     {
 
-     //$this->notificarEstudiante();
+     $this->notificarEstudiante();
      $this->notificarEmpleador();
-     //$this->notificarOfertaLaboralExpirada();
-     //$this->notificarOfertaLaboralExpiradaDePublicarGestor();
+     $this->notificarOfertaLaboralExpirada();
+     $this->notificarOfertaLaboralExpiradaDePublicarGestor();
 
     }
 
@@ -193,7 +193,6 @@ class NotificarUsuarios extends Command
     }
 
 
-
     //comunicar al gestor para que publique la oferta
     private function notificarOfertaLaboralExpiradaDePublicarGestor(){
         //enviar correo del registro el encargado
@@ -218,45 +217,54 @@ class NotificarUsuarios extends Command
             ->select("docente.*","usuario.correo")
             ->where("usuario.estado",1)
             ->where("usuario.tipoUsuario",4)
-            ->first();
-            $parrafoMensaje="";
-            $TituloCorreo="Publicacíon de oferta laboral pendientes ";
+            ->get();
             //recorrer todos los usuario que sean gestor
-
             foreach ($ObjOfertaLaboral as $key => $value) {
-                //tengo q redacatra el menaje aL ENCAGRADO
-                $plantillaCorreo=$this->templateHtmlCorreo($usuarioGestor->correo,$parrafoMensaje);
-
-                $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,
-                                                        $usuarioGestor->correo,
-                                                    $this->de,
-                                                    $TituloCorreo);
-                //ACTUALIZO EL ESTADO PARA QUE SE VUELVA A REENVIAR EL ESTADO DE LA OFERTA
-                $ObjOfertaLaboralUpdate=OfertasLaborales::where("external_of","=", $value['external_of'])
-                ->update(array('estado'=>2));
-                //========================================
-                $texto="[".date("Y-m-d H:i:s")."]"
-                ." Oferta laboral pendiente de publicar expirada por parte del gestor
-                :: Estado del correo enviado al gestor : "
-                .$enviarCorreoBolean
-                ."::: El Correo del gestor  es: ".$usuarioGestor->correo."
-                :::Estado de la oferta actualizado : ".($ObjOfertaLaboralUpdate ? 'true' : 'false')."
-                ::: El nombre de la oferta laboral es: ".$value["puesto"]."
-                ::: El Correo del empleador es :"
-                .$value['correo']." ]";
-                fwrite($handle, $texto);
-                fwrite($handle, "\r\n\n\n\n");
-                fclose($handle);
+                $nombreOferta=$value['puesto'];
+                $extnernal_of=$value['external_of'];
+                $puesto=$value['puesto'];
+                foreach ($usuarioGestor as $key => $value) {
+                    $parrafoMensaje=$value['correo']."
+                                    ".$value['apellido']."
+                                    tiene pendiente publicar la  oferta
+                                    ".$nombreOferta;
+                    //tengo q redacatra el menaje aL ENCAGRADO
+                    $plantillaHtmlCorreo=
+                                    $this->templateHtmlCorreo(
+                                                                $value['nombre']." ".$value['apellido'],
+                                                                $value
+                                                            );
+                    $enviarCorreoBolean=
+                                        $this->enviarCorreo($plantillaHtmlCorreo,
+                                                            $value['correo'],
+                                                            getenv("TITULO_CORREO_PUBLICACION_OFERTA"));
+                    //ACTUALIZO EL ESTADO PARA QUE SE VUELVA A REENVIAR EL ESTADO DE LA OFERTA
+                    $ObjOfertaLaboralUpdate=OfertasLaborales::where("external_of","=", $extnernal_of)
+                    ->update(array('estado'=>2));
+                    //========================================
+                    $texto="[".date("Y-m-d H:i:s")."]"
+                    ." Oferta laboral pendiente de publicar expirada por parte del gestor
+                    :: Estado del correo enviado al gestor : "
+                    .$enviarCorreoBolean
+                    ."::: El Correo del gestor  es: ".$value['correo']."
+                    :::Estado de la oferta actualizado : ".($ObjOfertaLaboralUpdate ? 'true' : 'false')."
+                    ::: El nombre de la oferta laboral es: ".$puesto."
+                    ::: El Correo del empleador es :"
+                    .$value['correo']." ]";
+                    fwrite($handle, $texto);
+                    fwrite($handle, "\r\n\n\n\n");
+                }
             }
+            fclose($handle);
 
         } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]"
-            ." Oferta laboral pendiente de publicar expirada por parte del gestor ERROR :: : "
-            .$th." ]";
+            ." Oferta laboral pendiente de publicar expirada por parte del gestor ERROR: "
+            .$th->getMessage()." ]";
             fwrite($handle, $texto);
             fwrite($handle, "\r\n\n\n\n");
             fclose($handle);
-           die("error");
+            return $th->getMessage();
         }
     }
 }

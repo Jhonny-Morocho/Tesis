@@ -2,3 +2,7 @@
 
 
 
+[2021-04-25 12:17:21] Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : false Correo del empleador empresa2@hotmail.com ]
+
+
+
