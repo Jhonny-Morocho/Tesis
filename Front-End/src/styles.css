@@ -13,7 +13,24 @@
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+ /* data table estilos */
+thead {
+  background: #0c2342 !important;
+  color: white;
+}
+.dataTables_wrapper
+.dataTables_paginate
+.paginate_button.current,
+.dataTables_wrapper
+.dataTables_paginate
+.paginate_button.current:hover {
+  color: white!important;
+  border: 1px solid #0c2342 !important;
+  background: white !important;
+}
 
+
+ /* end data table estilos */
 @keyframes fadeIn {
     from {
         opacity: 0;

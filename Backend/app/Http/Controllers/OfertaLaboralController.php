@@ -228,7 +228,6 @@ class OfertaLaboralController extends Controller
                 //esta publicada la oferta laboral
                 if($request['estado']==3){
                     $estadoCorreoEnviado=$this->notificarPublicacionOfertaLaboral($datos);
-
                 }
                 return response()->json(["mensaje"=>"Operacion Exitosa",
                                         "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,

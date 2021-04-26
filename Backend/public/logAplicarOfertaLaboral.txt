@@ -1,0 +1,5 @@
+[2021-04-25 23:24:21] APLICAR OFERTA LABORAL:
+           ::Estado del enviao de correo al empleador: false::: El Correo del empleador  es: empresa2@hotmail.com ] 
+
+
+

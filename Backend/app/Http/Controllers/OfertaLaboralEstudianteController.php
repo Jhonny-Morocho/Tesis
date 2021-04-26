@@ -9,14 +9,19 @@ use App\Models\OfertasLaborales;
 use App\Models\Estudiante;
 use App\Models\OfertaLaboralEstudiante;
 use App\Models\Usuario;
+//template para correo
+use App\Traits\TemplateCorreo;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
 
 class OfertaLaboralEstudianteController extends Controller
 {
+    //reutilizando el codigo con los correos
+    use TemplateCorreo;
 
     //el estudiante postula a una oferta laboral//
     public function listarTodasOfertaEstudianteExternal_us($external_id){
+        $ObjOfertaEstudiante=null;
         try {
             $ObjEstudiante=$this->buscarEstudiante($external_id);
             $ObjOfertaEstudiante=
@@ -29,8 +34,8 @@ class OfertaLaboralEstudianteController extends Controller
             return response()->json(["mensaje"=>$ObjOfertaEstudiante,"Siglas"=>"OE",200]);
 
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa",
-                                        "Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$ObjOfertaEstudiante,
+                                        "Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
     }
     public function PostularOfertaLaboral(Request $request,$external_id){
@@ -44,7 +49,9 @@ class OfertaLaboralEstudianteController extends Controller
                 //comprobar si el etudainte no postule dos veces a la misma oferta
                 $ValidarPostularUnaOfertaNVeces=$this->validarEstNoPostuleNVecesMismaOfert($ObjEstudiante['id'],$OfertaLaboral['id']);
                 if($ValidarPostularUnaOfertaNVeces==false){
-                    //si no repite la misma postulacion entonces si puede inscribirse
+
+
+                        //si no repite la misma postulacion entonces si puede inscribirse
                         $ObjOfertaLaboralEstudiante=new OfertaLaboralEstudiante();
                         $ObjOfertaLaboralEstudiante->fk_estudiante=$ObjEstudiante['id'];
                         $ObjOfertaLaboralEstudiante->fk_oferta_laboral=$OfertaLaboral['id'];
@@ -52,19 +59,30 @@ class OfertaLaboralEstudianteController extends Controller
                         $ObjOfertaLaboralEstudiante->observaciones=$request['observaciones'];
                         $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();
                         $ObjOfertaLaboralEstudiante->save();
+                        //notificar al empleador sobre la actividad de la oferta laboral
+                        $datosOfertaEstudiante=array(
+                            "nom_representante_legal"=>$OfertaLaboral['nom_representante_legal'],
+                            "razon_empresa"=>$OfertaLaboral['razon_empresa'],
+                            "puesto"=>$OfertaLaboral['puesto'],
+                            "correo"=>$OfertaLaboral['correo']
+                        );
+
+                        $notificarEmpeladorListaInteresados=$this->notificarAplicarOferta($datosOfertaEstudiante);
                         return response()->json(["mensaje"=>"Operacion Exitosa",
                                                     "Siglas"=>"OE",
+                                                    "notificarEmpleadorListaInteresados"=>$notificarEmpeladorListaInteresados,
                                                     "OferEstudiante"=>$ObjOfertaLaboralEstudiante,
                                                 200]);
                 }else{
                     return response()->json(["mensaje"=>"Usted ya esta postulando a esta oferta","Siglas"=>"ONE",200]);
                 }
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                return response()->json(["mensaje"=>$th->getMessage(),
                                         "Siglas"=>"ONE",
                                         "estudiante"=>$ObjEstudiante,
                                         "ofertaLaboral"=>$OfertaLaboral,
-                                        "request"=>$request->json()->all(),"error"=>$th]);
+                                        "request"=>$request->json()->all(),
+                                        "error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
@@ -320,14 +338,20 @@ class OfertaLaboralEstudianteController extends Controller
     //bucamos la oferta laboral
     private function  buscarOfertaLaboral($external_of){
         try {
-            $ObjOfertaLaboral=OfertasLaborales::where("external_of",$external_of)->first();
+            $ObjOfertaLaboral=OfertasLaborales::join("empleador","empleador.id","oferta_laboral.fk_empleador")
+            ->join("usuario","usuario.id","empleador.fk_usuario")
+            ->select("empleador.razon_empresa",
+            "usuario.correo",
+            "empleador.nom_representante_legal",
+            "oferta_laboral.*")
+            ->where("oferta_laboral.external_of",$external_of)->first();
             if($ObjOfertaLaboral){
                 return $ObjOfertaLaboral;
             }else{
                 return "ONE";
             }
         } catch (\Throwable $th) {
-            return $th;
+            return $th->getMessage();
         }
     }
     // validar que el estudainte no postule dos veces a la misma oferta
@@ -347,5 +371,47 @@ class OfertaLaboralEstudianteController extends Controller
         } catch (\Throwable $th) {
             return $th;
         }
+    }
+
+    // ======================= FUNCIONES PRIVADAS ================
+    private function notificarAplicarOferta($arrayData){
+       $texto="";
+       $handle = fopen("logAplicarOfertaLaboral.txt", "a");
+       try {
+           $parrafo="Se ha generado nuevos cambios en tu lista de postulantes de la oferta denominada ".
+                     $arrayData['puesto'].
+                     "puede que existan nuevos postulanrtes en tu oferta o que se hayan retirado de la misma, para mas detalles revise tu cuenta";
+
+           $temmplateHmtlAplicarOferta=
+                    $this->templateHtmlCorreo(
+                                        $arrayData['nom_representante_legal'],
+                                        $parrafo);
+            $enviarCorreoBooleanEmpleador=
+                    $this->enviarCorreo($temmplateHmtlAplicarOferta,
+                                        $arrayData['correo'],
+                                        getenv('TITULO_CORREO_APLICAR_OFERTA')
+                                        );
+
+            $arrayAplicarOferta=array(
+                    "estadoCorreoBooleanEmpleador"=>$enviarCorreoBooleanEmpleador,
+                    "correoEmpleador"=>$arrayData['correo'],
+                    );
+           $texto="[".date("Y-m-d H:i:s")."]"
+           ." APLICAR OFERTA LABORAL:
+           ::Estado del enviao de correo al empleador: ".$enviarCorreoBooleanEmpleador
+           ."::: El Correo del empleador  es: ".$arrayData['correo']." ] ";
+           fwrite($handle, $texto);
+           fwrite($handle, "\r\n\n\n\n");
+           //retorno respuesat
+           return $arrayAplicarOferta;
+       } catch (\Throwable $th) {
+            $texto="[".date("Y-m-d H:i:s")."]"
+            ." APLICAR OFERTA LABORAL ERROR: ".$th->getMessage()
+            ."::: El Correo del empleador  es: ".$arrayData['correo']." ] ";
+            fwrite($handle, $texto);
+            fwrite($handle, "\r\n\n\n\n");
+            return $arrayAplicarOferta=array("error"=>$th->getMessage());
+       }
+
     }
 }
