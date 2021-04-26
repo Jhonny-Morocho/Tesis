@@ -20,6 +20,7 @@ export class OfertaLaboralEstudianteService {
   private urlBackendListTodasEstudiantePostulanOfertaExternal_of_empleador="/Backend/public/index.php/ofertasLaboralesEstudiantes/listTodasEstudiantePostulanOfertaExternal_of_empleador/";
   private urlListarTodasOfertaEstudianteExternal_us="/Backend/public/index.php/ofertasLaboralesEstudiantes/listarTodasOfertaEstudianteExternal_us/";
   private urlELiminarPostulanteOfertaLaboral="/Backend/public/index.php/ofertasLaboralesEstudiantes/eliminarPostulanteOfertaLaboral";
+  private urlFinalizarOfertaLaboralEstudiante="/Backend/public/index.php/ofertasLaboralesEstudiantes/finalizarOfertaLaboralEstudiante";
   constructor(private _httCliente:HttpClient) { }
 
 
@@ -139,6 +140,18 @@ export class OfertaLaboralEstudianteService {
             return respuestaBackend;
           })
       );
+  }
+    //actulizar estado de validacion del postulante//aprobado y no aprobado
+  finalizarOfertaLaboralEstudiante(array:any){
+    array.forEach(elemento=>{
+    console.log(elemento);
+    });
+    return this._httCliente.post(`${this.urlDominio_}${this.urlFinalizarOfertaLaboralEstudiante}`,array).pipe(
+      map(
+        respuestaBackend=>{
+          return respuestaBackend;
+        })
+    );
   }
   reportOfertaEstudiante(){
     return this._httCliente.get(

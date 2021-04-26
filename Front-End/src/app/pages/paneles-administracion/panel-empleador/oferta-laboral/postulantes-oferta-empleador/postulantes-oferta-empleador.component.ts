@@ -155,7 +155,7 @@ export class PostulantesOfertaComponent implements OnInit {
                 }
               );
               //actualizo el estado de los postulantes
-              this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
+              this.servicioOfertaEstudiante.finalizarOfertaLaboralEstudiante(this.arrayAux).subscribe(
                 siHaceBien =>{
                     console.log(siHaceBien);
                     if(siHaceBien['Siglas']=='OE'){

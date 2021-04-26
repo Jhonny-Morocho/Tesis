@@ -291,8 +291,8 @@ class OfertaLaboralEstudianteController extends Controller
                    "existeContrados"=> $existeContratado,
                    "listaEstudiantes"=>$request->json()->all()
                );
+               //contratar o no controtar postulantes por parte del empleador
                $notificarContratado=$this->nofiticarFinalizacionOfertaEncargadoLaboralPostulante($datosOfertaEstudiante);
-               die(json_encode($notificarContratado));
                return  response()->json(["mensaje"=>$arrayRespuesta,"Siglas"=>"OE",
                                        "notificarContratacionPostulante"=>$notificarContratado,
                                        "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);

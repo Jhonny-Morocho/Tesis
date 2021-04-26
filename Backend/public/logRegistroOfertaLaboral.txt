@@ -1,0 +1,5 @@
+[2021-04-26 13:26:20] LLENAR FORMULARIO DEL SISSEG EMPLEADOR :
+                    ::Estado de enviar correo al empleador : false::: El Correo del empleador  es: empleador1unl@gmail.com ] 
+
+
+
