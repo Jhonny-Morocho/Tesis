@@ -262,10 +262,10 @@ class EmpleadorController extends Controller{
             $arrayEncargado=null;
             //recorrer todos los usuario que sean encargado
             foreach ($usuarioEncargado as $key => $value) {
-                //tengo q redacatra el menaje a la secretaria
+                //tengo q redacatra el menaje al encargado
                 $plantillaHmtlCorreo=
                             $this->templateHtmlCorreo(
-                                        $datos["nom_representante_legal"],
+                                        $usuarioEncargado["nombre"]." ".$usuarioEncargado['apellido'],
                                         $parrafo
                                     );
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaHmtlCorreo,
