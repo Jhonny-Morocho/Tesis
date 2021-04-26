@@ -49,30 +49,28 @@ class OfertaLaboralEstudianteController extends Controller
                 //comprobar si el etudainte no postule dos veces a la misma oferta
                 $ValidarPostularUnaOfertaNVeces=$this->validarEstNoPostuleNVecesMismaOfert($ObjEstudiante['id'],$OfertaLaboral['id']);
                 if($ValidarPostularUnaOfertaNVeces==false){
+                    //si no repite la misma postulacion entonces si puede inscribirse
+                    $ObjOfertaLaboralEstudiante=new OfertaLaboralEstudiante();
+                    $ObjOfertaLaboralEstudiante->fk_estudiante=$ObjEstudiante['id'];
+                    $ObjOfertaLaboralEstudiante->fk_oferta_laboral=$OfertaLaboral['id'];
+                    $ObjOfertaLaboralEstudiante->estado=$request['estado'];
+                    $ObjOfertaLaboralEstudiante->observaciones=$request['observaciones'];
+                    $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();
+                    $ObjOfertaLaboralEstudiante->save();
+                    //notificar al empleador sobre la actividad de la oferta laboral
+                    $datosOfertaEstudiante=array(
+                        "nom_representante_legal"=>$OfertaLaboral['nom_representante_legal'],
+                        "razon_empresa"=>$OfertaLaboral['razon_empresa'],
+                        "puesto"=>$OfertaLaboral['puesto'],
+                        "correo"=>$OfertaLaboral['correo']
+                    );
 
-
-                        //si no repite la misma postulacion entonces si puede inscribirse
-                        $ObjOfertaLaboralEstudiante=new OfertaLaboralEstudiante();
-                        $ObjOfertaLaboralEstudiante->fk_estudiante=$ObjEstudiante['id'];
-                        $ObjOfertaLaboralEstudiante->fk_oferta_laboral=$OfertaLaboral['id'];
-                        $ObjOfertaLaboralEstudiante->estado=$request['estado'];
-                        $ObjOfertaLaboralEstudiante->observaciones=$request['observaciones'];
-                        $ObjOfertaLaboralEstudiante->external_of_est="OfEst".Utilidades\UUID::v4();
-                        $ObjOfertaLaboralEstudiante->save();
-                        //notificar al empleador sobre la actividad de la oferta laboral
-                        $datosOfertaEstudiante=array(
-                            "nom_representante_legal"=>$OfertaLaboral['nom_representante_legal'],
-                            "razon_empresa"=>$OfertaLaboral['razon_empresa'],
-                            "puesto"=>$OfertaLaboral['puesto'],
-                            "correo"=>$OfertaLaboral['correo']
-                        );
-
-                        $notificarEmpeladorListaInteresados=$this->notificarAplicarOferta($datosOfertaEstudiante);
-                        return response()->json(["mensaje"=>"Operacion Exitosa",
-                                                    "Siglas"=>"OE",
-                                                    "notificarEmpleadorListaInteresados"=>$notificarEmpeladorListaInteresados,
-                                                    "OferEstudiante"=>$ObjOfertaLaboralEstudiante,
-                                                200]);
+                    $notificarEmpeladorListaInteresados=$this->notificarAplicarOferta($datosOfertaEstudiante);
+                    return response()->json(["mensaje"=>"Operacion Exitosa",
+                                                "Siglas"=>"OE",
+                                                "notificarEmpleadorListaInteresados"=>$notificarEmpeladorListaInteresados,
+                                                "OferEstudiante"=>$ObjOfertaLaboralEstudiante,
+                                            200]);
                 }else{
                     return response()->json(["mensaje"=>"Usted ya esta postulando a esta oferta","Siglas"=>"ONE",200]);
                 }
@@ -261,6 +259,7 @@ class OfertaLaboralEstudianteController extends Controller
          $arrayRespuesta=array();
          if($request->json()){
             try {
+                $fk_oferta_labora=null;
                 foreach ($request->json() as $key => $value) {
                     $OfertaLaboralPostulanteBorrar=
                     OfertaLaboralEstudiante::join("estudiante","estudiante.id","ofertalaboral_estudiante.fk_estudiante")
@@ -271,8 +270,21 @@ class OfertaLaboralEstudianteController extends Controller
                         "estudiante"=>$value['external_of_est'],
                         "estado"=> $OfertaLaboralPostulanteBorrar
                     );
+                    $fk_oferta_labora=$value['fk_oferta_laboral'];
                 }
+                //buscamos la oferta laboral que tenga ese id
+                $ofertaLaboralTemporal=OfertasLaborales::where("id",$fk_oferta_labora)->first();
+                //hacemos una consulta mas avanzada
+                $buscarOferta=$this->buscarOfertaLaboral($ofertaLaboralTemporal->external_of);
+                $datosOfertaEstudiante=array(
+                    "nom_representante_legal"=>$buscarOferta['nom_representante_legal'],
+                    "razon_empresa"=>$buscarOferta['razon_empresa'],
+                    "puesto"=>$buscarOferta['puesto'],
+                    "correo"=>$buscarOferta['correo']
+                );
+                $notificarEmpeladorListaInteresados=$this->notificarAplicarOferta($datosOfertaEstudiante);
                 return  response()->json(["mensaje"=>$arrayRespuesta,"Siglas"=>"OE",
+                                        "notificarEmpeladorListaInteresados"=>$notificarEmpeladorListaInteresados,
                                         "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
             } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>"Error no se puede borrar",
