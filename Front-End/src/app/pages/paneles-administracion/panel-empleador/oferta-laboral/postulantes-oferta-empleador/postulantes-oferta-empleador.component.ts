@@ -138,7 +138,6 @@ export class PostulantesOfertaComponent implements OnInit {
               console.log(this.instanciaOfertaLaboral);
               //primero la finalizado a la oferta laboral
               console.log(this.externalOferta);
-              return;
               this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
                 siHaceBien=>{
                     console.log(siHaceBien);
