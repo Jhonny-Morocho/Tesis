@@ -158,25 +158,27 @@ class OfertaLaboralController extends Controller
 
     //estado 4 finalizara la oferta laboral y se la borra de la plataforma
     public function finalizarOfertaLaboral(Request $request,$external_id){
-        echo $this->templateHtmlCorreo("Jhonny Morocho","El estudiante acaba de inscribir en la oferta");
-
-        die("xx");
         if($request->json()){
             $estadoOfertaLaboral=null;
+
             try {
                 //actualizar el estado de la oferta laboral
                 $estadoOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)
                 ->update(array('estado'=>$request['estado']));
+                //una ves finalizada la oferta laboral, se le hace llenar el
+                $llenarFormularioSISSEG=$this->notificarFinalizacionOfertaFormularioSISEG($external_id);
                 //actualizar el estado de los postulantes
                 return response()->json(["mensaje"=>"Operacion Exitosa",
                         "ObjetaOfertaLaboral"=>$estadoOfertaLaboral,
                         "external_of"=>$external_id,
+                        "llenarFormularioSISEGempleador"=>$llenarFormularioSISSEG,
                         "resquest"=>$request->json()->all(),
                         "Siglas"=>"OE",200]);
 
+
              //die($data);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                return response()->json(["mensaje"=>$th->getMessage(),
                                             "external_of"=>$external_id,
                                             "resques"=>$request->json()->all(),
                                             "Siglas"=>"ONE",
@@ -188,7 +190,6 @@ class OfertaLaboralController extends Controller
         }
     }
     public function actulizarOfertaLaboral(Request $request,$external_id){
-
         if($request->json()){
             $ObjOfertaLaboral=null;
             $estadoCorreoEnviado=null;
@@ -503,5 +504,50 @@ class OfertaLaboralController extends Controller
                 fclose($handle);
             return $arrayCorreoEstudiantes=array("error"=>$th->getMessage());
         }
+    }
+
+    //una vez finalizada la oferta hacer que llene el formulario del SISSEG AL EMPLEADOR
+    private function notificarFinalizacionOfertaFormularioSISEG($external_of){
+        $empleador=$this->buscarUsuarioEmpleador($external_of);
+        $texto="";
+        $handle = fopen("logRegistroOfertaLaboral.txt", "a");
+        try {
+            // notificar al empleador que su oferta laboral esta publicada en la plataforma
+            $parrafo="Muchas gracias por participar en este proceso, tu oferta laboral ha finalizado,
+                      sirvace porfavor de llenar la siguiente encuesta ".
+                      "<a href=".getenv('SISSEG_EPLEADOR').">".
+                     getenv('SISSEG_EPLEADOR') ."</a> de ante mano se le agradece su colaboración ";
+
+            $templateCorreoHmtlEmpleador=
+                                    $this->templateHtmlCorreo($empleador['nom_representante_legal'],
+                                                                $parrafo
+                                                            );
+
+            $enviarCorreoBoleanEmpleador=
+                                    $this->enviarCorreo($templateCorreoHmtlEmpleador,
+                                                        $empleador['correo'],
+                                                        getenv('TITULO_CORREO_APLICAR_OFERTA'));
+
+            $texto="[".date("Y-m-d H:i:s")."]"
+                    ." LLENAR FORMULARIO DEL SISSEG EMPLEADOR :
+                    ::Estado de enviar correo al empleador : ".$enviarCorreoBoleanEmpleador
+                    ."::: El Correo del empleador  es: ".$empleador['correo']." ] ";
+            $arrayCorreoEmpleador=array(
+                "estadoEnviarCorreoEmpleadorSISEG"=>$enviarCorreoBoleanEmpleador,
+                "correoEmpleador"=>$empleador['correo']
+            );
+            fwrite($handle, $texto);
+            fwrite($handle, "\r\n\n\n\n");
+            fclose($handle);
+            return $arrayCorreoEmpleador;
+        } catch (\Throwable $th) {
+                $texto="[".date("Y-m-d H:i:s")."]"
+                ." LLENAR FORMULARIO DEL SISSEG EMPLEADOR ERROR: ".$th->getMessage()."  ]";
+                fwrite($handle, $texto);
+                fwrite($handle, "\r\n\n\n\n");
+                fclose($handle);
+            return $arrayCorreoEmpleador=array("error"=>$th->getMessage());
+        }
+
     }
 }

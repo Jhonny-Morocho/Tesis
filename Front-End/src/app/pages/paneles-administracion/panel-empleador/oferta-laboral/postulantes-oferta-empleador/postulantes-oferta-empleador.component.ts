@@ -29,14 +29,14 @@ export class PostulantesOfertaComponent implements OnInit {
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioOfertaLabotal:OfertasLaboralesService,
     private servicioCursosCapacitaciones:CursosCapacitacionesService,
-    private servicioTitulosAcademicos:TituloService, 
+    private servicioTitulosAcademicos:TituloService,
     private _activateRoute:ActivatedRoute) { }
 
   ngOnInit() {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaVerPostulante=new PostulanteModel();
     this.estudiantesOfertaLaboral();
-  
+
   }
   ofertaLaboralFinalizar(external_of:string){
     console.log(this.externalOferta);
@@ -76,7 +76,7 @@ export class PostulantesOfertaComponent implements OnInit {
   }
   verHojaVidaModal(id:Number){
     console.log("click");
-    var index=parseInt((id).toString(), 10); 
+    var index=parseInt((id).toString(), 10);
     $('#motrarHojaVidaGeneral').modal('show');
     //============= mostamos la informacion personal ========================
     this.instanciaVerPostulante.nombre=this.arrayPostulante[index]['nombre'];
@@ -120,8 +120,8 @@ export class PostulantesOfertaComponent implements OnInit {
   }
   //envia los datos del array del ckeck a guardar
   contrarFinalizarOfertaLaboral(){
-      this.instanciaOfertaLaboral.estado=4;
-      if(this.existeAlgunPostulanteChechado==true){
+    this.instanciaOfertaLaboral.estado=4;
+    if(this.existeAlgunPostulanteChechado==true){
           Swal({
             title: '¿Está seguro en realizar la acción? No se podra revertir',
             text: "Ha seleccionado con éxito los postulantes de su interes, si desea continuar haga clic en Aceptar ",
@@ -136,7 +136,9 @@ export class PostulantesOfertaComponent implements OnInit {
               Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
 
               console.log(this.instanciaOfertaLaboral);
-              //primero la finalizado a la oferta laboral 
+              //primero la finalizado a la oferta laboral
+              console.log(this.externalOferta);
+              return;
               this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
                 siHaceBien=>{
                     console.log(siHaceBien);
@@ -153,7 +155,7 @@ export class PostulantesOfertaComponent implements OnInit {
                   console.warn(siHaceMal);
                 }
               );
-              //actualizo el estado de los postulantes 
+              //actualizo el estado de los postulantes
               this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
                 siHaceBien =>{
                     console.log(siHaceBien);
@@ -174,9 +176,9 @@ export class PostulantesOfertaComponent implements OnInit {
               }
             }
           })
-      }
+    }
       //dio check pero despues desmarco
-      if(this.existeAlgunPostulanteChechado==false){
+    if(this.existeAlgunPostulanteChechado==false){
         Swal({
           title: '¿Está seguro en realizar la acción? No se podra revertir ',
           text: "Desmarco algunos postulantes por lo cual no ha contratado ningún postulante, si desea continuar  haga clic en Aceptar",
@@ -203,7 +205,7 @@ export class PostulantesOfertaComponent implements OnInit {
             );
           }
         })
-      }
+    }
       //finaliza la oferta laboral pero no ha contratado ninugn postulante
       //si solo aplasto direccito el boton sin hacer nunguna accion en el check//aplasto directo el boton
     if(this.arrayAux.length==0){
@@ -258,7 +260,7 @@ export class PostulantesOfertaComponent implements OnInit {
     }
     //comprobar que el estado actual solo tenga dos valores 1 <-> 0
     if(estadoActualAux!=null){
-        const aux={   
+        const aux={
         fk_estudiante:fk_postulante,
         fk_oferta_laboral:fk_ofertaLaboral,
         estado:estadoActualAux,

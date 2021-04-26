@@ -31,3 +31,18 @@
 
 
 
+[2021-04-26 01:32:13] LLENAR FORMULARIO DEL SISSEG EMPLEADOR :
+                        ::Estado de enviar correo al empleador : false::: El Correo del empleador  es: empresa2@hotmail.com ] 
+
+
+
+[2021-04-26 01:33:03] LLENAR FORMULARIO DEL SISSEG EMPLEADOR :
+                        ::Estado de enviar correo al empleador : false::: El Correo del empleador  es: empresa2@hotmail.com ] 
+
+
+
+[2021-04-26 01:46:53] LLENAR FORMULARIO DEL SISSEG EMPLEADOR :
+                    ::Estado de enviar correo al empleador : false::: El Correo del empleador  es: empresa2@hotmail.com ] 
+
+
+
