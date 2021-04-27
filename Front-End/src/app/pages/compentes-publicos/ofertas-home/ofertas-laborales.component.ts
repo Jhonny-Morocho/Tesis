@@ -32,13 +32,13 @@ export class PostularOfertaLaboralComponent implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  
+
   constructor(private servicioOferta:OfertasLaboralesService,
     private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioUsuario:AutenticacionUserService,
     private servicioPostulante:SerivicioPostulanteService,
     private ruta_:Router) { }
-  
+
   ngOnInit() {
 
     this.instanciaOfertaVer=new OfertaLaboralModel();
@@ -52,8 +52,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
   }
 
 
-  cargarTabla(){
-
+    cargarTabla(){
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         console.info("TODO BIEN");
@@ -122,9 +121,6 @@ export class PostularOfertaLaboralComponent implements OnInit {
                         console.log(mensaje);
                         if(siHacesBien['Siglas']=='OE'){
                           Swal('Guardado',mensaje,'success');
-                          this.cargarTabla();
-                          this.ngOnDestroy()
-            
                         }else{
                           Swal('Informacion',mensaje,'info');
                         }
@@ -160,7 +156,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
         pagingType: 'full_numbers',
         pageLength: 10,
         responsive: true,
-         /* below is the relevant part, e.g. translated to spanish */ 
+         /* below is the relevant part, e.g. translated to spanish */
         language: {
           processing: "Procesando...",
           search: "Buscar:",

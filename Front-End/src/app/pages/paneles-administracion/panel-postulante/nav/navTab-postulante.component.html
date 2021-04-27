@@ -27,9 +27,15 @@
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="estadoValidacionForm==true">
+                      <a routerLinkActive="active" [routerLink]="['/home']" class="nav-link ">
+                          <i class="fas fa-briefcase mr-1"></i>
+                          <p>Ofertas laborales </p>
+                      </a>
+                  </li>
+                    <li class="nav-item" *ngIf="estadoValidacionForm==true">
                         <a routerLinkActive="active" [routerLink]="['/panel-postulante/ofertas-postuladas']" class="nav-link ">
-                            <i class="fas fa-briefcase mr-1"></i>
-                            <p>Mis ofertas laborales </p>
+                            <i class="fas fa-check mr-1"></i>
+                            <p>Ofertas elegidas </p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview" *ngIf="estadoValidacionForm==true">

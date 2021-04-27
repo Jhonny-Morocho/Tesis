@@ -448,7 +448,7 @@ class OfertaLaboralEstudianteController extends Controller
        try {
            $parrafo="Se ha generado nuevos cambios en tu lista de postulantes de la oferta denominada ".
                      $arrayData['puesto'].
-                     "puede que existan nuevos postulanrtes en tu oferta o que se hayan retirado de la misma, para mas detalles revise tu cuenta";
+                     "puede que existan nuevos postulantes en tu oferta o que se hayan retirado de la misma, para más detalles revise su cuenta";
 
            $temmplateHmtlAplicarOferta=
                     $this->templateHtmlCorreo(
@@ -511,7 +511,7 @@ class OfertaLaboralEstudianteController extends Controller
 
     private function notificarPostulante($listaPostulantes,$puesto){
         $parrafoPostulanteSISSEG="Muchas gracias por participar en este proceso,
-                                    sirvace porfavor de llenar la siguiente encuesta ".
+                                    sírvase por favor de llenar la siguiente encuesta ".
                                     "<a href=".getenv('SISSEG_POSTULANTE').">".
                                     getenv('SISSEG_POSTULANTE') ."</a> de ante mano se le agradece su colaboración ";
 

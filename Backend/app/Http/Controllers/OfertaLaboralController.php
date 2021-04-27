@@ -517,7 +517,7 @@ class OfertaLaboralController extends Controller
         try {
             // notificar al empleador que su oferta laboral esta publicada en la plataforma
             $parrafo="Muchas gracias por participar en este proceso, tu oferta laboral ha finalizado,
-                      sirvace porfavor de llenar la siguiente encuesta ".
+                      sírvase por favor de llenar la siguiente encuesta ".
                       "<a href=".getenv('SISSEG_EPLEADOR').">".
                      getenv('SISSEG_EPLEADOR') ."</a> de ante mano se le agradece su colaboración ";
 

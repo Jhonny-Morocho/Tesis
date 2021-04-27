@@ -31,7 +31,7 @@ trait TemplateCorreo {
                         </p>
                         <p class=" mt-2">
                             Por favor, revise su perfil en el
-                            "Módulo de software para la Vinculación Laboral de Actores dela Carrera de Ingeniería en Sistemas/Computación"
+                            "Módulo de software para la Vinculación Laboral de Actores de la Carrera de Ingeniería en Sistemas/Computación"
                         </p>
                 </div>
                     <a class="btn btn-primary btn-lg mt-4 "
