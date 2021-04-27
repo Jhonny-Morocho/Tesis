@@ -34,7 +34,7 @@ class EmpleadorController extends Controller{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
      }
-     //aqui aprobamos o no al empleador
+     //aqui aprobamos o no al empleador//aprobamos al empleador
      public function actulizarAprobacionEmpleador(Request $request,$external_id){
 
          if($request->json()){
@@ -74,7 +74,7 @@ class EmpleadorController extends Controller{
                 }
                 // NOTIFICAR EL EMPLEADOR LA VALIDACION DEL FORMULARIO
                 if($request['estado']==1){//
-                    $parrafo="Su información de registro tiene algunas inconsistencias por favor revise su informacion y vuelva a intentar";
+                    $parrafo="Su información ha sido validada con éxito";
                     $plantillaHtmlCorreo=$this
                     ->templateHtmlCorreo(
                                         $usuarioEmpleador['nom_representante_legal'],
@@ -265,7 +265,7 @@ class EmpleadorController extends Controller{
                 //tengo q redacatra el menaje al encargado
                 $plantillaHmtlCorreo=
                             $this->templateHtmlCorreo(
-                                        $usuarioEncargado["nombre"]." ".$usuarioEncargado['apellido'],
+                                        $value["nombre"]." ".$value['apellido'],
                                         $parrafo
                                     );
                 $enviarCorreoBolean=$this->enviarCorreo($plantillaHmtlCorreo,
