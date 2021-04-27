@@ -105,15 +105,15 @@ class EstudianteController extends Controller
                      ->where("usuario.tipoUsuario",5)
                      ->get();
                      //enviamo el correo
+                     $parrafo= "El postulante  ".
+                                 $usuarioEstudiante['nombre'].
+                                 " ".$usuarioEstudiante['apellido'].
+                                 "ha sido validada su información con éxito";
                      foreach ($usuarioEncargado as $key => $value) {
-                        $parrafo= "El postulante  ".
-                                    $usuarioEstudiante['nombre'].
-                                    " ".$usuarioEstudiante['apellido'].
-                                    "ha sido validada su información con éxito";
                         //generara plantilla html
                         $plantillaCorreoEncargado=
                             $this->templateHtmlCorreo(
-                                                        $usuarioEstudiante['nombre']." ".$usuarioEstudiante['apellido'],
+                                                        $value['nombre']." ".$value['apellido'],
                                                         $parrafo
                                                     );
                         //enviar correo
@@ -184,7 +184,7 @@ class EstudianteController extends Controller
                         foreach ($usuarioSecrataria as $key => $value) {
                             //tengo q redacatra el menaje a la secretaria
                             $plantillaHmtlCorreo=$this->templateHtmlCorreo(
-                                                    $request["nombre"]." ".$request["apellido"],
+                                                    $value["nombre"]." ".$value["apellido"],
                                                     $parrafo
                                                 );
 

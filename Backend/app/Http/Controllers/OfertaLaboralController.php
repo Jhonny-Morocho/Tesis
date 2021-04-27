@@ -208,6 +208,7 @@ class OfertaLaboralController extends Controller
                 $usuarioEmpleador=$this->buscarUsuarioEmpleador($external_id);
                 $datos=array(
                     "nombreOfertaLaboral"=>$request['puesto'],
+                    "external_of"=>$request['external_of'],
                     "nombreEmpresa"=>$usuarioEmpleador->razon_empresa,
                     "correoUsuarioEmpleador"=>$usuarioEmpleador->correo
                 );
@@ -452,11 +453,13 @@ class OfertaLaboralController extends Controller
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
         try {
-
+            $empleador=OfertasLaborales::join("empleador","empleador.id","oferta_laboral.fk_empleador")
+            ->where("oferta_laboral.external_of",$datosOFertaLaboral['external_of'])
+            ->first();
             // notificar al empleador que su oferta laboral esta publicada en la plataforma
             $parrafo="La Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." esta aprobada y publicada con éxito";
             $templateCorreoHmtlEmpleador=
-                                    $this->templateHtmlCorreo($datosOFertaLaboral['nombreEmpresa'],
+                                    $this->templateHtmlCorreo( $empleador['nom_representante_legal'],
                                                                 $parrafo
                                                             );
 
@@ -471,7 +474,7 @@ class OfertaLaboralController extends Controller
             ->where("estudiante.estado",1)
             ->get();
 
-            $parrafoEstudiante="Existe una nueva oferta laboal publicada denominada ".$datosOFertaLaboral['nombreOfertaLaboral'];
+            $parrafoEstudiante="Existe una nueva oferta laboral publicada denominada ".$datosOFertaLaboral['nombreOfertaLaboral'];
             foreach ($usuarioEstudiante as $key => $value) {
                 $plantillaHmtlCorreo=
                                     $this->templateHtmlCorreo($value['nombre']." ".$value['apellido'],

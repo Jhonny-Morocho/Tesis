@@ -18,7 +18,7 @@
                     <h4 class="alert-heading">Validacion exitosa </h4>
                     <p>Tu validacion ha sido exitosa, por lo cual ya puedes potular a las ofertas laborales disponible en la plataformas</p>
                     <hr>
-                    <p class="mb-0">Obersvaciones: {{ instanciaPostulante.observaciones }}</p>
+                    <p class="mb-0">Observaciones: {{ instanciaPostulante.observaciones }}</p>
                 </div>
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES FALSE  ===============// -->
                 <div class="alert alert-warning" role="alert" *ngIf="formValidado==false && obervaciones==true">
@@ -52,7 +52,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Telefono fijo o móvil</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">El telefono es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required minlength="7" [disabled]="obervaciones==false || formValidado==true">
+                    <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required maxlength="10" [disabled]="obervaciones==false || formValidado==true">
                 </div>
                 <div class="col-md-6">
                     <fieldset class="form-group">
@@ -119,7 +119,7 @@
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'telefono'].errors ">El telefono es obligatorio</span>
-                    <input type="text " [(ngModel)]="instanciaPostulante.telefono" class="form-control " name="telefono" required maxlength="10 ">
+                    <input type="text " [(ngModel)]="instanciaPostulante.telefono" class="form-control " name="telefono" required maxlength="10">
                 </div>
                 <div class="col-md-6 ">
                     <fieldset class="form-group ">
@@ -143,7 +143,7 @@
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls[ 'direcionDomicilio'].errors ">La direccion es obligatorio</span>
-                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio" name="direcionDomicilio" rows="3 " required minlength="5 "></textarea>
+                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio" name="direcionDomicilio" rows="3 " required maxlength="10"></textarea>
                     </div>
                 </div>
                 <div class="col-12 ">
