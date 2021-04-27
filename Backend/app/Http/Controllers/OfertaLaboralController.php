@@ -368,7 +368,7 @@ class OfertaLaboralController extends Controller
             $parrafo="Se ha registrado la oferta laboral: ".
                         $datos["nombreOfertaLaboral"].
                         " del usuario ".$datos["correoUsuarioEmpleador"].
-                        "Representante de la empresa ".$datos["nombreEmpresa"];
+                        ". Representante de la empresa ".$datos["nombreEmpresa"];
             $plantillaHtmlCorreo=
                 $this->templateHtmlCorreo(
                                             $value["nombre"]." ".$value["apellido"],

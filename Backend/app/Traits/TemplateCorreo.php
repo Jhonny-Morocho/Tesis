@@ -53,8 +53,8 @@ trait TemplateCorreo {
             $mail=new PHPMailer();
             $mail->CharSet='UTF-8';
             $mail->isMail();
-            $mail->setFrom(getenv("CORREO_MODULO"),'Proceso de Inserccón Laboral');
-            $mail->addReplyTo(getenv("CORREO_MODULO"),'Proceso de Inserccón Laboral');
+            $mail->setFrom(getenv("CORREO_MODULO"),'Proceso de Inserción Laboral');
+            $mail->addReplyTo(getenv("CORREO_MODULO"),'Proceso de Inserción Laboral');
             $mail->Subject=($tituloCorreo);
             $mail->addAddress($para);
             $mail->msgHTML($templateHtml);

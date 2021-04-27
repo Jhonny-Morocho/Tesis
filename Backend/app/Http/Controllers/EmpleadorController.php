@@ -226,7 +226,7 @@ class EmpleadorController extends Controller{
                 $ObjEmpleador->estado=$datos["estado"];
                 $ObjEmpleador->external_em="Em".Utilidades\UUID::v4();
                 $ObjEmpleador->save();
-                $parrafo="Existe un nuevo registro de empleador pendiente en validar información";
+                $parrafo="Existe un nuevo empleador pendiente en aprobar la información del mismo";
                 $arrayEncargado=$this->enviarCorreoEncargadoFormEditadoRegistrado($datos,$ObjUsuario,$parrafo);
 
                 return response()->json(["mensaje"=> "Registro Exitoso","Siglas"=>"OE",
