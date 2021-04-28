@@ -62,9 +62,8 @@ export class LoginAdminComponent implements OnInit {
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
     console.log(this.instanciaModeloUsuarioLogin);
-
+    console.log(formularioAdministrador);
     if(formularioAdministrador.invalid){
-
       return;
     }
     // si pasa la validacion se ejecuta el siguiente codigo

@@ -17,13 +17,32 @@
               </div>
               <div class="form-group">
                   <label for="inputEmail4" class="form-label text-white">Correo </label><br>
-                  <span class="text-danger " *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors">El correo es obligatorio</span>
-                  <input type="email" [(ngModel)]="usuarioModel.correo" name="correo" class="form-control" id="inputEmail4" required email>
+                  <input type="email"
+                         [(ngModel)]="usuarioModel.correo"
+                         name="correo"
+                         class="form-control"
+                         placeholder="Ingrese un correo electrónico"
+                         [ngClass]="{'is-invalid': fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors}"
+                         required email>
+                  <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && (fRegistroEmpleador.controls['correo'].value)==null">
+                    El campo correo es requerido
+                  </div>
+                  <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].invalid==true && (fRegistroEmpleador.controls['correo'].value)!=null">
+                    El correo ingresado no es valido
+                  </div>
               </div>
               <div class="form-group">
                   <label for="inputPassword4" class="form-label text-white">Contraseña</label><br>
-                  <span class="text-danger" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors">El password es obligatorio</span>
-                  <input type="password" [(ngModel)]="usuarioModel.password" name="password" class="form-control" id="inputPassword4" required maxlength="6">
+                  <input type="password"
+                         [(ngModel)]="usuarioModel.password"
+                         name="password"
+                         class="form-control"
+                         placeholder="Ingrese una contraseña"
+                         [ngClass]="{'is-invalid': fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors }"
+                         required maxlength="10">
+                    <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors">
+                      La contraseña es requerida
+                    </div>
               </div>
               <div class="form-group">
                   <button type="submit" class="btn btn-success">Ingresar</button>
@@ -35,15 +54,5 @@
               </div>
           </form>
         </div>
-        <!-- <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a class="h1"><b>Registro </b>Empleador</a>
-            </div>
-            <div class="card-body">
-                <article class="card-body">
-                </article>
-            </div>
-        </div> -->
-        <!-- /.card -->
     </div>
 </div>

@@ -16,8 +16,6 @@ export class RegistroEmpleadorComponent implements OnInit {
 
   ngOnInit() {
     this.usuarioModel=new UsuarioModel();
-    this.usuarioModel.correo="";
-    this.usuarioModel.password="";
     //empleador es tipo de usuario 6
     this.usuarioModel.tipoUsuario=6;
     //estado del usuario activo

@@ -23,14 +23,14 @@ export class RegistroPostulanteComponent implements OnInit {
      this.usuarioModel.tipoUsuario=2;
      this.usuarioModel.estado=1;
   }
-
   onSubMitRegistroPostulante(formularioRegistroPostulante:NgForm){
     console.log("POSTULANTE REGISTRO ON");
     console.log(formularioRegistroPostulante);
     // comprobamos si el formulario pao la validacion
     if(formularioRegistroPostulante.invalid){
       return;
-      }
+
+    }
     //mensaje de alerta usuario
     Swal({
       allowOutsideClick:false,
