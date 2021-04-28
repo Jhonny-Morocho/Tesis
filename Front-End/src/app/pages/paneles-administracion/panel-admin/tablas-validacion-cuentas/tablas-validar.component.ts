@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -38,7 +39,7 @@ export class TareaValiar implements OnInit {
   ngOnInit():void {
     this.obtenerCalificacionesTodosEmpleadores();
     this.configurarParametrosDataTable();
-    this.perfilUsuario();
+    this.cargarTablaperfilUsuario();
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaEmpleadorCalificar=new EmpleadorModel();
@@ -60,9 +61,8 @@ export class TareaValiar implements OnInit {
     this.dtOptions = dataTable;
   }
   //revisar que tipo de usuario admistrador esta usando la pagina
-  perfilUsuario(){
+  cargarTablaperfilUsuario(){
     //esat usando la pagina la secretaria
-
     if(Number(localStorage.getItem('tipoUsuario'))==3){
       this.tipoUsuarioSecretaria=true;
       this.servicioPostulante_.listarPostulantes().subscribe(
@@ -78,9 +78,10 @@ export class TareaValiar implements OnInit {
          }
       );
     }
-      //esat usando la pagina el encargado
+    //esat usando la pagina el encargado
     if(Number(localStorage.getItem('tipoUsuario'))==5){
       this.tipoUsuarioEncargado=true;
+      //listo todos los empleadores
       this.servicioEmpleador_.listarEmpleadores().subscribe(
         siHacesBien=>{
           console.log(siHacesBien);
@@ -88,17 +89,12 @@ export class TareaValiar implements OnInit {
           this.empleador =siHacesBien;
           //imprimimos las estrellas
           function recorrerEmpleadores(element, index, array) {
+            console.log(element);
             console.log("[" + index + "] = " + element['empleadorPromedio']);
             $(function() {
-              $('#'+index).starrr({
+              $('#'+element['empleadorExternal_em']).starrr({
                 max: 5,
                 rating: element['empleadorPromedio']
-                // change: function(e, value){
-                //   //calificacion=value;
-                //   this.valor= value;
-                //   console.log(value);
-                //   //console.log(e);
-                // }
               });
             });
           }
@@ -121,7 +117,7 @@ export class TareaValiar implements OnInit {
     this.intanciaCalifarEmpleador.estrellas=valorEstrella;
   }
 
-  calificarEmpleador(indice){
+  mostrarEmpleadorCalifiacar(indice){
     $('#CalificarEmpleador').modal('show');
     this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
     this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
@@ -134,14 +130,47 @@ export class TareaValiar implements OnInit {
     this.intanciaEmpleadorCalificar.num_ruc=this.empleador[indice]['num_ruc'];
     this.intanciaEmpleadorCalificar.razon_empresa=this.empleador[indice]['razon_empresa'];
     this.intanciaEmpleadorCalificar.telefono=this.empleador[indice]['telefono'];
+
   }
-  guardarCalificacion(){
+
+  calificarEmpleador(){
+    //aqui tengo el fk del empleador
     this.intanciaCalifarEmpleador.fk_empleador= this.intanciaEmpleadorCalificar.id;
     this.servicioCalificarEmpleador.registrarCalificacion(this.intanciaCalifarEmpleador).subscribe(
       siHaceBien=>{
         console.log(siHaceBien);
-        if(siHaceBien['Siglas']=='OE'){
-          Swal('Registrado', siHaceBien['mensaje'], 'success');
+          //consulto de nuevo las nuevas calificaiones de los emepleadores
+          if(siHaceBien['Siglas']=='OE'){
+            Swal('Registrado', siHaceBien['mensaje'], 'success');
+              this.obtenerCalificacionesTodosEmpleadores();
+              let external_em= this.intanciaEmpleadorCalificar.external_em;
+              console.log(external_em);
+              function logArrayElements(element, index, array) {
+                console.log(element);
+                if(element['empleadorExternal_em']== external_em){
+                  console.log(Number(element['empleadorPromedio']));
+                    switch (Number(element['empleadorPromedio'])) {
+                    case 1:
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a></div>');
+                      break;
+                    case 2:
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      break;
+                    case 3:
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      break;
+                    case 4:
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      break;
+                    case 4:
+                        $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                        break;
+                    default:
+                      break;
+                  }
+                }
+              }
+              this.arrayCalificacionesEmpleadores.forEach(logArrayElements);
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
         }
@@ -158,29 +187,27 @@ export class TareaValiar implements OnInit {
 
   }
 
-    //conversion de estado
-    estadoConversion(numeroEstado:Number):boolean{
-      if(numeroEstado==0){
-          return false;
-      }
-      if(numeroEstado==1){
-        return true;
-      }
-    }
-    cerrarModal(){
-      $('#CalificarEmpleador').modal('hide')
-    }
-    //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
-    estadoRevision(observacion:String):boolean{
-      //si ha escrito algo la secretaria signifca que si reviso
-      if(observacion.length>0){
-        return true;
-      }else{
+  //conversion de estado
+  estadoConversion(numeroEstado:Number):boolean{
+    if(numeroEstado==0){
         return false;
-      }
     }
-
-
+    if(numeroEstado==1){
+      return true;
+    }
+  }
+  cerrarModal(){
+    $('#CalificarEmpleador').modal('hide')
+  }
+  //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
+  estadoRevision(observacion:String):boolean{
+    //si ha escrito algo la secretaria signifca que si reviso
+    if(observacion.length>0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }
 

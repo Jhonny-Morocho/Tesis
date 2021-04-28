@@ -310,6 +310,13 @@ export class ReporteOfertasComponent implements OnInit {
             aux.push(element);
             console.log("xx");
             }
+            //ver todos
+            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+                fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+                  estado==0 ){
+            aux.push(element);
+            console.log("xx");
+            }
         });
         this.intanciaReporte=aux;
         //genero el reporte con el nuevo array de la busqueda
@@ -352,6 +359,8 @@ export class ReporteOfertasComponent implements OnInit {
       //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
       this.rowsItemsReporteOfertas=[];
       this.rowsItemsReporteOfertas.unshift(this.maquetarCabezeraTablaOfertaLaboralesPdf());
+      console.log(this.rowsItemsReporteOfertas);
+      //return;
       console.log(this.maquetarCabezeraTablaOfertaLaboralesPdf());
       reporteModelArray.forEach(element => {
         //cargo la tabla para generar reporte
@@ -428,8 +437,8 @@ export class ReporteOfertasComponent implements OnInit {
       siHacesBien=>{
         console.log(siHacesBien);
         this.intanciaReporte=siHacesBien;
-        this.dtTrigger.next();
         this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
+        this.dtTrigger.next();
       },siHacesMal=>{
         console.log(siHacesMal);
       }

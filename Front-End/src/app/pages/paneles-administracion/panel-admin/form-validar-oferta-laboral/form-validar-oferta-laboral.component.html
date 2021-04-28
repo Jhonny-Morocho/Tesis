@@ -34,16 +34,23 @@
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Observaciones</label><br>
                         <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">Debe poner un comentario</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.obervaciones" name="observaciones" required></textarea>
+                        <textarea class="form-control"
+                                    [disabled]="desactivarBotonGuardar==true"
+                                    [(ngModel)]="instanciaOfertaLaboral.obervaciones" name="observaciones"
+                                    required></textarea>
                     </div>
                 </div>
                 <div class=" col-md-6 ">
                     <div class="form-group ">
-                        <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
-                        <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==false " (click)="estadoAprobado(2) ">
+                        <label for="exampleFormControlTextarea1">Estado de validación</label><br>
+                        <button type="button " class="btn btn-outline-danger "
+                                *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==false"
+                                (click)="estadoAprobado(2) ">
                             <i class="fas fa-times-circle "></i>No Aprobado
                         </button>
-                        <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==true " (click)="estadoAprobado(1) ">
+                        <button type="button " class="btn btn-outline-success"
+                                *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==true "
+                                (click)="estadoAprobado(1) ">
                             <i class="fas fa-check "></i>  Aprobado
                         </button>
                     </div>

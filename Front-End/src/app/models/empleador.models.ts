@@ -14,5 +14,5 @@ export class EmpleadorModel{
     external_em:string;
     id?:Number;
     correo?:string;
-    estado:Number
+    estado:Number;
 }

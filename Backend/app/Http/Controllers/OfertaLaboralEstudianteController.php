@@ -224,7 +224,8 @@ class OfertaLaboralEstudianteController extends Controller
     public function reporteOfertaEstudiante(){
         try {
             $arrayReporte=array();
-            $objOfertaLaboral=OfertasLaborales::get();
+            $objOfertaLaboral=OfertasLaborales::where("estado",">",0)
+            ->get();
             foreach ($objOfertaLaboral as $key => $value) {
                 $empleador=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
                 ->select("empleador.razon_empresa",

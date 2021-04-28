@@ -26,7 +26,7 @@
                             <label for="inputStatus">Estado</label>
                             <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
                                 <option selected="" disabled></option>
-                                <!-- <option value="0">Todo</option> -->
+                                <option value="0">Todo</option>
                                 <option value="1">Revisado</option>
                                 <option value="9">No validados</option>
                                 <option value="2">Validado</option>
@@ -97,7 +97,6 @@
                         <td>
                             {{ reporteOfertaEstudiante.noContratados }}
                             <!-- <span class="badge badge-warning">{{ reporteOfertaEstudiante.noContratados }}</span> -->
-
                         </td>
                         <td>
                             {{ reporteOfertaEstudiante.contratados }}

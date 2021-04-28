@@ -122,6 +122,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
 
           //bloqueo el formulario
           this.booleanFormRegistro=true;
+          this.booleanFormularioCompletado=true;
            //this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
             console.warn(siHacesBien);

@@ -36,7 +36,7 @@ export class SerivicioEmpleadorService {
         })
     );
   }
-  
+
   //el postulante en su session puede ver sus datos registrados
   listarFormEmpleador(){
     const autenficacionDatos={
@@ -60,12 +60,12 @@ export class SerivicioEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
-          return this.crearArregloEstudiantes(respuestaBackend['mensaje']);
+          return this.crearArregloEmpleadores(respuestaBackend['mensaje']);
         })
     );
   }
 
-  private crearArregloEstudiantes(ObjEstudiante:object){
+  private crearArregloEmpleadores(ObjEstudiante:object){
     const estudiantex:EmpleadorModel[]=[];
     //validamos si el objeto tiene informaicon
     if(ObjEstudiante===null){
@@ -93,7 +93,7 @@ export class SerivicioEmpleadorService {
           return respuestaBackend;
         })
     );
- 
+
   }
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarAprobacionEmpleador(estado:Number,external_es:string,observaciones:string){

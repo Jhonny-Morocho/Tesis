@@ -26,7 +26,7 @@
                             <label for="inputStatus">Estado</label>
                             <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
                                 <option selected="" disabled></option>
-                                <!-- <option value="0">Todo</option> -->
+                                <option value="0">Todo</option>
                                 <option value="1">Revisado</option>
                                 <option value="9">No validados</option>
                                 <option value="2">Validado</option>
@@ -39,14 +39,19 @@
                     <div class="col-1">
                         <label for="inputStatus">Filtrar</label>
                         <div class="form-group ">
-                            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+                            <button type="submit" class="btn btn-outline-primary">
+                              <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-1">
-                    <label for="inputStatus">Reiniciar</label>
-                    <div class="form-group ">
-                        <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
+                    <div class="col-1">
+                        <label for="inputStatus">Reiniciar</label>
+                        <div class="form-group ">
+                            <button type="button" class="btn btn-outline-primary"
+                                      (click)="reiniciarValoresTablaOfertas()">
+                                      <i class="fas fa-undo-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -62,7 +67,6 @@
                         <th title="Preseleccionar Postulantes">
                             Posutalantes
                         </th>
-
                     </tr>
                 </thead>
                 <tbody>

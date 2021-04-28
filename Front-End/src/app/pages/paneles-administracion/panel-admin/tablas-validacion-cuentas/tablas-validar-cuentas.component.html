@@ -79,8 +79,12 @@
                                 <button type="button " class="btn btn-light" [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
                             </td>
                             <td>
-                                <span (click)="calificarEmpleador(i)">
-                                     <div class='starrr' id='{{ i }}' style="pointer-events: none;" ></div>  
+                                <span
+                                    (click)="mostrarEmpleadorCalifiacar(i)">
+                                     <div class='starrr'
+                                            id='{{ empleadores.external_em }}'
+                                            style="pointer-events: none;">
+                                     </div>
                                 </span>
                             </td>
                         </tr>
@@ -131,7 +135,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="guardarCalificacion()" [disabled]="activarBotonCalificarModal==false">Guardar</button>
+                    <button type="button" class="btn btn-primary" (click)="calificarEmpleador()" [disabled]="activarBotonCalificarModal==false">Guardar</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
                 </div>
             </div>

@@ -183,6 +183,33 @@ p.clasificacion input:checked~label {
 }
 
 
+/* //estrellas 2 */
+p.clasificacion2 {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+p.clasificacion2 input {
+  position: absolute;
+  top: -100px;
+}
+
+p.clasificacion2 label {
+  float: right;
+  color: #333;
+}
+
+p.clasificacion2 label:hover,
+p.clasificacion2 label:hover~label,
+p.clasificacion2 input:checked~label {
+  color: #FFD119;
+}
+
+.clasificacion2 label {
+  font-size: 20px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 
 @media only screen and (max-width: 600px) {

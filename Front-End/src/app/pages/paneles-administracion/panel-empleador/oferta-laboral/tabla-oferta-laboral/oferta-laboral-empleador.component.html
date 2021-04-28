@@ -26,28 +26,48 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ ofertaLaboral.updated_at | date: 'yyy/MM/dd'}}</td>
                         <td>{{ ofertaLaboral.puesto}}</td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && (ofertaLaboral.estado).toString()=='1'">
-                            <span class=" badge badge-danger " title="Tiempo máximo de espera 72 horas">No validado <i class="far fa-clock"></i></span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='2' ">
-                            <span class="badge badge-success ">Validado</span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='1' ">
-                            <span class="badge badge-warning">Revisado</span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='3' ">
-                            <span class="badge badge-primary">Publicada</span>
-                        </td>
-                        <td *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && (ofertaLaboral.estado).toString()=='4' ">
-                            <span class="badge badge-secondary">Finalizada</span>
+                        <td>
+                            <span class=" badge badge-danger "
+                                  *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && ofertaLaboral.estado==1"
+                                  title="Tiempo máximo de espera 72 horas">
+                              No validado <i class="far fa-clock"></i>
+                            </span>
+
+                            <span class="badge badge-success"
+                                  *ngIf="ofertaLaboral.estado==2">
+                              Validado
+                            </span>
+
+                            <span class="badge badge-warning"
+                                  *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && ofertaLaboral.estado==1 ">
+                              Revisado
+                            </span>
+
+                            <span class="badge badge-primary"
+                                  *ngIf="ofertaLaboral.estado==3 ">
+                              Publicada
+                            </span>
+
+                            <span class="badge badge-secondary"
+                                  *ngIf="ofertaLaboral.estado==4">
+                              Finalizada
+                            </span>
                         </td>
                         <td>
                             <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
                         </td>
                         <td>
 
-                            <a class="btn btn-light" [routerLink]="['/panel-empleador/edit-oferta-laboral',ofertaLaboral.external_of] "> <i class="fas fa-pencil-alt "></i></a>
-                            <a class="btn btn-light" (click)="eliminarOfertaLaboral(ofertaLaboral.external_of,ofertaLaboral.puesto,i)"> <i class="fas fa-trash-alt "></i></a>
+                            <a class="btn btn-light"
+                              [routerLink]="['/panel-empleador/edit-oferta-laboral',ofertaLaboral.external_of] ">
+                              <i class="fas fa-pencil-alt "></i>
+                            </a>
+
+                            <button type="button" class="btn btn-light"
+                              [disabled]="ofertaLaboral.estado>=2"
+                              (click)="eliminarOfertaLaboral(ofertaLaboral.external_of,ofertaLaboral.puesto,i)">
+                                <i class="fas fa-trash-alt "></i>
+                            </button>
                         </td>
                         <td>
                             <a [routerLink]="['/panel-empleador/postulante-oferta',ofertaLaboral.external_of] " class="btn btn-light">
