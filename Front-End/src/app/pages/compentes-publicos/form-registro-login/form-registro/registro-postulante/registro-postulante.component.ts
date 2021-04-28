@@ -4,12 +4,14 @@ import {UsuarioModel} from 'src/app/models/usuario.model';
 import Swal from 'sweetalert2';
 import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
+import {environment} from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-registro-postulante',
   templateUrl: './registro-postulante.component.html'
 })
 export class RegistroPostulanteComponent implements OnInit {
+  dominio=environment.dominio;
   constructor(private servicioUsuario_:AutenticacionUserService,
               private router_:Router) { }
   usuarioModel:UsuarioModel;
@@ -25,11 +27,11 @@ export class RegistroPostulanteComponent implements OnInit {
   onSubMitRegistroPostulante(formularioRegistroPostulante:NgForm){
     console.log("POSTULANTE REGISTRO ON");
     console.log(formularioRegistroPostulante);
-    // comprobamos si el formulario pao la validacion 
+    // comprobamos si el formulario pao la validacion
     if(formularioRegistroPostulante.invalid){
       return;
       }
-    //mensaje de alerta usuario 
+    //mensaje de alerta usuario
     Swal({
       allowOutsideClick:false,
       type:'info',
@@ -51,23 +53,23 @@ export class RegistroPostulanteComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-  
+
         this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
       }else{
         Swal({
           title:'Error, no se puede ejecutar su peticion',
           type:'error',
           text:siHacesBien['mensaje']
-        }); 
+        });
       }
-    
+
     },peroSiTenemosErro=>{
       console.log(peroSiTenemosErro);
       Swal({
         title:'Error, el usuario ya existe',
         type:'error',
         text:peroSiTenemosErro['mensaje']
-      }); 
+      });
   });
   }
 }

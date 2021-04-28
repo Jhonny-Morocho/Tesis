@@ -3,12 +3,14 @@ import {UsuarioModel} from 'src/app/models/usuario.model';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import {environment} from 'src/environments/environment.prod';
 import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
 @Component({
   selector: 'app-registro-empleador',
   templateUrl: './registro-empleador.component.html'
 })
 export class RegistroEmpleadorComponent implements OnInit {
+  dominio=environment.dominio
   constructor(private router_:Router,private servicioUsuario_:AutenticacionUserService) { }
   usuarioModel:UsuarioModel;
 
@@ -23,11 +25,11 @@ export class RegistroEmpleadorComponent implements OnInit {
   }
   onSubmitRegistroEmpleador(formularioRegistroEmpleador:NgForm){
     console.log(formularioRegistroEmpleador);
-    // comprobamos si el formulario pao la validacion 
+    // comprobamos si el formulario pao la validacion
     if(formularioRegistroEmpleador.invalid){
       return;
      }
-        //mensaje de alerta usuario 
+        //mensaje de alerta usuario
     Swal({
       allowOutsideClick:false,
       type:'info',
@@ -56,16 +58,16 @@ export class RegistroEmpleadorComponent implements OnInit {
            title:'Error, no se puede ejecutar su peticion',
            type:'error',
            text:siHacesBien['mensaje']
-         }); 
+         });
        }
-   
+
     },peroSiTenemosErro=>{
       console.log(peroSiTenemosErro);
       Swal({
         title:'Error, el usuario ya existe',
         type:'error',
         text:peroSiTenemosErro['mensaje']
-      }); 
+      });
   });
   }
 

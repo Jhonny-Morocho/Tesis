@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// importo mi modelo 
+// importo mi modelo
 import {UsuarioModel} from '../../../../models/usuario.model';
 // importa utomaticamente el ingForm
 import { NgForm } from '@angular/forms';
@@ -9,14 +9,16 @@ import Swal from 'sweetalert2';
 import {AutenticacionUserService} from '../../../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
 declare var $:any;
+import{environment} from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
 export class LoginAdminComponent implements OnInit {
-  
+
   // Instancio mi modelo
+  dominio=environment.dominio;
   instanciaModeloUsuarioLogin:UsuarioModel=new UsuarioModel;
   constructor(private _servicioAdmin:AutenticacionUserService,
     private router:Router) { }
@@ -60,20 +62,20 @@ export class LoginAdminComponent implements OnInit {
   // Login del formulario del admistrador
   loginAdmin(formularioAdministrador:NgForm){
     console.log(this.instanciaModeloUsuarioLogin);
-    
+
     if(formularioAdministrador.invalid){
- 
+
       return;
     }
     // si pasa la validacion se ejecuta el siguiente codigo
-    // mensaje de espera 
+    // mensaje de espera
     Swal({
       allowOutsideClick: false,
       type: 'info',
       text: 'Espere por favor...'
     });
     Swal.showLoading();
-    
+
     //========== ocupo el servicio =============
     this._servicioAdmin.login(this.instanciaModeloUsuarioLogin).subscribe(
       (siHacesBien)=>{
@@ -105,13 +107,13 @@ export class LoginAdminComponent implements OnInit {
             default:
               break;
           }
-         
+
         }else{
             Swal({
               title:'Atención',
               type:'info',
               text:siHacesBien['mensaje']
-            }); 
+            });
         }
         console.log("pase al url");
         console.log(siHacesBien);
@@ -121,10 +123,10 @@ export class LoginAdminComponent implements OnInit {
           title:'Error',
           type:'error',
           text:peroSiTenemosErro['error']
-        }); 
+        });
       }
     );
   }
-  
+
 }
 
