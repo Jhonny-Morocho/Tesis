@@ -7,6 +7,7 @@ import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.se
 import { EmpleadorModel } from 'src/app/models/empleador.models';
 import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
 import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
+import { dataTable } from 'src/app/templateDataTable/configDataTable';
 
 declare var JQuery:any;
 // ========= valoracion =========
@@ -33,7 +34,7 @@ export class TareaValiar implements OnInit {
   constructor(private servicioPostulante_:SerivicioPostulanteService,
               private servicioCalificarEmpleador:CalificarEmpleadorService,
               private servicioEmpleador_:SerivicioEmpleadorService ) { }
-  
+
   ngOnInit():void {
     this.obtenerCalificacionesTodosEmpleadores();
     this.configurarParametrosDataTable();
@@ -56,34 +57,7 @@ export class TareaValiar implements OnInit {
     );
   }
   configurarParametrosDataTable(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
-      language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
-      }
-    };
+    this.dtOptions = dataTable;
   }
   //revisar que tipo de usuario admistrador esta usando la pagina
   perfilUsuario(){
@@ -138,7 +112,7 @@ export class TareaValiar implements OnInit {
         }
       );
     }
-  
+
   }
 
   valorEstrella(valorEstrella){
@@ -146,7 +120,7 @@ export class TareaValiar implements OnInit {
     this.activarBotonCalificarModal=true;
     this.intanciaCalifarEmpleador.estrellas=valorEstrella;
   }
-  
+
   calificarEmpleador(indice){
     $('#CalificarEmpleador').modal('show');
     this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
@@ -206,7 +180,7 @@ export class TareaValiar implements OnInit {
       }
     }
 
-    
+
 
 }
 

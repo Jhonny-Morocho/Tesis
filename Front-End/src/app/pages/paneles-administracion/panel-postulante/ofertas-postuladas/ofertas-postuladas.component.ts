@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
+import { Subject } from 'rxjs';
+import { dataTable } from 'src/app/templateDataTable/configDataTable';
 
 @Component({
   selector: 'app-ofertas-postuladas',
@@ -8,11 +10,15 @@ import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service'
 })
 export class OfertasPostuladasComponent implements OnInit {
   ofertaLaboralPostulante:Object;
+  //data table
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioOfertaLaboralPostulante:OfertaLaboralEstudianteService,
               private servicioOferaLaboral:OfertasLaboralesService) { }
 
   ngOnInit() {
-   this.obtenrOfertasLaboralesEstudiante();
+    this.obtenrOfertasLaboralesEstudiante();
+    this.configurarParametrosDataTable();
   }
 
   obtenrOfertasLaboralesEstudiante(){
@@ -21,6 +27,7 @@ export class OfertasPostuladasComponent implements OnInit {
       siHaceBien=>{
         console.log((siHaceBien));
         this.ofertaLaboralPostulante=siHaceBien;
+        this.dtTrigger.next();
         siHaceBien.forEach(element => {
           element.estado;
         });
@@ -29,6 +36,8 @@ export class OfertasPostuladasComponent implements OnInit {
       }
     );
   }
-
+  configurarParametrosDataTable(){
+    this.dtOptions = dataTable;
+  }
 
 }

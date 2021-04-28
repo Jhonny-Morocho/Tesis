@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { DatePipe } from '@angular/common';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
+import { dataTable } from 'src/app/templateDataTable/configDataTable';
 
 declare var JQuery:any;
 declare var $:any;
@@ -33,7 +34,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     itemTabla:any=[];
     column:any;
     value:any;
- 
+
     instanciaOfertaVer:OfertaLaboralModel;
     instanciaFiltro:OfertasFiltroModel;
     //data table
@@ -49,7 +50,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
 
     private ruta_:Router) { }
 
-  
+
   ngOnInit() {
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
@@ -93,7 +94,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
 
   verOfertaModal(id:Number){
     //necesito converitr o typescrip me da error
-    var index=parseInt((id).toString(), 10); 
+    var index=parseInt((id).toString(), 10);
     this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
     this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
     this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
@@ -101,8 +102,8 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
     this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
     this.instanciaOfertaVer.correo=this.ofertasLaborales[index]['correo'];
-    
-    //obtengo todos los usuarios 
+
+    //obtengo todos los usuarios
     this.servicioEmpleador.listarEmpleadores().subscribe(
       siHaceBien=>{
           console.log(siHaceBien);
@@ -121,7 +122,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
       },error=>{
         console.log(error);
       });
-    
+
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
     $('#exampleModal').modal('show');
   }
@@ -145,14 +146,14 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
         let aux=[];
         //recorreo todo el array y compara los datos
         siHacesBien.forEach(element => {
-            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
               fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
               estado==element['estado'] && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
               console.log("xx");
             }
             //no validado
-            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") && 
+            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
             fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
              estado==9 && (element['obervaciones']).length==0){
             aux.push(element);
@@ -168,8 +169,8 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
       }
     );
   }
- 
-   
+
+
     //conversion de estado
   estadoConversion(numeroEstado:Number):boolean{
     if(numeroEstado==1){
@@ -189,36 +190,9 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     }
   }
     //si el tipo de usuario es un gestor entonces el puede solo ver los validados
-  
+
   configurarParametrosDataTable(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
-      language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
-      }
-    };
+    this.dtOptions = dataTable;
 
   }
   ngOnDestroy(): void {

@@ -7,6 +7,7 @@ import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service'
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
+import { dataTable } from 'src/app/templateDataTable/configDataTable';
 declare var JQuery:any;
 declare var $:any;
 @Component({
@@ -71,18 +72,18 @@ export class OfertaLaboralComponent implements OnInit {
   verOfertaModal(id:Number){
     console.log("click");
     //necesito converitr o typescrip me da error
-    var index=parseInt((id).toString(), 10);  
+    var index=parseInt((id).toString(), 10);
     this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];
     this.instanciaOfertaVer.requisitos=this.ofertasLaborales[index]['requisitos'];
     this.instanciaOfertaVer.descripcion=this.ofertasLaborales[index]['descripcion'];
     this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
     this.instanciaOfertaVer.razon_empresa=this.ofertasLaborales[index]['razon_empresa'];
     this.instanciaOfertaVer.correo=localStorage.getItem("correo");
-    
+
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
     console.log(this.instanciaOfertaVer);
     $('#exampleModal').modal('show');
- 
+
   }
   cerrarModal(){
     $('#exampleModal').modal('hide');
@@ -108,7 +109,7 @@ export class OfertaLaboralComponent implements OnInit {
            siHaceBien=>{
              console.log("tpdp bnien");
              console.log(index);
-             //elimino visualmente 
+             //elimino visualmente
              this.ofertasLaborales.splice(index,1); //desde la posición 2, eliminamos 1 elemento
              Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
              console.log(siHaceBien);
@@ -131,7 +132,7 @@ export class OfertaLaboralComponent implements OnInit {
     if(numeroEstado==2){
       return true;
     }
-    
+
   }
   //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
   estadoRevision(observacion:String):boolean{
@@ -143,33 +144,6 @@ export class OfertaLaboralComponent implements OnInit {
     }
   }
   configurarParametrosDataTable(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
-      language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
-      }
-    };
+    this.dtOptions = dataTable;
   }
 }

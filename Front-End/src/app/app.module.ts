@@ -59,8 +59,6 @@ import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel
 import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
 import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
 import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-postulante/info-detalles-postulante.component';
-import { TablaEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
-import { FormEncuestaComponent } from './pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
 import { DemoComponent } from './demo/demo.component';
 import { DatePipe } from '@angular/common';
 import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
@@ -110,8 +108,6 @@ import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-ad
     TablaTitulosAcademicosComponent,
     TablaCursosCapacitacionesComponent,
     VerHojaVidaComponent,
-    TablaEncuestaComponent,
-    FormEncuestaComponent,
     DemoComponent,
     TablaUsuariosAdminComponent,
     RegistarAdminComponent,

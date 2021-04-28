@@ -6,7 +6,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
-            <table class="table table-condensed">
+            <table class="table table-condensed" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
@@ -22,12 +22,6 @@
                         <td>{{ i +1}}</td>
                         <td>{{ item.created_at | date: 'yyyy/MM/dd'}}</td>
                         <td>{{ item.puesto }}</td>
-                        <!-- <td>
-                            <p *ngIf="item.estado==0">{{ item.observaciones }}</p>
-                            <p *ngIf="item.observaciones==1">{{ item.observaciones }}</p>
-                            <p *ngIf="item.observaciones==2">{{ item.observaciones }}</p>
-                            <p *ngIf="item.estado==3">{{ item.observaciones }}</p>
-                        </td> -->
                         <td>
                             <span class="badge bg-danger" *ngIf="item.estado==0 || item.estadoOfLab==4 && item.estado==1">
                                 Denegado

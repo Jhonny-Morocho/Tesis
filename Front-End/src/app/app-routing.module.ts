@@ -13,8 +13,6 @@ import {ReporteOfertasComponent} from 'src/app/pages/paneles-administracion/pane
 import {FormEditarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
 import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
 import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
-import {FormEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/form-encuesta/form-encuesta.component';
-import {TablaEncuestaComponent} from 'src/app/pages/paneles-administracion/panel-admin/encuesta/tabla-encuesta/tabla-encuesta.component';
 import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
@@ -56,13 +54,11 @@ const routes: Routes = [
 
   { path: 'panel-admin/filtrar-postulantes/:external_of' , component: PostulanteOfertas ,canActivate:[AutentificacionGuard]},
   //encuesta
-  { path: 'panel-admin/encuesta' , component: TablaEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/reporte-ofertas' , component: ReporteOfertasComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/registar-admin' , component: RegistarAdminComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/editar-admin/:external_us' , component: FormEditarAdminComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/gestionar-usuarios-admin' , component:  TablaUsuariosAdminComponent,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/preguntas' , component: DemoComponent ,canActivate:[AutentificacionGuard]},
-  { path: 'panel-admin/form-encuesta' , component: FormEncuestaComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-validar-ofertaLaboral/:external_of' , component: FormValidarOfertaLaboralComponent,canActivate:[AutentificacionGuard] },

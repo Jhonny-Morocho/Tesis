@@ -6,6 +6,7 @@ import {PaisesService} from 'src/app/servicios/paises.service';
 import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment.prod';
 import { PaisesModel } from 'src/app/models/paises.models';
+import { dataTable } from 'src/app/templateDataTable/configDataTable';
 declare var $:any;
 @Component({
   selector: 'app-cursos-capacitaciones',
@@ -13,7 +14,7 @@ declare var $:any;
 })
 export class CursosCapacitacionesComponent implements OnInit {
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
-  //frame 
+  //frame
   frameLimpio:any;
   ubicacionArchivo:String="";
   dominio=environment;
@@ -25,8 +26,8 @@ export class CursosCapacitacionesComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,
-              private servicioPaises:PaisesService) { 
-    
+              private servicioPaises:PaisesService) {
+
   }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class CursosCapacitacionesComponent implements OnInit {
         //console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
-   
+
       },
       (peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
@@ -104,7 +105,7 @@ export class CursosCapacitacionesComponent implements OnInit {
            siHaceBien=>{
              console.log("tpdp bnien");
              console.log(index);
-             //elimino visualmente 
+             //elimino visualmente
              this.cursosCapacitaciones.splice(index,1); //desde la posición 2, eliminamos 1 elemento
              Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
              console.log(siHaceBien);
@@ -119,34 +120,7 @@ export class CursosCapacitacionesComponent implements OnInit {
     //alert("estoy eliminado");
   }
   configurarParametrosDataTable(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-        /* below is the relevant part, e.g. translated to spanish */ 
-      language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
-      }
-    };
+    this.dtOptions = dataTable;
   }
 
 }
