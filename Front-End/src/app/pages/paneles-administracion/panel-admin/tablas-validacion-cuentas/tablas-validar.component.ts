@@ -145,32 +145,61 @@ export class TareaValiar implements OnInit {
               this.obtenerCalificacionesTodosEmpleadores();
               let external_em= this.intanciaEmpleadorCalificar.external_em;
               console.log(external_em);
-              function logArrayElements(element, index, array) {
-                console.log(element);
-                if(element['empleadorExternal_em']== external_em){
-                  console.log(Number(element['empleadorPromedio']));
-                    switch (Number(element['empleadorPromedio'])) {
+              for (let elemento of this.arrayCalificacionesEmpleadores){
+                console.log(elemento['empleadorExternal_em']);
+                  if(elemento['empleadorExternal_em']== external_em){
+                    console.log(Number(elemento['empleadorPromedio']));
+                    switch (Number(elemento['empleadorPromedio'])) {
                     case 1:
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a></div>');
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                '<a href="#" class="fa fa-star"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                              '</div>');
                       break;
                     case 2:
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                '<a href="#" class="fa fa-star"></a>'+
+                                                '<a href="#" class="fa fa-star"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                                '<a href="#" class="fa fa-star-o"></a>'+
+                                              '</div>');
                       break;
                     case 3:
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                  '<a href="#" class="fa fa-star"></a>'+
+                                                  '<a href="#" class="fa fa-star"></a>'+
+                                                  '<a href="#" class="fa fa-star"></a>'+
+                                                  '<a href="#" class="fa fa-star-o"></a>'+
+                                                  '<a href="#" class="fa fa-star-o"></a>'+
+                                              '</div>');
                       break;
                     case 4:
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                    '<a href="#" class="fa fa-star"></a>'+
+                                                    '<a href="#" class="fa fa-star"></a>'+
+                                                    '<a href="#" class="fa fa-star"></a>'+
+                                                    '<a href="#" class="fa fa-star"></a>'+
+                                                    '<a href="#" class="fa fa-star-o"></a>'+
+                                              '</div>');
                       break;
                     case 4:
-                        $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="0"><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a><a href="#" class="fa fa-star"></a></div>');
+                        $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                '</div>');
                         break;
                     default:
                       break;
                   }
                 }
               }
-              this.arrayCalificacionesEmpleadores.forEach(logArrayElements);
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
         }
