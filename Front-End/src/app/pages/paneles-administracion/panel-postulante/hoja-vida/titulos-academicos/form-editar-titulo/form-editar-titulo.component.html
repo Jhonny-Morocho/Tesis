@@ -12,13 +12,31 @@
                 <hr>
                 <div class="col-md-6">
                     <label for="inputTituloObtenido" class="form-label">Título obtenido </label><br>
-                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['titulo_obtenido'].errors">El Titulo obtenido  es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.titulo_obtenido" name="titulo_obtenido" class="form-control" required>
+                    <input type="text"
+                            [(ngModel)]="instanciaTituloAcademico.titulo_obtenido"
+                            name="titulo_obtenido"
+                            class="form-control"
+                            maxlength="100"
+                            [ngClass]="{'is-invalid': fEditarTitulo.submitted && fEditarTitulo.controls['titulo_obtenido'].errors }"
+                            placeholder="Ingrese su título obtenido"
+                            required>
+                    <div class="invalid-feedback" *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['titulo_obtenido'].errors">
+                      El campo titulo obtenido es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Número de registro</label><br>
-                    <span class="text-danger " *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['numero_registro'].errors">El Numero de registro es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaTituloAcademico.numero_registro" name="numero_registro" class="form-control" required>
+                    <input type="text"
+                          [(ngModel)]="instanciaTituloAcademico.numero_registro"
+                          name="numero_registro"
+                          class="form-control"
+                          placeholder="Ingrese el número de registro de su título obtenido"
+                          [ngClass]="{'is-invalid': fEditarTitulo.submitted && fEditarTitulo.controls['numero_registro'].errors }"
+                          maxlength="40"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fEditarTitulo.submitted && fEditarTitulo.controls['numero_registro'].errors">
+                      El campo número de registro es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nivel de instrucción</label><br>

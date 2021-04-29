@@ -33,11 +33,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Observaciones</label><br>
-                        <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">Debe poner un comentario</span>
                         <textarea class="form-control"
                                     [disabled]="desactivarBotonGuardar==true"
-                                    [(ngModel)]="instanciaOfertaLaboral.obervaciones" name="observaciones"
-                                    required></textarea>
+                                    [(ngModel)]="instanciaOfertaLaboral.obervaciones"
+                                    maxlength="150"
+                                    [ngClass]="{'is-invalid': fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors }"
+                                    name="observaciones"
+                                    required>
+                        </textarea>
+                      <div class="invalid-feedback" *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">
+                        Debe poner un comentario
+                      </div>
                     </div>
                 </div>
                 <div class=" col-md-6 ">

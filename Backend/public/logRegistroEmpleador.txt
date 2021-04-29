@@ -22,3 +22,7 @@
 
 
 
+[2021-04-29 00:42:08] Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : false Correo del empleador udemy@hotmail.com ]
+
+
+

@@ -2,27 +2,52 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitActualizarCursoCapacitacion(fActualizarCursoCapacitacion)" #fActualizarCursoCapacitacion="ngForm" enctype="multipart/form-data">
-                <h3>Editar curso o capacitacion</h3>
+                <h4>Editar curso o capacitacion</h4>
 
-                <div class="col-3">
+                <div class="col-sm-3">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
                 </div>
                 <hr>
                 <div class="col-md-6">
                     <label for="inputNombre del evento" class="form-label">Nombre del evento</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['nom_evento'].errors">El Nombre del evento es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.nom_evento" name="nom_evento" class="form-control" required>
+                    <input type="text"
+                          [(ngModel)]="instanciaCursosCapacitaciones.nom_evento"
+                          name="nom_evento"
+                          maxlength="100"
+                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['nom_evento'].errors }"
+                          class="form-control"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['nom_evento'].errors">
+                      El campo nombre del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['auspiciante'].errors">El Auspiciante es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.auspiciante" name="auspiciante" class="form-control" required>
+                    <input type="text"
+                          [(ngModel)]="instanciaCursosCapacitaciones.auspiciante"
+                          name="auspiciante"
+                          maxlength="100"
+                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['auspiciante'].errors }"
+                          class="form-control"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['auspiciante'].errors">
+                      El campo auspiciante del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors">El Numero de horas es obligatorio</span>
-                    <input type="number" [(ngModel)]="instanciaCursosCapacitaciones.horas" name="horas" class="form-control" min="1" required>
+                    <input type="number"
+                          [(ngModel)]="instanciaCursosCapacitaciones.horas"
+                          name="horas"
+                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors }"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          class="form-control"
+                          min="1"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors">
+                      El campo número de horas del evento es obligatorio
+                    </div>
                 </div>
 
                 <div class="col-md-6">

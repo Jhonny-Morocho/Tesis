@@ -2,7 +2,7 @@
     <div class="card">
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitRegistrarCursoCapacitacion(fRegistrarCursoCapacitacion)" #fRegistrarCursoCapacitacion="ngForm" enctype="multipart/form-data">
-                <h3>Registrar curso o capacitación</h3>
+                <h4>Registrar curso o capacitación</h4>
 
                 <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
@@ -11,48 +11,110 @@
                 <hr>
                 <div class="col-md-6">
                     <label for="inputNombre del evento" class="form-label">Nombre del evento</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['nom_evento'].errors">El Nombre del evento es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.nom_evento" name="nom_evento" class="form-control" required>
+                    <input type="text"
+                           [(ngModel)]="instanciaCursosCapacitaciones.nom_evento"
+                           name="nom_evento"
+                           placeholder="Ingrese el nombre del evento que asistio"
+                           maxlength="100"
+                           [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['nom_evento'].errors }"
+                           class="form-control"
+                           required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['nom_evento'].errors">
+                      El campo nombre del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['auspiciante'].errors">El Auspiciante es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaCursosCapacitaciones.auspiciante" name="auspiciante" class="form-control" required>
+                    <input type="text"
+                           [(ngModel)]="instanciaCursosCapacitaciones.auspiciante"
+                           name="auspiciante"
+                           maxlength="100"
+                           [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['auspiciante'].errors }"
+                           placeholder="Ingrese el auspiciante del evento que asistio"
+                           class="form-control"
+                           required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['auspiciante'].errors">
+                      El campo auspiciante del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors">El Numero de horas es obligatorio</span>
-                    <input type="number" [(ngModel)]="instanciaCursosCapacitaciones.horas" name="horas" class="form-control" min="1" required>
+                    <input type="number"
+                          [(ngModel)]="instanciaCursosCapacitaciones.horas"
+                          name="horas"
+                          placeholder="Ingrese el número de horas del evento que asistio"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors }"
+                          class="form-control"
+                          min="1"
+                          maxlength="10"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors">
+                      El campo número de horas del evento es obligatorio
+                    </div>
                 </div>
 
                 <div class="col-md-6">
                     <label for="inputFechaInicio" class="form-label">Fecha Inicio</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_inicio'].errors">La Fecha Inicio es obligatorio</span>
-                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_inicio" name="fecha_inicio" class="form-control" required>
+                    <input type="date"
+                           [(ngModel)]="instanciaCursosCapacitaciones.fecha_inicio"
+                           name="fecha_inicio"
+                           class="form-control"
+                           [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_inicio'].errors }"
+                           required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_inicio'].errors">
+                      El campo fecha inicio  del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors">La Fecha de culminacion es obligatorio</span>
-                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_culminacion" name="fecha_culminacion" class="form-control" required>
+                    <input type="date"
+                           [(ngModel)]="instanciaCursosCapacitaciones.fecha_culminacion"
+                           [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors }"
+                           name="fecha_culminacion"
+                           class="form-control"
+                           required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors">
+                      El campo fecha  de culminación del evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['tipo_evento'].errors">El Tipo de evento es obligatorio</span>
-                    <select class="form-control" name="tipo_evento" [(ngModel)]="instanciaCursosCapacitaciones.tipo_evento" required>
+                    <select class="form-control"
+                            name="tipo_evento"
+                            [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['tipo_evento'].errors }"
+                            [(ngModel)]="instanciaCursosCapacitaciones.tipo_evento"
+                            required>
                       <option [value]="i+1"*ngFor="let item of tipoCursoCapcitacion;let i=index">{{item}}</option>
                     </select>
+                    <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['tipo_evento'].errors">
+                      El campo tipo de evento es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputPais" class="form-label">País</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['pais'].errors">El País es obligatorio</span>
-                    <select class="form-control" name="pais" [(ngModel)]="instanciaCursosCapacitaciones.fk_pais" required>
+                    <select class="form-control"
+                             name="pais"
+                             [ngClass]="{'is-invalid': fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['pais'].errors }"
+                             [(ngModel)]="instanciaCursosCapacitaciones.fk_pais"
+                             required>
                     <option [value]="i+1"*ngFor="let item of paises;let i=index">{{item.nombre}}</option>
                   </select>
+                  <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['pais'].errors">
+                    El campo país es obligatorio
+                  </div>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEvidencias" class="form-label">Evidencias</label><br>
-                    <span class="text-danger " *ngIf="validarInputFile==false">Debe subir evidencias en formato PDF</span>
-                    <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
+                    <input type="file"
+                          (change)="fileEvent($event)"
+                          class="form-control"
+                          [ngClass]="{'is-invalid': validarInputFile==false}"
+                          required
+                          accept="application/pdf">
+                    <div class="invalid-feedback" *ngIf="validarInputFile==false">
+                      El campo evidencias es obligatorio
+                    </div>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Guardar</button>

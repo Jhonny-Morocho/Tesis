@@ -11,18 +11,49 @@
                 <hr>
                 <div class="col-md-12">
                     <label for="inputPuesto" class="form-label">Puesto</label><br>
-                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors">El Puesto es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required [disabled]="!estadoRevisionform">
+                    <input type="text"
+                          [(ngModel)]="instanciaOfertaLaboral.puesto"
+                          name="puesto"
+                          class="form-control"
+                          required
+                          [ngClass]="{'is-invalid': fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors }"
+                          class="form-control"
+                          maxlength="20"
+                          placeholder="Ingrese el puesto de la oferta"
+                         [disabled]="!estadoRevisionform">
+                    <div class="invalid-feedback" *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors">
+                      El campo puesto es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label for="inputDescripcion" class="form-label">Descripcion </label><br>
-                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required [disabled]="!estadoRevisionform"></textarea>
+                    <textarea class="form-control"
+                              [(ngModel)]="instanciaOfertaLaboral.descripcion"
+                              name="descripcion"
+                              maxlength="200"
+                              placeholder="Ingrese la descripción de la oferta"
+                              [ngClass]="{'is-invalid': fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['descripcion'].errors }"
+                              required
+                              [disabled]="!estadoRevisionform">
+                    </textarea>
+                    <div class="invalid-feedback" *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['descripcion'].errors">
+                      El campo descripción es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label for="inputLugar" class="form-label">Lugar</label><br>
-                    <span class="text-danger " *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['lugar'].errors">El Lugar es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required [disabled]="!estadoRevisionform"></textarea>
+                    <textarea class="form-control"
+                              [(ngModel)]="instanciaOfertaLaboral.lugar"
+                              name="lugar"
+                              required
+                              maxlength="100"
+                              placeholder="Ingrese el lugar de la oferta"
+                              [ngClass]="{'is-invalid': fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['lugar'].errors }"
+                              [disabled]="!estadoRevisionform">
+                    </textarea>
+                    <div class="invalid-feedback" *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['lugar'].errors">
+                      El campo lugar es obligatorio
+                    </div>
                 </div>
 
                 <div class="col-md-12">

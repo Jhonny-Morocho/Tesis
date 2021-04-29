@@ -12,23 +12,50 @@
                 <hr>
                 <div class="col-md-12">
                     <label for="inputPuesto" class="form-label">Puesto</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['puesto'].errors">El Puesto es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required>
+                    <input type="text"
+                          [(ngModel)]="instanciaOfertaLaboral.puesto"
+                          name="puesto"
+                          maxlength="20"
+                          placeholder="Ingrese el puesto de la oferta"
+                          [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['puesto'].errors }"
+                          class="form-control"
+                          required>
+                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['puesto'].errors">
+                      El campo puesto es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label for="inputDescripcion" class="form-label">Descripción </label><br>
-                    <span class="text-danger " *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required></textarea>
+                    <textarea class="form-control"
+                              [(ngModel)]="instanciaOfertaLaboral.descripcion"
+                              name="descripcion"
+                              [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors }"
+                              placeholder="Ingrese la descripción de la oferta"
+                              maxlength="200"
+                              required>
+                    </textarea>
+                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors">
+                      El campo descripción es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label for="inputLugar" class="form-label">Lugar</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['lugar'].errors">El Lugar es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required></textarea>
+                    <textarea class="form-control"
+                              [(ngModel)]="instanciaOfertaLaboral.lugar"
+                              name="lugar"
+                              [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['lugar'].errors }"
+                              placeholder="Ingrese el lugar de la oferta"
+                              maxlength="100"
+                              required>
+                    </textarea>
+                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['lugar'].errors">
+                      El campo lugar es obligatorio
+                    </div>
                 </div>
 
                 <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">Requisito </label><br>
-                    <textarea id="compose-textarea" class="form-control" style="height: 300px" name="requisitos" required>
+                    <textarea id="compose-textarea" class="form-control" style="height: 300px" name="requisitos" required maxlength="200">
                     <ul>
                       <li>Primer requisito</li>
                       <li>Segundo requisito</li>
