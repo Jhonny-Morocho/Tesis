@@ -10,25 +10,65 @@
             <form class="row g-3 " (ngSubmit)="onSubmitRegistrarAdmin(fRegistrarAdmin) " #fRegistrarAdmin="ngForm">
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Nombre</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors">El nombre es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaDocente.nombre" name="nombre" class="form-control" required>
+                    <input type="texto"
+                           [(ngModel)]="instanciaDocente.nombre"
+                           name="nombre"
+                           maxlength="20"
+                           placeholder="Ingrese el nombre"
+                           [ngClass]="{'is-invalid': fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors }"
+                           class="form-control"
+                           required>
+                    <div class="invalid-feedback"
+                      *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['nombre'].errors">
+                      El campo nombre es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Apellido</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">El Apellido es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaDocente.apellido" name="apellido" class="form-control " required>
+                    <input type="text"
+                          [(ngModel)]="instanciaDocente.apellido"
+                          name="apellido"
+                          maxlength="20"
+                          [ngClass]="{'is-invalid': fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors }"
+                          placeholder="Ingrese el apellido"
+                          class="form-control"
+                          required>
+                    <div class="invalid-feedback"
+                      *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['apellido'].errors">
+                      El campo apellido es obligatorio
+                    </div>
                 </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Correo</label><br>
-                        <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['correo'].errors">El Correo es obligatoro</span>
-                        <input type="text" [(ngModel)]="instanciaDocente.correo" name="correo" class="form-control" required>
+                        <input type="text"
+                               [(ngModel)]="instanciaDocente.correo"
+                               name="correo"
+                               
+                               placeholder="Ingrese un correo"
+                               [ngClass]="{'is-invalid': fRegistrarAdmin.submitted && fRegistrarAdmin.controls['correo'].errors }"
+                               class="form-control"
+                               required>
+                        <div class="invalid-feedback" *ngIf="fRegistrarAdmin.submitted && (fRegistrarAdmin.controls['correo'].value)==null">
+                          El campo correo es requerido
+                        </div>
+                        <div class="invalid-feedback" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['correo'].invalid==true && (fRegistrarAdmin.controls['correo'].value)!=null">
+                          El correo ingresado no es valido
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
-                    <span class="text-danger" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors">La Contraseña es obligatoria</span>
-                    <input type="password" [(ngModel)]="instanciaDocente.password" name="password" class="form-control" required maxlength="10">
+                    <input type="password"
+                           [(ngModel)]="instanciaDocente.password"
+                           name="password"
+                           [ngClass]="{'is-invalid': fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors }"
+                           class="form-control"
+                           required
+                           maxlength="10">
+                    <div class="invalid-feedback" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['password'].errors">
+                      La contraseña es requerida
+                    </div>
                 </div>
                 <div class=" col-md-6 ">
                     <div class="form-group">
@@ -39,12 +79,18 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Tipo Usuario</label><br>
-                    <span class="text-danger " *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
-                    <select class="form-control" name="tipoUsuario" [(ngModel)]="instanciaDocente.tipoUsuario" required>
+                    <select class="form-control"
+                            name="tipoUsuario"
+                            [ngClass]="{'is-invalid': fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors }"
+                            [(ngModel)]="instanciaDocente.tipoUsuario"
+                            required>
                         <option [value]="3" >Secretaria</option>
                         <option [value]="4" >Administrador</option>
                         <option [value]="5" >Encargado</option>
                       </select>
+                      <div class="invalid-feedback" *ngIf="fRegistrarAdmin.submitted && fRegistrarAdmin.controls['tipoUsuario'].errors">
+                        La contraseña es requerida
+                      </div>
                 </div>
                 <div class="col-12 ">
                     <button type="submit " class="btn btn-primary ">Registrar</button>

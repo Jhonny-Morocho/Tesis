@@ -15,13 +15,13 @@
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                 <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
                     <h4 class="alert-heading">Validacion exitosa </h4>
-                    <p>Tu validacion ha sido exitosa, por lo cual ya puedes potular a las ofertas laborales disponible en la plataformas</p>
+                    <p>Tu validación ha sido exitosa, por lo cual ya puedes potular a las ofertas laborales disponible en la plataformas</p>
                     <hr>
                     <p class="mb-0">Observaciones: {{ instanciaPostulante.observaciones }}</p>
                 </div>
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES FALSE  ===============// -->
                 <div class="alert alert-warning" role="alert" *ngIf="formValidado==false && obervaciones==true">
-                    <h4 class="alert-heading">Validacion no exitosa </h4>
+                    <h4 class="alert-heading">Validación no exitosa </h4>
                     <p>{{ instanciaPostulante.observaciones }}</p>
                     <hr>
                     <p class="mb-0">Por favor vuelte a intentar</p>

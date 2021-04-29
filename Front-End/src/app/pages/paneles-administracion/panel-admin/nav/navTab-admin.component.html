@@ -1,25 +1,16 @@
 <!-- Navbar -->
 <div class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <!-- Navbar -->
-    <app-navbar></app-navbar>
+    <app-navbar [usuario]="instanciaUsuario.correo"></app-navbar>
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a class="brand-link ">
-            <img src="{{ dominio.dominio }}/Archivos/images/logo-cis.jpg " alt="CIS Logo " class="brand-image img-circle elevation-3 " style="opacity: .8 ">
-            <span class="brand-text font-weight-light ">UNL</span>
-        </a>
+        <app-brand-logo-panel></app-brand-logo-panel>
         <!-- Sidebar -->
         <div class="sidebar ">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex ">
-                <div class="info ">
-                    <a class="d-block ">{{  instanciaUsuario.correo }}</a>
-                </div>
-            </div>
             <!-- Sidebar Menu -->
-            <nav class="mt-2 ">
+            <nav class="mt-2 mb-3">
                 <ul class="nav nav-pills nav-sidebar flex-column" id="acordeon" data-widget="treeview" role="menu" data-accordion="false" *ngIf="tipoUsuarioEncargado==true ">
                     <li class=" nav-item has-treeview menu-close ">
                         <a class="nav-link  ">

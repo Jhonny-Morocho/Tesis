@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {AutenticacionUserService} from 'src/app/servicios/autenticacion-usuario.service';
 import {UsuarioModel} from 'src/app/models/usuario.model';
@@ -9,6 +9,7 @@ import {environment} from 'src/environments/environment';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
+  @Input() usuario:string;
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   domininio=environment;
   tipoUsuarioAdmin:boolean=false;
@@ -40,7 +41,7 @@ export class NavbarComponent implements OnInit {
   }
   comprobarSession(){
     if(this.servicioUsuario.estaAutenticado()==true){
-      this.instanciaUsuario.correo = localStorage.getItem('correo'); 
+      this.instanciaUsuario.correo = localStorage.getItem('correo');
     }
   }
 

@@ -6,7 +6,31 @@
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+/* // panel de adminsitacion header nav */
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+  background: #0c2342  ;
+  height: 80px;
+}
+[class*=sidebar-dark-] {
+  background-color: #0c2342 ;
+}
+/* // end panel de adminsitacion header nav */
 
+
+/* // animacion para menu de pagina de inicio */
+header a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size .3s;
+}
+
+header a:hover, a:focus {
+  background-size: 100% 2px;
+}
+/* // end animacion para menu de pagina de inicio */
 .fast {
     -webkit-animation-duration: 0.4s;
     animation-duration: 0.4s;

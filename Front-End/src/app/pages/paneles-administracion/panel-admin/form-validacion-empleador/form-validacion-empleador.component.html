@@ -87,8 +87,18 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Observaciones</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['observaciones'].errors">Debe poner un comentario</span>
-                        <textarea class="form-control" [(ngModel)]="instanciaEmpleador.observaciones" name="observaciones" required></textarea>
+                        <textarea class="form-control"
+                                  [(ngModel)]="instanciaEmpleador.observaciones"
+                                  placeholder="Ingrese un comentario"
+                                  maxlength="40"
+                                  [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['observaciones'].errors }"
+                                  name="observaciones"
+                                  required>
+                        </textarea>
+                      <div class="invalid-feedback"
+                        *ngIf="fEmpleador.submitted && fEmpleador.controls['observaciones'].errors">
+                          Debe poner un comentario
+                      </div>
                     </div>
                 </div>
                 <div class="col-12 d-flex justify-content-center">

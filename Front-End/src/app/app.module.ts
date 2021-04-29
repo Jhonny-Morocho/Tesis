@@ -65,6 +65,7 @@ import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/pane
 import { RegistarAdminComponent } from './pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
 import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
 import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
+import { BrandLogoPanelComponent } from './pages/compentes-publicos/brand-logo-panel/brand-logo-panel.component';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-ad
     RegistarAdminComponent,
     FormEditarAdminComponent,
     ReporteOfertasComponent,
+    BrandLogoPanelComponent,
   ],
 
   imports: [
