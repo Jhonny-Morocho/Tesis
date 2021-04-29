@@ -1,11 +1,11 @@
 <div id="hero">
     <div class="centrarFormularioLoginRegistro animate__animated    animate__fadeInLeft">
-      <div class="container col-8 ">
+      <div class="container col-sm-8 ">
         <form class="row g-3 formRegistroLogin pl-3 pr-3 pb-4" (ngSubmit)="onSubMitRegistroPostulante(fRegistroPostulante)" #fRegistroPostulante="ngForm">
             <div class="text-center">
               <img src="{{ dominio }}/Archivos/images/sistemasUNL_blanco.png" class="rounded mx-auto d-block" alt="logo-carerara-ing-sistemas" width="400" height="100" >
             </div>
-            <div class="col-4">
+            <div class="col-sm-3">
                 <a [routerLink]="['/login-postulante']" class="float-right btn btn-outline-light">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio</a>
             </div>

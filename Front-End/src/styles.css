@@ -132,6 +132,7 @@ thead {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+
 }
 
 .form-check-input:checked[type=checkbox] {
@@ -174,6 +175,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
 
 .formRegistroLogin{
   background-color: #0c2342;
+  
 }
 .btn-link {
   color: #fff!important;
@@ -246,6 +248,18 @@ p.clasificacion2 input:checked~label {
         text-align: center;
         font-size: 12px !important;
     }
+    img.rounded.mx-auto.d-block {
+      width: 51vh;
+      height: auto;
+      margin-top: 14px;
+    }
+    #hero{
+      height: 125vh;
+    }
+    .carousel-inner {
+      width: 100%;
+      margin-top: 52px;
+    }
 }
 
 
@@ -257,9 +271,10 @@ p.clasificacion2 input:checked~label {
 /* Medium devices (landscape tablets, 768px and up) */
 
 @media only screen and (min-width: 768px) {
-    #hero {
-        height: 100vh;
-    }
+  #hero{
+    height: 105vh;
+    width: auto;
+  }
 }
 
 
