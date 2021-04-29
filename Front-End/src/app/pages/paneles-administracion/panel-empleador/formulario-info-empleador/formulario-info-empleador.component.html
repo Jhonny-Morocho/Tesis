@@ -18,71 +18,177 @@
                     <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES FALSE  ===============// -->
                     <div class="alert alert-warning" role="alert" *ngIf="formValidado==false && obervaciones==true">
                         <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Validación no exitosa </h4>
-                        <p>{{ instanciaEmpleadorLlenarForm.observaciones }}</p>
+                        <p class="mb-0">Obersvaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
                         <hr>
                         <p class="mb-0">Por favor vuelte a intentar</p>
                     </div>
                     <h3>Registro de Empleador</h3>
-
                     <hr>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['razonSocial'].errors">La razón social de la empresa es obligatorio</span>
-                        <input type="texto" [(ngModel)]="instanciaEmpleadorLlenarForm.razon_empresa" name="razonSocial" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                        <input type="texto"
+                              [(ngModel)]="instanciaEmpleadorLlenarForm.razon_empresa"
+                              name="razonSocial"
+                              class="form-control"
+                              placeholder="Ingrese la Razón social de la empresa"
+                              [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['razonSocial'].errors }"
+                              required
+                              [disabled]="obervaciones==false || formValidado==true">
+                      <div class="invalid-feedback"
+                          *ngIf="fEmpleador.submitted && fEmpleador.controls['razonSocial'].errors">
+                        El campo razón social de la empresa es obligatorio
+                      </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['tipoEmpresa'].errors">El tipo de institución o empresa es obligatorio</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.tipo_empresa" name="tipoEmpresa" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                        <input type="text"
+                               [(ngModel)]="instanciaEmpleadorLlenarForm.tipo_empresa"
+                               name="tipoEmpresa"
+                               class="form-control"
+                               maxlength="30"
+                               required
+                               placeholder="Ingrese el tipo de institución o empresa"
+                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['tipoEmpresa'].errors }"
+                               [disabled]="obervaciones==false || formValidado==true">
+                        <div class="invalid-feedback"
+                            *ngIf="fEmpleador.submitted && fEmpleador.controls['razonSocial'].errors">
+                          El campo tipo de institución o empresa es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
-                            <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['actividadRuc'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
-                            <textarea class="form-control" [(ngModel)]="instanciaEmpleadorLlenarForm.actividad_ruc" name="actividadRuc" rows="3" required [disabled]="obervaciones==false || formValidado==true"></textarea>
+                            <textarea class="form-control"
+                                      [(ngModel)]="instanciaEmpleadorLlenarForm.actividad_ruc"
+                                      name="actividadRuc"
+                                      rows="3"
+                                      placeholder="Ingrese la actividad económica inscrita en el RUC"
+                                      maxlength="50"
+                                      [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['actividadRuc'].errors }"
+                                      required
+                                      [disabled]="obervaciones==false || formValidado==true">
+                            </textarea>
+                          <div class="invalid-feedback"
+                            *ngIf="fEmpleador.submitted && fEmpleador.controls['actividadRuc'].errors">
+                              El campo actividad económica inscrita en el RUC  es obligatorio
+                          </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail4" class="form-label">Némero de RUC</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">El Numero de RUC es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.num_ruc" name="numeroRuc" class="form-control" required [disabled]="obervaciones==false || formValidado==true" max="13">
+                        <label for="inputEmail4" class="form-label">Número de RUC</label><br>
+                        <input type="text"
+                               [(ngModel)]="instanciaEmpleadorLlenarForm.num_ruc"
+                               name="numeroRuc"
+                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                               min="0"
+                               placeholder="Ingrese el número de RUC"
+                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors }"
+                               class="form-control"
+                               required [disabled]="obervaciones==false || formValidado==true"
+                               maxlength="13">
+                        <div class="invalid-feedback"
+                              *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">
+                          El campo número de RUC es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">El numero de cedula es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.cedula" name="cedula" class="form-control" required min="10" [disabled]="obervaciones==false || formValidado==true">
+                        <input type="number"
+                              [(ngModel)]="instanciaEmpleadorLlenarForm.cedula"
+                              name="cedula"
+                              class="form-control"
+                              placeholder="Ingrese la cédula de identidad del representante legal"
+                              required
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                              min="0"
+                              [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['cedula'].errors }"
+                              maxlength="10"
+                              [disabled]="obervaciones==false || formValidado==true">
+                        <div class="invalid-feedback"
+                            *ngIf="fEmpleador.submitted && fEmpleador.controls['cedula'].errors">
+                          El campo cédula de identidad del representante legal es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['nomRepresentanteLegal'].errors">El nombre del representante es obligatoria</span>
-                        <input type="text" [(ngModel)]="instanciaEmpleadorLlenarForm.nom_representante_legal" name="nomRepresentanteLegal" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPais" class="form-label">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">La provincia es obligatorio</span>
-                        <select class="form-control" (ngModelChange)="escucharSelectProvincia($event)" name="provincias" [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia" [disabled]="obervaciones==false || formValidado==true" required>
-                        <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6 ">
-                        <label for="inputPais " class="form-label ">Ciudad </label><br>
-                        <span class="text-danger" *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors ">La Ciudad es obligatorio</span>
-                        <select class="form-control " [(ngModel)]="instanciaEmpleadorLlenarForm.fk_ciudad" name="ciudad" [disabled]="obervaciones==false || formValidado==true" required>
-
-                            <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
-                      </select>
+                        <input type="text"
+                               [(ngModel)]="instanciaEmpleadorLlenarForm.nom_representante_legal"
+                               name="nomRepresentanteLegal"
+                               class="form-control"
+                               placeholder="Ingrese el nombre del representante legal"
+                               maxlength="25"
+                               required
+                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['nomRepresentanteLegal'].errors }"
+                               [disabled]="obervaciones==false || formValidado==true">
+                        <div class="invalid-feedback"
+                              *ngIf="fEmpleador.submitted && fEmpleador.controls['nomRepresentanteLegal'].errors">
+                            El campo nombre del representante es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Télefono</label><br>
-                        <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['telefono'].errors">La fecha es obligatorio</span>
-                        <input type="text" [ngModel]='instanciaEmpleadorLlenarForm.telefono' name="telefono" class="form-control" required [disabled]="obervaciones==false || formValidado==true">
+                        <input type="text"
+                              [ngModel]='instanciaEmpleadorLlenarForm.telefono'
+                              name="telefono"
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                              maxlength="10"
+                              [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['telefono'].errors }"
+                              placeholder="Ingrese el número de teléfono"
+                              class="form-control"
+                              required [disabled]="obervaciones==false || formValidado==true">
+                        <div class="invalid-feedback"
+                             *ngIf="fEmpleador.submitted && fEmpleador.controls['telefono'].errors">
+                            El campo teléfono es obligatorio
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPais" class="form-label">Provincia</label><br>
+                        <select class="form-control"
+                               (ngModelChange)="escucharSelectProvincia($event)"
+                               name="provincias"
+                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['provincias'].errors }"
+                               [(ngModel)]="instanciaEmpleadorLlenarForm.fk_provincia"
+                               [disabled]="obervaciones==false || formValidado==true" required>
+                        <option [value]="item.id" *ngFor="let item of arrayProvincias;let i=index">{{item.nombre}}</option>
+                       </select>
+                       <div class="invalid-feedback"
+                          *ngIf="fEmpleador.submitted && fEmpleador.controls['provincias'].errors">
+                          El campo provincia es obligatorio
+                       </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <label for="inputPais " class="form-label ">Ciudad </label><br>
+                        <select class="form-control"
+                                [(ngModel)]="instanciaEmpleadorLlenarForm.fk_ciudad"
+                                name="ciudad"
+                                [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['ciudad'].errors }"
+                                [disabled]="obervaciones==false || formValidado==true"
+                                required>
+
+                            <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
+                        </select>
+                        <div class="invalid-feedback"
+                          *ngIf="fEmpleador.submitted && fEmpleador.controls['ciudad'].errors">
+                          El campo ciudad es obligatorio
+                        </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label><br>
-                            <span class="text-danger " *ngIf="fEmpleador.submitted && fEmpleador.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
-                            <textarea class="form-control" [(ngModel)]="instanciaEmpleadorLlenarForm.direccion" name="direcionDomicilio" required [disabled]="obervaciones==false || formValidado==true"></textarea>
+                            <textarea class="form-control"
+                                      [(ngModel)]="instanciaEmpleadorLlenarForm.direccion"
+                                      name="direcionDomicilio"
+                                      required
+                                      maxlength="40"
+                                      [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['direcionDomicilio'].errors }"
+                                      placeholder="Ingrese la dirección de domicilio o laboral"
+                                      [disabled]="obervaciones==false || formValidado==true">
+                            </textarea>
+                            <div class="invalid-feedback"
+                              *ngIf="fEmpleador.submitted && fEmpleador.controls['direcionDomicilio'].errors">
+                              El campo dirección de domicilio o laboral es obligatorio
+                            </div>
                         </div>
                     </div>
                     <div class="col-12">
@@ -96,119 +202,180 @@
     <div class="mt-5 animated fadeIn" style="padding-bottom: 100px;" *ngIf="booleanFormularioCompletado==false">
         <div class="card">
             <article class="card-body">
+                <div class="alert alert-primary" role="alert">
+                  Por favor, complete el formulario para tener acceso a publicar sus ofertas laborales en la plataforma
+                </div>
                 <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpledor(fEmpleadorRegistrar)" #fEmpleadorRegistrar="ngForm">
                     <h3>Registro de Empleador</h3>
                     <hr>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Razón social de la empresa</label><br>
-                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['razonSocialRegistrar'].errors">La razón social de la empresa es obligatorio</span>
                         <input type="texto"
                               [(ngModel)]="instanciaEmpleadorRegistrar.razon_empresa"
                               name="razonSocialRegistrar"
                               class="form-control"
+                              placeholder="Ingrese la Razón social de la empresa"
+                              maxlength="30"
+                              [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['razonSocialRegistrar'].errors }"
                               required
                               [disabled]="booleanFormRegistro==true"
                               required>
+                        <div class="invalid-feedback"
+                            *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['razonSocialRegistrar'].errors">
+                          El campo razón social de la empresa es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Tipo de institución o empresa</label><br>
-                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['tipoEmpresaRegistrar'].errors">El tipo de institución o empresa es obligatorio</span>
                         <input type="text"
                               [(ngModel)]="instanciaEmpleadorRegistrar.tipo_empresa"
                               name="tipoEmpresaRegistrar"
+                              maxlength="30"
+                              placeholder="Ingrese el tipo de institución o empresa"
+                              [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['tipoEmpresaRegistrar'].errors }"
                               class="form-control"
                               [disabled]="booleanFormRegistro==true"
                         required>
+                      <div class="invalid-feedback"
+                        *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['tipoEmpresaRegistrar'].errors">
+                          El campo tipo de institución o empresa es obligatorio
+                      </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
-                            <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['actividadRucRegistrar'].errors">La Actividad económica inscrita en el RUC es obligatorio</span>
                             <textarea class="form-control"
                                     [(ngModel)]="instanciaEmpleadorRegistrar.actividad_ruc"
                                     name="actividadRucRegistrar"
                                     rows="3"
+                                    placeholder="Ingrese la actividad económica inscrita en el RUC"
+                                    maxlength="50"
+                                    [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['actividadRucRegistrar'].errors }"
                                     [disabled]="booleanFormRegistro==true"
                                     required>
                             </textarea>
+                          <div class="invalid-feedback"
+                            *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['actividadRucRegistrar'].errors">
+                            El campo actividad económica inscrita en el RUC es obligatorio
+                          </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Número de RUC</label><br>
-                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors">El Numero de RUC es obligatoria</span>
-                        <input type="text"
+                        <input type="number"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.num_ruc"
                                 name="numeroRucRegistrar"
                                  class="form-control"
-                                 required
+                                 placeholder="Ingrese el número de RUC"
                                  maxlength="13"
-                        [disabled]="booleanFormRegistro==true">
+                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                 min="0"
+                                 required
+                                 [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors }"
+                                [disabled]="booleanFormRegistro==true">
+                        <div class="invalid-feedback"
+                        *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors">
+                          El campo número de RUC es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
-                        <span class="text-danger" *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['cedulaRegistrar'].errors">El numero de cedula es obligatoria</span>
-                        <input type="text"
+                        <input type="number"
                               [(ngModel)]="instanciaEmpleadorRegistrar.cedula"
                               name="cedulaRegistrar"
                               class="form-control"
+                              placeholder="Ingrese la cédula de identidad del representante legal"
                               maxlength="10"
+                              min="0"
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                              [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['cedulaRegistrar'].errors }"
                               required
-                        [disabled]="booleanFormRegistro==true" >
+                              [disabled]="booleanFormRegistro==true" >
+                        <div class="invalid-feedback"
+                             *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['cedulaRegistrar'].errors">
+                          El campo cédula de identidad del representante legal es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Nombre del representante legal</label><br>
-                        <span class="text-danger" *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['nomRepresentanteLegalRegistrar'].errors">El nombre del representante es obligatoria</span>
                         <input type="text"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.nom_representante_legal"
                                 name="nomRepresentanteLegalRegistrar"
                                 class="form-control"
                                 required
-                        [disabled]="booleanFormRegistro==true">
+                                placeholder="Ingrese el nombre del representante legal"
+                                [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['nomRepresentanteLegalRegistrar'].errors }"
+                                maxlength="25"
+                                [disabled]="booleanFormRegistro==true">
+                        <div class="invalid-feedback"
+                              *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['nomRepresentanteLegalRegistrar'].errors">
+                            El campo nombre del representante es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Teléfono </label><br>
-                        <span class="text-danger" *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors">El Telefono es obligatoria</span>
-                        <input type="text"
+                        <input type="number"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.telefono"
                                 name="telefonoRegistrar"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                 class="form-control"
                                 maxlength="10"
+                                placeholder="Ingrese el número de teléfono"
+                                [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true"
-                        required>
+                                required>
+                        <div class="invalid-feedback"
+                              *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors">
+                            El campo teléfono es obligatorio
+                        </div>
                     </div>
                     <div class="col-md-6 ">
                         <label for="inputPais " class="form-label ">Provincia</label><br>
-                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['provinciasRegistrar'].errors ">La Provincia es obligatorio</span>
                         <select (ngModelChange)="escucharSelectProvincia($event)"
                                 class="form-control"
                                 name="provinciasRegistrar"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.fk_provincia"
                                 required
+                                [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['provinciasRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true">
                         <option [value]="item.id "*ngFor="let item of arrayProvincias;let i=index ">{{item.nombre}}</option>
                       </select>
+                      <div class="invalid-feedback"
+                          *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['provinciasRegistrar'].errors">
+                        El campo provincia es obligatorio
+                      </div>
                     </div>
                     <div class="col-md-6 ">
                         <label for="inputPais " class="form-label ">Ciudad</label><br>
-                        <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['ciudadRegistrar'].errors ">La Ciudad es obligatorio</span>
                         <select class="form-control "
                                 [(ngModel)]="instanciaEmpleadorRegistrar.fk_ciudad"
                                 name="ciudadRegistrar"
                                 required
+                                [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['ciudadRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true">
                         <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
                       </select>
+                      <div class="invalid-feedback"
+                        *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['ciudadRegistrar'].errors">
+                        El campo ciudad es obligatorio
+                      </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group ">
                             <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
-                            <span class="text-danger " *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls[ 'direcionDomicilioRegistrar'].errors ">La direccion es obligatorio</span>
                             <textarea class="form-control "
                                       [(ngModel)]="instanciaEmpleadorRegistrar.direccion"
                                       name="direcionDomicilioRegistrar"
+                                      placeholder="Ingrese la dirección de domicilio o laboral"
                                       required
+                                      maxlength="40"
+                                      [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['direcionDomicilioRegistrar'].errors }"
                                       [disabled]="booleanFormRegistro==true">
                             </textarea>
+                            <div class="invalid-feedback"
+                              *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['direcionDomicilioRegistrar'].errors">
+                              El campo dirección de domicilio o laboral es obligatorio
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 ">

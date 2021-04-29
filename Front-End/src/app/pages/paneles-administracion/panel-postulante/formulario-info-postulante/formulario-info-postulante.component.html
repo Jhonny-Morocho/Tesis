@@ -67,6 +67,7 @@
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
                            class="form-control"
                            required
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            min="0"
                            [disabled]="obervaciones==false || formValidado==true"
                            maxlength="10">
@@ -193,6 +194,7 @@
                            name="cedula"
                            class="form-control"
                            min="0"
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            placeholder="Ingrese su numero de cédula"
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
                            required
