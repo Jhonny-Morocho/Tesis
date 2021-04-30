@@ -10,6 +10,8 @@ use App\Traits\TemplateCorreo;
 use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Estudiante;
+use App\Models\OfertaLaboralEstudiante;
+use Carbon\Carbon;
 use Error;
 //permite traer la data del apirest
 use Illuminate\Http\Request;
@@ -238,7 +240,51 @@ class OfertaLaboralController extends Controller
                                         "respuesta"=>$ObjOfertaLaboral,
                                         "Siglas"=>"OE",200]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa",
+                return response()->json(["mensaje"=>$th->getMessage(),
+                                            "external_of"=>$external_id,
+                                            "resques"=>$request->json()->all(),
+                                            "Siglas"=>"ONE","error"=>$th->getMessage()]);
+            }
+        }else{
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
+    public function reactivarOfertaLaboral(Request $request,$external_id){
+        if($request->json()){
+            $ObjOfertaLaboral=null;
+            $postulanteOferta=null;
+            try {
+                //actualizo el registro del postulante para q vuelva a marcar los 8 dias
+                // y se geneere un ciclo
+                $postulanteOferta=
+                    OfertaLaboralEstudiante::join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
+                ->where("oferta_laboral.external_of",$external_id)
+                ->update(array('updated_at'=>Carbon::now()));
+                
+                // actualizo el estado de la oferta laboral // la puede reactivar de nuevo
+                $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)
+                ->update(array('estado'=>$request['estado']));
+                //actualizo el estado de todos los postulantes de su registro
+                if($ObjOfertaLaboral){
+                    return response()->json(["mensaje"=>"Operación Exitosa",
+                                            "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
+                                            "postulanteOfert"=>$postulanteOferta,
+                                            "resquest"=>$request->json()->all(),
+                                            "respuesta"=>$ObjOfertaLaboral,
+                                            "Siglas"=>"OE"
+                                            ,200]);
+
+                }else{
+                    return response()->json(["mensaje"=>"No se pudo actualizar el estado",
+                                            "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
+                                            "postulanteOfert"=>$postulanteOferta,
+                                            "resquest"=>$request->json()->all(),
+                                            "respuesta"=>$ObjOfertaLaboral,
+                                            "Siglas"=>"ONE",
+                                            200]);
+                }
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>$th->getMessage(),
                                             "external_of"=>$external_id,
                                             "resques"=>$request->json()->all(),
                                             "Siglas"=>"ONE","error"=>$th->getMessage()]);

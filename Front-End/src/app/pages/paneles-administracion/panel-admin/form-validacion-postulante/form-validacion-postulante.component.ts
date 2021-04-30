@@ -52,7 +52,7 @@ export class FormInfoPostulanteComponent implements OnInit {
             this.encontrado=false;
           }
         },peroSiTenemosErro=>{
-     
+
           console.log(peroSiTenemosErro);
         }
       );
@@ -81,15 +81,15 @@ export class FormInfoPostulanteComponent implements OnInit {
           Swal('Registrado', 'Informacion Registrada con Exito', 'success');
           }else{
             console.log(siHacesBien);
-            Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+            Swal('Ups', siHacesBien['mensaje'], 'info')
           }
-      
+
       },(peroSiTenemosErro)=>{
        Swal({
            title:'Error al registrar informacion',
            type:'error',
            text:peroSiTenemosErro['mensaje']
-         }); 
+         });
       }
     );
   }

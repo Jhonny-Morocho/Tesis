@@ -34,9 +34,16 @@ trait TemplateCorreo {
                             "Módulo de software para la Vinculación Laboral de Actores de la Carrera de Ingeniería en Sistemas/Computación"
                         </p>
                 </div>
-                    <a class="btn btn-primary btn-lg mt-4 "
+                    <a
+                        style="
+                        padding: .6rem 2rem;
+                        color: #fff;
+                        border-radius: .25rem;
+                        background-color: #0d6efd;
+                        text-decoration: none;"
+
                             href="'.getenv("DOMINIO_WEB").'" style="background:#292721 !important;">
-                    Acceder
+                        Acceder
                     </a>
                         <p class="mt-3">Saludos Cordiales</p>
                     <hr>

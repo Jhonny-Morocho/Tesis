@@ -18,6 +18,7 @@ export class OfertasLaboralesService {
   private urlObtenerOfertaLaboralExternal_of="/Backend/public/index.php/ofertas-laborales/obtenerOfertaLaboralExternal_of/";
   private urlEditarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/actulizarOfertaLaboral/";
   private urlFinalizarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/finalizarOfertaLaboral/";
+  private urlReactivarOfertaLaboral="/Backend/public/index.php/ofertas-laborales/reactivar-oferta-laboral/";
   constructor(private _httCliente:HttpClient) { }
 
 
@@ -36,7 +37,7 @@ export class OfertasLaboralesService {
      );
   }
 
-  //listammos ofertas por empleador/individual 
+  //listammos ofertas por empleador/individual
   listarOfertasLaboralesExternal_us(){
     //retorna la respuesata
     return this._httCliente.get(
@@ -111,18 +112,32 @@ export class OfertasLaboralesService {
           return respuestaBackend;
         })
     );
- 
+
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarDatosOfertaLaboral(modeloOfertasLaborales:OfertaLaboralModel){
+      const autenficacionDatos={
+        ...modeloOfertasLaborales
+      }
+      console.log(modeloOfertasLaborales);
+      console.log(modeloOfertasLaborales.external_of);
+      //retorna la respuesata
+      return this._httCliente.post(
+        `${this.urlDominio_}${this.urlReactivarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
+      ).pipe(
+        map(
+          respuestaBackend=>{
+            return respuestaBackend;
+          })
+      );
+  }
+    //actulizar estado de validacion del postulante//aprobado y no aprobado
+  reactivarOfertaLaboral(modeloOfertasLaborales:OfertaLaboralModel){
     const autenficacionDatos={
       ...modeloOfertasLaborales
     }
-    console.log(modeloOfertasLaborales);
-    console.log(modeloOfertasLaborales.external_of);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlEditarOfertaLaboral}${modeloOfertasLaborales.external_of}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlEditarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
     ).pipe(

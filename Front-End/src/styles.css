@@ -52,7 +52,32 @@ thead {
   border: 1px solid #0c2342 !important;
   background: white !important;
 }
+/* // reactivar oferta laboral // */
+.ractivar-oferta h6.fw-bold {
+  color:  white;
+}
+.ractivar-oferta h5.mt-1.text-muted {
+  color:  #ffffffcc !important;
+}
+.ractivar-oferta .post {
+  border-bottom: 1px solid #adb5bd;
+  color: #ffffff;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+.ractivar-oferta #itemRequisitos {
+  color: white;
+}
 
+.ractivar-oferta  hr:not([size]) {
+    height: 1px;
+    color: #ffffff;
+
+}
+.ractivar-oferta h5.mt-1.text-muted {
+  display: none;
+}
+/* // end reactivar oferta laboral // */
 
  /* end data table estilos */
 @keyframes fadeIn {
@@ -175,7 +200,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
 
 .formRegistroLogin{
   background-color: #0c2342;
-  
+
 }
 .btn-link {
   color: #fff!important;

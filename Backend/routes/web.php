@@ -84,6 +84,7 @@ try {
         //calificar empleador
         $router->post('/calificar-empleador/calificarEmpleador','CalificarEmpleadorController@calificarEmpleador');
         //ofertas-laborales
+        $router->post('/ofertas-laborales/reactivar-oferta-laboral/{external_id}','OfertaLaboralController@reactivarOfertaLaboral');
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasEncargado','OfertaLaboralController@listarOfertasLaboralesValidadasEncargado');
         $router->get('/ofertas-laborales/listarOfertasLaboralesValidadasGestor','OfertaLaboralController@listarOfertasLaboralesValidadasGestor');
         $router->get('/ofertas-laborales/listarTodasLasOfertasLaborales','OfertaLaboralController@listarTodasLasOfertasLaborales');
