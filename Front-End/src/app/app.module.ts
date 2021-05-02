@@ -21,7 +21,7 @@ import { HeaderComponent } from './pages/compentes-publicos/header-home/header.c
 
 import { PanelAdminComponent } from './pages/paneles-administracion/panel-admin/nav/navTab-admin.component';
 //import { LoginPostulanteComponent } from './pages/form-registro-login/form-logins/login-postulante/login-postulante.component';
-import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
+import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil-admin/mi-perfil-admin.component';
 import {TareaValiar} from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 //import { TareasPendientesComponent } from './pages/paneles-administracion/panel-admin/tabs/tareas/tareas-admin.component';
 import {PanelPostulanteComponent} from './pages/paneles-administracion/panel-postulante/nav/navTab-postulante.component';
@@ -67,6 +67,9 @@ import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-a
 import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
 import { BrandLogoPanelComponent } from './pages/compentes-publicos/brand-logo-panel/brand-logo-panel.component';
 import { ReactivarOfertaComponent } from './pages/compentes-publicos/reactivar-oferta/reactivar-oferta.component';
+import { FormMiPerfilComponent } from './pages/compentes-publicos/form-mi-perfil/form-mi-perfil.component';
+import { MiPerfilPostulanteComponent } from './pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
+import { MiPerfilEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
 // import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
 @NgModule({
   declarations: [
@@ -117,6 +120,9 @@ import { ReactivarOfertaComponent } from './pages/compentes-publicos/reactivar-o
     ReporteOfertasComponent,
     BrandLogoPanelComponent,
     ReactivarOfertaComponent,
+    FormMiPerfilComponent,
+    MiPerfilPostulanteComponent,
+    MiPerfilEmpleadorComponent,
   ],
 
   imports: [

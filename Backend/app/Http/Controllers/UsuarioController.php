@@ -46,7 +46,46 @@ class UsuarioController extends Controller
         }
 
     }
+    public function actualizarPassword(Request $request){
 
+        if($request->json()){
+            $ObjUsuario=nuLL;
+            $correo=null;
+            try {
+                //consultar si existe ese usuario
+                $datos=$request->json()->all();
+                //verificar si existe el usuario
+                if (filter_var($datos['correo'], FILTER_VALIDATE_EMAIL)) {
+                    $correo=Usuario::where("correo",$datos['correo'])->first();
+                }
+                if($correo){
+
+                   //actualizar el nuevo password
+                   $opciones=array('cost'=>12);
+                   $password_hashed=password_hash($correo->correo,PASSWORD_BCRYPT,$opciones);
+                   $updatePasword=Usuario::where("correo",$datos['correo'])
+                   ->update(array(
+                       "password"=>$password_hashed
+                    ));
+                    return response()->json(["mensaje"=>"Contraseña actualizada con éxito",
+                                                "correoUsuario"=>$datos['correo'],
+                                                "contraseñaActualizada"=>$updatePasword,
+                                                "Siglas"=>"OE",200]);
+                }else{
+                    return response()->json(["mensaje"=>"Usuario no encontrado",
+                                            "Siglas"=>"ONE",400]);
+                }
+
+            } catch (\Throwable $th) {
+                return response()->json(["mensaje"=>$ObjUsuario,
+                                            "error"=>$th->getMessage(),
+                                            "Siglas"=>"DNF",400]);
+            }
+
+        }else{
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+        }
+    }
     public function recuperarPassword(Request $request){
 
         if($request->json()){

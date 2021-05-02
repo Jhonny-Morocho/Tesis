@@ -16,17 +16,39 @@
           <a  class="nav-link text-white"> {{ usuario }}</a>
         </li>
         <li class="nav-item dropdown float-right btnConfigPanel ">
-            <a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="false">
+            <a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="false" title="Configuraciones">
                 <i class="fas fa-cog"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
-                <a [routerLink]="['/panel-admin/gestionar-usuarios-admin'] " class="dropdown-item " style="cursor: pointer; text-align: center;" *ngIf="tipoUsuarioAdmin==true">
+                <a [routerLink]="['/panel-admin/gestionar-usuarios-admin'] "
+                    class="dropdown-item " style="cursor: pointer; text-align: center;"
+                    *ngIf="tipoUsuarioAdminSuper==true">
                     <i class="fas fa-users"></i> Gestionar Usuarios
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item dropdown-footer" (click)="salirSession()" style="cursor: pointer;"><i class="fas fa-sign-out-alt"></i>Salir</a>
+                <a class="dropdown-item dropdown-footer"
+                    [routerLink]="['/panel-admin/mi-perfil']"
+                    *ngIf="tipoUsuarioAdmin==true"
+                    style="cursor: pointer;">
+                    <i class="fas fa-user"></i> Usuario <span class="badge badge-info">{{ rolUsuario }}</span>
+                </a>
+                <a class="dropdown-item dropdown-footer"
+                    [routerLink]="['/panel-postulante/mi-perfil']"
+                    *ngIf="tipoUsuarioPostulante==true"
+                    style="cursor: pointer;">
+                    <i class="fas fa-user"></i> Usuario <span class="badge badge-info">{{ rolUsuario }}</span>
+                </a>
+                <a class="dropdown-item dropdown-footer"
+                  [routerLink]="['/panel-empleador/mi-perfil']"
+                  *ngIf="tiposUsuarioEmpleador==true"
+                  style="cursor: pointer;">
+                  <i class="fas fa-user"></i> Usuario <span class="badge badge-info">{{ rolUsuario }}</span>
+                </a>
+                <a class="dropdown-item dropdown-footer" (click)="salirSession()" style="cursor: pointer;">
+                  <i class="fas fa-sign-out-alt"></i>Salir
+                </a>
             </div>
         </li>
     </ul>

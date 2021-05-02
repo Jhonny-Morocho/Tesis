@@ -14,10 +14,11 @@ import {environment} from 'src/environments/environment';
 export class AutenticacionUserService {
   // el url de donde voy a solicitar el servicio
   //InstanciaDominio:DominioWeb;
-  
+
   private urlDominio_=environment.dominio;
   private urlBackend_Login="/Backend/public/index.php/usuario/login";
   private urlBackend_recuperarPasword="/Backend/public/index.php/usuario/recuperarPassword";
+  private urlBackend_actualizarPasword="/Backend/public/index.php/usuario/actualizarPassword";
   private urlBackend_CrearUsuario="/Backend/public/index.php/usuario/registro";
   private nombreUser:string;
   private correo:string;
@@ -28,7 +29,7 @@ export class AutenticacionUserService {
     this.leerLocalSotarage();
    }
 
-  //funciones de login 
+  //funciones de login
   //recibo el modelo del usuario model con los datos
   login(usuioModel_:UsuarioModel){
     console.log(this.urlDominio_);
@@ -64,6 +65,17 @@ export class AutenticacionUserService {
         }
       )
     );
+  }
+  actualizarPassword(usuioModel_:UsuarioModel){
+    return this._httCLiente.post(`${this.urlDominio_}${this.urlBackend_actualizarPasword}`,
+    usuioModel_
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          return respuestaBackend;
+        }
+      )
+    );
 
   }
   guarUsuarioTempLocalSotarage(respuestaBackend:UsuarioModel){
@@ -78,14 +90,14 @@ export class AutenticacionUserService {
      hoy.setSeconds( 36000 );
      localStorage.setItem('expira',hoy.getTime().toString());
   }
-  
+
    cerrarSession(){
      localStorage.clear();
    }
 
     leerLocalSotarage(){
       if(localStorage.getItem('correo')){
-        
+
        this.correo=localStorage.getItem('correo');
        this.nombreUser=localStorage.getItem('nombe');
        this.apellido=localStorage.getItem('apellido');
@@ -102,7 +114,7 @@ export class AutenticacionUserService {
 
   estaAutenticado():boolean{
     //pregunta si existe correo osea un usuario
-    
+
     console.log(this.correo.length);
     if(this.correo.length<5){
       return false;
@@ -118,7 +130,7 @@ export class AutenticacionUserService {
       }else{
         return false;
       }
-   
+
     //return this.correo.length>2;
   }
   crearNuevoUsuario(modelUsuario:UsuarioModel){

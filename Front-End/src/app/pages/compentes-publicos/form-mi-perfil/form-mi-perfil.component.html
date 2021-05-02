@@ -1,0 +1,43 @@
+<div class="content-wrapper">
+  <div class="container mt-5 animate__animated    animate__slideInRight">
+    <div class="card ">
+        <article class="card-body ">
+            <h3>Mi Usuario</h3>
+            <hr>
+            <form class="row g-3 " (ngSubmit)="actualizarCuenta(fUsuario) " #fUsuario="ngForm">
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Correo</label><br>
+                        <input type="text"
+                              [(ngModel)]="instanciaUsuario.correo"
+                              name="correo"
+                              placeholder="Ingrese un correo"
+                              class="form-control"
+                              [disabled]="true"
+                              >
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
+                    <input type="password"
+                          [(ngModel)]="instanciaUsuario.password"
+                          name="password"
+                          required
+                          placeholder="Ingrese su contraseña"
+                          [ngClass]="{'is-invalid': fUsuario.submitted && fUsuario.controls['password'].errors }"
+                          class="form-control"
+                          maxlength="10">
+                    <div class="invalid-feedback" *ngIf="fUsuario.submitted && fUsuario.controls['password'].errors">
+                      La contraseña es requerida
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <button type="submit " class="btn btn-primary ">Actualizar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+
+  </div>
+
+</div>

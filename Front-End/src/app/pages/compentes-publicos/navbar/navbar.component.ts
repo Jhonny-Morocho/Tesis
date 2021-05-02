@@ -12,15 +12,48 @@ export class NavbarComponent implements OnInit {
   @Input() usuario:string;
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   domininio=environment;
-  tipoUsuarioAdmin:boolean=false;
+  tipoUsuarioAdminSuper:boolean;
+  tipoUsuarioPostulante:boolean;
+  tiposUsuarioEmpleador:boolean;
+  rolUsuario:string;
+  tipoUsuarioAdmin:boolean;
   constructor(private servicioUsuario:AutenticacionUserService,
               private _router:Router) { }
 
   ngOnInit() {
+    this.tipoUsuario();
+  }
+  tipoUsuario(){
+    this.tipoUsuarioAdminSuper=false;
+    this.tipoUsuarioPostulante=false;
+    this.tiposUsuarioEmpleador=false;
+    this.tipoUsuarioAdmin=false;
+    //super administrado
     if(localStorage.getItem('tipoUsuario')=='4'){
+      this.rolUsuario="Gestor";
+      this.tipoUsuarioAdminSuper=true;
       this.tipoUsuarioAdmin=true;
     }
-
+    //secretaria
+    if(localStorage.getItem('tipoUsuario')=='3'){
+      this.rolUsuario="Secretaria";
+      this.tipoUsuarioAdmin=true;
+    }
+    //encargado
+    if(localStorage.getItem('tipoUsuario')=='5'){
+      this.rolUsuario="Encargado";
+      this.tipoUsuarioAdmin=true;
+    }
+    //encargado
+    if(localStorage.getItem('tipoUsuario')=='6'){
+      this.rolUsuario="Empleador";
+      this.tiposUsuarioEmpleador=true;
+    }
+    //empleador
+    if(localStorage.getItem('tipoUsuario')=='2'){
+      this.rolUsuario="Postulante";
+      this.tipoUsuarioPostulante=true;
+    }
   }
   salirSession(){
     // ocupo el servicio

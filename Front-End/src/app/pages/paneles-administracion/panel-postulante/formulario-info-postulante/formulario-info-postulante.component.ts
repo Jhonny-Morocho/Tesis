@@ -75,7 +75,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       siHacesBien=>{
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+          Swal('Registrado', 'Información registrada con éxito', 'success');
           localStorage.setItem("nombre", this.instanciaPostulante.nombre);
           localStorage.setItem("apellido", this.instanciaPostulante.apellido);
           localStorage.setItem("cedula",this.instanciaPostulante.cedula);

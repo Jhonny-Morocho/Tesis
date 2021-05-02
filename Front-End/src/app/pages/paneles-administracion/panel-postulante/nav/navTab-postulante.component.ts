@@ -13,7 +13,7 @@ import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuari
 export class PanelPostulanteComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   domininio=environment;
-  estadoValidacionForm=false;
+  estadoValidacionForm:boolean;
   constructor(private _router:Router,
               private servicioEstudiante:SerivicioPostulanteService,
     private servicioUsuario:AutenticacionUserService) { }
@@ -30,9 +30,11 @@ export class PanelPostulanteComponent implements OnInit {
         console.log(sihacesBien);
         if(sihacesBien['Siglas']=="OE" && parseInt(sihacesBien['mensaje']['estado'])==1){
           this.estadoValidacionForm=true;
+        }else{
+          this.estadoValidacionForm=false;
         }
       },siHacesMal=>{
-        
+
       }
 
     );
@@ -40,7 +42,6 @@ export class PanelPostulanteComponent implements OnInit {
   comprobarSession(){
     if(this.servicioUsuario.estaAutenticado()==true){
       this.instanciaUsuario.correo = localStorage.getItem('correo');
-      
     }else{
      // no existe session por lo cual debo direccionar al inicio
     }

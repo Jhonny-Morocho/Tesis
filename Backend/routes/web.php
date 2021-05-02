@@ -25,6 +25,7 @@ try {
         //envaimos a guardar datos (end pint,controladador/)
         $router->post('/usuario/registro','UsuarioController@RegistrarUsuario');
         $router->post('/usuario/recuperarPassword','UsuarioController@recuperarPassword');
+        $router->post('/usuario/actualizarPassword','UsuarioController@actualizarPassword');
         $router->post('/docente/registro/{external_id}','DocenteController@registrarDocente');
         $router->get('/docente/listarDocentes','DocenteController@listarDocentes');
         $router->post('/docente/editarDocentes/{external_id}','DocenteController@editarDocente_external_us');

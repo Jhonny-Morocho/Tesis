@@ -4,10 +4,12 @@ import { HomeComponent } from './pages/compentes-publicos/home/home.component';
 import { RegistroPostulanteComponent } from './pages/compentes-publicos/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
 import {LoginAdminComponent} from './pages/compentes-publicos/form-registro-login/form-login/login.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
-import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil/mi-perfil.component';
+import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil-admin/mi-perfil-admin.component';
+import { MiPerfilEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
 import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
 import {RegistroEmpleadorComponent} from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
+import {MiPerfilPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
 import {PostulanteOfertas} from 'src/app/pages/paneles-administracion/panel-admin/postulante-ofertas/postulantes-ofertas-encargado.component';
 import {ReporteOfertasComponent} from 'src/app/pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
 import {FormEditarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
@@ -54,7 +56,6 @@ const routes: Routes = [
   //rutas del admistrador
   { path: 'reactivar-oferta-laboral/:external_of' , component: ReactivarOfertaComponent},
   { path: 'panel-admin/filtrar-postulantes/:external_of' , component: PostulanteOfertas ,canActivate:[AutentificacionGuard]},
-  //encuesta
   { path: 'panel-admin/reporte-ofertas' , component: ReporteOfertasComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/registar-admin' , component: RegistarAdminComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/editar-admin/:external_us' , component: FormEditarAdminComponent ,canActivate:[AutentificacionGuard]},
@@ -62,6 +63,8 @@ const routes: Routes = [
   { path: 'panel-admin/preguntas' , component: DemoComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-empleador/mi-perfil' , component: MiPerfilEmpleadorComponent ,canActivate:[AutentificacionGuard]},
+  { path: 'panel-postulante/mi-perfil' , component: MiPerfilPostulanteComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/form-validar-ofertaLaboral/:external_of' , component: FormValidarOfertaLaboralComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/form-publicar-ofertaLaboral/:external_of' , component: FormPublicarOfertaGestorComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/validar-oferta-laboral' , component: TablaValidarOfertasLaboralesComponent ,canActivate:[AutentificacionGuard]},
