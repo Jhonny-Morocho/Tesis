@@ -110,17 +110,29 @@
                             <legend class="col-form-label col-sm-2 pt-0">Género</legend>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="instanciaPostulante.genero" required [(ngModel)]="instanciaPostulante.genero" [disabled]="obervaciones==false || formValidado==true">
+                                    <input class="form-check-input"
+                                          type="radio"
+                                          name="genero"
+                                          required
+                                          [value]="0"
+                                          [(ngModel)]="instanciaPostulante.genero"
+                                          [disabled]="instanciaPostulante.genero===1  && obervaciones==false || formValidado==true">
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="genero" [value]="instanciaPostulante.genero" required [(ngModel)]="instanciaPostulante.genero" [disabled]="obervaciones==false || formValidado==true">
+                                    <input class="form-check-input"
+                                            type="radio"
+                                            name="genero"
+                                            [value]="1"
+                                            [(ngModel)]="instanciaPostulante.genero"
+                                            required
+                                            [disabled]="instanciaPostulante.genero===0  && obervaciones==false || formValidado==true">
                                     <label class="form-check-label" for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
-                            <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
+                            <!-- <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
                               El campo género es obligatorio
-                            </div>
+                            </div> -->
                         </div>
                     </fieldset>
                 </div>
@@ -239,7 +251,7 @@
                                     <input class="form-check-input"
                                            type="radio"
                                            name="genero"
-                                           [value]="0"
+                                           value="0"
                                            required
                                            [(ngModel)]="instanciaPostulante.genero">
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
@@ -248,7 +260,7 @@
                                     <input class="form-check-input "
                                            type="radio"
                                            name="genero"
-                                           [value]="1"
+                                           value="1"
                                            required
                                            [(ngModel)]="instanciaPostulante.genero">
                                     <label class="form-check-label "for="gridRadios2">Femenino</label>

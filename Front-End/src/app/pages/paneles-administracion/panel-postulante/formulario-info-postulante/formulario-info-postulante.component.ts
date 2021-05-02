@@ -16,6 +16,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
    obervaciones=false;
    //validacion de formulario true/false
    formValidado=false;
+   //tipo de genero
+
 
 
 
@@ -47,7 +49,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             //si es mayor a cero es q si ha revisado y si ha visto el formulario
             this.obervaciones = ( this.instanciaPostulante.observaciones.length>0)?true:false;
             this.formValidado = ( this.instanciaPostulante.estado==1)?true:false;
-           }
+
+          }
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro);
         console.warn("TODO MAL");
