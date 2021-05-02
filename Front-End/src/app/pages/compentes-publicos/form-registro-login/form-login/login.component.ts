@@ -87,14 +87,17 @@ export class LoginAdminComponent implements OnInit {
 
           this._servicioAdmin.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
           switch (parseInt(siHacesBien['mensaje']['tipoUsuario'])) {
+            //secretaria
             case 3:
               this.router.navigateByUrl('/panel-admin/mi-perfil');
               break;
+            //empleador
             case 6:
-              this.router.navigateByUrl('/panel-empleador/form-info-empleador');
+              this.router.navigateByUrl('/panel-empleador/mi-perfil');
               break;
+            //postulante
             case 2:
-              this.router.navigateByUrl('/panel-postulante/form-info-postulante');
+              this.router.navigateByUrl('/panel-postulante/mi-perfil');
               break;
             case 5:
               this.router.navigateByUrl('/panel-admin/mi-perfil');
