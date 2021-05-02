@@ -35,10 +35,10 @@
                         <label for="exampleFormControlTextarea1">Observaciones</label><br>
                         <textarea class="form-control"
                                     [disabled]="desactivarBotonGuardar==true"
+                                    name="observaciones"
                                     [(ngModel)]="instanciaOfertaLaboral.obervaciones"
                                     maxlength="150"
                                     [ngClass]="{'is-invalid': fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors }"
-                                    name="observaciones"
                                     required>
                         </textarea>
                       <div class="invalid-feedback" *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">

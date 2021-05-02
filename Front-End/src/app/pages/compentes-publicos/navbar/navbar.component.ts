@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     this.tipoUsuarioPostulante=false;
     this.tiposUsuarioEmpleador=false;
     this.tipoUsuarioAdmin=false;
-    //super administrado
+    //super administrador
     if(localStorage.getItem('tipoUsuario')=='4'){
       this.rolUsuario="Gestor";
       this.tipoUsuarioAdminSuper=true;

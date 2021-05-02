@@ -124,7 +124,7 @@ export class OfertasLaboralesService {
       console.log(modeloOfertasLaborales.external_of);
       //retorna la respuesata
       return this._httCliente.post(
-        `${this.urlDominio_}${this.urlReactivarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
+        `${this.urlDominio_}${this.urlEditarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
       ).pipe(
         map(
           respuestaBackend=>{
@@ -132,14 +132,14 @@ export class OfertasLaboralesService {
           })
       );
   }
-    //actulizar estado de validacion del postulante//aprobado y no aprobado
+    //reactivar la oferta laboral cuando se haya caducado por parte del empleador 
   reactivarOfertaLaboral(modeloOfertasLaborales:OfertaLaboralModel){
     const autenficacionDatos={
       ...modeloOfertasLaborales
     }
     //retorna la respuesata
     return this._httCliente.post(
-      `${this.urlDominio_}${this.urlEditarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
+      `${this.urlDominio_}${this.reactivarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{

@@ -36,7 +36,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
               this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
               this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
               this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
-              
+
               $(function() {
                 //Add text editor
                 $('#compose-textarea').summernote({
@@ -60,7 +60,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
               //this.encontrado=false;
             }
         },peroSiTenemosErro=>{
-     
+
           console.log(peroSiTenemosErro);
         }
       )
@@ -93,7 +93,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
       }
 
     );
-    
+
 
   }
   //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
@@ -102,17 +102,15 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
 
     if(estado==1){
       this.instanciaOfertaLaboral.estado=1;
-      console.log(this.instanciaOfertaLaboral.estado);
       return false;
     }
     if(estado==2){
       this.instanciaOfertaLaboral.estado=2;
-      console.log(this.instanciaOfertaLaboral.estado);
       return true;
     }
     if(estado==3 || estado==4 ){
       this.desactivarBotonGuardar=true;
     }
-   
+
   }
 }
