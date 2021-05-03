@@ -98,7 +98,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                   console.log("SI PUEDE POSTULAR");
                   Swal({
                     title: '¿Está seguro?',
-                    text: "Usted seleciono la oferta  "+nomOferta,
+                    text: "Uste ha seleccionado la oferta "+nomOferta,
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -121,7 +121,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                         let mensaje=(siHacesBien['mensaje']);
                         console.log(mensaje);
                         if(siHacesBien['Siglas']=='OE'){
-                          Swal('Guardado',mensaje,'success');
+                          Swal('Guardado','success');
                         }else{
                           Swal('Informacion',mensaje,'info');
                         }
@@ -140,7 +140,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                       'info');
                 }
               }else{
-                 Swal('Información','Debe completar el formulario de registro, para  postular a las  ofertas laborales','info');
+                 Swal('Información','Debe completar el formulario de registro para  postular a las  ofertas laborales','info');
 
               }
             },siHaceMal=>{

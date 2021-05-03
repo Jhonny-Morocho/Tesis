@@ -449,7 +449,7 @@ class OfertaLaboralEstudianteController extends Controller
        try {
            $parrafo="Se ha generado nuevos cambios en tu lista de postulantes de la oferta denominada ".
                      $arrayData['puesto'].
-                     "puede que existan nuevos postulantes en tu oferta o que se hayan retirado de la misma, para más detalles revise su cuenta";
+                     " puede que existan nuevos postulantes en tu oferta o que se hayan retirado de la misma, para más detalles revise su cuenta";
 
            $temmplateHmtlAplicarOferta=
                     $this->templateHtmlCorreo(

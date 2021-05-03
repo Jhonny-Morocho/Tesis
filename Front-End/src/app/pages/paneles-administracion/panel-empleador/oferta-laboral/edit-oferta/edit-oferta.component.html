@@ -18,7 +18,7 @@
                           required
                           [ngClass]="{'is-invalid': fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors }"
                           class="form-control"
-                          maxlength="20"
+                          maxlength="50"
                           placeholder="Ingrese el puesto de la oferta"
                          [disabled]="!estadoRevisionform">
                     <div class="invalid-feedback" *ngIf="fEditarOfertaLaboral.submitted && fEditarOfertaLaboral.controls['puesto'].errors">

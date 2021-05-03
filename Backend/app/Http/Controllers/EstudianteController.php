@@ -108,7 +108,7 @@ class EstudianteController extends Controller
                      $parrafo= "El postulante  ".
                                  $usuarioEstudiante['nombre'].
                                  " ".$usuarioEstudiante['apellido'].
-                                 "ha sido validada su información con éxito";
+                                 " ha sido validada su información con éxito";
                      foreach ($usuarioEncargado as $key => $value) {
                         //generara plantilla html
                         $plantillaCorreoEncargado=

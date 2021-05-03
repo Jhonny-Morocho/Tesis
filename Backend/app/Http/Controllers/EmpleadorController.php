@@ -255,8 +255,10 @@ class EmpleadorController extends Controller{
             $handle = fopen("logRegistroEmpleador.txt", "a");
             //enviamos registro de postulante a la secretaria a la secretaria
             $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
-            ->select("docente.*","usuario.*")
-            ->where("docente.estado",1)
+            ->select("docente.nombre",
+            "docente.apellido",
+            "usuario.*")
+            ->where("usuario.estado",1)
             ->where("usuario.tipoUsuario",5)
             ->get();
             $arrayEncargado=null;
