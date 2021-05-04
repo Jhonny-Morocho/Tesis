@@ -64,6 +64,16 @@ export class LoginAdminComponent implements OnInit {
     console.log(this.instanciaModeloUsuarioLogin);
     console.log(formularioAdministrador);
     if(formularioAdministrador.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'info',
+        title: 'Debe completar todos los campos'
+      })
       return;
     }
     // si pasa la validacion se ejecuta el siguiente codigo
@@ -84,6 +94,16 @@ export class LoginAdminComponent implements OnInit {
         Swal.close();
         //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          toast({
+            type: 'success',
+            title: 'Bienvenido'
+          })
 
           this._servicioAdmin.guarUsuarioTempLocalSotarage(siHacesBien['mensaje']);
           switch (parseInt(siHacesBien['mensaje']['tipoUsuario'])) {

@@ -25,6 +25,16 @@ export class RegistroEmpleadorComponent implements OnInit {
     console.log(formularioRegistroEmpleador);
     // comprobamos si el formulario pao la validacion
     if(formularioRegistroEmpleador.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'info',
+        title: 'Debe completar todos los campos'
+      })
       return;
      }
         //mensaje de alerta usuario

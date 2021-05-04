@@ -11,7 +11,7 @@
     </div>
     <div class="card">
         <article class="card-body animated animate__animated fadeIn">
-            <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulanteEditar(fPostulante)" #fPostulante="ngForm">
+            <form class="row g-2" (ngSubmit)="onSubmitFormularioPostulanteEditar(fPostulante)" #fPostulante="ngForm">
                 <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                 <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
                     <h4 class="alert-heading">Validación exitosa </h4>
@@ -164,7 +164,7 @@
 <div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==false">
     <div class="card">
         <article class="card-body">
-            <form class="row g-3" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
+            <form class="row g-2" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
                 <div class="alert alert-primary" role="alert">
                     Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
                 </div>

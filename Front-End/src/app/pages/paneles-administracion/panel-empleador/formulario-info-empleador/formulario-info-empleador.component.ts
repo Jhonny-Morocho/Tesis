@@ -95,6 +95,16 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   onSubmitFormularioEmpledor(formRegistroEmpleador:NgForm){
     console.log(formRegistroEmpleador);
     if(formRegistroEmpleador.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe completar todos los campos'
+      })
       return;
      }
      Swal({
@@ -110,7 +120,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
       siHacesBien=>{
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+          Swal('Registrado', 'Información Registrada con éxito', 'success');
           console.log(siHacesBien);
           localStorage.setItem("actividad_ruc", this.instanciaEmpleadorRegistrar.actividad_ruc);
           localStorage.setItem("cedula", this.instanciaEmpleadorRegistrar.cedula);
@@ -122,18 +132,17 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
 
           //bloqueo el formulario
           this.booleanFormRegistro=true;
-          this.booleanFormularioCompletado=true;
            //this.ruta_.navigateByUrl('/panel-postulante/form-info-postulante');
           }else{
             console.warn(siHacesBien);
-            Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
+            Swal('Ups', siHacesBien['error'], 'info')
           }
 
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro['error']);
         console.log(this.instanciaEmpleadorRegistrar);
         Swal({
-          title:'Error al registrar informacion',
+          title:'Error',
           type:'error',
           text:peroSiTenemosErro['mensaje']
         });
@@ -145,6 +154,16 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   onSubmitFormularioEmpleadorEditar(formRegistroEmpleadorEditar:NgForm){
     console.log("Editar formRegistroEmpleadorEditar");
     if(formRegistroEmpleadorEditar.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe completar todos los campos'
+      })
       return;
     }
     Swal({
@@ -161,18 +180,18 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         console.log(siHacesBien['Siglas']);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Actualizado', 'Informacion Registrada con Exito', 'success');
+          Swal('Actualizado', 'Información Registrada con éxito', 'success');
           //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
           this.obervaciones=false;
           //si el usuario esta el estado en 1// estado cero
           this.formValidado=false;
           }else{
             console.log(siHacesBien);
-             Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+             Swal('Ups', siHacesBien['mensaje'], 'info')
           }
       },(peroSiTenemosErro)=>{
          Swal({
-          title:'Error al registrar informacion',
+          title:'Error',
           type:'error',
           text:peroSiTenemosErro['mensaje']
          });

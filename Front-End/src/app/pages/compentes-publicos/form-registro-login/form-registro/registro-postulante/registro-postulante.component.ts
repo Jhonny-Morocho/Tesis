@@ -28,6 +28,16 @@ export class RegistroPostulanteComponent implements OnInit {
     console.log(formularioRegistroPostulante);
     // comprobamos si el formulario pao la validacion
     if(formularioRegistroPostulante.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'info',
+        title: 'Debe completar todos los campos'
+      })
       return;
 
     }

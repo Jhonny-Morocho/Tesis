@@ -1,5 +1,4 @@
 <navTab-empleador></navTab-empleador>
-
 <div class="content-wrapper">
     <div class="alert alert-warning" role="alert" *ngIf="obervaciones==false && booleanFormularioCompletado==true">
         <i class="fas fa-exclamation-triangle"></i> Registro de empleador en proceso de validación, en 72 horas se notificara su aprobación
@@ -7,7 +6,7 @@
     <div class=" animated fadeIn" *ngIf="booleanFormularioCompletado==true">
         <div class="card">
             <article class="card-body">
-                <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpleadorEditar(fEmpleador)" #fEmpleador="ngForm">
+                <form class="row g-2" (ngSubmit)="onSubmitFormularioEmpleadorEditar(fEmpleador)" #fEmpleador="ngForm">
                     <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES TRUE ===============// -->
                     <div class="alert alert-success" role="alert" *ngIf="formValidado==true && obervaciones==true">
                         <h4 class="alert-heading"> Validación exitosa </h4>
@@ -205,7 +204,7 @@
                 <div class="alert alert-primary" role="alert">
                   Por favor complete el formulario para tener acceso a publicar sus ofertas laborales en la plataforma
                 </div>
-                <form class="row g-3" (ngSubmit)="onSubmitFormularioEmpledor(fEmpleadorRegistrar)" #fEmpleadorRegistrar="ngForm">
+                <form class="row g-2" (ngSubmit)="onSubmitFormularioEmpledor(fEmpleadorRegistrar)" #fEmpleadorRegistrar="ngForm">
                     <h3>Registro de Empleador</h3>
                     <hr>
                     <div class="col-md-6">
@@ -217,7 +216,6 @@
                               placeholder="Ingrese la Razón social de la empresa"
                               maxlength="30"
                               [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['razonSocialRegistrar'].errors }"
-                              required
                               [disabled]="booleanFormRegistro==true"
                               required>
                         <div class="invalid-feedback"
@@ -241,7 +239,7 @@
                           El campo tipo de institución o empresa es obligatorio
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC</label><br>
                             <textarea class="form-control"
@@ -329,7 +327,7 @@
                             El campo teléfono es obligatorio
                         </div>
                     </div>
-                    <div class="col-md-6 ">
+                    <div class="form-group">
                         <label for="inputPais " class="form-label ">Provincia</label><br>
                         <select (ngModelChange)="escucharSelectProvincia($event)"
                                 class="form-control"
@@ -345,7 +343,7 @@
                         El campo provincia es obligatorio
                       </div>
                     </div>
-                    <div class="col-md-6 ">
+                    <div class="form-group">
                         <label for="inputPais " class="form-label ">Ciudad</label><br>
                         <select class="form-control "
                                 [(ngModel)]="instanciaEmpleadorRegistrar.fk_ciudad"
@@ -360,7 +358,7 @@
                         El campo ciudad es obligatorio
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group">
                         <div class="form-group ">
                             <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
                             <textarea class="form-control "
@@ -378,7 +376,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 ">
+                    <div class="form-group">
                         <button type="submit " class="btn btn-primary"
                                 [disabled]="booleanFormRegistro==true"
                                 required>

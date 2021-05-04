@@ -26,3 +26,23 @@
 
 
 
+[2021-05-04 02:08:41] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-05-04 02:10:46] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-05-04 02:13:28] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-05-04 02:16:29] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
+[2021-05-04 02:23:48] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador1unl@gmail.com ]
+
+
+
