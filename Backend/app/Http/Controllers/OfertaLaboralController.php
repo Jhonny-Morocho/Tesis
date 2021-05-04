@@ -170,7 +170,7 @@ class OfertaLaboralController extends Controller
                 //una ves finalizada la oferta laboral, se le hace llenar el
                 $llenarFormularioSISSEG=$this->notificarFinalizacionOfertaFormularioSISEG($external_id);
                 //actualizar el estado de los postulantes
-                return response()->json(["mensaje"=>"Operacion Exitosa",
+                return response()->json(["mensaje"=>"Operación Exitosa",
                         "ObjetaOfertaLaboral"=>$estadoOfertaLaboral,
                         "external_of"=>$external_id,
                         "llenarFormularioSISEGempleador"=>$llenarFormularioSISSEG,
@@ -233,7 +233,7 @@ class OfertaLaboralController extends Controller
                 if($request['estado']==3){
                     $estadoCorreoEnviado=$this->notificarPublicacionOfertaLaboral($datos);
                 }
-                return response()->json(["mensaje"=>"Operacion Exitosa",
+                return response()->json(["mensaje"=>"Operación Exitosa",
                                         "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
                                         "resquest"=>$request->json()->all(),
                                         "estadoCorreoEnviado"=>$estadoCorreoEnviado,
@@ -260,7 +260,7 @@ class OfertaLaboralController extends Controller
                     OfertaLaboralEstudiante::join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
                 ->where("oferta_laboral.external_of",$external_id)
                 ->update(array('updated_at'=>Carbon::now()));
-                
+
                 // actualizo el estado de la oferta laboral // la puede reactivar de nuevo
                 $ObjOfertaLaboral=OfertasLaborales::where("external_of","=", $external_id)
                 ->update(array('estado'=>$request['estado']));
@@ -275,12 +275,12 @@ class OfertaLaboralController extends Controller
                                             ,200]);
 
                 }else{
-                    return response()->json(["mensaje"=>"No se pudo actualizar el estado",
+                    return response()->json(["mensaje"=>"No se actualizo el estado",
                                             "ObjetoOfertaLaboral"=>$ObjOfertaLaboral,
                                             "postulanteOfert"=>$postulanteOferta,
                                             "resquest"=>$request->json()->all(),
                                             "respuesta"=>$ObjOfertaLaboral,
-                                            "Siglas"=>"ONE",
+                                            "Siglas"=>"ONEE",
                                             200]);
                 }
             } catch (\Throwable $th) {
@@ -312,9 +312,9 @@ class OfertaLaboralController extends Controller
 
     private function retornarOfertaLaboralEncontrado($ObjTitulo){
         if($ObjTitulo!=null){
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operación Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el titulo"]);
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"No se encontro el título"]);
         }
     }
      //terminar de hacer
@@ -323,11 +323,11 @@ class OfertaLaboralController extends Controller
             //actualizo el texto plano
             $ObjTituloAcademico=OfertasLaborales::where("external_of","=", $request['external_of'])->update(array('estado'=>$request['estado']));
 
-            return response()->json(["mensaje"=>"Operacion Exitosa",
+            return response()->json(["mensaje"=>"Operación Exitosa",
                                      "Respuesta"=>$ObjTituloAcademico,200]);
 
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>"Operación no Exitosa","Siglas"=>"ONE","error"=>$th]);
         }
 
     }
@@ -356,8 +356,8 @@ class OfertaLaboralController extends Controller
             ->where("usuario.tipoUsuario",4)
             ->get();
             //recorrer todos los usuario que sean encargado
-            $parrafo="Se ha validado la oferta laboral ".$datos["nombreOfertaLaboral"].
-                        " perteneciente a la empresa ".
+            $parrafo="Se ha validado la oferta laboral <b>".$datos["nombreOfertaLaboral"].
+                        "</b> perteneciente a la empresa ".
                         $datos["nombreEmpresa"]. ", debe realizar la publicación de la misma para que pueda ser visualizada en la plataforma";
             foreach ($usuarioGestor as $key => $value) {
                 //tengo q redacatra el menaje a la secretaria
@@ -458,7 +458,7 @@ class OfertaLaboralController extends Controller
             $usuarioEmpleador=$this->buscarUsuarioEmpleador($external_oferta);
             $nombreUsuario= $usuarioEmpleador->nom_representante_legal.
                             " representante de la empresa ".$usuarioEmpleador->razon_empresa;
-            $tituloMensaje="Estado de validación de la oferta laboral ".$usuarioEmpleador->puesto;
+            $tituloMensaje="Estado de validación de la oferta laboral <b>".$usuarioEmpleador->puesto."</b>";
 
             $parrafoMensaje="La oferta ".$usuarioEmpleador->puesto." ".$mensaje;
             $plantillaCorreo=$this->templateHtmlCorreo($nombreUsuario,$parrafoMensaje);
@@ -503,7 +503,7 @@ class OfertaLaboralController extends Controller
             ->where("oferta_laboral.external_of",$datosOFertaLaboral['external_of'])
             ->first();
             // notificar al empleador que su oferta laboral esta publicada en la plataforma
-            $parrafo="La Oferta laboral ".$datosOFertaLaboral['nombreOfertaLaboral']." esta aprobada y publicada con éxito";
+            $parrafo="La Oferta laboral <b>".$datosOFertaLaboral['nombreOfertaLaboral']."</b> esta aprobada y publicada con éxito";
             $templateCorreoHmtlEmpleador=
                                     $this->templateHtmlCorreo( $empleador['nom_representante_legal'],
                                                                 $parrafo
@@ -520,7 +520,7 @@ class OfertaLaboralController extends Controller
             ->where("estudiante.estado",1)
             ->get();
 
-            $parrafoEstudiante="Existe una nueva oferta laboral publicada denominada ".$datosOFertaLaboral['nombreOfertaLaboral'];
+            $parrafoEstudiante="Existe una nueva oferta laboral publicada denominada <b>".$datosOFertaLaboral['nombreOfertaLaboral']."</b>";
             foreach ($usuarioEstudiante as $key => $value) {
                 $plantillaHmtlCorreo=
                                     $this->templateHtmlCorreo($value['nombre']." ".$value['apellido'],

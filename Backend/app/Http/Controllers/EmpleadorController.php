@@ -23,11 +23,11 @@ class EmpleadorController extends Controller{
                  if($ObjEmpleador !=null){
                      return response()->json(["mensaje"=> $ObjEmpleador,"Siglas"=>"OE",200]);
                  }else{
-                    return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
+                    return response()->json(["mensaje"=>"No existe registro del empleador","Siglas"=>"ONE"]);
                  }
 
             }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+                return response()->json(["mensaje"=>"No se encontro el usuario external_us","Siglas"=>"ONE"]);
             }
 
          }else{
@@ -96,8 +96,7 @@ class EmpleadorController extends Controller{
                                         "estadoCorreoEnviado"=>$enviarCorreoBolean,
                                         "ObjEmleador"=>$ObjEmleador,
                                         "Siglas"=>"OE",
-
-                                        "respuesta"=>"Operacion Exitosa"]);
+                                        "respuesta"=>"Operación Exitosa"]);
              } catch (\Throwable $th) {
                 return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
              }
@@ -139,11 +138,11 @@ class EmpleadorController extends Controller{
                                                  "estadoCorreoEnviado"=>$arrayEncargado,
                                                     "Siglas"=>"OE"]);
                     }else{
-                       return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del empleador","Siglas"=>"ONE"]);
+                       return response()->json(["mensaje"=>"No existe registro del empleador","Siglas"=>"ONE"]);
                     }
 
                }else{
-                   return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_em","Siglas"=>"ONE"]);
+                   return response()->json(["mensaje"=>"No se encontro el usuario external_em","Siglas"=>"ONE"]);
                }
             } catch (\Throwable $th) {
                return response()->json(["mensaje"=>$th->getMessage(),
@@ -168,7 +167,7 @@ class EmpleadorController extends Controller{
             ->get();
             return response()->json(["mensaje"=>$ObjeEmpleador,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
 
 
@@ -182,7 +181,7 @@ class EmpleadorController extends Controller{
                 return $this->retornarRespuestaEstudianteEncontrado($ObjeEmpleador);
 
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el empleador "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
 
         }else{
@@ -193,9 +192,9 @@ class EmpleadorController extends Controller{
     private function retornarRespuestaEstudianteEncontrado($ObjetoEstudiante){
 
         if($ObjetoEstudiante!=null){
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operación Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el empleador "]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"No se encontro el empleador"]);
         }
 
     }

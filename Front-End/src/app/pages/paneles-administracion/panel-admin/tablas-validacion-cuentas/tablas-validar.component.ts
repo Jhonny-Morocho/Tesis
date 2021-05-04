@@ -149,8 +149,7 @@ export class TareaValiar implements OnInit {
                 console.log(elemento['empleadorExternal_em']);
                   if(elemento['empleadorExternal_em']== external_em){
                     console.log(Number(elemento['empleadorPromedio']));
-                    switch (Number(elemento['empleadorPromedio'])) {
-                    case 1:
+                    if(Number(elemento['empleadorPromedio'])<=1 || Number(elemento['empleadorPromedio'])>0 ){
                       $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
                                                 '<a href="#" class="fa fa-star"></a>'+
                                                 '<a href="#" class="fa fa-star-o"></a>'+
@@ -158,46 +157,48 @@ export class TareaValiar implements OnInit {
                                                 '<a href="#" class="fa fa-star-o"></a>'+
                                                 '<a href="#" class="fa fa-star-o"></a>'+
                                               '</div>');
-                      break;
-                    case 2:
+
+                    }
+                    if(Number(elemento['empleadorPromedio'])<=2 || Number(elemento['empleadorPromedio'])>1 ){
                       $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                '<a href="#" class="fa fa-star"></a>'+
-                                                '<a href="#" class="fa fa-star"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                              '</div>');
-                      break;
-                    case 3:
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                    '</div>');
+
+                    }
+                    if(Number(elemento['empleadorPromedio'])<=3 || Number(elemento['empleadorPromedio'])>2 ){
                       $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                  '<a href="#" class="fa fa-star"></a>'+
-                                                  '<a href="#" class="fa fa-star"></a>'+
-                                                  '<a href="#" class="fa fa-star"></a>'+
-                                                  '<a href="#" class="fa fa-star-o"></a>'+
-                                                  '<a href="#" class="fa fa-star-o"></a>'+
-                                              '</div>');
-                      break;
-                    case 4:
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                    '</div>');
+
+                    }
+                    if(Number(elemento['empleadorPromedio'])<=4 || Number(elemento['empleadorPromedio'])>3 ){
                       $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                    '<a href="#" class="fa fa-star"></a>'+
-                                                    '<a href="#" class="fa fa-star"></a>'+
-                                                    '<a href="#" class="fa fa-star"></a>'+
-                                                    '<a href="#" class="fa fa-star"></a>'+
-                                                    '<a href="#" class="fa fa-star-o"></a>'+
-                                              '</div>');
-                      break;
-                    case 4:
-                        $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star"></a>'+
+                                                      '<a href="#" class="fa fa-star-o"></a>'+
+                                                    '</div>');
+
+                    }
+                    if(Number(elemento['empleadorPromedio'])<=5 || Number(elemento['empleadorPromedio'])>4 ){
+                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
                                                       '<a href="#" class="fa fa-star"></a>'+
                                                       '<a href="#" class="fa fa-star"></a>'+
                                                       '<a href="#" class="fa fa-star"></a>'+
                                                       '<a href="#" class="fa fa-star"></a>'+
                                                       '<a href="#" class="fa fa-star"></a>'+
-                                                '</div>');
-                        break;
-                    default:
-                      break;
-                  }
+                                                    '</div>');
+
+                    }
                 }
               }
         }else{

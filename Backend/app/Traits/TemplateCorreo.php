@@ -30,7 +30,7 @@ trait TemplateCorreo {
                             '.$parrafoMensaje.'
                         </p>
                         <p class=" mt-2">
-                            Por favor, revise su perfil en el
+                            Por favor revise su perfil en el
                             "Módulo de software para la Vinculación Laboral de Actores de la Carrera de Ingeniería en Sistemas/Computación"
                         </p>
                 </div>

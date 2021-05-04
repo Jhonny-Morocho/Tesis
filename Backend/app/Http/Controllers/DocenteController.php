@@ -11,9 +11,9 @@ use PhpParser\Node\Expr\Isset_;
 
 class DocenteController extends Controller
 {
-   
+
     public function registrarDocente(Request $request,$external_id){
-        
+
         if($request->json()){
             //obtengo todos los datos y lo guardo en la variable datos
             $datos=$request->json()->all();
@@ -48,7 +48,7 @@ class DocenteController extends Controller
                         return response()->json(["mensaje"=>$arrayUsuarioDocente,"Siglas"=>"OE",200,]);
 
                     }else{
-                        return response()->json(["mensaje"=>"Operacion no exitosa, el correo ya existe","Siglas"=>"ONE",400,]);
+                        return response()->json(["mensaje"=>"El usuario ".$datos["correo"]." ya existe","Siglas"=>"ONE",400,]);
                     }
                 }else{
                     return response()->json(["mensaje"=>"Solo el administrador puede realizar esta operación","Siglas"=>"ONE",200]);
@@ -59,7 +59,7 @@ class DocenteController extends Controller
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
- 
+
     }
     public function listarDocentes(){
         try {

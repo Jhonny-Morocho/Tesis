@@ -34,11 +34,11 @@ class EstudianteController extends Controller
 
                                             "Siglas"=>"OE"]);
                 }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                return response()->json(["mensaje"=>"No existe formulario del estudiante","Siglas"=>"ONE"]);
                 }
 
         }else{
-            return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+            return response()->json(["mensaje"=>"No se encontro el usuario external_us","Siglas"=>"ONE"]);
         }
 
         }else{
@@ -105,10 +105,10 @@ class EstudianteController extends Controller
                      ->where("usuario.tipoUsuario",5)
                      ->get();
                      //enviamo el correo
-                     $parrafo= "El postulante  ".
+                     $parrafo= "El postulante  <b>".
                                  $usuarioEstudiante['nombre'].
                                  " ".$usuarioEstudiante['apellido'].
-                                 " ha sido validada su información con éxito";
+                                 "</b> ha sido validada su información con éxito";
                      foreach ($usuarioEncargado as $key => $value) {
                         //generara plantilla html
                         $plantillaCorreoEncargado=
@@ -141,7 +141,7 @@ class EstudianteController extends Controller
                                             "respuesta"=>"Operacion Exitosa"]);
 
              } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"No se puede actulizar el postulante","Siglas"=>"ONE","error"=>$th]);
              }
 
          }else{
@@ -209,10 +209,10 @@ class EstudianteController extends Controller
                                                 "etadoCorreo"=> $arraycorreoRespuesta,
                                                 "Siglas"=>"OE"]);
                     }else{
-                       return response()->json(["mensaje"=>"Operacion No Exitosa, no existe registro de formulario del estudiante","Siglas"=>"ONE"]);
+                       return response()->json(["mensaje"=>"No existe formulario del estudiante","Siglas"=>"ONE"]);
                     }
                 }else{
-                   return response()->json(["mensaje"=>"Operacion No Exitosa no se encontro el usuario external_us","Siglas"=>"ONE"]);
+                   return response()->json(["mensaje"=>"No se encontro el usuario external_us","Siglas"=>"ONE"]);
                }
             } catch (\Throwable $th) {
                return response()->json(["mensaje"=>$th->getMessage(),
@@ -238,7 +238,7 @@ class EstudianteController extends Controller
             ->get();
             return response()->json(["mensaje"=>$ObjeEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion Exitosa"]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar los estudiante","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th]);
         }
 
     }
@@ -255,7 +255,7 @@ class EstudianteController extends Controller
                 return $this->retornarRespuestaEstudianteEncontrado($ObjeEstudiante);
 
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el estudiante "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>"No se encontro el estudiante "+$request['external_es'],"Siglas"=>"ONE","error"=>$th]);
             }
 
         }else{
@@ -266,9 +266,9 @@ class EstudianteController extends Controller
     private function retornarRespuestaEstudianteEncontrado($ObjetoEstudiante){
 
         if($ObjetoEstudiante!=null){
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"OE","respuesta"=>"Operación  Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el estudiante xxx"]);
+            return response()->json(["mensaje"=>$ObjetoEstudiante,"Siglas"=>"ONE","respuesta"=>"No se encontro el estudiante xxx"]);
         }
 
     }

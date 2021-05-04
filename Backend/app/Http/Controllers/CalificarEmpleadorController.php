@@ -28,9 +28,9 @@ class CalificarEmpleadorController extends Controller
                  $ObjCalificar->save();
                  return response()->json(["mensaje"=>"Registro guardado","Siglas"=>"OE","respuest"=>$ObjCalificar,200]);
              } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede realizar el registro","Siglas"=>"ONE","error"=>$th,"respuesta"=>$ObjCalificar,400]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),"respuesta"=>$ObjCalificar,400]);
              }
-        
+
          }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
          }
@@ -48,12 +48,11 @@ class CalificarEmpleadorController extends Controller
                  $numRegistros++;
                  $califiacionUnitaria=$value["estrellas"]+ $califiacionUnitaria;
              }
-             $premedio=round($califiacionUnitaria/$numRegistros); 
+             $premedio=round($califiacionUnitaria/$numRegistros);
              return response()->json(["mensaje"=>$premedio,"Siglas"=>"OE",200]);
-            echo $califiacionUnitaria;
          } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$premedio,"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
-         }  
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
+         }
      }
      public function promedioCalificacionEmpleadorTodos(){
         $ObjCalificacion=array();
@@ -75,16 +74,16 @@ class CalificarEmpleadorController extends Controller
                     "empleadorPromedio"=>round($suma/$numItem)
                  );
                 // ->get();
-            } 
+            }
             return response()->json(["mensaje"=>$ObjCalificacion,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-           return response()->json(["mensaje"=>$ObjCalificacion,"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
-        }  
+           return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
+        }
     }
-  
 
 
-     
 
- 
+
+
+
 }

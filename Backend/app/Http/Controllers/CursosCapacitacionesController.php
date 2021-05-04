@@ -15,11 +15,11 @@ use function PHPUnit\Framework\isEmpty;
 
 class CursosCapacitacionesController extends Controller
 {
-  
+
     //ssubir achivo
     private  $ruta= '../../Archivos/Cursos';
     public  function subirArchivo(Request $request){
-       
+
         $archivoSubido=false;
         try {
             //code...
@@ -67,14 +67,14 @@ class CursosCapacitacionesController extends Controller
                 $ObjCusosCapacitaciones->save();
                 //die(json_encode($ObjCusosCapacitaciones));
                 //respuesta exitoso o no en la inserrccion
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE","Objeto"=>$ObjCusosCapacitaciones,200,]);
+                return response()->json(["mensaje"=>"Operación Exitosa","Siglas"=>"OE","Objeto"=>$ObjCusosCapacitaciones,200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","reques"=>$request->json()->all(),"error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
         }
- 
+
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarCursosCapacitaciones( $external_id){
@@ -83,7 +83,7 @@ class CursosCapacitacionesController extends Controller
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            //busco si ese usuario es un estudiante 
+            //busco si ese usuario es un estudiante
             $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
             $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
@@ -101,7 +101,7 @@ class CursosCapacitacionesController extends Controller
                     $actulizoArchivo=true;
                     $ObjCursosCapacitaciones=CursosCapacitaciones::where("external_cu","=", $external_id)->update(
                                                                             array(
-                                                                            'nom_evento'=>$request['nom_evento'], 
+                                                                            'nom_evento'=>$request['nom_evento'],
                                                                             'tipo_evento'=>$request['tipo_evento'],
                                                                             'auspiciante'=>$request['auspiciante'],
                                                                             'horas'=>$request['horas'],
@@ -110,15 +110,15 @@ class CursosCapacitacionesController extends Controller
                                                                             'fecha_culminacion'=>$request['fecha_culminacion'],
                                                                             'evidencia_url'=>$request['evidencia_url']
 
-                                                                            
+
                                                                     ));
                 }
-                //solo actualizo la data 
+                //solo actualizo la data
                 else{
-       
+
                     $ObjCursosCapacitaciones=CursosCapacitaciones::where("external_cu","=", $external_id)->update(
                         array(
-                            'nom_evento'=>$request['nom_evento'], 
+                            'nom_evento'=>$request['nom_evento'],
                             'tipo_evento'=>$request['tipo_evento'],
                             'auspiciante'=>$request['auspiciante'],
                             'horas'=>$request['horas'],
@@ -127,10 +127,10 @@ class CursosCapacitacionesController extends Controller
                             'fecha_culminacion'=>$request['fecha_culminacion']
                     ));
                 }
-                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjCursosCapacitaciones,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjCursosCapacitaciones,"Siglas"=>"OE",200]);
+                return response()->json(["mensaje"=>"Operación Exitosa","Objeto"=>$ObjCursosCapacitaciones,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjCursosCapacitaciones,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -144,36 +144,36 @@ class CursosCapacitacionesController extends Controller
             $ObjTitulo=CursosCapacitaciones::where("external_cu","=",$external_id)->first();
             return $this->retornarTituloEncontrado($ObjTitulo);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el registro "+$external_id,"Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
     }
 
     private function retornarTituloEncontrado($ObjTitulo){
         if($ObjTitulo!=null){
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operacion  Exitosa"]);
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"OE","respuesta"=>"Operación  Exitosa"]);
         }else{
-            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el titulo"]);
+            return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"No se encontro el título"]);
         }
     }
      //terminar de hacer
      public function eliminarCursoCapicitacion(Request $request){
         try {
-            //actualizo el texto plano 
+            //actualizo el texto plano
             $ObjTituloAcademico=CursosCapacitaciones::where("external_cu","=", $request['external_cu'])->update(array('estado'=>$request['estado']));
             //borro el archivo
             $bandera_borrar=false;
             $UbicacionArchivo=$this->ruta."/".$request['evidencia_url'];
-            if(file_exists($UbicacionArchivo)){ 
-                if(unlink($UbicacionArchivo)) 
-                $bandera_borrar=true; 
+            if(file_exists($UbicacionArchivo)){
+                if(unlink($UbicacionArchivo))
+                $bandera_borrar=true;
             }
-            return response()->json(["mensaje"=>"Operacion Exitosa",
+            return response()->json(["mensaje"=>"Operación Exitosa",
                                      "Siglas"=>"OE","banderaBorrar"=>$bandera_borrar,
                                      "Respuesta"=>$ObjTituloAcademico,200]);
-        
+
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
-     
+
     }
 }

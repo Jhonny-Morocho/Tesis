@@ -57,8 +57,8 @@ export class RegistroPostulanteComponent implements OnInit {
         this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
       }else{
         Swal({
-          title:'Error, no se puede ejecutar su peticion',
-          type:'error',
+          title:'Información',
+          type:'info',
           text:siHacesBien['mensaje']
         });
       }

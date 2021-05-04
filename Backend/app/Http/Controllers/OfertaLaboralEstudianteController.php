@@ -67,7 +67,7 @@ class OfertaLaboralEstudianteController extends Controller
                     );
 
                     $notificarEmpeladorListaInteresados=$this->notificarAplicarOferta($datosOfertaEstudiante);
-                    return response()->json(["mensaje"=>"Operacion Exitosa",
+                    return response()->json(["mensaje"=>"Operación Exitosa",
                                                 "Siglas"=>"OE",
                                                 "notificarEmpleadorListaInteresados"=>$notificarEmpeladorListaInteresados,
                                                 "OferEstudiante"=>$ObjOfertaLaboralEstudiante,
@@ -84,7 +84,9 @@ class OfertaLaboralEstudianteController extends Controller
                                         "error"=>$th->getMessage()]);
             }
         }else{
-            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF","reques"=>$request->json()->all(),400]);
+            return response()->json(["mensaje"=>"Los datos no tienene el formato deseado",
+                                    "Siglas"=>"DNF",
+                                    "reques"=>$request->json()->all(),400]);
         }
 
     }
@@ -98,9 +100,11 @@ class OfertaLaboralEstudianteController extends Controller
             $ObjEmpleador=Empleador::where("fk_usuario","=",$ObjUsuario->id)->first();
             //4 estado //0== eliminado,1==activo,2==aprobado,3==rechazado
             $ObjOfertaLaboral=OfertasLaborales::where("fk_empleador","=",$ObjEmpleador->id)->where("estado","!=","0")->orderBy('id', 'DESC')->get();
-            return response()->json(["mensaje"=>$ObjOfertaLaboral,"Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
+            return response()->json(["mensaje"=>$ObjOfertaLaboral,
+                                     "Siglas"=>"OE","fechaCreacion"=>($ObjEmpleador->updated_at)->format('Y-m-d'),200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar la oferta","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),
+                                     "Siglas"=>"ONE","error"=>$th->getMessage(),400]);
         }
     }
     public function resumenOfertaEstudiantesFinalizada_external_of($external_id){
@@ -189,12 +193,11 @@ class OfertaLaboralEstudianteController extends Controller
     public function listarOfertasLaboralesValidadasEncargado(){
         //obtener todos los usuarios que sean postulante
         try {
-
             //obtenemos las que ya estan aprobado usario ==2 y las que se tienen que publicar ==3
             $ObjOfertasLaborales=OfertaLaboralEstudiante::get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se puede listar las ofertas laborales","Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage(),400]);
         }
     }
     public function actulizarOfertaLaboral(Request $request,$external_id){
@@ -211,10 +214,16 @@ class OfertaLaboralEstudianteController extends Controller
                         'requisitos'=>$request['requisitos']
                     ));
 
-                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjOfertaLaboral,"resques"=>$request->json()->all(),"respuesta"=>$ObjOfertaLaboral,"Siglas"=>"OE",200]);
+                return response()->json(["mensaje"=>"Operación Exitosa",
+                                         "Objeto"=>$ObjOfertaLaboral,
+                                         "resques"=>$request->json()->all(),
+                                         "respuesta"=>$ObjOfertaLaboral,
+                                         "Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),
+                                        "resques"=>$request->json()->all(),
+                                        "Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -298,7 +307,7 @@ class OfertaLaboralEstudianteController extends Controller
                                        "notificarContratacionPostulante"=>$notificarContratado,
                                        "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
            } catch (\Throwable $th) {
-               return response()->json(["mensaje"=>"Error no se puede borrar",
+               return response()->json(["mensaje"=>$th->getMessage(),
                "resquest"=>$request->json()->all(),
                "respuesta"=>$OfertaLaboralPostulanteBorrar,
                "Siglas"=>"ONE",
@@ -343,7 +352,7 @@ class OfertaLaboralEstudianteController extends Controller
                                         "notificarEmpeladorListaInteresados"=>$notificarEmpeladorListaInteresados,
                                         "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Error no se puede borrar",
+                return response()->json(["mensaje"=>$th->getMessage(),
                 "resquest"=>$request->json()->all(),
                 "respuesta"=>$OfertaLaboralPostulanteBorrar,
                 "Siglas"=>"ONE",
@@ -374,7 +383,7 @@ class OfertaLaboralEstudianteController extends Controller
             return  response()->json(["mensaje"=>$arrayRespuesta,"Siglas"=>"OE",
                                     "respuesta"=>$OfertaLaboralPostulanteBorrar,200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Error no se puede borrar",
+            return response()->json(["mensaje"=>$th->getMessage(),
             "resquest"=>$request->json()->all(),
             "respuesta"=>$OfertaLaboralPostulanteBorrar,
             "Siglas"=>"ONE",
@@ -447,9 +456,9 @@ class OfertaLaboralEstudianteController extends Controller
        $handle = fopen("logAplicarOfertaLaboral.txt", "a");
 
        try {
-           $parrafo="Se ha generado nuevos cambios en tu lista de postulantes de la oferta denominada ".
+           $parrafo="Se ha generado nuevos cambios en tu lista de postulantes de la oferta denominada <b>".
                      $arrayData['puesto'].
-                     " puede que existan nuevos postulantes en tu oferta o que se hayan retirado de la misma, para más detalles revise su cuenta";
+                     "</b> puede que existan nuevos postulantes en tu oferta o que se hayan retirado de la misma, para más detalles revise su cuenta";
 
            $temmplateHmtlAplicarOferta=
                     $this->templateHtmlCorreo(
@@ -525,7 +534,7 @@ class OfertaLaboralEstudianteController extends Controller
            // si su estado es 2// entonces fue contratado
            $texto="";
            if($value['estado']==2){
-            $parrafoPostulante="Felicitaciones usted ha sido aceptado en la oferta ".$puesto;
+            $parrafoPostulante="Felicitaciones usted ha sido aceptado en la oferta <b>".$puesto."</b>";
             $temmplateHmtlAplicarOferta=
                                 $this->templateHtmlCorreo(
                                                             $postulante->nombre." ".$postulante->apellido,
@@ -556,8 +565,8 @@ class OfertaLaboralEstudianteController extends Controller
             $texto++;
 
            }else{
-               $parrafoPostulante="La oferta laboral ".$puesto.
-                                   " le informa que usted no ha sido aceptado en esta oferta laboral,
+               $parrafoPostulante="La oferta laboral <b>".$puesto.
+                                   "</b> le informa que usted no ha sido aceptado en esta oferta laboral,
                                    gracias por participar en este proceso, este pendiente de las nuevas publicaciones de oferta laborales en la plataforma ";
                $temmplateHmtlAplicarOferta=
                                    $this->templateHtmlCorreo(

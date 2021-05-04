@@ -39,7 +39,7 @@ class UsuarioController extends Controller
                 //respuesta exitoso o no en la inserrccion
                 return response()->json(["mensaje"=>$ObjUsuario,"Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th->getMessage()]);
+                return response()->json(["mensaje"=>"Operación No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -62,7 +62,7 @@ class UsuarioController extends Controller
 
                    //actualizar el nuevo password
                    $opciones=array('cost'=>12);
-                   $password_hashed=password_hash($correo->correo,PASSWORD_BCRYPT,$opciones);
+                   $password_hashed=password_hash($datos['password'],PASSWORD_BCRYPT,$opciones);
                    $updatePasword=Usuario::where("correo",$datos['correo'])
                    ->update(array(
                        "password"=>$password_hashed
@@ -115,7 +115,7 @@ class UsuarioController extends Controller
                        "password"=>$password_hashed
                    ));
                    //enviamos al correo el password
-                   $parrafo="Su nueva contraseña es ".$nuevoPassword;
+                   $parrafo="Su nueva contraseña es: <b>".$nuevoPassword."</b>";
                    $templateHtmlCorreo= $this->templateHtmlCorreo($datos['correo'],$parrafo);
                    $enviarCorreoBolean=
                         $this->enviarCorreo($templateHtmlCorreo,$datos['correo'],
@@ -223,7 +223,7 @@ class UsuarioController extends Controller
                 }
 
             }else{
-                return response()->json(["mensaje"=>"Operacion No Exitosa no coincide el external user","Siglas"=>"ONE"]);
+                return response()->json(["mensaje"=>"Operación No Exitosa no coincide el external user","Siglas"=>"ONE"]);
             }
         }else{
             return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
@@ -250,10 +250,10 @@ class UsuarioController extends Controller
 
                         } catch (\Throwable $th) {
                             //throw $th;
-                            return response()->json(["mensaje"=>"El tipo de usuario no encontrado","Siglas"=>"TUNE",400,"error"=>$th->getMessage()]);
+                            return response()->json(["mensaje"=>"El rol del usuario no se encontro","Siglas"=>"TUNE",400,"error"=>$th->getMessage()]);
                         }
                     }else{
-                        return response()->json(["mensaje"=>"Password Incorrecto","Siglas"=>"PI",400]);
+                        return response()->json(["mensaje"=>"Contraseña Incorrecta","Siglas"=>"PI",400]);
                     }
 
                 } // usuario no encontrado
