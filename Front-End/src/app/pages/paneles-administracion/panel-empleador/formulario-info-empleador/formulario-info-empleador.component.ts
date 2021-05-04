@@ -161,7 +161,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
         timer: 3000
       });
       toast({
-        type: 'error',
+        type: 'info',
         title: 'Debe completar todos los campos'
       })
       return;

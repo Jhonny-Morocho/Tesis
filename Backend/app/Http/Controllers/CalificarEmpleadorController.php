@@ -71,7 +71,7 @@ class CalificarEmpleadorController extends Controller
                     "empleadorId"=>$value['id'],
                     "empleadorCalificacionSuma"=>$suma,
                     "empleadorCantidad"=>$numItem,
-                    "empleadorPromedio"=>round($suma/$numItem)
+                    "empleadorPromedio"=>($suma/$numItem)
                  );
                 // ->get();
             }

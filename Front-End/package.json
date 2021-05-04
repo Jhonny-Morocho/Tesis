@@ -26,6 +26,7 @@
         "datatables.net-colreorder-dt": "^1.5.3",
         "datatables.net-dt": "^1.10.23",
         "install": "^0.13.0",
+        "ng-starrating": "^1.0.7",
         "ng2-pdf-viewer": "^6.1.2",
         "pdfmake": "^0.1.71",
         "rxjs": "~6.3.3",

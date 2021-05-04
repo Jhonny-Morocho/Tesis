@@ -9,7 +9,7 @@ import { EmpleadorModel } from 'src/app/models/empleador.models';
 import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
 import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
-
+import { StarRatingComponent } from 'ng-starrating';
 declare var JQuery:any;
 // ========= valoracion =========
 
@@ -45,7 +45,41 @@ export class TareaValiar implements OnInit {
     this.intanciaEmpleadorCalificar=new EmpleadorModel();
     //this.calificarEstrellas();
   }
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent},indice) {
+    // alert(`Old Value:${$event.oldValue},
+    //   New Value: ${$event.newValue},
+    //   Checked Color: ${$event.starRating.checkedcolor},
+    //   Unchecked Color: ${$event.starRating.uncheckedcolor}`);
+    console.log(indice);
+      this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
+      this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
+      this.intanciaEmpleadorCalificar.fk_ciudad=this.empleador[indice]['fk_ciudad'];
+      this.intanciaEmpleadorCalificar.fk_provincia=this.empleador[indice]['fk_provincia'];
+      this.intanciaEmpleadorCalificar.direccion=this.empleador[indice]['direccion'];
+      this.intanciaEmpleadorCalificar.external_em=this.empleador[indice]['external_em'];
+      this.intanciaEmpleadorCalificar.id=this.empleador[indice]['id'];
+      this.intanciaEmpleadorCalificar.nom_representante_legal=this.empleador[indice]['nom_representante_legal'];
+      this.intanciaEmpleadorCalificar.num_ruc=this.empleador[indice]['num_ruc'];
+      this.intanciaEmpleadorCalificar.razon_empresa=this.empleador[indice]['razon_empresa'];
+      this.intanciaEmpleadorCalificar.telefono=this.empleador[indice]['telefono'];
+      console.log(this.intanciaEmpleadorCalificar);
 
+      //$('#CalificarEmpleador').modal('show');
+      Swal({
+        title: '¿Está seguro en realizar esta acción?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) {
+          this.intanciaCalifarEmpleador.estrellas=$event.newValue;
+          this.calificarEmpleador();
+          //this.dibujarEstrellas(this.intanciaEmpleadorCalificar.external_em);
+        }
+      })
+  }
   obtenerCalificacionesTodosEmpleadores(){
     this.servicioCalificarEmpleador.obtenerCalificacionTodosEmpleadores().subscribe(
       siHacesBien=>{
@@ -59,6 +93,15 @@ export class TareaValiar implements OnInit {
   }
   configurarParametrosDataTable(){
     this.dtOptions = dataTable;
+  }
+  dibujarEstrellas(external_em){
+    let calificacion=0;
+    this.arrayCalificacionesEmpleadores.forEach(element => {
+      if(element['empleadorExternal_em']===external_em){
+        calificacion= element['empleadorPromedio'];
+      }
+    });
+    return calificacion;
   }
   //revisar que tipo de usuario admistrador esta usando la pagina
   cargarTablaperfilUsuario(){
@@ -87,19 +130,6 @@ export class TareaValiar implements OnInit {
           console.log(siHacesBien);
           //asginamos el array que viene del servicio
           this.empleador =siHacesBien;
-          //imprimimos las estrellas
-          function recorrerEmpleadores(element, index, array) {
-            console.log(element);
-            console.log("[" + index + "] = " + element['empleadorPromedio']);
-            $(function() {
-              $('#'+element['empleadorExternal_em']).starrr({
-                max: 5,
-                rating: element['empleadorPromedio']
-              });
-            });
-          }
-          this.arrayCalificacionesEmpleadores.forEach(recorrerEmpleadores);
-          console.log(this.empleador);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
@@ -111,27 +141,13 @@ export class TareaValiar implements OnInit {
 
   }
 
-  valorEstrella(valorEstrella){
-    console.log(valorEstrella);
-    this.activarBotonCalificarModal=true;
-    this.intanciaCalifarEmpleador.estrellas=valorEstrella;
-  }
+  // valorEstrella(valorEstrella){
+  //   console.log(valorEstrella);
+  //   this.activarBotonCalificarModal=true;
+  //   this.intanciaCalifarEmpleador.estrellas=valorEstrella;
+  // }
 
-  mostrarEmpleadorCalifiacar(indice){
-    $('#CalificarEmpleador').modal('show');
-    this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
-    this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
-    this.intanciaEmpleadorCalificar.fk_ciudad=this.empleador[indice]['fk_ciudad'];
-    this.intanciaEmpleadorCalificar.fk_provincia=this.empleador[indice]['fk_provincia'];
-    this.intanciaEmpleadorCalificar.direccion=this.empleador[indice]['direccion'];
-    this.intanciaEmpleadorCalificar.external_em=this.empleador[indice]['external_em'];
-    this.intanciaEmpleadorCalificar.id=this.empleador[indice]['id'];
-    this.intanciaEmpleadorCalificar.nom_representante_legal=this.empleador[indice]['nom_representante_legal'];
-    this.intanciaEmpleadorCalificar.num_ruc=this.empleador[indice]['num_ruc'];
-    this.intanciaEmpleadorCalificar.razon_empresa=this.empleador[indice]['razon_empresa'];
-    this.intanciaEmpleadorCalificar.telefono=this.empleador[indice]['telefono'];
 
-  }
 
   calificarEmpleador(){
     //aqui tengo el fk del empleador
@@ -142,65 +158,10 @@ export class TareaValiar implements OnInit {
           //consulto de nuevo las nuevas calificaiones de los emepleadores
           if(siHaceBien['Siglas']=='OE'){
             Swal('Registrado', siHaceBien['mensaje'], 'success');
-              this.obtenerCalificacionesTodosEmpleadores();
-              let external_em= this.intanciaEmpleadorCalificar.external_em;
-              console.log(external_em);
-              for (let elemento of this.arrayCalificacionesEmpleadores){
-                console.log(elemento['empleadorExternal_em']);
-                  if(elemento['empleadorExternal_em']== external_em){
-                    console.log(Number(elemento['empleadorPromedio']));
-                    if(Number(elemento['empleadorPromedio'])<=1 || Number(elemento['empleadorPromedio'])>0 ){
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                '<a href="#" class="fa fa-star"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                                '<a href="#" class="fa fa-star-o"></a>'+
-                                              '</div>');
+              // this.obtenerCalificacionesTodosEmpleadores();
+              // let external_em= this.intanciaEmpleadorCalificar.external_em;
+              // console.log(external_em);
 
-                    }
-                    if(Number(elemento['empleadorPromedio'])<=2 || Number(elemento['empleadorPromedio'])>1 ){
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                    '</div>');
-
-                    }
-                    if(Number(elemento['empleadorPromedio'])<=3 || Number(elemento['empleadorPromedio'])>2 ){
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                    '</div>');
-
-                    }
-                    if(Number(elemento['empleadorPromedio'])<=4 || Number(elemento['empleadorPromedio'])>3 ){
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star-o"></a>'+
-                                                    '</div>');
-
-                    }
-                    if(Number(elemento['empleadorPromedio'])<=5 || Number(elemento['empleadorPromedio'])>4 ){
-                      $('#'+external_em).html('<div class="starrr" style="pointer-events: none;" id="'+external_em+'">'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                      '<a href="#" class="fa fa-star"></a>'+
-                                                    '</div>');
-
-                    }
-                }
-              }
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
         }
@@ -214,7 +175,6 @@ export class TareaValiar implements OnInit {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
-
   }
 
   //conversion de estado

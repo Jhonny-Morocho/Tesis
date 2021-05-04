@@ -79,13 +79,17 @@
                                 <button type="button " class="btn btn-light" [routerLink]="[ '/panel-admin/tareas/empleador',empleadores.external_em] "><i class="fas fa-chevron-right "></i></button>
                             </td>
                             <td>
-                                <span
+                              <div style="text-align:center">
+
+                                <star-rating [value]="dibujarEstrellas(empleadores.external_em)" checkedcolor="yellow" uncheckedcolor="black" size="24px"    readonly="false" (rate)="onRate($event,i)"></star-rating>
+                              </div>
+                                <!-- <span
                                     (click)="mostrarEmpleadorCalifiacar(i)">
                                      <div class='starrr'
                                             id='{{ empleadores.external_em }}'
                                             style="pointer-events: none;">
                                      </div>
-                                </span>
+                                </span> -->
                             </td>
                         </tr>
                     </tbody>
@@ -96,49 +100,3 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="CalificarEmpleador" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="bg-light">
-                <div class="card-header text-muted border-bottom-0">
-                    {{intanciaEmpleadorCalificar.razon_empresa }}
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2 class="lead"><b>{{ intanciaEmpleadorCalificar.nom_representante_legal }}</b></h2>
-                            <p class="text-muted text-lg"><b>{{ intanciaEmpleadorCalificar.razon_empresa }}: </b> {{ intanciaEmpleadorCalificar.num_ruc }} </p>
-                            <ul class="ml-4 mb-0 fa-ul text-muted">
-                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Ciudad: {{ intanciaEmpleadorCalificar.fk_ciudad }}</li>
-                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Provincia: {{ intanciaEmpleadorCalificar.fk_provincia }}</li>
-                                <li class="large"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: {{ intanciaEmpleadorCalificar.telefono }}</li>
-                                <li class="large"><span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Direccion #: {{ intanciaEmpleadorCalificar.direccion }}</li>
-                                <li class="large"><span class="fa-li"><i class="far fa-address-card"></i></span> Cedula #: {{ intanciaEmpleadorCalificar.cedula }}</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="text-center">
-                    <p class="clasificacion ">
-                        <input id="radio1" type="radio" name="estrellas" value="5" (click)="valorEstrella(5)">
-                        <label for="radio1">★</label>
-                        <input id="radio2" type="radio" name="estrellas" value="4" (click)="valorEstrella(4)">
-                        <label for="radio2">★</label>
-                        <input id="radio3" type="radio" name="estrellas" value="3" (click)="valorEstrella(3)">
-                        <label for="radio3">★</label>
-                        <input id="radio4" type="radio" name="estrellas" value="2" (click)="valorEstrella(2)">
-                        <label for="radio4">★</label>
-                        <input id="radio5" type="radio" name="estrellas" value="1" (click)="valorEstrella(1)">
-                        <label for="radio5">★</label>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="calificarEmpleador()" [disabled]="activarBotonCalificarModal==false">Guardar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cerrarModal()">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

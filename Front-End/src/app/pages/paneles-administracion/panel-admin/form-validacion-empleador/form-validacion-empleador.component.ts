@@ -96,6 +96,16 @@ export class FormValidacionEmpleadorComponent implements OnInit {
  //aprobar postulante //y tambien no aprobar estudiante
  onSubmitForEmpleadorAprobacion(formularioAprobacion:NgForm){
   if(formularioAprobacion.invalid){
+    const toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    toast({
+      type: 'info',
+      title: 'Debe poner un comentario'
+    })
     return;
   }
 
@@ -113,15 +123,15 @@ export class FormValidacionEmpleadorComponent implements OnInit {
     siHacesBien=>{
       Swal.close();
       if(siHacesBien['Siglas']=="OE"){
-        Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+        Swal('Registrado', 'Información registrada con éxito', 'success');
         }else{
           console.log(siHacesBien);
-          Swal('Ups, No se puede realizar el registro', siHacesBien['mensaje'], 'info')
+          Swal('Ups', siHacesBien['mensaje'], 'info')
         }
 
     },(peroSiTenemosErro)=>{
      Swal({
-         title:'Error al registrar informacion',
+         title:'Error',
          type:'error',
          text:peroSiTenemosErro['mensaje']
        });

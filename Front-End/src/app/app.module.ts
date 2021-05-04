@@ -70,7 +70,7 @@ import { ReactivarOfertaComponent } from './pages/compentes-publicos/reactivar-o
 import { FormMiPerfilComponent } from './pages/compentes-publicos/form-mi-perfil/form-mi-perfil.component';
 import { MiPerfilPostulanteComponent } from './pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
 import { MiPerfilEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
-// import { Model,Survey,SurveyModel,showModal } from 'survey-jquery'
+import { RatingModule } from 'ng-starrating';
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,7 +132,8 @@ import { MiPerfilEmpleadorComponent } from './pages/paneles-administracion/panel
     FormsModule,
     HttpClientModule,
     // DATA TABLE
-    DataTablesModule
+    DataTablesModule,
+    RatingModule 
 
 
     // Tostadas
