@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Cedula de Identidad</label><br>
+                    <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
                     <input type="number"
                            [(ngModel)]="instanciaPostulante.cedula"
                            name="cedula"
@@ -113,20 +113,24 @@
                                     <input class="form-check-input"
                                           type="radio"
                                           name="genero"
+                                          ng-control="genero"
                                           required
+                                          [checked]="instanciaPostulante.genero==0"
                                           [value]="0"
                                           [(ngModel)]="instanciaPostulante.genero"
-                                          [disabled]="instanciaPostulante.genero===1  && obervaciones==false || formValidado==true">
+                                          [disabled]="obervaciones == false || formValidado==true">
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input"
                                             type="radio"
+                                            ng-control="genero"
                                             name="genero"
                                             [value]="1"
                                             [(ngModel)]="instanciaPostulante.genero"
                                             required
-                                            [disabled]="instanciaPostulante.genero===0  && obervaciones==false || formValidado==true">
+                                            [checked]="instanciaPostulante.genero==1"
+                                            [disabled]="obervaciones == false || formValidado==true">
                                     <label class="form-check-label" for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
@@ -251,7 +255,7 @@
                                     <input class="form-check-input"
                                            type="radio"
                                            name="genero"
-                                           value="0"
+                                           [value]="0"
                                            required
                                            [(ngModel)]="instanciaPostulante.genero">
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
@@ -260,7 +264,7 @@
                                     <input class="form-check-input "
                                            type="radio"
                                            name="genero"
-                                           value="1"
+                                           [value]="1"
                                            required
                                            [(ngModel)]="instanciaPostulante.genero">
                                     <label class="form-check-label "for="gridRadios2">Femenino</label>

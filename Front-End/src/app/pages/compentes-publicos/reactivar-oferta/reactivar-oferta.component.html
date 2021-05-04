@@ -4,8 +4,14 @@
   <div class="centrarFormularioLoginRegistro  animate__animated  fadeIn ">
     <div class="container col-sm-9 ">
       <div class="formRegistroLogin" *ngIf="ofertaEncontrada==false">
-        <div class="alert alert-warning row g-3  pl-2 pr-2 text-center" role="alert" >
-          <i class="fas fa-exclamation-triangle" style="font-size: 60px;"></i>  <p>Oferta laboral no encontrada</p>
+        <div class="row g-3  pl-2 pr-2 pb-5  text-center" >
+          <i class="fas fa-exclamation-triangle text-white" style="font-size: 60px;"></i>
+            <p class="text-white">Oferta laboral no encontrada</p>
+          <div class="col-sm-3">
+            <a [routerLink]="['/home']" class="float-right btn btn-outline-light">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio
+            </a>
+          </div>
         </div>
       </div>
       <form class="row g-3  pl-2 pr-2 formRegistroLogin" *ngIf="ofertaEncontrada==true" (ngSubmit)="fActualizarEstadoOferta(fActualizarEstadOferta)" #fActualizarEstadOferta="ngForm" >

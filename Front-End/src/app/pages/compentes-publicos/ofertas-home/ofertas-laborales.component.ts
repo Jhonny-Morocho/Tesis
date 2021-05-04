@@ -98,7 +98,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                   console.log("SI PUEDE POSTULAR");
                   Swal({
                     title: '¿Está seguro?',
-                    text: "Uste ha seleccionado la oferta "+nomOferta,
+                    text: "Usted ha seleccionado la oferta "+nomOferta,
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -123,7 +123,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                         if(siHacesBien['Siglas']=='OE'){
                           Swal('Guardado','success');
                         }else{
-                          Swal('Informacion',mensaje,'info');
+                          Swal('Información',mensaje,'info');
                         }
                       },error=>{
                         let mensaje=error['mensaje'];

@@ -123,7 +123,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Actualizado', 'Informacion Registrada con Exito', 'success');
+          Swal('Actualizado', 'Información registrada con éxito', 'success');
           //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
           this.obervaciones=false;
           //si el usuario esta el estado en 1// estado cero

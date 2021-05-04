@@ -299,8 +299,8 @@ class NotificarUsuarios extends Command
                               por lo cual su oferta laboral se encuentra deshabilitado,
                               para volver a reactivar su oferta laboral denominada <b>".$value['puesto']."</b>
                               por favor realizarlo mediante el siguiente enlace
-                              <a href='".getenv("DOMINIO_WEB")."'/reactivar-oferta-laboral/'".$value["external_of"]."'>".
-                                            getenv("DOMINIO_WEB")."/reactivar-oferta-laboral/".$value["external_of"].
+                              <a href='".getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/".$value["external_of"]."'>".
+                                            getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/".$value["external_of"].
                               "</a>";
 
                     $plantillaHtml= $this->templateHtmlCorreo($value['nom_representante_legal'],$parrafo);

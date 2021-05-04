@@ -74,11 +74,29 @@ export class ReporteOfertasComponent implements OnInit {
                       ];
     return arrayCabezera;
   }
-  resumenTabla(noVal:number,rev:number,publ:number,final:number){
+  resumenTabla(val:number,noVal:number,rev:number,publ:number,final:number){
     let array=
   [
+    // validadas
+    [
+
+      {
+        text: 'Ofertas validadas',
+        border: [false, true, false, true],
+        alignment: 'right',
+        margin: [0, 5, 0, 5],
+      },
+      {
+        border: [false, true, false, true],
+        text: val,
+        alignment: 'right',
+        fillColor: '#f5f5f5',
+        margin: [0, 5, 0, 5],
+      },
+    ],
     //no validadas
     [
+
       {
         text: 'Ofertas no validadas',
         border: [false, true, false, true],
@@ -395,6 +413,7 @@ export class ReporteOfertasComponent implements OnInit {
      });
       //asigno los contadores de resumen al documento
       this.rowsResumenTabla=this.resumenTabla(
+                        numOfertValidadas,
                         numOfertasNoValidas,
                         numOfertRevisadas,
                         numOfertasPublicadas,
