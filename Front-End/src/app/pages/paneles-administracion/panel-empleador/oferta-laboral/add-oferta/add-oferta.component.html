@@ -3,12 +3,10 @@
         <article class="card-body animated animate__animated animate__slideInRight">
             <form class="row g-3" (ngSubmit)="onSubMitRegistroOfertaLaboral(fRegistrarOfertaLaboral)" #fRegistrarOfertaLaboral="ngForm" enctype="multipart/form-data">
                 <h6>Registrar Oferta Laboral</h6>
-                <hr>
                 <div class="col-2">
                     <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
                 </div>
-
                 <hr>
                 <div class="col-md-12">
                     <label for="inputPuesto" class="form-label">Puesto</label><br>

@@ -83,7 +83,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Información Registrada con éxito', 'success');
+          Swal('Registrado', 'Información registrada con éxito', 'success');
         }else{
           Swal('Ups', siHacesBien['mensaje'], 'info')
         }

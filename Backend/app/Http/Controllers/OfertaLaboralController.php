@@ -497,6 +497,7 @@ class OfertaLaboralController extends Controller
     //corresponde al proceso 4
     private function notificarPublicacionOfertaLaboral($datosOFertaLaboral){
         $texto="";
+        $arrayCorreoEstudiantes=null;
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
         try {
             $empleador=OfertasLaborales::join("empleador","empleador.id","oferta_laboral.fk_empleador")

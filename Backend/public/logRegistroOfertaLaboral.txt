@@ -318,3 +318,47 @@
 
 
 
+[2021-05-04 04:03:29] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :udemy@hotmail.com ]
+
+
+
+[2021-05-04 04:04:38] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :udemy@hotmail.com ]
+
+
+
+[2021-05-04 04:08:52] Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : false::: El Correo del gestor  es: gestorsistemas.unl@gmail.com::: El Correo del empleador es :udemy@hotmail.com ]
+
+
+
+[2021-05-04 04:08:55] Oferta laboral validada por el encargado pendiente de publicar por parte del gestor:: Estado del correo enviado al gestor : false::: El Correo del gestor  es: jhonny@hotmail3.com::: El Correo del empleador es :udemy@hotmail.com ]
+
+
+
+[2021-05-04 04:10:04] NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES :
+                            ::Estado de enviar correo a los postulantes: false::: El Correo del postulante  es: jmmorochoa@unl.edu.ec
+                            ::: Estado de correo enviado al empleador : false
+                            El correo del empleador es : udemy@hotmail.com ] 
+
+
+
+[2021-05-04 04:10:06] NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES :
+                            ::Estado de enviar correo a los postulantes: false::: El Correo del postulante  es: jhonnymichaeldj2011@hotmail.com
+                            ::: Estado de correo enviado al empleador : false
+                            El correo del empleador es : udemy@hotmail.com ] 
+
+
+
+[2021-05-04 04:10:08] NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES :
+                            ::Estado de enviar correo a los postulantes: false::: El Correo del postulante  es: jhonny@hotmail.com
+                            ::: Estado de correo enviado al empleador : false
+                            El correo del empleador es : udemy@hotmail.com ] 
+
+
+
+[2021-05-04 04:10:10] NOTIFICAR PUBLICACIÓN DE OFERTA LABORAL AL EMPLEADOR Y ESTUDIANTES :
+                            ::Estado de enviar correo a los postulantes: false::: El Correo del postulante  es: demoy@hotmail.com
+                            ::: Estado de correo enviado al empleador : false
+                            El correo del empleador es : udemy@hotmail.com ] 
+
+
+

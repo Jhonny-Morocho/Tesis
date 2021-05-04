@@ -44,6 +44,16 @@ export class AddOfertaComponent implements OnInit {
     this.instanciaOfertaLaboral.obervaciones="";
     //console.log(textAreaRequisitos);
     if(formRegistroTitulo.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'info',
+        title: 'Debe completar todos los campos'
+      })
       return;
      }
      Swal({
@@ -57,7 +67,7 @@ export class AddOfertaComponent implements OnInit {
           console.log(siHaceBien);
           if(siHaceBien['Siglas']=="OE"){
             console.log(siHaceBien);
-            Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+            Swal('Registrado', 'Información registrada con éxito', 'success');
             this.router.navigateByUrl('/panel-empleador/oferta-laboral');
           }else{
             console.warn(siHaceBien);

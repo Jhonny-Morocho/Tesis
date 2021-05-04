@@ -35,7 +35,7 @@ export class FormPublicarOfertaGestorComponent implements OnInit {
               this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
               this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
               this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
-              
+
               $(function() {
                 //Add text editor
                 $('#compose-textarea').summernote({
@@ -59,7 +59,7 @@ export class FormPublicarOfertaGestorComponent implements OnInit {
               //this.encontrado=false;
             }
         },peroSiTenemosErro=>{
-     
+
           console.log(peroSiTenemosErro);
         }
       )
@@ -82,9 +82,9 @@ export class FormPublicarOfertaGestorComponent implements OnInit {
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+          Swal('Registrado', 'Información registrada con éxito', 'success');
         }else{
-          Swal('Ups, No se puede realizar el registro'+siHacesBien['mensaje'], 'info')
+          Swal('Ups'+siHacesBien['mensaje'], 'info')
         }
 
       },error=>{
@@ -92,7 +92,7 @@ export class FormPublicarOfertaGestorComponent implements OnInit {
       }
 
     );
-    
+
 
   }
     //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
@@ -110,7 +110,7 @@ export class FormPublicarOfertaGestorComponent implements OnInit {
         console.log(this.instanciaOfertaLaboral.estado);
         return true;
       }
-  
+
     }
 
 }

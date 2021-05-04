@@ -46,11 +46,6 @@ export class TareaValiar implements OnInit {
     //this.calificarEstrellas();
   }
   onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent},indice) {
-    // alert(`Old Value:${$event.oldValue},
-    //   New Value: ${$event.newValue},
-    //   Checked Color: ${$event.starRating.checkedcolor},
-    //   Unchecked Color: ${$event.starRating.uncheckedcolor}`);
-    console.log(indice);
       this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];
       this.intanciaEmpleadorCalificar.cedula=this.empleador[indice]['cedula'];
       this.intanciaEmpleadorCalificar.fk_ciudad=this.empleador[indice]['fk_ciudad'];
@@ -76,7 +71,9 @@ export class TareaValiar implements OnInit {
         if (result.value) {
           this.intanciaCalifarEmpleador.estrellas=$event.newValue;
           this.calificarEmpleador();
-          //this.dibujarEstrellas(this.intanciaEmpleadorCalificar.external_em);
+          //borro la tabla anetrior y vuelvo a cargar
+          this.dtTrigger.unsubscribe();
+          this.cargarTablaperfilUsuario();
         }
       })
   }
@@ -141,13 +138,6 @@ export class TareaValiar implements OnInit {
 
   }
 
-  // valorEstrella(valorEstrella){
-  //   console.log(valorEstrella);
-  //   this.activarBotonCalificarModal=true;
-  //   this.intanciaCalifarEmpleador.estrellas=valorEstrella;
-  // }
-
-
 
   calificarEmpleador(){
     //aqui tengo el fk del empleador
@@ -158,9 +148,7 @@ export class TareaValiar implements OnInit {
           //consulto de nuevo las nuevas calificaiones de los emepleadores
           if(siHaceBien['Siglas']=='OE'){
             Swal('Registrado', siHaceBien['mensaje'], 'success');
-              // this.obtenerCalificacionesTodosEmpleadores();
-              // let external_em= this.intanciaEmpleadorCalificar.external_em;
-              // console.log(external_em);
+
 
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
@@ -169,7 +157,6 @@ export class TareaValiar implements OnInit {
         console.log(error);
         Swal('Error', error['mensaje'], 'error');
       });
-    this.cerrarModal();
   }
 
   ngOnDestroy(): void {
@@ -186,9 +173,7 @@ export class TareaValiar implements OnInit {
       return true;
     }
   }
-  cerrarModal(){
-    $('#CalificarEmpleador').modal('hide')
-  }
+
   //si esta revisado debe hacer algo o existr texto en el campo de obersiaciones
   estadoRevision(observacion:String):boolean{
     //si ha escrito algo la secretaria signifca que si reviso
