@@ -295,7 +295,7 @@ class NotificarUsuarios extends Command
                 Carbon::now()->subHour($this->tiempoSeleccionarPostulante))
                 ->first();
                 if(isset($postulanteEncontrado)){
-                    $parrafo="Se le informa que han trancurrido 8 dias desde que se inicio el proceso de postulación,
+                    $parrafoEmpleador="Se le informa que han trancurrido 8 dias desde que se inicio el proceso de postulación,
                               por lo cual su oferta laboral se encuentra deshabilitado,
                               para volver a reactivar su oferta laboral denominada <b>".$value['puesto']."</b>
                               por favor realizarlo mediante el siguiente enlace
@@ -303,8 +303,8 @@ class NotificarUsuarios extends Command
                                             getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/".$value["external_of"].
                               "</a>";
 
-                    $plantillaHtml= $this->templateHtmlCorreo($value['nom_representante_legal'],$parrafo);
-                    $enviarCorreoBolean=$this->enviarCorreo($plantillaHtml,$value['correo'],getenv("TITULO_CORREO_APLICAR_OFERTA"));
+                    $plantillaHtmlEmpleador= $this->templateHtmlCorreo($value['nom_representante_legal'],$parrafoEmpleador);
+                    $enviarCorreoBolean=$this->enviarCorreo($plantillaHtmlEmpleador,$value['correo'],getenv("TITULO_CORREO_APLICAR_OFERTA"));
 
                     //cambio de estado a la oferta laboral a finalizado
                     $ofertaLaboralEstado=OfertasLaborales::where("id",$value['id'])
@@ -314,8 +314,8 @@ class NotificarUsuarios extends Command
 
                     // NOTIFICAR AL ENCARGADADO PARA QUE CALIFIQUE AL EMPLEADOR
                     // NOTIFICAR AL ENCARGADADO PARA QUE CALIFIQUE AL EMPLEADOR
-                    $parrafoEcargado="Se le informa que el señor ".$value['nom_representante_legal']."
-                             represntante de la empresa ".$value['razon_empresa'].",
+                    $parraEncargado="Se le informa que el señor <b>".$value['nom_representante_legal']."</b>
+                             representante de la empresa <b>".$value['razon_empresa']."</b>,
                              no ha realizado ninguna contración en los 8 dias habiles,
                              en la oferta laboral denominada ".$value['puesto'];
 
@@ -328,10 +328,10 @@ class NotificarUsuarios extends Command
                         $plantillaHtmlCorreoEncargado=
                             $this->templateHtmlCorreo(
                                                         $item["nombre"]." ".$item["apellido"],
-                                                        $parrafoEcargado
+                                                        $parraEncargado
                                                     );
                         $enviarCorreoBoleanEncargado=$this->enviarCorreo($plantillaHtmlCorreoEncargado,
-                                                            $value['correo'],
+                                                            $item['correo'],
                                                             getenv("TITULO_CORREO_APLICAR_OFERTA"));
                     }
 

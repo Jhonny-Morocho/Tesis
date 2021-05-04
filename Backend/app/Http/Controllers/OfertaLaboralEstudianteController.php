@@ -279,10 +279,12 @@ class OfertaLaboralEstudianteController extends Controller
                    ->join("oferta_laboral","oferta_laboral.id","ofertalaboral_estudiante.fk_oferta_laboral")
                    ->where("ofertalaboral_estudiante.external_of_est",$value['external_of_est'])
                    ->update(array('ofertalaboral_estudiante.estado'=>$value['estado']));
+
                    $arrayRespuesta[$key]=array(
                        "estudiante"=>$value['external_of_est'],
                        "estado"=> $OfertaLaboralPostulanteBorrar
                    );
+
                    $fk_oferta_labora=$value['fk_oferta_laboral'];
                    //revisar si existe contratado o no
                    if($value['estado']==2){
@@ -293,6 +295,7 @@ class OfertaLaboralEstudianteController extends Controller
                $ofertaLaboralTemporal=OfertasLaborales::where("id",$fk_oferta_labora)->first();
                //hacemos una consulta mas avanzada
                $buscarOferta=$this->buscarOfertaLaboral($ofertaLaboralTemporal->external_of);
+
                $datosOfertaEstudiante=array(
                    "nom_representante_legal"=>$buscarOferta['nom_representante_legal'],
                    "razon_empresa"=>$buscarOferta['razon_empresa'],
@@ -520,7 +523,8 @@ class OfertaLaboralEstudianteController extends Controller
 
 
     private function notificarPostulante($listaPostulantes,$puesto){
-        $parrafoPostulanteSISSEG="Muchas gracias por participar en este proceso,
+
+        $parrafoPostulanteSISSEG="Muchas gracias por participar en la oferta laboral <b>".$puesto."</b>,
                                     sírvase por favor de llenar la siguiente encuesta ".
                                     "<a href=".getenv('SISSEG_POSTULANTE').">".
                                     getenv('SISSEG_POSTULANTE') ."</a> de ante mano se le agradece su colaboración ";
@@ -598,6 +602,7 @@ class OfertaLaboralEstudianteController extends Controller
            }
            //tabulo por cada interaccion que exista
         }
+        //die(json_encode($listaPostulantes));
         return $texto;
     }
     private function nofiticarFinalizacionOfertaEncargadoLaboralPostulante($arrayData){
@@ -612,24 +617,31 @@ class OfertaLaboralEstudianteController extends Controller
 
                 $parrafoNotificarEncargado="Se le comunica que ha finalizado la oferta laboral denominada <b>".
                         $arrayData["puesto"]. "</b>,  existen postulantes contratados";
+                $notificarEncargado=$this->notificarEncargado($parrafoNotificarEncargado,$arrayData['existeContrados'],"SI SE CONTRARARON POSTULANTES");
                 //1.notificar al encargado de la contracion de postulanes
-                fwrite($handle, $this->notificarEncargado($parrafoNotificarEncargado,$arrayData['existeContrados'],"SI SE CONTRARARON POSTULANTES"));
+                fwrite($handle,$notificarEncargado );
                 fwrite($handle, "\r\n\n\n\n");
                 //2.Notifcamos a los postulantes si han sido o no contratados
-                fwrite($handle, $this->notificarPostulante($arrayData['listaEstudiantes'],$arrayData['puesto']));
+                $notificarPostulantes=$this->notificarPostulante($arrayData['listaEstudiantes'],$arrayData['puesto']);
+                $arrayRespuesta=array("existeContratado"=>$arrayData['existeContrados']);
+                fwrite($handle, $notificarPostulantes);
                 fwrite($handle, "\r\n\n\n\n");
-                return $arrayRespuesta=array("existeContratado"=>$arrayData['existeContrados']);
             }
             // SI NO SE CONTRATA SOLO SE NOTIFICA AL ENCARGADO
             // SI NO SE CONTRATA SOLO SE NOTIFICA AL ENCARGADO
             if($arrayData['existeContrados']==false){
-                $parrafoPostulanteNoContratados="Ha finalizado la oferta laboral denominada".
-                                                 $arrayData["puesto"]. ", por ende esta oferta laboral no ha contrato ningún postulante";
+                $parrafoPostulanteNoContratados="Ha finalizado la oferta laboral denominada <b>".
+                                                 $arrayData["puesto"]. "</b>, por ende esta oferta laboral no ha contrato ningún postulante";
                 //2.notificar al encargado de la no contracion de postulanes
-                fwrite($handle, $this->notificarEncargado($parrafoPostulanteNoContratados,$arrayData['existeContrados'],"NO SE  CONTRARARON POSTULANTES"));
+                $notificarEncargado=$this->notificarEncargado($parrafoPostulanteNoContratados,$arrayData['existeContrados'],"NO SE  CONTRARARON POSTULANTES");
+                //2.Notifcamos a los postulantes si han sido o no contratados
+                $notificarPostulantes=$this->notificarPostulante($arrayData['listaEstudiantes'],$arrayData['puesto']);
+                $arrayRespuesta=array("existeContratado"=>$arrayData['existeContrados']);
+                $arrayRespuesta=array("existeContratado"=>$arrayData['existeContrados']);
+                fwrite($handle,$notificarEncargado );
                 fwrite($handle, "\r\n\n\n\n");
-                return $arrayRespuesta=array("existeContratado"=>$arrayData['existeContrados']);
             }
+            return $arrayRespuesta;
         } catch (\Throwable $th) {
             $texto="[".date("Y-m-d H:i:s")."]"
             ." APLICAR OFERTA LABORAL ERROR: NOTICAR AL ENCARGADO LA CONTRACION O NO CONTRACION DE POSTULANTES ".$th->getMessage()

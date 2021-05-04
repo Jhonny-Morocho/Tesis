@@ -418,3 +418,7 @@
 
 
 
+[2021-05-04 13:33:23] Registrar oferta laboral :: Estado del correo enviado al empleador : false::: El Correo del encargado  es: encargado.unl@gmail.com::: El Correo del empleador es :udemy@hotmail.com ]
+
+
+

@@ -1,0 +1,24 @@
+[2021-05-04 14:27:00] APLICAR OFERTA LABORAL -> NOTIFICAR AL ENCARGADO  NO SE  CONTRARARON POSTULANTES :
+            ::Existen postulantes contratados boolean : false::: El Correo del encargado  es: encargado.unl@gmail.com ] 
+
+
+
+[2021-05-04 14:29:51] APLICAR OFERTA LABORAL -> NOTIFICAR AL ENCARGADO  NO SE  CONTRARARON POSTULANTES :
+            ::Existen postulantes contratados boolean : false::: El Correo del encargado  es: encargado.unl@gmail.com ] 
+
+
+
+[2021-05-04 14:31:34] APLICAR OFERTA LABORAL -> NOTIFICAR AL ENCARGADO  SI SE CONTRARARON POSTULANTES :
+            ::Existen postulantes contratados boolean : true::: El Correo del encargado  es: encargado.unl@gmail.com ] 
+
+
+
+[2021-05-04 14:31:43] APLICAR OFERTA LABORAL -> NOTIFICAR AL POSTULANTE QUE EL EMPLEADOR LE CONTRATO  :
+            ::Postulante contrado  : PRUEBAS 2 PRUEBA 2
+            ::: El Correo del postulante  es: jhonnymichaeldj2011@hotmail.com
+            ::: NOMBRE DE LA OFERTA LABORAL: Ing en front end--
+            ::: ESTADO DE ENVIAR FORMULARIO DEL SISSEG POSTULANTE: true
+            ::Estado del correo enviado al postulante true ]
+
+
+
