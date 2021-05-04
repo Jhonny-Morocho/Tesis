@@ -121,7 +121,7 @@ export class PostularOfertaLaboralComponent implements OnInit {
                         let mensaje=(siHacesBien['mensaje']);
                         console.log(mensaje);
                         if(siHacesBien['Siglas']=='OE'){
-                          Swal('Guardado','success');
+                          Swal('Guardado','Registro guardado','success');
                         }else{
                           Swal('Información',mensaje,'info');
                         }

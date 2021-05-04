@@ -68,12 +68,8 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
 
       return;
     }
-    if(this.instanciaFiltro.estado==0){
-      this.reiniciarValoresTablaOfertas();
-    }else{
-      this.filtrarDatosFecha(this.instanciaFiltro.de,
-        this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
-    }
+    this.filtrarDatosFecha(this.instanciaFiltro.de,
+    this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
   }
   cargarTodasOfertas(){
   //listamos todas las ofertas
@@ -132,8 +128,10 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
   }
   reiniciarValoresTablaOfertas(){
     this.dtTrigger.unsubscribe();
-    this.configurarParametrosDataTable();
     this.cargarTodasOfertas();
+    this.instanciaFiltro.de='';
+    this.instanciaFiltro.hasta='';
+    this.instanciaFiltro.estado=null;
   }
 
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){

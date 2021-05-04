@@ -300,12 +300,9 @@ export class ReporteOfertasComponent implements OnInit {
     if(formFiltro.invalid){
       return;
     }
-    if(this.instanciaFiltro.estado==0){
-      this.reiniciarValoresTablaOfertas();
-    }else{
-      this.filtrarDatosFecha(this.instanciaFiltro.de,
-        this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
-    }
+    this.filtrarDatosFecha(this.instanciaFiltro.de,
+    this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
+
   }
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
@@ -582,6 +579,9 @@ export class ReporteOfertasComponent implements OnInit {
     this.dtTrigger.unsubscribe();
     this.configurarParametrosDataTable();
     this.cargarTablaReporteOfertas();
+    this.instanciaFiltro.de='';
+    this.instanciaFiltro.hasta='';
+    this.instanciaFiltro.estado=null;
   }
   configurarParametrosDataTable(){
     this.dtOptions = dataTable;
