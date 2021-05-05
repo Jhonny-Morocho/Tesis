@@ -39,15 +39,15 @@ trait TemplateCorreo {
                         padding: .6rem 2rem;
                         color: #fff;
                         border-radius: .25rem;
-                        background-color: #0d6efd;
+                        background-color: #0c2342;
                         text-decoration: none;"
 
-                            href="'.getenv("DOMINIO_WEB").'" style="background:#292721 !important;">
+                            href="'.getenv("DOMINIO_WEB").'" style="background:#0c2342 !important;">
                         Acceder
                     </a>
                         <p class="mt-3">Saludos Cordiales</p>
                     <hr>
-                    <p><b>CARRERA DE INGENIERÍA EN SISTEMAS (UNL)</b></p>
+                    <p><b>CARRERA DE INGENIERÍA EN SISTEMAS/COMPUTACIÓN</b></p>
                     <p class="text-secondary">07-2546384/07-2547252(ext 154-155) Ciudad Universitaria "Ing. Guillermo Falconi Espinosa"</p>
                 </div>
                 </div>

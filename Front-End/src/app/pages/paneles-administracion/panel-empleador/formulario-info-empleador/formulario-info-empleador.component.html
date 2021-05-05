@@ -126,11 +126,12 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Télefono</label><br>
-                        <input type="text"
-                              [ngModel]='instanciaEmpleadorLlenarForm.telefono'
+                        <input type="number"
+                              [(ngModel)]='instanciaEmpleadorLlenarForm.telefono'
                               name="telefono"
                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                               maxlength="10"
+                              min="0"
                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['telefono'].errors }"
                               placeholder="Ingrese el número de teléfono"
                               class="form-control"
@@ -260,14 +261,12 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Número de RUC</label><br>
-                        <input type="number"
+                        <input type="text"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.num_ruc"
                                 name="numeroRucRegistrar"
                                  class="form-control"
                                  placeholder="Ingrese el número de RUC"
-                                 maxlength="13"
-                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                 min="0"
+                                 [maxlength]="13"
                                  required
                                  [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true">
@@ -278,14 +277,12 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
-                        <input type="number"
+                        <input type="text"
                               [(ngModel)]="instanciaEmpleadorRegistrar.cedula"
                               name="cedulaRegistrar"
                               class="form-control"
                               placeholder="Ingrese la cédula de identidad del representante legal"
-                              maxlength="10"
-                              min="0"
-                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                              [maxlength]="10"
                               [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['cedulaRegistrar'].errors }"
                               required
                               [disabled]="booleanFormRegistro==true" >
@@ -312,12 +309,11 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Teléfono </label><br>
-                        <input type="number"
+                        <input type="text"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.telefono"
                                 name="telefonoRegistrar"
-                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                 class="form-control"
-                                maxlength="10"
+                                [maxlength]="10"
                                 placeholder="Ingrese el número de teléfono"
                                 [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true"

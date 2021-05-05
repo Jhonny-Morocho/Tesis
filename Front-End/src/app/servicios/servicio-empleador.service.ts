@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {  map } from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
+import { ReturnStatement } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +20,7 @@ export class SerivicioEmpleadorService {
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
     console.log(modeloEmpleador);
+    ReturnStatement;
     const autenficacionDatos={
       ...modeloEmpleador
 
