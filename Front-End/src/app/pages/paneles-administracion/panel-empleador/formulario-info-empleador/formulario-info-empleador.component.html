@@ -12,14 +12,14 @@
                         <h4 class="alert-heading"> Validación exitosa </h4>
                         <p>Tu validación ha sido éxitosa, por lo cual ya puedes publicar las ofertas laborales en la plataformas</p>
                         <hr>
-                        <p class="mb-0">Obersvaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
+                        <p class="mb-0">Observaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
                     </div>
                     <!-- // ======= SI EL FORMULARIO HA SIDO REVISADO POR LA SECREATARIA Y SU ESTADO DE VALIDACION ES FALSE  ===============// -->
                     <div class="alert alert-warning" role="alert" *ngIf="formValidado==false && obervaciones==true">
                         <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Validación no exitosa </h4>
-                        <p class="mb-0">Obersvaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
+                        <p class="mb-0">Observaciones: {{ instanciaEmpleadorLlenarForm.observaciones }}</p>
                         <hr>
-                        <p class="mb-0">Por favor vuelte a intentar</p>
+                        <p class="mb-0">Por favor vuelva a intentar</p>
                     </div>
                     <h3>Registro de Empleador</h3>
                     <hr>
@@ -78,13 +78,12 @@
                         <input type="text"
                                [(ngModel)]="instanciaEmpleadorLlenarForm.num_ruc"
                                name="numeroRuc"
-                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                               min="0"
+                               maxlength="13"
                                placeholder="Ingrese el número de RUC"
                                [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors }"
                                class="form-control"
-                               required [disabled]="obervaciones==false || formValidado==true"
-                               maxlength="13">
+                               required
+                               [disabled]="obervaciones==false || formValidado==true">
                         <div class="invalid-feedback"
                               *ngIf="fEmpleador.submitted && fEmpleador.controls['numeroRuc'].errors">
                           El campo número de RUC es obligatorio
@@ -92,14 +91,12 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Cédula de identidad del representante legal</label><br>
-                        <input type="number"
+                        <input type="text"
                               [(ngModel)]="instanciaEmpleadorLlenarForm.cedula"
                               name="cedula"
                               class="form-control"
                               placeholder="Ingrese la cédula de identidad del representante legal"
                               required
-                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                              min="0"
                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['cedula'].errors }"
                               maxlength="10"
                               [disabled]="obervaciones==false || formValidado==true">
@@ -126,12 +123,11 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail4" class="form-label">Télefono</label><br>
-                        <input type="number"
+                        <input type="text"
                               [(ngModel)]='instanciaEmpleadorLlenarForm.telefono'
                               name="telefono"
                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                               maxlength="10"
-                              min="0"
                               [ngClass]="{'is-invalid': fEmpleador.submitted && fEmpleador.controls['telefono'].errors }"
                               placeholder="Ingrese el número de teléfono"
                               class="form-control"
@@ -264,11 +260,11 @@
                         <input type="text"
                                 [(ngModel)]="instanciaEmpleadorRegistrar.num_ruc"
                                 name="numeroRucRegistrar"
-                                 class="form-control"
-                                 placeholder="Ingrese el número de RUC"
-                                 [maxlength]="13"
-                                 required
-                                 [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors }"
+                                class="form-control"
+                                placeholder="Ingrese el número de RUC"
+                                maxlength="13"
+                                required
+                                [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true">
                         <div class="invalid-feedback"
                         *ngIf="fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['numeroRucRegistrar'].errors">
@@ -282,7 +278,7 @@
                               name="cedulaRegistrar"
                               class="form-control"
                               placeholder="Ingrese la cédula de identidad del representante legal"
-                              [maxlength]="10"
+                              maxlength="10"
                               [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['cedulaRegistrar'].errors }"
                               required
                               [disabled]="booleanFormRegistro==true" >
@@ -313,7 +309,7 @@
                                 [(ngModel)]="instanciaEmpleadorRegistrar.telefono"
                                 name="telefonoRegistrar"
                                 class="form-control"
-                                [maxlength]="10"
+                                maxlength="10"
                                 placeholder="Ingrese el número de teléfono"
                                 [ngClass]="{'is-invalid': fEmpleadorRegistrar.submitted && fEmpleadorRegistrar.controls['telefonoRegistrar'].errors }"
                                 [disabled]="booleanFormRegistro==true"

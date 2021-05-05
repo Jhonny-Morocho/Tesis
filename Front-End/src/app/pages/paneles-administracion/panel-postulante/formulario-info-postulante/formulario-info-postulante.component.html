@@ -24,13 +24,13 @@
                     <h4 class="alert-heading">Validación no exitosa </h4>
                     <p>{{ instanciaPostulante.observaciones }}</p>
                     <hr>
-                    <p class="mb-0">Por favor vuelte a intentar</p>
+                    <p class="mb-0">Por favor vuelva a intentar</p>
                 </div>
                 Formulario de Registro de Postulante
                 <hr>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre Completos</label><br>
-                    <input type="texto"
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.nombre"
                            name="nombre"
                            class="form-control"
@@ -60,15 +60,13 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
-                    <input type="number"
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.cedula"
                            name="cedula"
                            placeholder="Ingrese su numero de cédula"
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
                            class="form-control"
                            required
-                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                           min="0"
                            [disabled]="obervaciones==false || formValidado==true"
                            maxlength="10">
                     <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">
@@ -90,12 +88,11 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Teléfono fijo o móvil</label><br>
-                    <input type="number"
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.telefono"
                            class="form-control"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            name="telefono"
-                           min="0"
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['telefono'].errors }"
                            required
                            maxlength="10"
@@ -134,9 +131,9 @@
                                     <label class="form-check-label" for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
-                            <!-- <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
+                            <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
                               El campo género es obligatorio
-                            </div> -->
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -176,7 +173,7 @@
                 <hr>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombres Completos</label><br>
-                    <input type="texto"
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.nombre"
                            name="nombre"
                            maxlength="20"
@@ -205,12 +202,10 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
-                    <input type="number"
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.cedula"
                            name="cedula"
                            class="form-control"
-                           min="0"
-                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            placeholder="Ingrese su numero de cédula"
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
                            required
@@ -233,11 +228,10 @@
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil</label><br>
-                    <input type="number "
+                    <input type="text"
                            [(ngModel)]="instanciaPostulante.telefono"
                            class="form-control"
                            name="telefono"
-                           min="0"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            required
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['telefono'].errors }"

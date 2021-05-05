@@ -86,7 +86,7 @@ class NotificarUsuarios extends Command
             ->get();
             //
             $parrafoMensaje="Se le informa que la validación de su
-                            oferta laboral ha expirado, porfavor vuelva a
+                            oferta laboral ha expirado, por favor vuelva a
                             insistir ingresando a su cuenta y reenviando la oferta";
 
             $TituloCorreo="Proceso de publicacion de oferta laboral";
@@ -130,11 +130,11 @@ class NotificarUsuarios extends Command
             ->get();
             //
             $parrafoMensaje="Se le informa que la validación de su
-                            información ha expirado, porfavor vuelva a
+                            información ha expirado, por favor vuelva a
                             insistir ingresando a su cuenta y reenviando el
                             formulario de registro";
             //
-            $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
+            $observaciones="La validación de su información ha expirado, por favor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
                 $estudianteBooleand=Estudiante::where("fk_usuario","=",$value['fk_usuario'])
                 ->update(array( 'estado'=>0,"observaciones"=>$observaciones));
@@ -167,11 +167,11 @@ class NotificarUsuarios extends Command
                 Carbon::now()->subHour($this->tiempoValidarFormEmpleador))
             ->get();
             $parrafoMensaje="Se le informa que la validación de su
-            información ha expirado, porfavor vuelva a
+            información ha expirado, por favor vuelva a
             insistir ingresando a su cuenta y reenviando el
             formulario de registro";
 
-            $observaciones="La validación de su información ha expirado, porfavor vuelva a insistir reenviando el formulario";
+            $observaciones="La validación de su información ha expirado, por favor vuelva a insistir reenviando el formulario";
             foreach ($usuario as $key => $value) {
                 $empleadorBooleand=Empleador::join("usuario","usuario.id","empleador.fk_usuario")
                 ->where("empleador.fk_usuario","=",$value['fk_usuario'])
