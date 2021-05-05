@@ -41,7 +41,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     //filtros personalizados con codigo
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
-
+    datatableElement!: DataTableDirective;
     //Probando nuevos codigo para renicnair dat table
 
     constructor(private servicioOferta:OfertasLaboralesService,
@@ -127,8 +127,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     $('#exampleModal').modal('hide');
   }
   reiniciarValoresTablaOfertas(){
-    this.dtTrigger.unsubscribe();
-    this.cargarTodasOfertas();
     this.instanciaFiltro.de='';
     this.instanciaFiltro.hasta='';
     this.instanciaFiltro.estado=null;

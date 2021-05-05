@@ -299,8 +299,8 @@ class NotificarUsuarios extends Command
                               por lo cual su oferta laboral se encuentra deshabilitado,
                               para volver a reactivar su oferta laboral denominada <b>".$value['puesto']."</b>
                               por favor realizarlo mediante el siguiente enlace
-                              <a href='".getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/".$value["external_of"]."'>".
-                                            getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/".$value["external_of"].
+                              <a href='".getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/reactivar-oferta-laboral/".$value["external_of"]."'>".
+                                            getenv("DOMINIO_WEB_REACTIVAR_OFERTA")."/reactivar-oferta-laboral/".$value["external_of"].
                               "</a>";
 
                     $plantillaHtmlEmpleador= $this->templateHtmlCorreo($value['nom_representante_legal'],$parrafoEmpleador);
@@ -316,8 +316,8 @@ class NotificarUsuarios extends Command
                     // NOTIFICAR AL ENCARGADADO PARA QUE CALIFIQUE AL EMPLEADOR
                     $parraEncargado="Se le informa que el señor <b>".$value['nom_representante_legal']."</b>
                              representante de la empresa <b>".$value['razon_empresa']."</b>,
-                             no ha realizado ninguna contración en los 8 dias habiles,
-                             en la oferta laboral denominada ".$value['puesto'];
+                             no ha realizado ninguna contración en los 8 dias habiles
+                             en la oferta laboral denominada <b>".$value['puesto']."</b>";
 
                     $usuarioEncargado=Docente::join("usuario","usuario.id","=","docente.fk_usuario")
                     ->select("docente.*","usuario.*")

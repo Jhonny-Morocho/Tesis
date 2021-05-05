@@ -412,10 +412,10 @@ class OfertaLaboralController extends Controller
         //recorrer todos los usuario que sean encargado
         foreach ($usuarioEncargado as $key => $value) {
             //tengo q redacatra el menaje a la secretaria
-            $parrafo="Se ha registrado la oferta laboral: ".
+            $parrafo="Se ha registrado la oferta laboral: <b>".
                         $datos["nombreOfertaLaboral"].
-                        " del usuario ".$datos["correoUsuarioEmpleador"].
-                        ". Representante de la empresa ".$datos["nombreEmpresa"];
+                        "</b> del usuario ".$datos["correoUsuarioEmpleador"].
+                        ", representante de la empresa <b>".$datos["nombreEmpresa"]."</b>";
             $plantillaHtmlCorreo=
                 $this->templateHtmlCorreo(
                                             $value["nombre"]." ".$value["apellido"],
@@ -448,7 +448,7 @@ class OfertaLaboralController extends Controller
             $mensaje="ha salido validada exitosamente ";
         }
         if($estadoValidacion==0){// si el estado es 0, siginifica que el postulante no esta validado
-            $mensaje="tiene algunas inconsistencias por favor revise su información y vuelva a intentar";
+            $mensaje="tiene algunas inconsistencias, por favor revise su información y vuelva a intentar";
         }
         $texto="";
         $handle = fopen("logRegistroOfertaLaboral.txt", "a");
@@ -460,7 +460,7 @@ class OfertaLaboralController extends Controller
                             " representante de la empresa ".$usuarioEmpleador->razon_empresa;
             $tituloMensaje="Estado de validación de la oferta laboral <b>".$usuarioEmpleador->puesto."</b>";
 
-            $parrafoMensaje="La oferta ".$usuarioEmpleador->puesto." ".$mensaje;
+            $parrafoMensaje="La oferta <b>".$usuarioEmpleador->puesto."</b> ".$mensaje;
             $plantillaCorreo=$this->templateHtmlCorreo($nombreUsuario,$parrafoMensaje);
 
             $enviarCorreoBolean=$this->enviarCorreo($plantillaCorreo,

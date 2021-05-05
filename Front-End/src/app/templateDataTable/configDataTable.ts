@@ -7,7 +7,7 @@ export const dataTable=
   language: {
     processing: "Procesando...",
     search: "Buscar:",
-    lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+    lengthMenu: "Mostrar _MENU_ elementos",
     info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
     infoEmpty: "Mostrando ningún elemento.",
     infoFiltered: "(filtrado _MAX_ elementos total)",
@@ -16,10 +16,10 @@ export const dataTable=
     zeroRecords: "No se encontraron registros",
     emptyTable: "No hay datos disponibles en la tabla",
     paginate: {
-      first: "Primero",
-      previous: "Anterior",
-      next: "Siguiente",
-      last: "Último"
+      first: "<i class='fas fa-chevron-left'></i>",
+      previous: "<i class='fas fa-angle-double-left'></i>",
+      next: "<i class='fas fa-angle-double-right'></i>",
+      last: "<i class='fas fa-chevron-right'></i>"
     },
     aria: {
       sortAscending: ": Activar para ordenar la tabla en orden ascendente",
