@@ -18,40 +18,68 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre Completos</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['nombre'].errors">El Nombre es obligatorio</span>
-                    <input type="texto" [(ngModel)]="instanciaPostulante.nombre" name="nombre" class="form-control" required minlength="3" disabled>
+                    <input type="text"
+                          [(ngModel)]="instanciaPostulante.nombre"
+                          name="nombre"
+                          class="form-control"
+                          required
+                          maxlength="20"
+                          disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellido Completos</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['apellido'].errors">El Apellido es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.apellido" name="apellido" class="form-control" required minlength="3" disabled>
+                    <input type="text"
+                            [(ngModel)]="instanciaPostulante.apellido"
+                            name="apellido"
+                            class="form-control"
+                            required
+                            maxlength="20"
+                            disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">La cedula es obligatoria</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.cedula" name="cedula" class="form-control" required disabled>
+                    <input type="text"
+                            [(ngModel)]="instanciaPostulante.cedula"
+                            name="cedula"
+                            class="form-control"
+                            required
+                            disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors">La fecha es obligatorio</span>
-                    <input type="date" [ngModel]='instanciaPostulante.fecha_nacimiento | date:"yyyy-MM-dd" ' name="fechaNacimiento" class="form-control" required disabled>
+                    <input type="date"
+                          [(ngModel)]='instanciaPostulante.fecha_nacimiento'
+                          name="fechaNacimiento"
+                          class="form-control"
+                          required
+                          disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Teléfono fijo o móvil</label><br>
                     <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">El telefono es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaPostulante.telefono" class="form-control" name="telefono" required minlength="10" disabled>
+                    <input type="text"
+                            [(ngModel)]="instanciaPostulante.telefono"
+                            class="form-control"
+                            name="telefono"
+                            required
+                            minlength="10"
+                            disabled>
                 </div>
                 <div class="col-md-6">
                     <fieldset class="form-group">
                         <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Genero</legend>
+                            <label class="col-form-label col-sm-2 pt-0">Género</label>
                             <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors">El genero es obligatorio</span>
                             <div class="col-sm-10">
                                 <div class="form-check">
                                     <input class="form-check-input"
                                             type="radio"
                                             name="genero"
-                                            [value]="0"
-
+                                            value="0"
+                                            [checked]="instanciaPostulante.genero==0"
                                             [(ngModel)]="instanciaPostulante.genero"
                                             disabled>
                                     <label class="form-check-label " for="gridRadios1 "> Masculino</label>
@@ -60,8 +88,9 @@
                                     <input class="form-check-input "
                                             type="radio"
                                             name="genero"
-                                            [value]="1"
-                                             [(ngModel)]="instanciaPostulante.genero"
+                                            value="1"
+                                            [checked]="instanciaPostulante.genero==1"
+                                            [(ngModel)]="instanciaPostulante.genero"
                                              disabled>
                                     <label class="form-check-label " for="gridRadios2">Femenino</label>
                                 </div>
@@ -73,7 +102,13 @@
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
                         <span class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">La direccion es obligatorio</span>
-                        <textarea class="form-control " [(ngModel)]="instanciaPostulante.direccion_domicilio " name="direcionDomicilio" rows="3 " required minlength="5 " disabled></textarea>
+                        <textarea class="form-control "
+                                  [(ngModel)]="instanciaPostulante.direccion_domicilio"
+                                  name="direcionDomicilio"
+                                  rows="3"
+                                  required
+                                  disabled>
+                        </textarea>
                     </div>
                 </div>
                 <div class="col-md-6 ">
@@ -96,13 +131,18 @@
                 <div class=" col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Estado de validación</label><br>
-                        <button type="button " class="btn btn-outline-danger" *ngIf="estadoAprobado(instanciaPostulante.estado)==false" (click)="estadoAprobado(1) "><i class="fas fa-times-circle "></i> No Aprobado</button>
-                        <button type="button " class="btn btn-outline-success" *ngIf="estadoAprobado(instanciaPostulante.estado)==true" (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
+                        <button type="button"
+                                class="btn btn-outline-danger"
+                                *ngIf="estadoAprobado(instanciaPostulante.estado)==false" (click)="estadoAprobado(1) ">
+                                <i class="fas fa-times-circle "></i>
+                                No Aprobado
+                        </button>
+                        <button type="button" class="btn btn-outline-success" *ngIf="estadoAprobado(instanciaPostulante.estado)==true" (click)="estadoAprobado(0) "><i class="fas fa-check "></i>  Aprobado</button>
                     </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center ">
-                    <button type="submit " class="btn btn-primary ">Guardar</button>
+                    <button type="submit" class="btn btn-primary ">Guardar</button>
                 </div>
             </form>
         </article>

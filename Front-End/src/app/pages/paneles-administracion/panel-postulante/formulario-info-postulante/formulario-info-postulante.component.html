@@ -76,7 +76,7 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <input type="date"
-                           [ngModel]='instanciaPostulante.fecha_nacimiento | date:"yyyy-MM-dd" '
+                           [(ngModel)]='instanciaPostulante.fecha_nacimiento'
                            name="fechaNacimiento"
                            class="form-control"
                            [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors }"
@@ -104,7 +104,7 @@
                 <div class="col-md-6">
                     <fieldset class="form-group">
                         <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Género</legend>
+                            <label class="col-form-label col-sm-2 pt-0">Género</label>
                             <div class="col-sm-10">
                                 <div class="form-check">
                                     <input class="form-check-input"
@@ -113,7 +113,7 @@
                                           ng-control="genero"
                                           required
                                           [checked]="instanciaPostulante.genero==0"
-                                          [value]="0"
+                                          value="0"
                                           [(ngModel)]="instanciaPostulante.genero"
                                           [disabled]="obervaciones == false || formValidado==true">
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
@@ -123,7 +123,7 @@
                                             type="radio"
                                             ng-control="genero"
                                             name="genero"
-                                            [value]="1"
+                                            value="1"
                                             [(ngModel)]="instanciaPostulante.genero"
                                             required
                                             [checked]="instanciaPostulante.genero==1"
