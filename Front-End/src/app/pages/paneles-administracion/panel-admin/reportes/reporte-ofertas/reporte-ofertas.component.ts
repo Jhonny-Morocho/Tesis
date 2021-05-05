@@ -326,8 +326,8 @@ export class ReporteOfertasComponent implements OnInit {
             console.log("xx");
             }
             //ver todos
-            if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
-                fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
+            if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
+                fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
                   estado==0 ){
             aux.push(element);
             console.log("xx");

@@ -43,6 +43,7 @@ export class ReactivarOfertaComponent implements OnInit {
           }
       },siHaceMal=>{
         console.warn(siHaceMal);
+        Swal('Error', siHaceMal['mensaje'], 'error')
       }
     );
   }
