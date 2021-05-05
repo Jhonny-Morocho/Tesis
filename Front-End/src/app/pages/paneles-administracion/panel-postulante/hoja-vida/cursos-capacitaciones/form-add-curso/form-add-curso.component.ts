@@ -31,7 +31,7 @@ export class FormAddCursoComponent implements OnInit {
   onSubMitRegistrarCursoCapacitacion(formRegistroTitulo:NgForm ){
     //prepara el archivo para enviar
     let form=new FormData();
-    //falta llenar el input file//valdiar si tenemos archivo 
+    //falta llenar el input file//valdiar si tenemos archivo
     if(this.file==null){
        this.validarInputFile=false;
        return;
@@ -41,7 +41,7 @@ export class FormAddCursoComponent implements OnInit {
     //reviso si los datos del formulario han sido llenados
     console.log(formRegistroTitulo);
     if(formRegistroTitulo.invalid){
-     
+
       return;
      }
      Swal({
@@ -65,20 +65,20 @@ export class FormAddCursoComponent implements OnInit {
                       console.log(siHacesBienJson);
                       if(siHacesBienJson['Siglas']=="OE"){
                         console.log(siHacesBienJson);
-                        Swal('Registrado', 'Informacion Registrada con Exito', 'success');
-                       
+                        Swal('Registrado', 'Información registrada con exito', 'success');
+
                       }else{
                         console.warn(siHacesBienJson);
-                        Swal('Ups, No se puede realizar el registro'+siHacesBienJson['mensaje'], 'info')
+                        Swal('Ups',siHacesBienJson['mensaje'], 'info')
                       }
                     },(erroSubirJson)=>{
                       console.error(erroSubirJson);
-          
+
                        Swal({
-                         title:'Error al registrar informacion',
+                         title:'Error',
                          type:'error',
                          text:erroSubirJson['archivoSubido']
-                       }); 
+                       });
                   });
            }else{
              console.warn(siHacesBienFormData);

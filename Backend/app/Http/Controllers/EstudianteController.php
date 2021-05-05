@@ -91,7 +91,7 @@ class EstudianteController extends Controller
                     $plantillaHtmlCorreo=
                         $this->templateHtmlCorreo(
                                                 $usuarioEstudiante['nombre']." ".$usuarioEstudiante['apellido'],
-                                                 "Su información ha salido validado exitosamente"
+                                                 "Su información ha salido validada exitosamente"
                                                 );
                     $enviarCorreoBolean=$this->enviarCorreo(
                                                             $plantillaHtmlCorreo,
@@ -108,7 +108,7 @@ class EstudianteController extends Controller
                      $parrafo= "El postulante  <b>".
                                  $usuarioEstudiante['nombre'].
                                  " ".$usuarioEstudiante['apellido'].
-                                 "</b> ha sido validada su información con éxito";
+                                 "</b> ha sido validado con éxito";
                      foreach ($usuarioEncargado as $key => $value) {
                         //generara plantilla html
                         $plantillaCorreoEncargado=
