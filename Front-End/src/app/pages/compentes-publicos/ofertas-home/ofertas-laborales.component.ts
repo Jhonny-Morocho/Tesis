@@ -84,6 +84,39 @@ public data = [
 
   filterById(form:NgForm): void {
     console.log(form.value);
+
+
+    $.fn.dataTable.ext.search.push(
+      function( settings, data, dataIndex ) {
+          var min = parseInt( $('#min').val(), 10 );
+          console.log(min);
+          var max = parseInt( $('#max').val(), 10 );
+          console.log(max);
+          var age = parseFloat( data[0] ) || 0; // use data for the age column
+          console.log(age);
+
+          if ( ( isNaN( min ) && isNaN( max ) ) ||
+               ( isNaN( min ) && age <= max ) ||
+               ( min <= age   && isNaN( max ) ) ||
+               ( min <= age   && age <= max ) )
+          {
+              return true;
+          }
+          return false;
+      }
+  );
+
+  $(document).ready(function() {
+    //$('#dataTables-example').DataTable().columns(0).search(11).draw();
+    var table = $('#dataTables-example').DataTable();
+
+  // Event listener to the two range filtering inputs to redraw on input
+  $('#min, #max').keyup( function() {
+      table.draw();
+  } );
+
+  })
+    //return;
     //console.log(this.datatableElement.dtInstance);
     //return;
     // this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -144,13 +177,85 @@ public data = [
         },
         columns: [{ data: 'id' }, { data: 'firstName' }, { data: 'lastName' }]
       };
-      $('#dateadded').on( 'change', function () {
 
-        var v = $(this).val();  // getting search input value
-        console.log(v);
+    //   $.fn.dataTable.ext.search.push(
+    //     function( settings, data, dataIndex ) {
+    //       console.log(data);
+    //         var min = parseInt( $('#min').val(), 10 );
+    //         var max = parseInt( $('#max').val(), 10 );
+    //         var age = parseFloat( data[0] ) || 0; // use data for the age column
 
-        $('#dataTables-example').DataTable().columns(0).search(v).draw();
-      } );
+    //         if ( ( isNaN( min ) && isNaN( max ) ) ||
+    //              ( isNaN( min ) && age <= max ) ||
+    //              ( min <= age   && isNaN( max ) ) ||
+    //              ( min <= age   && age <= max ) )
+    //         {
+    //             return true;
+    //         }
+    //         return false;
+    //     }
+    // );
+
+    //$(document).ready(function() {
+      //var table = $('#dataTables-example').DataTable();
+
+      // Event listener to the two range filtering inputs to redraw on input
+     // $('#min, #max').keyup( function() {
+       //   table.draw();
+      //} );
+  //} );
+     // $('#dateadded1').on( 'change', function () {
+
+        //var v1 = $('#dateadded1').val();  // getting search input value
+       //var v1 = $(this).val();  // getting search input value
+        //console.log(v1);
+        //console.log(v1);
+        //$('#dataTables-example').DataTable().columns(0).search(1).draw();
+        //$('#dataTables-example').DataTable().columns(0).search(v2).draw();
+     // } );
+     // $('#dateadded2').on( 'change', function () {
+
+        //var v1 = $('#dateadded1').val();  // getting search input value
+        //var v2 = $(this).val();  // getting search input value
+        //console.log(v1);
+        //console.log(v2);
+        //$('#dataTables-example').DataTable().columns(0).search(v2).draw();
+        //$('#dataTables-example').DataTable().columns(0).search(v2).draw();
+      //} );
+
+
+
+
+
+     // $(document).ready(function() {
+
+        // Setup - add a text input to each footer cell
+        $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead' );
+        $('#dataTables-example thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            console.log(title);
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+            $( 'input', this ).on( 'keyup change', function () {
+              console.log(this);
+                if ( $('#dataTables-example').DataTable().columns(i).search() !== this.value ) {
+                  $('#dataTables-example').DataTable()
+                        .column(i)
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+       // } );
+      //   var table = $('#dataTables-example').DataTable( {
+
+      //     orderCellsTop: true,
+      //     fixedHeader: true
+      // } );
+
+    } );
+
+
+
    }
 
    pintarRequisitos(i){
