@@ -158,8 +158,10 @@ public data = [
       this.dtOptions = {
         pagingType: 'full_numbers',
         pageLength: 10,
+        lengthMenu: [[10,25, 100, -1], [10,25, 100, "All"]],
         serverSide: true,
         processing: true,
+
         ajax:
         (dataTablesParameters: any, callback) => {
           that.http.post<DataTablesResponse>('https://angular-datatables-demo-server.herokuapp.com/',
@@ -239,6 +241,7 @@ public data = [
             $( 'input', this ).on( 'keyup change', function () {
               console.log(this);
                 if ( $('#dataTables-example').DataTable().columns(i).search() !== this.value ) {
+
                   $('#dataTables-example').DataTable()
                         .column(i)
                         .search( this.value )
