@@ -1,46 +1,77 @@
 <div class="container mt-5 mb-5">
+  <form (submit)="filterById(fRegistroEmpleador)" #fRegistroEmpleador="ngForm">
+    <label>
+      Min
+      <input type="number" name="min" id="min" required [(ngModel)]="min" />
+    </label>
+    <label>
+      Max
+      <input type="number" name="max" id="max" required [(ngModel)]="max" />
+    </label>
+    <button class="btn btn-primary" type="submit">Filter by ID</button>
+  </form>
 
-    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
-        <thead>
-            <tr>
-                <th>Ofertas Laborales</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let instanciaOfertaVer of ofertasLaborales;let i=index">
-                <td>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-6 order-2 order-md-1">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="post">
-                                            <div class="user-block">
-                                                <!-- <img class="img-circle img-bordered-sm" src="{{dominio.dominio}}/Archivos/images/empresa.png" alt="user image"> -->
-                                                <span class="username">
-                                                              <a >{{ instanciaOfertaVer.razon_empresa }}</a>
-                                                          </span>
-                                            </div>
-                                            <br>
-                                            <h5 class="text-primary">{{ instanciaOfertaVer.puesto }} </h5>{{instanciaOfertaVer.descripcion}} Descripción de la oferta laboral:
-                                            <hr>
-                                        </div>
-                                    </div>
-                                    <div class=" mt-2 mb-2">
-                                        <button type="button" class="btn btn-primary" (click)="postular(instanciaOfertaVer.external_of,instanciaOfertaVer.puesto)">Postular</button>
-                                    </div>
+  <table datatable
+           id="dataTables-example"
+          [dtOptions]="dtOptions" class="row-border hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="persons?.length != 0">
+      <tr *ngFor="let person of persons">
+        <td>{{ person.id }}</td>
+        <td>{{ person.firstName }}</td>
+        <td>{{ person.lastName }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="persons?.length == 0">
+      <tr>
+        <td colspan="3" class="no-data-available">No data!</td>
+      </tr>
+    </tbody>
+  </table>
 
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6 order-1 order-md-2">
-                                <h5 class="mt-1 text-muted">Requisitos</h5>
-                                <div id="{{ i }}">{{pintarRequisitos(i) }} </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="sel1">Select Date:</label>
+        <input type="number" class=" form-control" id="dateadded">
+      </div>
+    </div>
+  </div>
+  <!-- <div class="container text-center">
+    <h1 class="mt-5 mb-5">Angular 10</h1>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label for="sel1">Select Date:</label>
+          <input type="date" class="dateadded form-control">
+        </div>
+      </div>
+    </div>
+    <table id="dataTables-example"
 
-                </td>
-            </tr>
-        </tbody>
+            class="table table-striped table-bordered table-sm row-border hover"
+            datatable [dtOptions]="dtOptions">
+      <thead>
+        <tr>
+          <th>FirstName</th>
+          <th>Email</th>
+          <th>Website</th>
+          <th>Date Added</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let group of data">
+             <td>{{group.name}}</td>
+             <td>{{group.email}}</td>
+             <td>{{group.website}}</td>
+             <td>{{group.date}}</td>
+         </tr>
+      </tbody>
     </table>
-</div>
+  </div> -->

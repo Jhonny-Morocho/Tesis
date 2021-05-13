@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
@@ -14,59 +14,143 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
 declare var JQuery:any;
 declare var $:any;
+import { HttpClient } from '@angular/common/http';
+import { DataTableDirective } from 'angular-datatables';
+import { NgForm } from '@angular/forms';
 
+class DataTablesResponse {
+  data: any[];
+  draw: number;
+  recordsFiltered: number;
+  recordsTotal: number;
+}
 @Component({
   selector: 'app-postular-oferta-laboral',
   templateUrl: './ofertas-laborales.component.html'
 })
-export class PostularOfertaLaboralComponent implements OnInit {
+export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
+ // @ViewChild(DataTableDirective)
   instanciaEmpleadorModelVer:EmpleadorModel;
   dominio=environment;
   instanciaOfertaEstudianteEstado:OfertaLaboralEstudianteModel;
   instanciaOfertLaboralEstudiante:OfertaLaboralEstudianteModel;
   booleanGestor:boolean=false;
+
   instanciaOfertaLaboralActualizar:OfertaLaboralModel;
   intanciaOfertaLaboral:OfertaLaboralModel;
   //array de data ofertas labarales
   ofertasLaborales:OfertaLaboralModel[];
   instanciaOfertaVer:OfertaLaboralModel;
   //data table
+
   dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  persons: any=[];
+  datatableElement: DataTableDirective;
+  min: number;
+  max: number;
+  // probnado con la data table el induo
+  //dtOptions: DataTables.Settings = {};
+  //datatable custom json data
+public data = [
+  {name: 'Ajay', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-20'},
+  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
+  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-14'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-13'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-13'},
+  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-11'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-09'},
+  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-01'},
+];
 
   constructor(private servicioOferta:OfertasLaboralesService,
     private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
     private servicioUsuario:AutenticacionUserService,
+    private http: HttpClient,
     private servicioPostulante:SerivicioPostulanteService,
     private ruta_:Router) { }
 
   ngOnInit() {
-
     this.instanciaOfertaVer=new OfertaLaboralModel();
     this.intanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.instanciaOfertaEstudianteEstado=new OfertaLaboralEstudianteModel();
     this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudianteModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
-    this.configurarParametrosDataTable();
+    //this.configurarParametrosDataTable();
     this.cargarTabla();
   }
 
+  filterById(form:NgForm): void {
+    console.log(form.value);
+    //console.log(this.datatableElement.dtInstance);
+    //return;
+    // this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    //   dtInstance.draw()
+    // });
+  }
+  cargarTabla2(){
+    // this.dtOptions = {
+    //   pagingType: 'full_numbers',
+    //   pageLength: 5,
+    // lengthMenu : [5, 10, 25],
+    //   processing: true
+    // };
+  //Custom Filters by Datepicker
 
+    $('.dateadded').on( 'change', function () {
+
+      var v = $(this).val();  // getting search input value
+      console.log(v);
+
+      $('#dataTables-example').DataTable().columns(3).search(v).draw();
+    } );
+
+  }
     cargarTabla(){
-    this.servicioOferta.listarOfertasValidadasGestor().subscribe(
-      siHacesBien=>{
-        console.info("TODO BIEN");
-        // data table
-        // cargamos los items o los requisitos
-        this.ofertasLaborales =siHacesBien;
-        console.log(this.ofertasLaborales);
-        this.dtTrigger.next();
-      },
-      (peroSiTenemosErro)=>{
-        console.warn("TODO MAL");
-      }
-      );
+  // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
+      // $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
+      //   console.log(data);
+      //   const id = parseFloat(data[0]) || 0; // use data for the id column
+      //   if ((isNaN(this.min) && isNaN(this.max)) ||
+      //     (isNaN(this.min) && id <= this.max) ||
+      //     (this.min <= id && isNaN(this.max)) ||
+      //     (this.min <= id && id <= this.max)) {
+      //     return true;
+      //   }
+      //   return false;
+      // });
+      const that = this;
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        serverSide: true,
+        processing: true,
+        ajax:
+        (dataTablesParameters: any, callback) => {
+          that.http.post<DataTablesResponse>('https://angular-datatables-demo-server.herokuapp.com/',
+              dataTablesParameters,{}
+            ).subscribe(resp => {
+                console.log(resp);
+
+              that.persons = resp.data;
+              callback({
+                recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+                data: []
+              });
+            });
+        },
+        columns: [{ data: 'id' }, { data: 'firstName' }, { data: 'lastName' }]
+      };
+      $('#dateadded').on( 'change', function () {
+
+        var v = $(this).val();  // getting search input value
+        console.log(v);
+
+        $('#dataTables-example').DataTable().columns(0).search(v).draw();
+      } );
    }
 
    pintarRequisitos(i){
@@ -74,13 +158,9 @@ export class PostularOfertaLaboralComponent implements OnInit {
     //console.log(this.ofertasLaborales[i]['requisitos']);
    }
    ngOnDestroy(): void {
+    $.fn['dataTable'].ext.search.pop();
     // Do not forget to unsubscribe the event
-      try {
-        this.dtTrigger.unsubscribe();
-      } catch (error) {
-        //le puse x q no uso suscripcion/mas info:/https://l-lin.github.io/angular-datatables/#/basic/angular-way
-        console.warn(error);
-      }
+
     }
 
 
