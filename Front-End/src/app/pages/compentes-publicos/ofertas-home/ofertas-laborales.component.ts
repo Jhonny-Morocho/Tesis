@@ -14,6 +14,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
 declare var JQuery:any;
 declare var $:any;
+//declare var DateTime:any;
 import { HttpClient } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { NgForm } from '@angular/forms';
@@ -30,6 +31,7 @@ class DataTablesResponse {
 })
 export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
  // @ViewChild(DataTableDirective)
+ @ViewChild(DataTableDirective, {read: false})
   instanciaEmpleadorModelVer:EmpleadorModel;
   dominio=environment;
   instanciaOfertaEstudianteEstado:OfertaLaboralEstudianteModel;
@@ -42,27 +44,19 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
   ofertasLaborales:OfertaLaboralModel[];
   instanciaOfertaVer:OfertaLaboralModel;
   //data table
-
+  dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   persons: any=[];
   datatableElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject();
   min: number;
   max: number;
+  instanciaDataTable:any;
   // probnado con la data table el induo
   //dtOptions: DataTables.Settings = {};
   //datatable custom json data
-public data = [
-  {name: 'Ajay', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-20'},
-  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-17'},
-  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-14'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-13'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-13'},
-  {name: 'Jas', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-11'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-09'},
-  {name: 'therichpost', email: 'therichpost@gmail.com', website:'therichpost.com', date:'2020-07-01'},
-];
+  miData:any;
+
 
   constructor(private servicioOferta:OfertasLaboralesService,
     private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
@@ -82,47 +76,32 @@ public data = [
     this.cargarTabla();
   }
 
+
   filterById(form:NgForm): void {
     console.log(form.value);
+    if(form.invalid){
+     // return;
+    }
+
+    // var v1 = $(this).val();  // getting search input value
+    // console.log(v1);
+
+  //   var table = $('#dataTables-example').DataTable( {
+  //     ajax: 'https://proeditsclub.com/Tesis/Backend/public/index.php/ofertas-laborales/listarOfertasLaboralesValidadasGestor'
+  // } );
+
+  //var total=
+
+  //$('#dataTables-example').ajax.url( this.persons).load();
 
 
-    $.fn.dataTable.ext.search.push(
-      function( settings, data, dataIndex ) {
-          var min = parseInt( $('#min').val(), 10 );
-          console.log(min);
-          var max = parseInt( $('#max').val(), 10 );
-          console.log(max);
-          var age = parseFloat( data[0] ) || 0; // use data for the age column
-          console.log(age);
+   // this.cargarTabla();
 
-          if ( ( isNaN( min ) && isNaN( max ) ) ||
-               ( isNaN( min ) && age <= max ) ||
-               ( min <= age   && isNaN( max ) ) ||
-               ( min <= age   && age <= max ) )
-          {
-              return true;
-          }
-          return false;
-      }
-  );
 
-  $(document).ready(function() {
-    //$('#dataTables-example').DataTable().columns(0).search(11).draw();
-    var table = $('#dataTables-example').DataTable();
-
-  // Event listener to the two range filtering inputs to redraw on input
-  $('#min, #max').keyup( function() {
-      table.draw();
-  } );
-
-  })
-    //return;
-    //console.log(this.datatableElement.dtInstance);
-    //return;
-    // this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-    //   dtInstance.draw()
-    // });
   }
+
+
+
   cargarTabla2(){
     // this.dtOptions = {
     //   pagingType: 'full_numbers',
@@ -132,28 +111,9 @@ public data = [
     // };
   //Custom Filters by Datepicker
 
-    $('.dateadded').on( 'change', function () {
-
-      var v = $(this).val();  // getting search input value
-      console.log(v);
-
-      $('#dataTables-example').DataTable().columns(3).search(v).draw();
-    } );
 
   }
     cargarTabla(){
-  // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
-      // $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
-      //   console.log(data);
-      //   const id = parseFloat(data[0]) || 0; // use data for the id column
-      //   if ((isNaN(this.min) && isNaN(this.max)) ||
-      //     (isNaN(this.min) && id <= this.max) ||
-      //     (this.min <= id && isNaN(this.max)) ||
-      //     (this.min <= id && id <= this.max)) {
-      //     return true;
-      //   }
-      //   return false;
-      // });
       const that = this;
       this.dtOptions = {
         pagingType: 'full_numbers',
@@ -161,14 +121,13 @@ public data = [
         lengthMenu: [[10,25, 100, -1], [10,25, 100, "All"]],
         serverSide: true,
         processing: true,
-
         ajax:
         (dataTablesParameters: any, callback) => {
-          that.http.post<DataTablesResponse>('https://angular-datatables-demo-server.herokuapp.com/',
+          this.http.post<DataTablesResponse>('https://angular-datatables-demo-server.herokuapp.com/',
               dataTablesParameters,{}
             ).subscribe(resp => {
                 console.log(resp);
-
+                this.miData=resp.data;
               that.persons = resp.data;
               callback({
                 recordsTotal: resp.recordsTotal,
@@ -180,23 +139,61 @@ public data = [
         columns: [{ data: 'id' }, { data: 'firstName' }, { data: 'lastName' }]
       };
 
-    //   $.fn.dataTable.ext.search.push(
-    //     function( settings, data, dataIndex ) {
-    //       console.log(data);
-    //         var min = parseInt( $('#min').val(), 10 );
-    //         var max = parseInt( $('#max').val(), 10 );
-    //         var age = parseFloat( data[0] ) || 0; // use data for the age column
+    //   $(document).ready(function() {
 
-    //         if ( ( isNaN( min ) && isNaN( max ) ) ||
-    //              ( isNaN( min ) && age <= max ) ||
-    //              ( min <= age   && isNaN( max ) ) ||
-    //              ( min <= age   && age <= max ) )
-    //         {
+    //        var minDate, maxDate;
+    // var data=this.person;
+    // console.log(data);
+
+    // // Custom filtering function which will search data in column four between two values
+    // $.fn.dataTable.ext.search.push(
+    //     function( settings, data, dataIndex ) {
+    //         var min = minDate.val();
+    //         var max = maxDate.val();
+    //         var date = new Date( data[4] );
+
+    //         if (
+    //             ( min === null && max === null ) ||
+    //             ( min === null && date <= max ) ||
+    //             ( min <= date   && max === null ) ||
+    //             ( min <= date   && date <= max )
+    //         ) {
     //             return true;
     //         }
     //         return false;
     //     }
-    // );
+
+    //     );
+        // Create date inputs
+      //    minDate = new DateTime($('#min'), {
+      //      format: 'MMMM Do YYYY'
+      //  });
+      //  maxDate = new DateTime($('#max'), {
+      //      format: 'MMMM Do YYYY'
+      //  });
+
+      //  // DataTables initialisation
+      //  var table = $('#example').DataTable();
+
+      //  // Refilter the table
+      //  $('#min, #max').on('change', function () {
+      //      table.draw();
+      //  });
+
+     //$('#dateadded1').on( 'change', function () {
+
+          //var v1 = $('#dateadded1').val();  // getting search input value
+         //var v1 = $(this).val();  // getting search input value
+          //console.log(v1);
+          //console.log(v1);
+
+         // $('#dataTables-example').DataTable().columns(0).search(10).draw();
+          //console.log( $('#dataTables-example').DataTable().columns(0).search(1).draw());
+          //$('#dataTables-example').DataTable().columns(0).search(v2).draw();
+      //} );
+
+
+   //})
 
     //$(document).ready(function() {
       //var table = $('#dataTables-example').DataTable();
@@ -230,32 +227,32 @@ public data = [
 
 
      // $(document).ready(function() {
-
+        //este si funciona
         // Setup - add a text input to each footer cell
-        $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead' );
-        $('#dataTables-example thead tr:eq(1) th').each( function (i) {
-            var title = $(this).text();
-            console.log(title);
-            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        // $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead' );
+        // $('#dataTables-example thead tr:eq(1) th').each( function (i) {
+        //   console.log(i);
+        //     var title = $(this).text();
+        //     console.log(title);
+        //     $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
 
-            $( 'input', this ).on( 'keyup change', function () {
-              console.log(this);
-                if ( $('#dataTables-example').DataTable().columns(i).search() !== this.value ) {
+        //     $( 'input', this ).on( 'keyup change', function () {
+        //       console.log(this);
+        //         if ( $('#dataTables-example').DataTable().columns(i).search() !== this.value ) {
 
-                  $('#dataTables-example').DataTable()
-                        .column(i)
-                        .search( this.value )
-                        .draw();
-                }
-            } );
-       // } );
-      //   var table = $('#dataTables-example').DataTable( {
+        //           $('#dataTables-example').DataTable()
+        //                 .column(i)
+        //                 .search( this.value )
+        //                 .draw();
+        //         }
+        //     } );
 
-      //     orderCellsTop: true,
-      //     fixedHeader: true
-      // } );
 
-    } );
+    //} );
+
+
+
+
 
 
 
@@ -266,7 +263,7 @@ public data = [
     //console.log(this.ofertasLaborales[i]['requisitos']);
    }
    ngOnDestroy(): void {
-    $.fn['dataTable'].ext.search.pop();
+    //$.fn['dataTable'].ext.search.pop();
     // Do not forget to unsubscribe the event
 
     }

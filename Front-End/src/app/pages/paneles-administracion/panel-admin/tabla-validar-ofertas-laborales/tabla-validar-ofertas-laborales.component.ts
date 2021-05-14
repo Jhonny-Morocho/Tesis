@@ -127,9 +127,10 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     $('#exampleModal').modal('hide');
   }
   reiniciarValoresTablaOfertas(){
-    this.instanciaFiltro.de='';
-    this.instanciaFiltro.hasta='';
-    this.instanciaFiltro.estado=null;
+    this.ruta_.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.ruta_.onSameUrlNavigation = 'reload';
+    this.ruta_.navigate(['/panel-admin/validar-oferta-laboral']);
+
   }
 
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
@@ -164,7 +165,11 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
             }
         });
         this.ofertasLaborales=aux;
-        this.dtTrigger.unsubscribe();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          // Destroy the table first
+          dtInstance.destroy();
+        });
+        // Call the dtTrigger to rerender again
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{

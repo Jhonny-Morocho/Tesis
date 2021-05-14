@@ -1,4 +1,4 @@
-<!-- <div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5">
   <form (submit)="filterById(fRegistroEmpleador)" #fRegistroEmpleador="ngForm">
     <label>
       Min
@@ -9,8 +9,19 @@
       <input type="number" name="max" id="max" required [(ngModel)]="max" />
     </label>
     <button class="btn btn-primary" type="submit">Filter by ID</button>
-  </form> -->
+  </form>
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+          <td>Minimum date:</td>
+          <td><input type="text" id="min" name="min"></td>
+      </tr>
+      <tr>
+          <td>Maximum date:</td>
+          <td><input type="text" id="max" name="max"></td>
+      </tr>
+      </tbody>
 
+  </table>
   <table datatable
            id="dataTables-example"
           [dtOptions]="dtOptions" class="row-border hover">
@@ -23,7 +34,7 @@
     </thead>
     <tbody *ngIf="persons?.length != 0">
       <tr *ngFor="let person of persons">
-        <td>{{ person.id }}</td>
+        <td >{{ person.id }}</td>
         <td>{{ person.firstName }}</td>
         <td>{{ person.lastName }}</td>
       </tr>
@@ -35,7 +46,7 @@
     </tbody>
   </table>
 
-  <!-- <div class="row">
+   <div class="row">
     <div class="col-sm-3">
       <div class="form-group">
         <label for="sel1">Select Date:</label>
@@ -48,7 +59,7 @@
         <input type="number" class=" form-control" id="dateadded2">
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- <tbody><tr>
     <td>Minimum age:</td>
