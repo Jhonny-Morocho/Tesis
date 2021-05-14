@@ -57,7 +57,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.instanciaFiltro=new OfertasFiltroModel();
-    this.configurarParametrosDataTable();
+    //this.configurarParametrosDataTable();
     this.cargarTodasOfertas();
   }
 
@@ -130,7 +130,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.ruta_.routeReuseStrategy.shouldReuseRoute = () => false;
     this.ruta_.onSameUrlNavigation = 'reload';
     this.ruta_.navigate(['/panel-admin/validar-oferta-laboral']);
-
   }
 
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){

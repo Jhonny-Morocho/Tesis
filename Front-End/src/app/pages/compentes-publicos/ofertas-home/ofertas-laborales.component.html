@@ -1,27 +1,5 @@
-<div class="container mt-5 mb-5">
-  <form (submit)="filterById(fRegistroEmpleador)" #fRegistroEmpleador="ngForm">
-    <label>
-      Min
-      <input type="number" name="min" id="min" required [(ngModel)]="min" />
-    </label>
-    <label>
-      Max
-      <input type="number" name="max" id="max" required [(ngModel)]="max" />
-    </label>
-    <button class="btn btn-primary" type="submit">Filter by ID</button>
-  </form>
-    <table border="0" cellspacing="5" cellpadding="5">
-        <tbody><tr>
-          <td>Minimum date:</td>
-          <td><input type="text" id="min" name="min"></td>
-      </tr>
-      <tr>
-          <td>Maximum date:</td>
-          <td><input type="text" id="max" name="max"></td>
-      </tr>
-      </tbody>
 
-  </table>
+
   <table datatable
            id="dataTables-example"
           [dtOptions]="dtOptions" class="row-border hover">
