@@ -9,7 +9,7 @@ import { HomeComponent } from './pages/compentes-publicos/home/home.component';
 
 // vamos a importar la clase de modulos para poder opcuar el ngmodel en los formulkario
 // modulos siempre van en los import
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // para hacer soliuctudes http necestio el siguiente moduo
 import {HttpClientModule} from '@angular/common/http';
 import { LoginAdminComponent } from './pages/compentes-publicos/form-registro-login/form-login/login.component';
@@ -133,7 +133,9 @@ import { RatingModule } from 'ng-starrating';
     HttpClientModule,
     // DATA TABLE
     DataTablesModule,
-    RatingModule 
+    RatingModule,
+    //FORM REACTIVOS
+    ReactiveFormsModule
 
 
     // Tostadas

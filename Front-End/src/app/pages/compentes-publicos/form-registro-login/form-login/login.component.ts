@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // importo mi modelo
 import {UsuarioModel} from '../../../../models/usuario.model';
 // importa utomaticamente el ingForm
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 // llamo la libreria de switch alert
 import Swal from 'sweetalert2';
 //importamos el servicio
@@ -16,15 +16,51 @@ import{environment} from 'src/environments/environment.prod';
   templateUrl: './login.component.html'
 })
 export class LoginAdminComponent implements OnInit {
+  //trabajos con formularios reactivos
+  //creo una referencia
+  formLogin:FormGroup;
 
   // Instancio mi modelo
   dominio=environment.dominio;
   instanciaModeloUsuarioLogin:UsuarioModel=new UsuarioModel;
+
   constructor(private _servicioAdmin:AutenticacionUserService,
-    private router:Router) { }
+    private router:Router,private formulario:FormBuilder) {
+    this.crearFormulario();
+
+    }
 
   ngOnInit() {
   }
+  get correoNoValido(){
+    return this.formLogin.get('correo').invalid && this.formLogin.get('correo').touched;
+  }
+  get passwordNoValido(){
+    return this.formLogin.get('password').invalid && this.formLogin.get('password').touched;
+  }
+
+  crearFormulario(){
+    this.formLogin=this.formulario.group({
+      correo:['',
+                  [
+                    Validators.required,
+                    Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')
+
+                  ]
+              ],
+      password:['',
+                   [
+                      Validators.required,
+                      Validators.maxLength(10)
+                   ]
+               ]
+    });
+  }
+  obtenerCredenciales(){
+    console.log(this.formLogin);
+
+  }
+
   recuperarPassword(){
 
     Swal({
@@ -60,10 +96,10 @@ export class LoginAdminComponent implements OnInit {
     })
   }
   // Login del formulario del admistrador
-  loginAdmin(formularioAdministrador:NgForm){
+  loginAdmin(){
     console.log(this.instanciaModeloUsuarioLogin);
-    console.log(formularioAdministrador);
-    if(formularioAdministrador.invalid){
+    console.log(this.formLogin);
+    if(this.formLogin.invalid){
       const toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -71,11 +107,15 @@ export class LoginAdminComponent implements OnInit {
         timer: 3000
       });
       toast({
-        type: 'info',
+        type: 'error',
         title: 'Debe completar todos los campos'
       })
       return;
     }
+    //envios los datos ya validados
+    this.instanciaModeloUsuarioLogin.correo=this.formLogin.value.correo;
+    this.instanciaModeloUsuarioLogin.password=this.formLogin.value.password;
+
     // si pasa la validacion se ejecuta el siguiente codigo
     // mensaje de espera
     Swal({

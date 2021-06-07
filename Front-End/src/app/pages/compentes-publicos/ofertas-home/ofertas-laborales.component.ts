@@ -31,7 +31,7 @@ class DataTablesResponse {
 })
 export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
  // @ViewChild(DataTableDirective)
- @ViewChild(DataTableDirective, {read: false})
+ @ViewChild(DataTableDirective)
   instanciaEmpleadorModelVer:EmpleadorModel;
   dominio=environment;
   instanciaOfertaEstudianteEstado:OfertaLaboralEstudianteModel;
@@ -49,13 +49,13 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
   persons: any=[];
   datatableElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
-  min: number;
-  max: number;
+  min: number=1;
+  max: number=10;
   instanciaDataTable:any;
   // probnado con la data table el induo
   //dtOptions: DataTables.Settings = {};
   //datatable custom json data
-  miData:any;
+  miData:any=[];
 
 
   constructor(private servicioOferta:OfertasLaboralesService,
@@ -73,7 +73,47 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudianteModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     //this.configurarParametrosDataTable();
+    // We need to call the $.fn.dataTable like this because DataTables typings do not have the "ext" property
     this.cargarTabla();
+    this.demo();
+  }
+
+  demo(){
+    //console.log($('#dataTables-example').DataTable());
+    $.fn.dataTable.ext.search.push(
+      function( settings, searchData, index, rowData, counter ) {
+        console.log(searchData);
+          if (settings.nTable.id !== 'myTarget'){
+              return true;
+          }
+
+          var min = parseInt( $('#min').val(), 10 );
+          var max = parseInt( $('#max').val(), 10 );
+          var age = parseFloat( searchData[3] ) || 0; // using the data from the 4th column
+
+          if ( ( isNaN( min ) && isNaN( max ) ) ||
+               ( isNaN( min ) && age <= max ) ||
+               ( min <= age   && isNaN( max ) ) ||
+               ( min <= age   && age <= max ) )
+          {
+              return true;
+          }
+          return false;
+      }
+  );
+
+  }
+
+  filterById2(form:NgForm): void {
+    console.log(form.value);
+    console.log(this.demo());
+    //this.demo();
+     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       //console.log(dtInstance);
+       //dtInstance.destroy();
+       dtInstance.draw();
+     });
+     //this.dtTrigger.next();
   }
 
 
@@ -263,7 +303,7 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     //console.log(this.ofertasLaborales[i]['requisitos']);
    }
    ngOnDestroy(): void {
-    //$.fn['dataTable'].ext.search.pop();
+    $.fn['dataTable'].ext.search.pop();
     // Do not forget to unsubscribe the event
 
     }

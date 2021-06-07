@@ -4,10 +4,11 @@
 
 export const environment = {
   production: true,
-  dominio:"https://proeditsclub.com/Tesis"
+  dominio:"http://localhost:81/Tesis"
 };
 //domio sanbox http://localhost/Tesis
 //domio produccion https://proeditsclub.com/Tesis
+//domio produccion http://192.168.0.106/empresa1
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
