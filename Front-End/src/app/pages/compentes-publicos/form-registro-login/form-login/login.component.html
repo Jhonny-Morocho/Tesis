@@ -10,7 +10,7 @@
           </div>
           <div class="col-5">
             <a [routerLink]="['/home']" class="float-right btn btn-outline-light">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio
             </a>
           </div>
           <hr class="text-white">
@@ -19,41 +19,43 @@
           </div>
           <div class="form-group">
               <label for="inputEmailAdmin" class="form-label text-white">Correo </label><br>
+              <i class="fas fa-envelope form-control-feedback"></i>
               <input type="email"
-
                     formControlName="correo"
                     class="form-control"
                     placeholder="Ingrese su correo"
                     [class.is-invalid]="correoNoValido"
-                    [class.is-valid]="formLogin.get('correo').valid"
-                     >
-
+                    [class.is-valid]="formLogin.get('correo').valid">
+              <!-- mensajes de validacion -->
               <div class="invalid-feedback"  *ngIf="formLogin.get('correo').invalid && (formLogin.get('correo').value)!='' ">
                 <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
               </div>
               <div class="invalid-feedback"  *ngIf="correoNoValido && (formLogin.get('correo').value)=='' ">
                 <i class="fas fa-info-circle"></i> El correo es requerido
               </div>
+              <!-- end mensajes de validacion -->
           </div>
 
 
           <div class="form-group">
               <label for="inputPasswordAdmin" class="form-label text-white">Contraseña</label><br>
+              <i class="fas fa-key form-control-feedback"></i>
               <input type="password"
                     formControlName="password"
                     class="form-control"
                     [class.is-invalid]="passwordNoValido"
                     [class.is-valid]="formLogin.get('password').valid"
                     placeholder="Ingrese su contraseña"
-                    maxlength="10"
-                    >
+                    maxlength="10">
+              <!-- mensajes de validacion -->
               <div class="invalid-feedback" *ngIf="passwordNoValido && (formLogin.get('password').value)=='' ">
-                <i class="fas fa-info-circle"></i> Contraseña requerida
+                Contraseña requerida
               </div>
+              <!-- end mensajes de validacion -->
           </div>
 
           <div class="form-group">
-              <button type="submit" class="btn btn-success">Ingresar</button>
+              <button type="submit" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> Ingresar</button>
               <p class="mt-3 text-white">
                 ¿No tienes cuenta?
                 </p>

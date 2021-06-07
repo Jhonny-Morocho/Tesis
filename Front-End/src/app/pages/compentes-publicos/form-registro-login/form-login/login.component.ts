@@ -32,6 +32,7 @@ export class LoginAdminComponent implements OnInit {
 
   ngOnInit() {
   }
+  // para hacer validacion y activar la clase en css
   get correoNoValido(){
     return this.formLogin.get('correo').invalid && this.formLogin.get('correo').touched;
   }
@@ -55,10 +56,6 @@ export class LoginAdminComponent implements OnInit {
                    ]
                ]
     });
-  }
-  obtenerCredenciales(){
-    console.log(this.formLogin);
-
   }
 
   recuperarPassword(){

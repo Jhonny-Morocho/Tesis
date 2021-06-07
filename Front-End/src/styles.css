@@ -316,3 +316,13 @@ p.clasificacion2 input:checked~label {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 
 @media only screen and (min-width: 1200px) {}
+ /* // PONER ICONOS A LOS INPUT // */
+.form-control-feedback {
+  position: absolute;
+  padding: 2px 2px 2px 10px;
+  pointer-events: none;
+}
+
+.form-control {
+  padding-left: 30px!important;
+}
