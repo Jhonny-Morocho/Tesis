@@ -31,75 +31,52 @@
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombre Completos</label><br>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.nombre"
                            name="nombre"
                            class="form-control"
-                           required
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['nombre'].errors }"
                            placeholder="Ingrese sus nombres completos"
-                           maxlength="20"
-                           [disabled]="obervaciones==false || formValidado==true">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['nombre'].errors">
-                      El campo nombres completos es obligatorio
-                    </div>
+                           maxlength="20">
+
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellido Completos</label><br>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.apellido"
+
                            name="apellido"
                            class="form-control"
                            placeholder="Ingrese sus apellidos completos"
-                           required
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['apellido'].errors }"
-                           maxlength="20"
-                           [disabled]="obervaciones==false || formValidado==true">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['apellido'].errors">
-                      Los campo apellidos es obligatorio
-                    </div>
+                           maxlength="20">
+
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.cedula"
+
                            name="cedula"
                            placeholder="Ingrese su numero de cédula"
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
+
                            class="form-control"
                            required
-                           [disabled]="obervaciones==false || formValidado==true"
+
                            maxlength="10">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">
-                      La cedula es obligatoria
-                    </div>
+
+
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <input type="date"
-                           [(ngModel)]='instanciaPostulante.fecha_nacimiento'
                            name="fechaNacimiento"
                            class="form-control"
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors }"
-                           required
-                           [disabled]="obervaciones==false || formValidado==true">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors">
-                      El campo fecha de nacimiento es obligatorio
-                    </div>
+                           >
+
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Teléfono fijo o móvil</label><br>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.telefono"
                            class="form-control"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            name="telefono"
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['telefono'].errors }"
-                           required
-                           maxlength="10"
-                           [disabled]="obervaciones==false || formValidado==true">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">
-                      El campo teléfono es obligatorio
-                    </div>
+                           maxlength="10">
+
                 </div>
                 <div class="col-md-6">
                     <fieldset class="form-group">
@@ -110,10 +87,10 @@
                                     <input class="form-check-input"
                                           type="radio"
                                           name="genero"
-                                          [checked]="instanciaPostulante.genero==0"
+
                                           value="0"
-                                          [ngModel]="instanciaPostulante.genero"
-                                          disabled="obervaciones == false || formValidado==true">
+
+                                          >
                                     <label class="form-check-label" for="gridRadios1"> Masculino</label>
                                 </div>
                                 <div class="form-check">
@@ -121,9 +98,8 @@
                                             type="radio"
                                             name="genero"
                                             value="1"
-                                            [ngModel]="instanciaPostulante.genero"
-                                            [checked]="instanciaPostulante.genero==1"
-                                            disabled="obervaciones == false || formValidado==true">
+
+                                            >
                                     <label class="form-check-label" for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
@@ -137,17 +113,15 @@
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Dirección de domicilio o laboral</label><br>
                         <textarea class="form-control"
-                                  [(ngModel)]="instanciaPostulante.direccion_domicilio"
+
                                   name="direcionDomicilio"
                                   rows="3"
                                   placeholder="Ingrese su dirección de domicilio"
                                   required
-                                  [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors }"
+
                                   maxlength="30"
-                                  [disabled]="obervaciones==false || formValidado==true"></textarea>
-                        <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">
-                          El campo dirección de domicilio o laboral es obligatorio
-                        </div>
+                                  ></textarea>
+
                     </div>
                 </div>
                 <div class="col-12">
@@ -157,11 +131,15 @@
         </article>
     </div>
 </div>
+
+
+
+
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
 <div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==false">
     <div class="card">
         <article class="card-body">
-            <form class="row g-2" (ngSubmit)="onSubmitFormularioPostulante(fPostulante)" #fPostulante="ngForm">
+            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" #fEmpleador="ngForm">
                 <div class="alert alert-primary" role="alert">
                     Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
                 </div>
@@ -169,118 +147,123 @@
                 <hr>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombres Completos</label><br>
+                    <i class="fas fa-user form-control-feedback"></i>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.nombre"
-                           name="nombre"
                            maxlength="20"
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['nombre'].errors }"
+                           formControlName="nombresCompleto"
+                           [class.is-invalid]="nombreNoValido"
+                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
                            class="form-control"
-                           required
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['nombre'].errors">
-                      El campo nombres completos es obligatorio
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido && (formRegistroPostulante.get('nombresCompleto').value)==''">
+                      <i class="fas fa-info-circle"></i> El nombre es requerido
                     </div>
+                    <!-- <div class="invalid-feedback"  *ngIf="fEmpleador.submitted===true">
+                      <i class="fas fa-info-circle"></i> xxxx
+                    </div>
+                    <p>{{ fEmpleador.submitted }}</p> -->
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
+                    <i class="fas fa-user form-control-feedback"></i>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.apellido"
-                           name="apellido"
                            class="form-control"
+                           formControlName="apellidosCompleto"
+                           [class.is-invalid]="apellidoNoValido"
+                           [class.is-valid]="formRegistroPostulante.get('apellidosCompleto').valid"
                            placeholder="Ingrese sus apellidos completos"
-                           required
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['apellido'].errors }"
                            maxlength="20">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['apellido'].errors">
-                      Los campo apellidos es obligatorio
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
+                      <i class="fas fa-info-circle"></i> El apellido es requerido
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Cédula de Identidad</label><br>
+                    <label for="inputEmail4" class="form-label">Documento de identidad</label><br>
+                    <i class="fas fa-address-card form-control-feedback"></i>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.cedula"
-                           name="cedula"
                            class="form-control"
-                           placeholder="Ingrese su numero de cédula"
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['cedula'].errors }"
-                           required
+                           formControlName="documentoIndentidad"
+                           placeholder="Ingrese su documento de identidad"
+                           [class.is-invalid]="documentoIdentidadNoValido"
+                           [class.is-valid]="formRegistroPostulante.get('documentoIndentidad').valid"
                            maxlength="10">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['cedula'].errors">
-                      La cedula es obligatoria
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido && (formRegistroPostulante.get('documentoIndentidad').value)=='' ">
+                      <i class="fas fa-info-circle"></i> El documento de identidad es requerido
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <input type="date"
-                           [(ngModel)]="instanciaPostulante.fecha_nacimiento"
-                           name="fechaNacimiento"
-                           class="form-control "
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors }"
-                           required>
-                  <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['fechaNacimiento'].errors">
-                    El campo fecha de nacimiento es obligatorio
-                  </div>
+                          formControlName="fechaNacimiento"
+                          [class.is-invalid]="fechaNacimientoNoValido"
+                          [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
+                           class="form-control ">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido && (formRegistroPostulante.get('fechaNacimiento').value)=='' ">
+                      <i class="fas fa-info-circle"></i> La fecha de nacimiento es requerido
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
                     <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil</label><br>
+                    <i class="fas fa-phone-volume form-control-feedback"></i>
                     <input type="text"
-                           [(ngModel)]="instanciaPostulante.telefono"
                            class="form-control"
-                           name="telefono"
+                           formControlName="telefono"
+                           [class.is-invalid]="telefonoNoValido"
+                           [class.is-valid]="formRegistroPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
-                           required
-                           [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['telefono'].errors }"
                            maxlength="10">
-                    <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['telefono'].errors">
-                      El campo teléfono es obligatorio
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="telefonoNoValido && (formRegistroPostulante.get('telefono').value)=='' ">
+                      <i class="fas fa-info-circle"></i> El telefono es requerido
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
                     <fieldset class="form-group ">
                         <div class="row ">
                             <legend class="col-form-label col-sm-2 pt-0 ">Género</legend>
                             <div class="col-sm-10 ">
-                                <div class="form-check ">
+                              <div class="form-check ">
+
                                     <input class="form-check-input"
-                                           type="radio"
-                                           name="genero"
+                                           formControlName="genero"
+                                           [class.is-invalid]="generoNoValido"
+                                           [class.is-valid]="formRegistroPostulante.get('genero').touched"
                                            [value]="0"
-                                           required
-                                           [(ngModel)]="instanciaPostulante.genero">
-                                    <label class="form-check-label" for="gridRadios1"> Masculino</label>
+                                           type="radio">
+                                    <label class="form-check-label" for="gridRadios1"><i class="fas fa-mars-stroke "></i> Masculino</label>
                                 </div>
                                 <div class="form-check ">
                                     <input class="form-check-input "
                                            type="radio"
-                                           name="genero"
                                            [value]="1"
-                                           required
-                                           [(ngModel)]="instanciaPostulante.genero">
-                                    <label class="form-check-label "for="gridRadios2">Femenino</label>
+                                           [class.is-invalid]="generoNoValido"
+                                           [class.is-valid]="formRegistroPostulante.get('genero').touched"
+                                           formControlName="genero">
+                                    <label class="form-check-label "for="gridRadios2"><i class="fas fa-venus"></i> Femenino</label>
                                 </div>
                             </div>
-                            <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
-                              El campo género es obligatorio
-                            </div>
                         </div>
-                    </fieldset>
-                </div>
+                      </fieldset>
+                    </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
                         <textarea class="form-control "
-                                  [(ngModel)]="instanciaPostulante.direccion_domicilio"
                                   name="direcionDomicilio"
                                   rows="3"
                                   placeholder="Ingrese su dirección de domicilio o laboral"
-                                  required
-                                  [ngClass]="{'is-invalid': fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors }"
                                   maxlength="30">
                         </textarea>
-                        <div class="invalid-feedback" *ngIf="fPostulante.submitted && fPostulante.controls['direcionDomicilio'].errors">
-                          El campo dirección de domicilio o laboral es obligatorio
-                        </div>
                     </div>
                 </div>
                 <div class="col-12 ">

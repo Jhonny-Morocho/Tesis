@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PostulanteModel} from 'src/app/models/postulante.models';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import { Router } from '@angular/router';
@@ -11,22 +11,107 @@ import { Router } from '@angular/router';
 })
 export class FormularioInfoPostulanteComponent implements OnInit {
   instanciaPostulante:PostulanteModel;
-   booleanFormularioCompletado=false;
-   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
-   obervaciones=false;
-   //validacion de formulario true/false
-   formValidado=false;
-   //tipo de genero
+  //creo una referencia
+  formRegistroPostulante:FormGroup;
+  fechaActual:string;
+  //formulario aplastado submit
+  submitFormRegistro:boolean=false;
+
+  booleanFormularioCompletado=false;
+  //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
+  obervaciones=false;
+  //validacion de formulario true/false
+  formValidado=false;
+  //tipo de genero
 
 
 
 
-  constructor( private servicioPostulante_:SerivicioPostulanteService,private ruta_:Router) { }
+  constructor(private servicioPostulante_:SerivicioPostulanteService,
+              private formulario:FormBuilder,
+              private ruta_:Router) {
+  this.instanciaPostulante=new PostulanteModel();
 
+  this.funcionFechaActual();
+  this.crearFormulario();
+
+  }
+  funcionFechaActual(){
+    var fecha:string = new Date(); //Fecha actual
+    var mes:string = fecha.getMonth()+1; //obteniendo mes
+    var dia:string = fecha.getDate(); //obteniendo dia
+    var ano:string = fecha.getFullYear(); //obteniendo año
+    if(parseInt(dia)<10){
+      dia='0'+dia;
+    }
+    if(parseInt(mes)<10){
+      mes='0'+mes;
+    }
+    this.fechaActual=ano+'-'+mes+'-'+dia;
+  }
   ngOnInit() {
-    this.instanciaPostulante=new PostulanteModel();
     //consultar si el postulante ha llenado el formulario
-    this.formMotrarFormularioCompletado();
+    //this.formMotrarFormularioCompletado();
+  }
+
+  // para hacer validacion y activar la clase en css
+  get generoNoValido(){
+    return this.formRegistroPostulante.get('genero').invalid && this.formRegistroPostulante.get('genero').touched ;
+  }
+  get fechaNacimientoNoValido(){
+    return this.formRegistroPostulante.get('fechaNacimiento').invalid && this.formRegistroPostulante.get('fechaNacimiento').touched;
+  }
+  get documentoIdentidadNoValido(){
+    return this.formRegistroPostulante.get('documentoIndentidad').invalid && this.formRegistroPostulante.get('documentoIndentidad').touched;
+  }
+  get nombreNoValido(){
+    return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
+  }
+  get apellidoNoValido(){
+    return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
+  }
+  get telefonoNoValido(){
+    return this.formRegistroPostulante.get('telefono').invalid && this.formRegistroPostulante.get('telefono').touched;
+  }
+  crearFormulario(){
+    this.formRegistroPostulante=this.formulario.group({
+      nombresCompleto:['',
+                  [
+                    Validators.required,
+                    Validators.maxLength(20)
+
+                  ]
+              ],
+      apellidosCompleto:['',
+                   [
+                      Validators.required,
+                      Validators.maxLength(20)
+                   ]
+               ],
+      documentoIndentidad:['',
+                    [
+                      Validators.required,
+                      Validators.maxLength(20)
+                    ]
+                  ],
+      telefono:['',
+                  [
+                    Validators.required,
+                    Validators.maxLength(10)
+                  ]
+                ],
+      fechaNacimiento:[this.fechaActual,
+                    [
+                      Validators.required,
+                      Validators.maxLength(20)
+                    ]
+                  ],
+      genero:['',
+        [
+          Validators.required,
+        ]
+      ],
+    });
   }
 
   formMotrarFormularioCompletado(){
@@ -59,7 +144,12 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   }
 
   //creacion usuario estudiante
-  onSubmitFormularioPostulante(formRegistroPostulanteDatosCompletos:NgForm){
+  registrarPostulante(){
+    this.submitFormRegistro=true;
+    console.log(this.formRegistroPostulante);
+
+    console.log(this.formRegistroPostulante.value);
+    return;
     console.log(formRegistroPostulanteDatosCompletos);
     console.log("on submit Formulario Registro datos postulante postular");
     if(formRegistroPostulanteDatosCompletos.invalid){
