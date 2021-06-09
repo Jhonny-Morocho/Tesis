@@ -2,7 +2,7 @@
 <div id="hero">
   <div class="centrarFormularioLoginRegistro animate__animated  fadeIn ">
     <div class="container col-sm-8 ">
-      <form class="row g-3 formRegistroLogin pl-2 pr-2 " (ngSubmit)="loginAdmin()"  [formGroup]="formLogin">
+      <form class="row g-3 formRegistroLogin pl-2 pr-2 " (ngSubmit)="loginAdmin()"  [formGroup]="formLogin" #fLogin="ngForm">
           <div class="text-center">
             <img src="{{ dominio }}/Archivos/images/sistemasUNL_blanco.png"
                   class="rounded mx-auto d-block"
@@ -25,12 +25,13 @@
                     class="form-control"
                     placeholder="Ingrese su correo"
                     [class.is-invalid]="correoNoValido"
+                    [class.is-invalid]="fLogin.submitted==true && (formLogin.get('correo').value)==''"
                     [class.is-valid]="formLogin.get('correo').valid">
               <!-- mensajes de validacion -->
               <div class="invalid-feedback"  *ngIf="formLogin.get('correo').invalid && (formLogin.get('correo').value)!='' ">
                 <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
               </div>
-              <div class="invalid-feedback"  *ngIf="correoNoValido && (formLogin.get('correo').value)=='' ">
+              <div class="invalid-feedback"  *ngIf="correoNoValido && (formLogin.get('correo').value)=='' || fLogin.submitted==true && (formLogin.get('correo').value)=='' ">
                 <i class="fas fa-info-circle"></i> El correo es requerido
               </div>
               <!-- end mensajes de validacion -->
@@ -44,12 +45,16 @@
                     formControlName="password"
                     class="form-control"
                     [class.is-invalid]="passwordNoValido"
+                    [class.is-invalid]="fLogin.submitted==true && (formLogin.get('password').value)==''"
                     [class.is-valid]="formLogin.get('password').valid"
                     placeholder="Ingrese su contraseña"
                     maxlength="10">
               <!-- mensajes de validacion -->
-              <div class="invalid-feedback" *ngIf="passwordNoValido && (formLogin.get('password').value)=='' ">
+              <div class="invalid-feedback" *ngIf="passwordNoValido && (formLogin.get('password').value)=='' || fLogin.submitted==true && (formLogin.get('password').value)=='' ">
                 Contraseña requerida
+              </div>
+              <div class="invalid-feedback"  *ngIf="formLogin.get('correo').invalid && (formLogin.get('correo').value)!='' ">
+                <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
               </div>
               <!-- end mensajes de validacion -->
           </div>

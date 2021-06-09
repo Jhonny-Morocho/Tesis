@@ -3,6 +3,7 @@ import {PostulanteModel} from 'src/app/models/postulante.models';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
+import {ValidadoresService} from 'src/app/servicios/validadores.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +15,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   //creo una referencia
   formRegistroPostulante:FormGroup;
   fechaActual:string;
+  fechaMinima:string='1905-12-31';
   //formulario aplastado submit
   submitFormRegistro:boolean=false;
 
@@ -29,6 +31,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   constructor(private servicioPostulante_:SerivicioPostulanteService,
               private formulario:FormBuilder,
+              private validadorPersonalizado:ValidadoresService,
               private ruta_:Router) {
   this.instanciaPostulante=new PostulanteModel();
 
@@ -37,7 +40,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   }
   funcionFechaActual(){
-    var fecha:string = new Date(); //Fecha actual
+    var fecha:any = new Date(); //Fecha actual
     var mes:string = fecha.getMonth()+1; //obteniendo mes
     var dia:string = fecha.getDate(); //obteniendo dia
     var ano:string = fecha.getFullYear(); //obteniendo año
@@ -56,10 +59,10 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   // para hacer validacion y activar la clase en css
   get generoNoValido(){
-    return this.formRegistroPostulante.get('genero').invalid && this.formRegistroPostulante.get('genero').touched ;
+    return this.formRegistroPostulante.get('genero').invalid  ;
   }
   get fechaNacimientoNoValido(){
-    return this.formRegistroPostulante.get('fechaNacimiento').invalid && this.formRegistroPostulante.get('fechaNacimiento').touched;
+    return this.formRegistroPostulante.get('fechaNacimiento').invalid && this.formRegistroPostulante.get('fechaNacimiento').touched ;
   }
   get documentoIdentidadNoValido(){
     return this.formRegistroPostulante.get('documentoIndentidad').invalid && this.formRegistroPostulante.get('documentoIndentidad').touched;
@@ -67,11 +70,15 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   get nombreNoValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
   }
+
   get apellidoNoValido(){
     return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
   }
   get telefonoNoValido(){
     return this.formRegistroPostulante.get('telefono').invalid && this.formRegistroPostulante.get('telefono').touched;
+  }
+  get direccionNoValida(){
+    return this.formRegistroPostulante.get('direccionDomicilio').invalid && this.formRegistroPostulante.get('direccionDomicilio').touched;
   }
   crearFormulario(){
     this.formRegistroPostulante=this.formulario.group({
@@ -85,6 +92,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       apellidosCompleto:['',
                    [
                       Validators.required,
+                      this.validadorPersonalizado.noHerrera,
                       Validators.maxLength(20)
                    ]
                ],
@@ -102,15 +110,20 @@ export class FormularioInfoPostulanteComponent implements OnInit {
                 ],
       fechaNacimiento:[this.fechaActual,
                     [
-                      Validators.required,
-                      Validators.maxLength(20)
+                      Validators.required
                     ]
                   ],
       genero:['',
-        [
-          Validators.required,
-        ]
-      ],
+                [
+                  Validators.required,
+                ]
+              ],
+      direccionDomicilio:['',
+                [
+                  Validators.required,
+                  Validators.maxLength(30)
+                ]
+             ],
     });
   }
 
@@ -150,9 +163,9 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
     console.log(this.formRegistroPostulante.value);
     return;
-    console.log(formRegistroPostulanteDatosCompletos);
+    console.log(this.formRegistroPostulante);
     console.log("on submit Formulario Registro datos postulante postular");
-    if(formRegistroPostulanteDatosCompletos.invalid){
+    if(this.formRegistroPostulante.invalid){
       return;
      }
      Swal({

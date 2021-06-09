@@ -103,7 +103,7 @@
                                     <label class="form-check-label" for="gridRadios2">Femenino</label>
                                 </div>
                             </div>
-                            <div class="text-danger " *ngIf="fPostulante.submitted && fPostulante.controls['genero'].errors ">
+                            <div class="text-danger " *ngIf="fPostulante.submitted ">
                               El campo género es obligatorio
                             </div>
                         </div>
@@ -139,7 +139,7 @@
 <div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==false">
     <div class="card">
         <article class="card-body">
-            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" #fEmpleador="ngForm">
+            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" #fPostulante="ngForm">
                 <div class="alert alert-primary" role="alert">
                     Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
                 </div>
@@ -152,19 +152,15 @@
                            maxlength="20"
                            formControlName="nombresCompleto"
                            [class.is-invalid]="nombreNoValido"
-                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
+                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)==''"
+                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid "
                            class="form-control"
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="nombreNoValido && (formRegistroPostulante.get('nombresCompleto').value)==''">
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)=='' ">
                       <i class="fas fa-info-circle"></i> El nombre es requerido
                     </div>
-                    <!-- <div class="invalid-feedback"  *ngIf="fEmpleador.submitted===true">
-                      <i class="fas fa-info-circle"></i> xxxx
-                    </div>
-                    <p>{{ fEmpleador.submitted }}</p> -->
-                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
@@ -173,11 +169,12 @@
                            class="form-control"
                            formControlName="apellidosCompleto"
                            [class.is-invalid]="apellidoNoValido"
+                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('apellidosCompleto').valid"
                            placeholder="Ingrese sus apellidos completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="apellidoNoValido && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido || fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
                       <i class="fas fa-info-circle"></i> El apellido es requerido
                     </div>
                     <!-- end mensajes de validacion -->
@@ -190,10 +187,11 @@
                            formControlName="documentoIndentidad"
                            placeholder="Ingrese su documento de identidad"
                            [class.is-invalid]="documentoIdentidadNoValido"
+                           [class.is-invalid]="fPostulante.submitted==true && (formRegistroPostulante.get('documentoIndentidad').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('documentoIndentidad').valid"
-                           maxlength="10">
+                           maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido && (formRegistroPostulante.get('documentoIndentidad').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido  || fPostulante.submitted && (formRegistroPostulante.get('documentoIndentidad').value)=='' ">
                       <i class="fas fa-info-circle"></i> El documento de identidad es requerido
                     </div>
                     <!-- end mensajes de validacion -->
@@ -202,12 +200,14 @@
                     <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
                     <input type="date"
                           formControlName="fechaNacimiento"
-                          [class.is-invalid]="fechaNacimientoNoValido"
-                          [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
+                          [max]="fechaActual"
+                          [min]="fechaMinima"
+                          [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('fechaNacimiento').value)==fechaActual"
+                          [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').value!=fechaActual"
                            class="form-control ">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido && (formRegistroPostulante.get('fechaNacimiento').value)=='' ">
-                      <i class="fas fa-info-circle"></i> La fecha de nacimiento es requerido
+                    <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido || fPostulante.submitted && (formRegistroPostulante.get('fechaNacimiento').value)==fechaActual ">
+                      <i class="fas fa-info-circle"></i> Asegurate de usar tu fecha de nacimiento real
                     </div>
                     <!-- end mensajes de validacion -->
                 </div>
@@ -218,52 +218,62 @@
                            class="form-control"
                            formControlName="telefono"
                            [class.is-invalid]="telefonoNoValido"
+                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('telefono').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            maxlength="10">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="telefonoNoValido && (formRegistroPostulante.get('telefono').value)=='' ">
-                      <i class="fas fa-info-circle"></i> El telefono es requerido
+                    <div class="invalid-feedback"  *ngIf="telefonoNoValido || fPostulante.submitted && (formRegistroPostulante.get('telefono').value)=='' ">
+                      <i class="fas fa-info-circle"></i> El teléfono es requerido
                     </div>
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
-                    <fieldset class="form-group ">
-                        <div class="row ">
-                            <legend class="col-form-label col-sm-2 pt-0 ">Género</legend>
-                            <div class="col-sm-10 ">
-                              <div class="form-check ">
-
-                                    <input class="form-check-input"
-                                           formControlName="genero"
-                                           [class.is-invalid]="generoNoValido"
-                                           [class.is-valid]="formRegistroPostulante.get('genero').touched"
-                                           [value]="0"
-                                           type="radio">
-                                    <label class="form-check-label" for="gridRadios1"><i class="fas fa-mars-stroke "></i> Masculino</label>
-                                </div>
-                                <div class="form-check ">
-                                    <input class="form-check-input "
-                                           type="radio"
-                                           [value]="1"
-                                           [class.is-invalid]="generoNoValido"
-                                           [class.is-valid]="formRegistroPostulante.get('genero').touched"
-                                           formControlName="genero">
-                                    <label class="form-check-label "for="gridRadios2"><i class="fas fa-venus"></i> Femenino</label>
-                                </div>
-                            </div>
+                      <label for="inputEmail4 " class="form-label ">Género</label><br>
+                      <div class="form-check">
+                        <input type="radio"
+                              class="form-check-input"
+                              formControlName="genero"
+                              [class.is-invalid]="generoNoValido"
+                              [class.is-valid]="formRegistroPostulante.get('genero').touched"
+                              [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('genero').value)==''"
+                              value="0"
+                               >
+                        <label class="form-check-label" for="validationFormCheck2"><i class="fas fa-venus "></i> Masculino</label>
+                      </div>
+                      <div class="form-check mb-3">
+                        <input type="radio"
+                                class="form-check-input"
+                                formControlName="genero"
+                                [class.is-invalid]="generoNoValido"
+                                [class.is-valid]="formRegistroPostulante.get('genero').touched"
+                                [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('genero').value)==''"
+                                value="1"
+                                >
+                        <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino</label>
+                        <div class="invalid-feedback" *ngIf="generoNoValido || fPostulante.submitted && (formRegistroPostulante.get('genero').value)=='' ">
+                          <i class="fas fa-info-circle"></i> El género es obligatorio
                         </div>
-                      </fieldset>
-                    </div>
+                      </div>
+                  </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
+                        <i class="fas fa-map-marker-alt form-control-feedback"></i>
                         <textarea class="form-control "
-                                  name="direcionDomicilio"
                                   rows="3"
+                                  formControlName="direccionDomicilio"
+                                  [class.is-invalid]="direccionNoValida"
+                                  [class.is-valid]="formRegistroPostulante.get('direccionDomicilio').valid"
+                                  [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('direccionDomicilio').value)==''"
                                   placeholder="Ingrese su dirección de domicilio o laboral"
                                   maxlength="30">
                         </textarea>
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="direccionNoValida || fPostulante.submitted && (formRegistroPostulante.get('direccionDomicilio').value)=='' ">
+                        <i class="fas fa-info-circle"></i> La dirección es requerida
+                      </div>
+                      <!-- end mensajes de validacion -->
                     </div>
                 </div>
                 <div class="col-12 ">
