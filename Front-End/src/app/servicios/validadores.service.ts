@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
+//importo libreria para poder jugar con las fechas
+import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,5 +17,16 @@ export class ValidadoresService {
       }
     }
     return null;
+  }
+  noFechaMayorActualPostulante(control: FormControl):{[s:string]:boolean}{
+    let fechaActual=moment().format("YYYY-MM-DD");
+    let fechaMinima='1905-01-01';
+    if(fechaActual<=control.value ||  fechaMinima >= control.value){
+      return{
+        noFechaMayorActualPostulante:true
+      }
+    }else{
+      return null;
+    }
   }
 }

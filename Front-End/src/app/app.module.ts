@@ -71,6 +71,7 @@ import { FormMiPerfilComponent } from './pages/compentes-publicos/form-mi-perfil
 import { MiPerfilPostulanteComponent } from './pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
 import { MiPerfilEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,7 +136,8 @@ import { RatingModule } from 'ng-starrating';
     DataTablesModule,
     RatingModule,
     //FORM REACTIVOS
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
 
 
     // Tostadas

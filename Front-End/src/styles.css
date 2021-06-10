@@ -326,3 +326,34 @@ p.clasificacion2 input:checked~label {
 .form-control {
   padding-left: 30px!important;
 }
+/* ============== ALERT MODERN =================== */
+.simple-alert {
+  background-color: #ebebeb;
+  border-left: 5px solid #6c6c6c;
+}
+.simple-warning {
+  background-color: #ebebeb;
+  border-left: 5px solid yellow;
+}
+.simple-danger {
+  background-color: #ebebeb;
+  border-left: 5px solid #dc3545;
+}
+.simple-succes {
+  background-color: #ebebeb;
+  border-left: 5px solid #198754;
+}
+.simple-primary {
+  background-color: #ebebeb;
+  border-left: 5px solid #007bff;
+}
+
+
+.alert {
+width: 100%;
+margin: 20px auto;
+padding: 30px;
+position: relative;
+border-radius: 5px;
+box-shadow: 0 0 15px 5px #ccc;
+}

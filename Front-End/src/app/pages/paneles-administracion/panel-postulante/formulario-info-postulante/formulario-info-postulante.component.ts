@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import {ValidadoresService} from 'src/app/servicios/validadores.service';
 import { Router } from '@angular/router';
-
+//importo libreria para poder jugar con las fechas
+import * as moment from 'moment';
 @Component({
   selector: 'app-formulario-info-postulante',
   templateUrl: './formulario-info-postulante.component.html'
@@ -16,16 +17,12 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   formRegistroPostulante:FormGroup;
   fechaActual:string;
   fechaMinima:string='1905-12-31';
-  //formulario aplastado submit
-  submitFormRegistro:boolean=false;
-
-  booleanFormularioCompletado=false;
+  booleanFormularioCompletado:boolean;
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
-  obervaciones=false;
+  obervaciones:boolean;
   //validacion de formulario true/false
-  formValidado=false;
+  formValidado:boolean;
   //tipo de genero
-
 
 
 
@@ -34,32 +31,17 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               private validadorPersonalizado:ValidadoresService,
               private ruta_:Router) {
   this.instanciaPostulante=new PostulanteModel();
-
-  this.funcionFechaActual();
+  this.fechaActual=moment().format("YYYY-MM-DD");
   this.crearFormulario();
-
-  }
-  funcionFechaActual(){
-    var fecha:any = new Date(); //Fecha actual
-    var mes:string = fecha.getMonth()+1; //obteniendo mes
-    var dia:string = fecha.getDate(); //obteniendo dia
-    var ano:string = fecha.getFullYear(); //obteniendo año
-    if(parseInt(dia)<10){
-      dia='0'+dia;
-    }
-    if(parseInt(mes)<10){
-      mes='0'+mes;
-    }
-    this.fechaActual=ano+'-'+mes+'-'+dia;
   }
   ngOnInit() {
     //consultar si el postulante ha llenado el formulario
-    //this.formMotrarFormularioCompletado();
+    this.cargarDatosFormulario();
   }
 
   // para hacer validacion y activar la clase en css
   get generoNoValido(){
-    return this.formRegistroPostulante.get('genero').invalid  ;
+    return this.formRegistroPostulante.get('genero').invalid   && this.formRegistroPostulante.get('genero').touched ;
   }
   get fechaNacimientoNoValido(){
     return this.formRegistroPostulante.get('fechaNacimiento').invalid && this.formRegistroPostulante.get('fechaNacimiento').touched ;
@@ -92,7 +74,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       apellidosCompleto:['',
                    [
                       Validators.required,
-                      this.validadorPersonalizado.noHerrera,
                       Validators.maxLength(20)
                    ]
                ],
@@ -110,7 +91,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
                 ],
       fechaNacimiento:[this.fechaActual,
                     [
-                      Validators.required
+                      Validators.required,
+                      this.validadorPersonalizado.noFechaMayorActualPostulante
                     ]
                   ],
       genero:['',
@@ -127,26 +109,52 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     });
   }
 
-  formMotrarFormularioCompletado(){
+
+  cargarDatosFormulario(){
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
            // si esta registradoo en la BD el formulario completo entonces presento los datos
           if(siHacesBien['Siglas']=="OE"){
-            // por lo tanto formulario completo ==true
-            this.booleanFormularioCompletado=true;
-            //llena el formulario por primera ves
-            this.instanciaPostulante.nombre=siHacesBien['mensaje']['nombre'];
-            this.instanciaPostulante.apellido=siHacesBien['mensaje']['apellido'];
-            this.instanciaPostulante.cedula=siHacesBien['mensaje']['cedula'];
-            this.instanciaPostulante.telefono=siHacesBien['mensaje']['telefono'];
-            this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
-            this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
-            this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
-            this.instanciaPostulante.observaciones=siHacesBien['mensaje']['observaciones'];
-            this.instanciaPostulante.estado=siHacesBien['mensaje']['estado'];
-            //si es mayor a cero es q si ha revisado y si ha visto el formulario
-            this.obervaciones = ( this.instanciaPostulante.observaciones.length>0)?true:false;
-            this.formValidado = ( this.instanciaPostulante.estado==1)?true:false;
+              this.booleanFormularioCompletado=true;
+              this.instanciaPostulante.observaciones=siHacesBien['mensaje']['observaciones']
+              this.instanciaPostulante.estado=siHacesBien['mensaje']['estado'];
+              this.instanciaPostulante.nombre=siHacesBien['mensaje']['nombre'];
+              this.instanciaPostulante.apellido=siHacesBien['mensaje']['apellido'];
+              this.instanciaPostulante.cedula=siHacesBien['mensaje']['cedula'];
+              this.instanciaPostulante.fecha_nacimiento=siHacesBien['mensaje']['fecha_nacimiento'];
+              this.instanciaPostulante.telefono=siHacesBien['mensaje']['telefono'];
+              this.instanciaPostulante.genero=siHacesBien['mensaje']['genero'];
+              this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
+
+              //cargo los datos al formulario
+              this.formRegistroPostulante.setValue({
+              nombresCompleto:this.instanciaPostulante.nombre,
+              apellidosCompleto:this.instanciaPostulante.apellido,
+              documentoIndentidad:this.instanciaPostulante.cedula,
+              telefono:this.instanciaPostulante.telefono,
+              fechaNacimiento:this.instanciaPostulante.fecha_nacimiento,
+              genero:this.instanciaPostulante.genero,
+              direccionDomicilio:this.instanciaPostulante.direccion_domicilio
+            });
+            console.log(this.instanciaPostulante);
+
+            //ahun no lo revisan al formulario
+            if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones===''){
+              this.formValidado=false;
+              this.obervaciones=false;
+              this.formRegistroPostulante.disable();
+            }
+            //ya lo revisaron al formulaorio,pero no fue validado
+            if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones!=''){
+              this.formValidado=false;
+              this.obervaciones=true;
+            }
+            //lo revisaron y lo validaron
+            if(this.instanciaPostulante.estado==1 && this.instanciaPostulante.observaciones!=''){
+              this.formValidado=true;
+              this.obervaciones=true;
+              this.formRegistroPostulante.disable();
+            }
 
           }
       },(peroSiTenemosErro)=>{
@@ -158,14 +166,18 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   //creacion usuario estudiante
   registrarPostulante(){
-    this.submitFormRegistro=true;
     console.log(this.formRegistroPostulante);
-
-    console.log(this.formRegistroPostulante.value);
-    return;
-    console.log(this.formRegistroPostulante);
-    console.log("on submit Formulario Registro datos postulante postular");
     if(this.formRegistroPostulante.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
       return;
      }
      Swal({
@@ -176,31 +188,41 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     Swal.showLoading();
     this.instanciaPostulante.estado=0;
     this.instanciaPostulante.observaciones="";
-    console.log(this.instanciaPostulante);
+    this.instanciaPostulante.nombre=this.formRegistroPostulante.value.nombresCompleto;
+    this.instanciaPostulante.apellido=this.formRegistroPostulante.value.apellidosCompleto;
+    this.instanciaPostulante.cedula=this.formRegistroPostulante.value.documentoIndentidad;
+    this.instanciaPostulante.fecha_nacimiento=this.formRegistroPostulante.value.fechaNacimiento;
+    this.instanciaPostulante.telefono=this.formRegistroPostulante.value.telefono;
+    this.instanciaPostulante.genero=this.formRegistroPostulante.value.genero;
+    this.instanciaPostulante.direccion_domicilio=this.formRegistroPostulante.value.direccionDomicilio;
     this.servicioPostulante_.crearPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Información registrada con éxito', 'success');
-          localStorage.setItem("nombre", this.instanciaPostulante.nombre);
-          localStorage.setItem("apellido", this.instanciaPostulante.apellido);
-          localStorage.setItem("cedula",this.instanciaPostulante.cedula);
-          localStorage.setItem("telefono",this.instanciaPostulante.telefono);
-          localStorage.setItem("genero",(this.instanciaPostulante.genero).toString());
-          localStorage.setItem("direccion_domicilio",this.instanciaPostulante.direccion_domicilio);
-          localStorage.setItem("fecha_nacimiento",this.instanciaPostulante.fecha_nacimiento);
-          localStorage.setItem("external_es",siHacesBien['mensaje']['external_es']);
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
           this.booleanFormularioCompletado=true;
+          this.formValidado=false;
+          this.obervaciones=false;
+          this.formRegistroPostulante.disable();
         }else{
             console.warn(siHacesBien);
-            Swal('Ups, No se puede realizar el registro', siHacesBien['error'], 'info')
-          }
+            Swal('Ups', siHacesBien['error'], 'info')
+        }
 
       },(peroSiTenemosErro)=>{
         console.log(peroSiTenemosErro['error']);
         console.log(this.instanciaPostulante);
         Swal({
-          title:'Error al registrar informacion',
+          title:'Error',
           type:'error',
           text:peroSiTenemosErro['mensaje']
         });
@@ -208,11 +230,16 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   }
 
   //editar
-  onSubmitFormularioPostulanteEditar(formRegistroPostulanteDatosCompletos:NgForm){
-    if(formRegistroPostulanteDatosCompletos.invalid){
-      return;
-     }
-
+  editarPostulante(){
+    this.instanciaPostulante.estado=0;
+    this.instanciaPostulante.observaciones="";
+    this.instanciaPostulante.nombre=this.formRegistroPostulante.value.nombresCompleto;
+    this.instanciaPostulante.apellido=this.formRegistroPostulante.value.apellidosCompleto;
+    this.instanciaPostulante.cedula=this.formRegistroPostulante.value.documentoIndentidad;
+    this.instanciaPostulante.fecha_nacimiento=this.formRegistroPostulante.value.fechaNacimiento;
+    this.instanciaPostulante.telefono=this.formRegistroPostulante.value.telefono;
+    this.instanciaPostulante.genero=this.formRegistroPostulante.value.genero;
+    this.instanciaPostulante.direccion_domicilio=this.formRegistroPostulante.value.direccionDomicilio;
      Swal({
       allowOutsideClick:false,
       type:'info',
@@ -220,17 +247,28 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     });
     Swal.showLoading();
     //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
-    this.instanciaPostulante.observaciones="";
     this.servicioPostulante_.actulizarDatosPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Actualizado', 'Información registrada con éxito', 'success');
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          toast({
+            type: 'success',
+            title: 'Actualizado'
+          })
           //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
           this.obervaciones=false;
           //si el usuario esta el estado en 1// estado cero
           this.formValidado=false;
+          this.formRegistroPostulante.disable();
+          //redirecciono a la misma pagina
+          this.ruta_.navigate(['/panel-postulante/form-info-postulante']);
           }else{
             console.log(siHacesBien);
              Swal('Info', siHacesBien['mensaje'], 'info')
