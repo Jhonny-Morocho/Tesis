@@ -177,8 +177,11 @@
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido && (formRegistroPostulante.get('nombresCompleto').value)=='' || fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)=='' ">
                       <i class="fas fa-info-circle"></i> El nombre es requerido
+                    </div>
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -193,8 +196,11 @@
                            placeholder="Ingrese sus apellidos completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="apellidoNoValido || fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido && (formRegistroPostulante.get('apellidosCompleto').value)==''|| fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
                       <i class="fas fa-info-circle"></i> El apellido es requerido
+                    </div>
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido  || fPostulante.submitted && formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] ">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto
                     </div>
                     <!-- end mensajes de validacion -->
                 </div>
@@ -241,10 +247,13 @@
                            [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('telefono').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
-                           maxlength="10">
+                           maxlength="15">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="telefonoNoValido || fPostulante.submitted && (formRegistroPostulante.get('telefono').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="telefonoNoValido && (formRegistroPostulante.get('telefono').value)=='' || fPostulante.submitted && (formRegistroPostulante.get('telefono').value)=='' ">
                       <i class="fas fa-info-circle"></i> El teléfono es requerido
+                    </div>
+                    <div class="invalid-feedback"  *ngIf="telefonoNoValido  || fPostulante.submitted && formRegistroPostulante.controls['telefono'].errors['soloNumeros'] ">
+                      <i class="fas fa-info-circle"></i> Ingrese solo números
                     </div>
                     <!-- end mensajes de validacion -->
                 </div>

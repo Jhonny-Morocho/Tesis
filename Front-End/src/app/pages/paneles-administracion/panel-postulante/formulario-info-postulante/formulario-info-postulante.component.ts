@@ -52,10 +52,14 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   get nombreNoValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
   }
+  get nombreSoloTexto(){
+    return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'];
+  }
 
   get apellidoNoValido(){
     return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
   }
+
   get telefonoNoValido(){
     return this.formRegistroPostulante.get('telefono').invalid && this.formRegistroPostulante.get('telefono').touched;
   }
@@ -67,6 +71,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       nombresCompleto:['',
                   [
                     Validators.required,
+                    this.validadorPersonalizado.soloTexto,
                     Validators.maxLength(20)
 
                   ]
@@ -74,6 +79,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       apellidosCompleto:['',
                    [
                       Validators.required,
+                      this.validadorPersonalizado.soloTexto,
                       Validators.maxLength(20)
                    ]
                ],
@@ -86,7 +92,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
       telefono:['',
                   [
                     Validators.required,
-                    Validators.maxLength(10)
+                    this.validadorPersonalizado.soloNumeros,
+                    Validators.maxLength(15)
                   ]
                 ],
       fechaNacimiento:[this.fechaActual,

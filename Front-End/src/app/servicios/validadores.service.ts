@@ -29,4 +29,22 @@ export class ValidadoresService {
       return null;
     }
   }
+  soloTexto(control: FormControl):{[s:string]:boolean}{
+      const pattern = new RegExp('^[A-ZÁÉÍÓÚÑ ]+$', 'i');
+      if (!pattern.test(control.value)){
+        return{
+          soloTexto:true
+        }
+      }
+      return null;
+  }
+  soloNumeros(control: FormControl):{[s:string]:boolean}{
+    const pattern = new RegExp('^[0-9]*$');
+    if (!pattern.test(control.value)){
+      return{
+        soloNumeros:true
+      }
+    }
+    return null;
+  }
 }
