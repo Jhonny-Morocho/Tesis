@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // importa utomaticamente el ingForm
 import Swal from 'sweetalert2';
-import {UsuarioModel} from '../../../../models/usuario.model';
+import {UsuarioModel} from '../../../models/usuario.model';
 import { Router } from '@angular/router';
 import {environment} from 'src/environments/environment';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';
@@ -20,7 +20,7 @@ export class PanelAdminComponent implements OnInit {
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
-   
+
     this.verificarDireccionarTipoUsuario();
 
   }
@@ -36,7 +36,7 @@ export class PanelAdminComponent implements OnInit {
           break;
         case 3:
           this.tipoUsuarioSecretaria=true;
-          break;       
+          break;
         case 4:
           this.tipoUsuarioGestor=true;
           break;
@@ -44,7 +44,7 @@ export class PanelAdminComponent implements OnInit {
           console.log("tipo de usuario para nav item no encontrado");
           break;
       }
-      
+
     }else{
      // no existe session por lo cual debo direccionar al inicio
     }
@@ -66,7 +66,7 @@ export class PanelAdminComponent implements OnInit {
       }
     })
   }
- 
+
 }
 
 

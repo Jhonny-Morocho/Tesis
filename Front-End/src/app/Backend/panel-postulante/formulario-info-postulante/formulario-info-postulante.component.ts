@@ -52,8 +52,14 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   get nombreNoValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
   }
+
   get nombreSoloTexto(){
-    return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'];
+    console.log(this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']);
+    // si ingresa numero entonces sera falso
+    return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ;
+  }
+  get nombreVacio(){
+    return this.formRegistroPostulante.get('nombresCompleto').value=='';
   }
 
   get apellidoNoValido(){

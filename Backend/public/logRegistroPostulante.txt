@@ -2318,3 +2318,51 @@ Stack trace:
 
 
 
+[2021-06-12 01:25:39] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:25:41] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:25:43] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:25:45] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:25:47] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:25:49] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:48] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:51] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:53] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:55] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:57] Registro Postulante Correo : false ]
+
+
+
+[2021-06-12 01:40:59] Registro Postulante Correo : false ]
+
+
+

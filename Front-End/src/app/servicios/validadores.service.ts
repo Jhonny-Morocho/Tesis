@@ -31,12 +31,14 @@ export class ValidadoresService {
   }
   soloTexto(control: FormControl):{[s:string]:boolean}{
       const pattern = new RegExp('^[A-ZÁÉÍÓÚÑ ]+$', 'i');
+      console.log(pattern.test(control.value));
       if (!pattern.test(control.value)){
+        // si estra entonces no cumple con la validacion
         return{
           soloTexto:true
         }
       }
-      return null;
+      return null
   }
   soloNumeros(control: FormControl):{[s:string]:boolean}{
     const pattern = new RegExp('^[0-9]*$');

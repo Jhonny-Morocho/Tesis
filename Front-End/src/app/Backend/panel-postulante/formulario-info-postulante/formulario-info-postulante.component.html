@@ -170,19 +170,50 @@
                     <input type="text"
                            maxlength="20"
                            formControlName="nombresCompleto"
+                           [class.is-invalid]="fPostulante.submitted && nombreVacio"
                            [class.is-invalid]="nombreNoValido"
-                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)==''"
-                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid "
+                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
                            class="form-control"
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
-                    <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="nombreNoValido && (formRegistroPostulante.get('nombresCompleto').value)=='' || fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)=='' ">
-                      <i class="fas fa-info-circle"></i> El nombre es requerido
+                    <!-- Si hizo submit pero no lleno el campo -->
+                    <div class="invalid-feedback"  *ngIf="fPostulante.submitted && nombreVacio">
+                      <i class="fas fa-info-circle"></i> El nombre es requerido.
                     </div>
-                    <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ">
+                     <!-- Si el campo esta vacio pero no hizo submit-->
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido && !fPostulante.submitted">
+                      <i class="fas fa-info-circle"></i> El nombre es requerido.
+                    </div>
+                    <!-- Si el campo esta vacio pero no hizo submit-->
+                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto && !nombreVacio && !fPostulante.submitted">
                       <i class="fas fa-info-circle"></i> Ingrese solo texto
-                    </div>
+                    </div> -->
+                    <p>{{  nombreSoloTexto}}</p>
+                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
+                    </div> -->
+                    <!-- <p>{{ nombreVacio }}</p>
+                    <p>{{  nombreSoloTexto}}</p> -->
+                     <!-- Si hizo submit pero no lleno el campo -->
+                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto && !nombreVacio">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
+                    </div> -->
+                    <!-- <p class="invalid-feedback" *ngIf="nombreSoloTexto">{{ nombreSoloTexto }}</p> -->
+                    <!-- <p>{{ nombreVacio }}</p> -->
+                    <!-- <div class="invalid-feedback"  *ngIf="!nombreSoloTexto">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
+                    </div> -->
+                    <!-- mensajes de validacion -->
+                    <!-- Si el usuario escribe numero -->
+                    <!-- <div class="invalid-feedback"  *ngIf="formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
+                    </div> -->
+                     <!-- <div class="invalid-feedback"  *ngIf="fPostulante.submitted && formRegistroPostulante.get('nombresCompleto').invalid">
+                      <i class="fas fa-info-circle"></i> El nombre es requerido
+                    </div> -->
+                    <!-- <div class="invalid-feedback" *ngIf="fPostulante.submitted && !formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']">
+                      <i class="fas fa-info-circle"></i> Ingrese solo texto
+                    </div>  -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
@@ -191,17 +222,16 @@
                            class="form-control"
                            formControlName="apellidosCompleto"
                            [class.is-invalid]="apellidoNoValido"
-                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('apellidosCompleto').valid"
                            placeholder="Ingrese sus apellidos completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="apellidoNoValido && (formRegistroPostulante.get('apellidosCompleto').value)==''|| fPostulante.submitted && (formRegistroPostulante.get('apellidosCompleto').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido ">
                       <i class="fas fa-info-circle"></i> El apellido es requerido
                     </div>
-                    <div class="invalid-feedback"  *ngIf="apellidoNoValido  || fPostulante.submitted && formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] ">
+                    <!-- <div class="invalid-feedback"  *ngIf="apellidoNoValido && formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] || fPostulante.submitted && formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] && apellidoNoValido">
                       <i class="fas fa-info-circle"></i> Ingrese solo texto
-                    </div>
+                    </div> -->
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
@@ -212,11 +242,10 @@
                            formControlName="documentoIndentidad"
                            placeholder="Ingrese su documento de identidad"
                            [class.is-invalid]="documentoIdentidadNoValido"
-                           [class.is-invalid]="fPostulante.submitted==true && (formRegistroPostulante.get('documentoIndentidad').value)==''"
                            [class.is-valid]="formRegistroPostulante.get('documentoIndentidad').valid"
                            maxlength="20">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido  || fPostulante.submitted && (formRegistroPostulante.get('documentoIndentidad').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido ">
                       <i class="fas fa-info-circle"></i> El documento de identidad es requerido
                     </div>
                     <!-- end mensajes de validacion -->
@@ -227,12 +256,12 @@
                           formControlName="fechaNacimiento"
                           [max]="fechaActual"
                           [min]="fechaMinima"
-                          [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('fechaNacimiento').value)==fechaActual"
+
                           [class.is-invalid]="fechaNacimientoNoValido"
                           [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
                            class="form-control ">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido || fPostulante.submitted && !fechaNacimientoNoValido">
+                    <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido">
                       <i class="fas fa-info-circle"></i> Asegurate de usar tu fecha de nacimiento real
                     </div>
                     <!-- end mensajes de validacion -->
@@ -244,17 +273,17 @@
                            class="form-control"
                            formControlName="telefono"
                            [class.is-invalid]="telefonoNoValido"
-                           [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('telefono').value)==''"
+
                            [class.is-valid]="formRegistroPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            maxlength="15">
                     <!-- mensajes de validacion -->
-                    <div class="invalid-feedback"  *ngIf="telefonoNoValido && (formRegistroPostulante.get('telefono').value)=='' || fPostulante.submitted && (formRegistroPostulante.get('telefono').value)=='' ">
+                    <div class="invalid-feedback"  *ngIf="telefonoNoValido">
                       <i class="fas fa-info-circle"></i> El teléfono es requerido
                     </div>
-                    <div class="invalid-feedback"  *ngIf="telefonoNoValido  || fPostulante.submitted && formRegistroPostulante.controls['telefono'].errors['soloNumeros'] ">
+                    <!-- <div class="invalid-feedback"  *ngIf="telefonoNoValido && formRegistroPostulante.controls['telefono'].errors['soloNumeros'] || fPostulante.submitted && formRegistroPostulante.controls['telefono'].errors['soloNumeros']">
                       <i class="fas fa-info-circle"></i> Ingrese solo números
-                    </div>
+                    </div> -->
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
@@ -294,7 +323,6 @@
                                   formControlName="direccionDomicilio"
                                   [class.is-invalid]="direccionNoValida"
                                   [class.is-valid]="formRegistroPostulante.get('direccionDomicilio').valid"
-                                  [class.is-invalid]="fPostulante.submitted && (formRegistroPostulante.get('direccionDomicilio').value)==''"
                                   placeholder="Ingrese su dirección de domicilio o laboral"
                                   maxlength="30">
                         </textarea>
