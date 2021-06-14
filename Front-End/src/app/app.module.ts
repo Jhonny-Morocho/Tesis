@@ -28,7 +28,7 @@ import {FormInfoPostulanteComponent} from 'src/app/Backend/pages/form-validacion
 //empleador
 import {NabPanelEmpleador} from 'src/app/Backend/panel-empleador/nav/navTab-empleador.component';
 import { FormularioInfoEmpleadorComponent } from 'src/app/Backend/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
-import {FormValidacionEmpleadorComponent} from 'src/app/Backend/pages/form-validacion-empleador/form-validacion-empleador.component',
+import {FormValidacionEmpleadorComponent} from 'src/app/Backend/pages/form-validacion-empleador/form-validacion-empleador.component';
 //postulante
 import {TitulosAcademicosComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
 import {CursosCapacitacionesComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
@@ -50,21 +50,20 @@ import { PostulantesOfertaComponent } from 'src/app/Backend/panel-empleador/ofer
 import {VerOfertaLaboralComponent} from 'src/app/Front-end/componentes/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import {NavbarComponent} from 'src/app/Front-end/componentes/navbar/navbar.component';
-import { OfertasPostuladasComponent } from './pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
-import { TablaTitulosAcademicosComponent } from './pages/compentes-publicos/tabla-titulos-academicos/tabla-titulos-academicos.component';
-import { TablaCursosCapacitacionesComponent } from './pages/compentes-publicos/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
-import { VerHojaVidaComponent } from './pages/compentes-publicos/info-detalles-postulante/info-detalles-postulante.component';
-import { DemoComponent } from './demo/demo.component';
+import { OfertasPostuladasComponent } from 'src/app/Backend/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
+import {TablaTitulosAcademicosComponent} from 'src/app/Front-end/tabla-titulos-academicos/tabla-titulos-academicos.component';
+import { TablaCursosCapacitacionesComponent } from 'src/app/Front-end/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
+import { VerHojaVidaComponent } from 'src/app/Front-end/info-detalles-postulante/info-detalles-postulante.component';
 import { DatePipe } from '@angular/common';
-import { TablaUsuariosAdminComponent } from './pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
-import { RegistarAdminComponent } from './pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
-import { FormEditarAdminComponent } from './pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
-import { ReporteOfertasComponent } from './pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
-import { BrandLogoPanelComponent } from './pages/compentes-publicos/brand-logo-panel/brand-logo-panel.component';
-import { ReactivarOfertaComponent } from './pages/compentes-publicos/reactivar-oferta/reactivar-oferta.component';
-import { FormMiPerfilComponent } from './pages/compentes-publicos/form-mi-perfil/form-mi-perfil.component';
-import { MiPerfilPostulanteComponent } from './pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
-import { MiPerfilEmpleadorComponent } from './pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
+import { TablaUsuariosAdminComponent } from 'src/app/Backend/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import { RegistarAdminComponent } from 'src/app/Backend/pages/form-registar-admin/form-registar-admin.component';
+import { FormEditarAdminComponent } from 'src/app/Backend/pages/form-editar-admin/form-editar-admin.component';
+import {ReporteOfertasComponent} from 'src/app/Backend/pages/reporte-ofertas/reporte-ofertas.component';
+import {BrandLogoPanelComponent} from 'src/app/Front-end/brand-logo-panel/brand-logo-panel.component';
+import {ReactivarOfertaComponent} from 'src/app/Front-end/reactivar-oferta/reactivar-oferta.component';
+import { FormMiPerfilComponent } from 'src/app/Front-end/form-mi-perfil/form-mi-perfil.component';
+import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
+import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';
 
 @NgModule({
@@ -109,7 +108,6 @@ import { RatingModule } from 'ng-starrating';
     TablaTitulosAcademicosComponent,
     TablaCursosCapacitacionesComponent,
     VerHojaVidaComponent,
-    DemoComponent,
     TablaUsuariosAdminComponent,
     RegistarAdminComponent,
     FormEditarAdminComponent,

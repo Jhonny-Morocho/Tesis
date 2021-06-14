@@ -1,46 +1,45 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-import { HomeComponent } from './pages/compentes-publicos/home/home.component';
-import { RegistroPostulanteComponent } from './pages/compentes-publicos/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
-import {LoginAdminComponent} from './pages/compentes-publicos/form-registro-login/form-login/login.component';
+import {HomeComponent} from 'src/app/Front-end/pages/home/home.component';
+import {RegistroPostulanteComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
+import {LoginAdminComponent} from 'src/app/Front-end/pages/form-registro-login/form-login/login.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
-import { MiPerfilComponent } from './pages/paneles-administracion/panel-admin/mi-perfil-admin/mi-perfil-admin.component';
-import { MiPerfilEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
-import { TareaValiar } from 'src/app/pages/paneles-administracion/panel-admin/tablas-validacion-cuentas/tablas-validar.component';
-import {RegistroEmpleadorComponent} from './pages/compentes-publicos/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
+import {MiPerfilComponent} from 'src/app/Backend/pages/mi-perfil-admin/mi-perfil-admin.component';
+import { MiPerfilEmpleadorComponent} from 'src/app/Backend/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
+import {TareaValiar} from 'src/app/Backend/componentes/tablas-validacion-cuentas/tablas-validar.component';
+import {RegistroEmpleadorComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
-import {MiPerfilPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
-import {PostulanteOfertas} from 'src/app/pages/paneles-administracion/panel-admin/postulante-ofertas/postulantes-ofertas-encargado.component';
-import {ReporteOfertasComponent} from 'src/app/pages/paneles-administracion/panel-admin/reportes/reporte-ofertas/reporte-ofertas.component';
-import {FormEditarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-editar-admin/form-editar-admin.component';
-import {RegistarAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-registar-admin/form-registar-admin.component';
-import {TablaUsuariosAdminComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-usuarios-admin/tabla-usuarios-admin.component';
-import {FormPublicarOfertaGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
-import {TablaPublicarOfertGestorComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
-import {FormValidarOfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
-import {TablaValidarOfertasLaboralesComponent} from 'src/app/pages/paneles-administracion/panel-admin/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
-import {FormInfoPostulanteComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-postulante/form-validacion-postulante.component';
-import {FormularioInfoPostulanteComponent} from './pages/paneles-administracion/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
+import {MiPerfilPostulanteComponent} from 'src/app/Backend/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
+import {PostulanteOfertas} from 'src/app/Backend/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
+import {ReporteOfertasComponent} from 'src/app/Backend/pages/reporte-ofertas/reporte-ofertas.component';
+import {FormEditarAdminComponent} from 'src/app/Backend/pages/form-editar-admin/form-editar-admin.component';
+import {RegistarAdminComponent} from 'src/app/Backend/pages/form-registar-admin/form-registar-admin.component';
+import {TablaUsuariosAdminComponent} from 'src/app/Backend/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import {FormPublicarOfertaGestorComponent} from 'src/app/Backend/pages/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
+import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/componentes/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
+import {FormValidarOfertaLaboralComponent} from 'src/app/Backend/pages/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
+import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
+import {FormInfoPostulanteComponent} from 'src/app/Backend/pages/form-validacion-postulante/form-validacion-postulante.component';
+import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
-import {ReactivarOfertaComponent} from 'src/app/pages/compentes-publicos/reactivar-oferta/reactivar-oferta.component';
-import {PostulantesOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
-import {EditOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
-import {AddOfertaComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
-import {FormValidacionEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-admin/form-validacion-empleador/form-validacion-empleador.component';
-import {FormularioInfoEmpleadorComponent} from 'src/app/pages/paneles-administracion/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
-import {OfertaLaboralComponent} from 'src/app/pages/paneles-administracion/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
+import {ReactivarOfertaComponent} from 'src/app/Front-end/reactivar-oferta/reactivar-oferta.component';
+import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
+import {EditOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
+import {AddOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
+import {FormValidacionEmpleadorComponent} from 'src/app/Backend/pages/form-validacion-empleador/form-validacion-empleador.component';
+import {FormularioInfoEmpleadorComponent} from 'src/app/Backend/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
+import {OfertaLaboralComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 //postulante
-import {OfertasPostuladasComponent} from 'src/app/pages/paneles-administracion/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
-//import {} from 'src/app/pages/paneles-administracion/panel-postulante/ofertas-postuladas';
-import {FormEditarTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
-import {FormAddTituloComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
-import {TitulosAcademicosComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
-import {CursosCapacitacionesComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
+import {OfertasPostuladasComponent} from 'src/app/Backend/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
+//import {} from 'src/app/Backend/panel-postulante/ofertas-postuladas';
+import {FormEditarTituloComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
+import {FormAddTituloComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
+import {TitulosAcademicosComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
+import {CursosCapacitacionesComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
 //cursos-capacitaciones
-import {FormEditarCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
-import {FormAddCursoComponent} from 'src/app/pages/paneles-administracion/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
-//publicar ofertas
-import {DemoComponent} from 'src/app/demo/demo.component';
+import {FormEditarCursoComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
+import {FormAddCursoComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
+
 
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent },
@@ -60,7 +59,6 @@ const routes: Routes = [
   { path: 'panel-admin/registar-admin' , component: RegistarAdminComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/editar-admin/:external_us' , component: FormEditarAdminComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/gestionar-usuarios-admin' , component:  TablaUsuariosAdminComponent,canActivate:[AutentificacionGuard]},
-  { path: 'panel-admin/preguntas' , component: DemoComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/publicar-oferta-gestor' , component: TablaPublicarOfertGestorComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/mi-perfil' , component: MiPerfilComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-empleador/mi-perfil' , component: MiPerfilEmpleadorComponent ,canActivate:[AutentificacionGuard]},
@@ -69,7 +67,6 @@ const routes: Routes = [
   { path: 'panel-admin/form-publicar-ofertaLaboral/:external_of' , component: FormPublicarOfertaGestorComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/validar-oferta-laboral' , component: TablaValidarOfertasLaboralesComponent ,canActivate:[AutentificacionGuard]},
   { path: 'panel-admin/tareas' , component: TareaValiar,canActivate:[AutentificacionGuard] },
-  //{ path: 'panel-admin/tareas' , component: TareaValiarEmpleadorComponent,canActivate:[AutentificacionGuard] },
 
   { path: 'panel-admin/tareas/postulante/:external_es' , component: FormInfoPostulanteComponent,canActivate:[AutentificacionGuard] },
   { path: 'panel-admin/tareas/empleador/:external_em' , component: FormValidacionEmpleadorComponent,canActivate:[AutentificacionGuard] },

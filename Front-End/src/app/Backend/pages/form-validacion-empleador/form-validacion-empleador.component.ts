@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
-import { EmpleadorModel } from '../../../../models/empleador.models';
+import { EmpleadorModel } from '../../../models/empleador.models';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import {CiudadesModel} from 'src/app/models/ciudades.models';

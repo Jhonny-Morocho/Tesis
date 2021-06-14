@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // importa utomaticamente el ingForm
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import {UsuarioModel} from '../../../../models/usuario.model';
+import {UsuarioModel} from '../../../models/usuario.model';
 import Swal from 'sweetalert2';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';
 import {environment} from 'src/environments/environment';
@@ -21,7 +21,7 @@ export class NabPanelEmpleador implements OnInit {
             private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
-  
+
   this.comprobarLogin();
   this.empleadorValidadoForm();
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UsuarioModel} from '../../../../models/usuario.model';
-import {AutenticacionUserService} from '../../../../servicios/autenticacion-usuario.service';
+import {UsuarioModel} from '../../../models/usuario.model';
+import {AutenticacionUserService} from '../../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-mi-perfil',
