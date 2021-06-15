@@ -4,41 +4,41 @@ import {HomeComponent} from 'src/app/Front-end/pages/home/home.component';
 import {RegistroPostulanteComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
 import {LoginAdminComponent} from 'src/app/Front-end/pages/form-registro-login/form-login/login.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
-import {MiPerfilComponent} from 'src/app/Backend/pages/mi-perfil-admin/mi-perfil-admin.component';
-import { MiPerfilEmpleadorComponent} from 'src/app/Backend/panel-empleador/mi-perfil-empleador/mi-perfil-empleador.component';
-import {TareaValiar} from 'src/app/Backend/componentes/tablas-validacion-cuentas/tablas-validar.component';
+import {MiPerfilComponent} from 'src/app/Backend/panel-admin/pages/mi-perfil-admin/mi-perfil-admin.component';
+import { MiPerfilEmpleadorComponent} from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
+import {TareaValiar} from 'src/app/Backend/panel-admin/componentes/tablas-validacion-cuentas/tablas-validar.component';
 import {RegistroEmpleadorComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
-import {MiPerfilPostulanteComponent} from 'src/app/Backend/panel-postulante/mi-perfil-postulante/mi-perfil-postulante.component';
-import {PostulanteOfertas} from 'src/app/Backend/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
-import {ReporteOfertasComponent} from 'src/app/Backend/pages/reporte-ofertas/reporte-ofertas.component';
-import {FormEditarAdminComponent} from 'src/app/Backend/pages/form-editar-admin/form-editar-admin.component';
-import {RegistarAdminComponent} from 'src/app/Backend/pages/form-registar-admin/form-registar-admin.component';
-import {TablaUsuariosAdminComponent} from 'src/app/Backend/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
-import {FormPublicarOfertaGestorComponent} from 'src/app/Backend/pages/form-publicar-oferta-gestor/form-publicar-oferta-gestor.component';
-import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/componentes/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
-import {FormValidarOfertaLaboralComponent} from 'src/app/Backend/pages/form-validar-oferta-laboral/form-validar-oferta-laboral.component';
-import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
-import {FormInfoPostulanteComponent} from 'src/app/Backend/pages/form-validacion-postulante/form-validacion-postulante.component';
-import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/formulario-info-postulante/formulario-info-postulante.component';
+import {MiPerfilPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
+import {PostulanteOfertas} from 'src/app/Backend/panel-admin/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
+import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';
+import {FormEditarAdminComponent} from 'src/app/Backend/panel-admin/pages/editar-admin/form-editar-admin.component';
+import {RegistarAdminComponent} from 'src/app/Backend/panel-admin/pages/registar-admin/form-registar-admin.component';
+import {TablaUsuariosAdminComponent} from 'src/app/Backend/panel-admin/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import {FormPublicarOfertaGestorComponent} from 'src/app/Backend/panel-admin/pages/publicar-oferta-gestor/form-publicar-oferta-gestor.component';
+import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/panel-admin/componentes/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
+import {FormValidarOfertaLaboralComponent} from 'src/app/Backend/panel-admin/pages/validar-oferta-laboral/form-validar-oferta-laboral.component';
+import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
+import {FormInfoPostulanteComponent} from 'src/app/Backend/panel-admin/pages/validacion-postulante/form-validacion-postulante.component';
+import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/formulario-info-postulante/formulario-info-postulante.component';
 //empleador
-import {ReactivarOfertaComponent} from 'src/app/Front-end/reactivar-oferta/reactivar-oferta.component';
-import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
-import {EditOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/edit-oferta/edit-oferta.component';
-import {AddOfertaComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/add-oferta/add-oferta.component';
-import {FormValidacionEmpleadorComponent} from 'src/app/Backend/pages/form-validacion-empleador/form-validacion-empleador.component';
-import {FormularioInfoEmpleadorComponent} from 'src/app/Backend/panel-empleador/formulario-info-empleador/formulario-info-empleador.component';
-import {OfertaLaboralComponent} from 'src/app/Backend/panel-empleador/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
+import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
+import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
+import {EditOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/edit-oferta/edit-oferta.component';
+import {AddOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/add-oferta/add-oferta.component';
+import {FormValidacionEmpleadorComponent} from 'src/app/Backend/panel-admin/pages/validacion-empleador/form-validacion-empleador.component';
+import {FormularioInfoEmpleadorComponent} from 'src/app/Backend/panel-empleador/pages/formulario-info-empleador/formulario-info-empleador.component';
+import {OfertaLaboralComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 //postulante
-import {OfertasPostuladasComponent} from 'src/app/Backend/panel-postulante/ofertas-postuladas/ofertas-postuladas.component';
+import {OfertasPostuladasComponent} from 'src/app/Backend/panel-postulante/pages/ofertas-postuladas/ofertas-postuladas.component';
 //import {} from 'src/app/Backend/panel-postulante/ofertas-postuladas';
-import {FormEditarTituloComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
-import {FormAddTituloComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/form-add-titulo/form-add-titulo.component';
-import {TitulosAcademicosComponent} from 'src/app/Backend/panel-postulante/hoja-vida/titulos-academicos/titulos-academicos.component';
-import {CursosCapacitacionesComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/cursos-capacitaciones.component';
+import {FormEditarTituloComponent} from 'src/app/Backend/panel-postulante/pages/titulos-academicos/form-editar-titulo/form-editar-titulo.component';
+import {FormAddTituloComponent} from 'src/app/Backend/panel-postulante/pages/titulos-academicos/form-add-titulo/form-add-titulo.component';
+import {TitulosAcademicosComponent} from 'src/app/Backend/panel-postulante/pages/titulos-academicos/titulos-academicos.component';
+import {CursosCapacitacionesComponent} from 'src/app/Backend/panel-postulante/pages/cursos-capacitaciones/cursos-capacitaciones.component';
 //cursos-capacitaciones
-import {FormEditarCursoComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
-import {FormAddCursoComponent} from 'src/app/Backend/panel-postulante/hoja-vida/cursos-capacitaciones/form-add-curso/form-add-curso.component';
+import {FormEditarCursoComponent} from 'src/app/Backend/panel-postulante/pages/cursos-capacitaciones/form-editar-curso/form-editar-curso.component';
+import {FormAddCursoComponent} from 'src/app/Backend/panel-postulante/pages/cursos-capacitaciones/form-add-curso/form-add-curso.component';
 
 
 const routes: Routes = [

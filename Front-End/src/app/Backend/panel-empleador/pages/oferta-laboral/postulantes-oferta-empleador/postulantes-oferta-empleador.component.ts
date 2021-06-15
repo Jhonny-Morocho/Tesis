@@ -8,7 +8,7 @@ import { OfertaLaboralEstudianteService } from 'src/app/servicios/ofertLaboral-E
 import { TituloService } from 'src/app/servicios/titulos.service';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
-import { OfertaLaboralModel } from '../../../../models/oferta-laboral.models';
+import { OfertaLaboralModel } from '../../../../../models/oferta-laboral.models';
 declare var $:any;
 @Component({
   selector: 'app-postulantes-oferta',

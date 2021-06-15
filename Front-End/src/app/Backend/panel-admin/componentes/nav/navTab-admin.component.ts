@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // importa utomaticamente el ingForm
 import Swal from 'sweetalert2';
-import {UsuarioModel} from '../../../models/usuario.model';
+import {UsuarioModel} from '../../../../models/usuario.model';
 import { Router } from '@angular/router';
 import {environment} from 'src/environments/environment';
 import { AutenticacionUserService } from 'src/app/servicios/autenticacion-usuario.service';

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioModel } from 'src/app/models/usuario.model';
-import {AutenticacionUserService} from '../../../servicios/autenticacion-usuario.service';
+import {UsuarioModel} from '../../../../models/usuario.model';
+import {AutenticacionUserService} from '../../../../servicios/autenticacion-usuario.service';
+import { Router } from '@angular/router';
 @Component({
-  selector: 'app-mi-perfil-empleador',
-  templateUrl: './mi-perfil-empleador.component.html'
+  selector: 'app-mi-perfil',
+  templateUrl: './mi-perfil-admin.component.html',
 })
-export class MiPerfilEmpleadorComponent implements OnInit {
+export class MiPerfilComponent implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   ObjDatosPerfil:Object;
-
-  constructor(private servicioAuthenAdmin_:AutenticacionUserService) { }
+  constructor(private servicioAuthenAdmin_:AutenticacionUserService,
+              private _routert:Router) { }
 
   ngOnInit() {
     if(localStorage.getItem('correo')){
