@@ -24,9 +24,10 @@
                          placeholder="Ingrese sus nombres completos"
                          maxlength="20">
                   <!-- mensajes de validacion -->
-                  <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && (formRegistroPostulante.get('nombresCompleto').value)=='' ">
+                  <div class="invalid-feedback"  *ngIf="nombreNoValido  || fPostulante.submitted && nombreVacio ">
                     <i class="fas fa-info-circle"></i> El nombre es requerido
                   </div>
+
               </div>
               <div class="col-md-6">
                   <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
@@ -163,57 +164,25 @@
             <div class="alert simple-succes" *ngIf="booleanFormularioCompletado && formValidado && obervaciones">
               <i class="fas fa-check-circle"></i> La validación de su información ha sido aprobado, ahora ya puedes postular a todas las ofertas disponibles en la plataforma.
             </div>
-            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" #fPostulante="ngForm">
+            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" >
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombres Completos</label><br>
                     <i class="fas fa-user form-control-feedback"></i>
                     <input type="text"
                            maxlength="20"
                            formControlName="nombresCompleto"
-                           [class.is-invalid]="fPostulante.submitted && nombreVacio"
                            [class.is-invalid]="nombreNoValido"
                            [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
                            class="form-control"
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
-                    <!-- Si hizo submit pero no lleno el campo -->
-                    <div class="invalid-feedback"  *ngIf="fPostulante.submitted && nombreVacio">
-                      <i class="fas fa-info-circle"></i> El nombre es requerido.
+                    <div class="invalid-feedback"  *ngIf="nombreNoValido">
+                      <p *ngIf="nombreVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                      <p *ngIf="soloTextoNombre && nombreVacio!=''"> <i class="fas fa-info-circle"></i> Ingrese solo Texto</p>
                     </div>
-                     <!-- Si el campo esta vacio pero no hizo submit-->
-                    <div class="invalid-feedback"  *ngIf="nombreNoValido && !fPostulante.submitted">
-                      <i class="fas fa-info-circle"></i> El nombre es requerido.
-                    </div>
-                    <!-- Si el campo esta vacio pero no hizo submit-->
-                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto && !nombreVacio && !fPostulante.submitted">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto
-                    </div> -->
-                    <p>{{  nombreSoloTexto}}</p>
-                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
-                    </div> -->
-                    <!-- <p>{{ nombreVacio }}</p>
-                    <p>{{  nombreSoloTexto}}</p> -->
-                     <!-- Si hizo submit pero no lleno el campo -->
-                    <!-- <div class="invalid-feedback"  *ngIf="nombreSoloTexto && !nombreVacio">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
-                    </div> -->
-                    <!-- <p class="invalid-feedback" *ngIf="nombreSoloTexto">{{ nombreSoloTexto }}</p> -->
-                    <!-- <p>{{ nombreVacio }}</p> -->
-                    <!-- <div class="invalid-feedback"  *ngIf="!nombreSoloTexto">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
-                    </div> -->
-                    <!-- mensajes de validacion -->
-                    <!-- Si el usuario escribe numero -->
-                    <!-- <div class="invalid-feedback"  *ngIf="formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto.
-                    </div> -->
-                     <!-- <div class="invalid-feedback"  *ngIf="fPostulante.submitted && formRegistroPostulante.get('nombresCompleto').invalid">
-                      <i class="fas fa-info-circle"></i> El nombre es requerido
-                    </div> -->
-                    <!-- <div class="invalid-feedback" *ngIf="fPostulante.submitted && !formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']">
-                      <i class="fas fa-info-circle"></i> Ingrese solo texto
-                    </div>  -->
+                    <p>{{ soloTextoNombre }}</p>
+                    <p>{{ nombreVacio }}</p>
+
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
@@ -256,7 +225,6 @@
                           formControlName="fechaNacimiento"
                           [max]="fechaActual"
                           [min]="fechaMinima"
-
                           [class.is-invalid]="fechaNacimientoNoValido"
                           [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
                            class="form-control ">
@@ -273,7 +241,6 @@
                            class="form-control"
                            formControlName="telefono"
                            [class.is-invalid]="telefonoNoValido"
-
                            [class.is-valid]="formRegistroPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            maxlength="15">
@@ -281,9 +248,7 @@
                     <div class="invalid-feedback"  *ngIf="telefonoNoValido">
                       <i class="fas fa-info-circle"></i> El teléfono es requerido
                     </div>
-                    <!-- <div class="invalid-feedback"  *ngIf="telefonoNoValido && formRegistroPostulante.controls['telefono'].errors['soloNumeros'] || fPostulante.submitted && formRegistroPostulante.controls['telefono'].errors['soloNumeros']">
-                      <i class="fas fa-info-circle"></i> Ingrese solo números
-                    </div> -->
+                    <p *ngIf="formRegistroPostulante.controls['telefono'].errors['soloNumeros'] && formRegistroPostulante.get('telefono').touched">Ingrese solo Numeros</p>
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
@@ -293,7 +258,6 @@
                               class="form-check-input"
                               formControlName="genero"
                               [class.is-invalid]="generoNoValido"
-                              [class.is-invalid]="fPostulante.submitted && formRegistroPostulante.get('genero').invalid"
                               [class.is-valid]="formRegistroPostulante.get('genero').valid || formRegistroPostulante.get('genero').touched"
                               [value]="0"
                                >
@@ -304,12 +268,11 @@
                                 class="form-check-input"
                                 formControlName="genero"
                                 [class.is-invalid]="generoNoValido"
-                                [class.is-invalid]="fPostulante.submitted && formRegistroPostulante.get('genero').invalid"
                                 [class.is-valid]="formRegistroPostulante.get('genero').valid || formRegistroPostulante.get('genero').touched"
                                 [value]="1"
                                 >
                         <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino</label>
-                        <div class="invalid-feedback" *ngIf=" fPostulante.submitted && formRegistroPostulante.get('genero').invalid ">
+                        <div class="invalid-feedback" *ngIf="generoNoValido">
                           <i class="fas fa-info-circle"></i> El género es obligatorio
                         </div>
                       </div>
@@ -327,7 +290,7 @@
                                   maxlength="30">
                         </textarea>
                       <!-- mensajes de validacion -->
-                      <div class="invalid-feedback"  *ngIf="direccionNoValida || fPostulante.submitted && (formRegistroPostulante.get('direccionDomicilio').value)=='' ">
+                      <div class="invalid-feedback"  *ngIf="direccionNoValida">
                         <i class="fas fa-info-circle"></i> La dirección es requerida
                       </div>
                       <!-- end mensajes de validacion -->
@@ -337,6 +300,17 @@
                     <button type="submit " class="btn btn-success" [disabled]="booleanFormularioCompletado"><i class="fas fa-save"></i> Registrar</button>
                 </div>
             </form>
+            <div class="col-12">
+              <hr>
+              <pre>
+                estado del formulario : {{ formRegistroPostulante.valid }}
+              </pre>
+              stattus: {{ formRegistroPostulante.status }}
+              <br>
+              <pre>
+                {{ formRegistroPostulante.value | json }}
+              </pre>
+            </div>
         </article>
     </div>
 </div>

@@ -21,7 +21,7 @@ import {TareaValiar} from 'src/app/Backend/panel-admin/componentes/tablas-valida
 import {PanelPostulanteComponent} from 'src/app/Backend/panel-postulante/componentes/nav/navTab-postulante.component';
 
 import { from } from 'rxjs';
-import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/formulario-info-postulante/formulario-info-postulante.component';
+import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/registro-postulante/formulario-info-postulante.component';
 //===================== DATA TABLE ============================//
 import { DataTablesModule } from "angular-datatables";
 import {FormInfoPostulanteComponent} from 'src/app/Backend/panel-admin/pages/validacion-postulante/form-validacion-postulante.component';

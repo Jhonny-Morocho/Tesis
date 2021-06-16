@@ -20,7 +20,7 @@ import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/panel-admin/com
 import {FormValidarOfertaLaboralComponent} from 'src/app/Backend/panel-admin/pages/validar-oferta-laboral/form-validar-oferta-laboral.component';
 import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
 import {FormInfoPostulanteComponent} from 'src/app/Backend/panel-admin/pages/validacion-postulante/form-validacion-postulante.component';
-import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/formulario-info-postulante/formulario-info-postulante.component';
+import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/registro-postulante/formulario-info-postulante.component';
 //empleador
 import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
 import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';

@@ -52,15 +52,21 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   get nombreNoValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
   }
+  get nombreValido(){
+    return this.formRegistroPostulante.get('nombresCompleto').invalid &&  this.formRegistroPostulante.get('nombresCompleto').touched;
+  }
 
-  get nombreSoloTexto(){
+  get soloTextoNombre(){
+
     console.log(this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']);
-    // si ingresa numero entonces sera falso
     return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ;
+    //fEmpleador.controls['actividadRuc'].errors
   }
+
   get nombreVacio(){
-    return this.formRegistroPostulante.get('nombresCompleto').value=='';
+    return this.formRegistroPostulante.get('nombresCompleto').value;
   }
+
 
   get apellidoNoValido(){
     return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
@@ -191,8 +197,11 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         type: 'error',
         title: 'Debe llenar todos los campos correctamente'
       })
-      return;
-     }
+      return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
+        console.log(contol);
+        contol.markAsTouched();
+      });
+    }
      Swal({
       allowOutsideClick:false,
       type:'info',
