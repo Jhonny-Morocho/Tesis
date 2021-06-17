@@ -39,7 +39,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     this.cargarDatosFormulario();
   }
 
-  // para hacer validacion y activar la clase en css
+  // ==== para hacer validacion y activar la clase en css ====//
   get generoNoValido(){
     return this.formRegistroPostulante.get('genero').invalid   && this.formRegistroPostulante.get('genero').touched ;
   }
@@ -49,32 +49,44 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   get documentoIdentidadNoValido(){
     return this.formRegistroPostulante.get('documentoIndentidad').invalid && this.formRegistroPostulante.get('documentoIndentidad').touched;
   }
+  // input nombre
   get nombreNoValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
   }
   get nombreValido(){
     return this.formRegistroPostulante.get('nombresCompleto').invalid &&  this.formRegistroPostulante.get('nombresCompleto').touched;
   }
-
   get soloTextoNombre(){
-
-    console.log(this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto']);
     return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ;
-    //fEmpleador.controls['actividadRuc'].errors
   }
-
   get nombreVacio(){
     return this.formRegistroPostulante.get('nombresCompleto').value;
   }
-
-
+  // input apellido
   get apellidoNoValido(){
     return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
   }
-
+  get apellidoValido(){
+    return this.formRegistroPostulante.get('apellidosCompleto').invalid &&  this.formRegistroPostulante.get('apellidosCompleto').touched;
+  }
+  get soloTextoApellido(){
+    return this.formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] ;
+  }
+  get apellidoVacio(){
+    return this.formRegistroPostulante.get('apellidosCompleto').value;
+  }
+  //input telefono
   get telefonoNoValido(){
     return this.formRegistroPostulante.get('telefono').invalid && this.formRegistroPostulante.get('telefono').touched;
   }
+  get soloNumerosTelefono(){
+    return this.formRegistroPostulante.controls['telefono'].errors['soloNumeros'] ;
+  }
+  get telefonoVacio(){
+    return this.formRegistroPostulante.get('telefono').value;
+  }
+
+  //input direccion de domicilio
   get direccionNoValida(){
     return this.formRegistroPostulante.get('direccionDomicilio').invalid && this.formRegistroPostulante.get('direccionDomicilio').touched;
   }
