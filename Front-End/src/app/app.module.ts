@@ -61,7 +61,7 @@ import { FormEditarAdminComponent } from 'src/app/Backend/panel-admin/pages/edit
 import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';
 import {BrandLogoPanelComponent} from 'src/app/Front-end/brand-logo-panel/brand-logo-panel.component';
 import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
-import { FormMiPerfilComponent } from 'src/app/Front-end/form-mi-perfil/form-mi-perfil.component';
+import { FormMiPerfilComponent } from 'src/app/Backend/componentes/form-mi-perfil/form-mi-perfil.component';
 import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
 import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';

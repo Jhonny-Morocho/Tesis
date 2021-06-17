@@ -7,12 +7,12 @@
   <div class="card">
     <article class="card-body">
         <div class="alert simple-danger" *ngIf="!formValidado && obervaciones">
-          <i class="fas fa-times-circle"></i> Su validación de su registro no ha sido exitosa.
+          <i class="fas fa-times-circle"></i> La validación de su información no ha sido exitosa.
           <p><i class="fas fa-info-circle"></i> Observaciones : {{ instanciaPostulante.observaciones }}</p>
         </div>
           <form class="row g-2" (ngSubmit)="editarPostulante()" [formGroup]="formRegistroPostulante" >
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Nombresx Completos</label><br>
+                <label for="inputEmail4" class="form-label">Nombres Completos <span class="text-danger">*</span></label><br>
                 <i class="fas fa-user form-control-feedback"></i>
                 <input type="text"
                        maxlength="20"
@@ -22,13 +22,15 @@
                        class="form-control"
                        placeholder="Ingrese sus nombres completos"
                        maxlength="20">
+                <!-- mensajes de validacion -->
                 <div class="invalid-feedback"  *ngIf="nombreNoValido">
                   <p *ngIf="nombreVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
                   <p *ngIf="soloTextoNombre && nombreVacio!=''"> <i class="fas fa-info-circle"></i> Ingrese solo Texto</p>
                 </div>
+                <!-- end mensajes de validacion -->
             </div>
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
+                <label for="inputEmail4" class="form-label">Apellidos Completos <span class="text-danger">*</span></label><br>
                 <i class="fas fa-user form-control-feedback"></i>
                 <input type="text"
                        class="form-control"
@@ -45,7 +47,7 @@
                 <!-- end mensajes de validacion -->
             </div>
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Documento de identidad</label><br>
+                <label for="inputEmail4" class="form-label">Documento de identidad <span class="text-danger">*</span></label><br>
                 <i class="fas fa-address-card form-control-feedback"></i>
                 <input type="text"
                        class="form-control"
@@ -61,7 +63,7 @@
                 <!-- end mensajes de validacion -->
             </div>
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
+                <label for="inputEmail4" class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label><br>
                 <input type="date"
                       formControlName="fechaNacimiento"
                       [max]="fechaActual"
@@ -76,7 +78,7 @@
                 <!-- end mensajes de validacion -->
             </div>
             <div class="col-md-6 ">
-                <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil</label><br>
+                <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil <span class="text-danger">*</span></label><br>
                 <i class="fas fa-phone-volume form-control-feedback"></i>
                 <input type="text"
                        class="form-control"
@@ -94,7 +96,7 @@
 
             </div>
             <div class="col-md-6 ">
-                  <label for="inputEmail4 " class="form-label ">Género</label><br>
+                  <label for="inputEmail4 " class="form-label ">Género <span class="text-danger">*</span></label><br>
                   <div class="form-check">
                     <input type="radio"
                           class="form-check-input"
@@ -121,7 +123,7 @@
               </div>
             <div class="col-md-6 ">
                 <div class="form-group ">
-                    <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
+                    <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral <span class="text-danger">*</span></label><br>
                     <i class="fas fa-map-marker-alt form-control-feedback"></i>
                     <textarea class="form-control "
                               rows="3"
@@ -162,7 +164,7 @@
             </div>
             <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" >
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Nombres Completos</label><br>
+                    <label for="inputEmail4" class="form-label">Nombres Completos  <span class="text-danger">*</span></label><br>
                     <i class="fas fa-user form-control-feedback"></i>
                     <input type="text"
                            maxlength="20"
@@ -178,7 +180,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Apellidos Completos</label><br>
+                    <label for="inputEmail4" class="form-label">Apellidos Completos <span class="text-danger">*</span></label><br>
                     <i class="fas fa-user form-control-feedback"></i>
                     <input type="text"
                            class="form-control"
@@ -195,7 +197,7 @@
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Documento de identidad</label><br>
+                    <label for="inputEmail4" class="form-label">Documento de identidad <span class="text-danger">*</span></label><br>
                     <i class="fas fa-address-card form-control-feedback"></i>
                     <input type="text"
                            class="form-control"
@@ -211,7 +213,7 @@
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Fecha de Nacimiento</label><br>
+                    <label for="inputEmail4" class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label><br>
                     <input type="date"
                           formControlName="fechaNacimiento"
                           [max]="fechaActual"
@@ -226,7 +228,7 @@
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
-                    <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil</label><br>
+                    <label for="inputEmail4 " class="form-label ">Teléfono fijo o móvil <span class="text-danger">*</span></label><br>
                     <i class="fas fa-phone-volume form-control-feedback"></i>
                     <input type="text"
                            class="form-control"
@@ -244,7 +246,7 @@
 
                 </div>
                 <div class="col-md-6 ">
-                      <label for="inputEmail4 " class="form-label ">Género</label><br>
+                      <label for="inputEmail4 " class="form-label ">Género <span class="text-danger">*</span></label><br>
                       <div class="form-check">
                         <input type="radio"
                               class="form-check-input"
@@ -263,7 +265,7 @@
                                 [class.is-valid]="formRegistroPostulante.get('genero').valid "
                                 [value]="1"
                                 >
-                        <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino</label>
+                        <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino </label>
                         <div class="invalid-feedback" *ngIf="generoNoValido">
                           <i class="fas fa-info-circle"></i> El género es obligatorio
                         </div>
@@ -271,7 +273,7 @@
                   </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
-                        <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral</label><br>
+                        <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral <span class="text-danger">*</span></label><br>
                         <i class="fas fa-map-marker-alt form-control-feedback"></i>
                         <textarea class="form-control "
                                   rows="3"

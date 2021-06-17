@@ -2406,3 +2406,35 @@ Stack trace:
 
 
 
+[2021-06-17 16:52:00] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 16:52:02] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 16:52:04] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 16:52:06] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 16:52:08] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 16:52:10] Registro Postulante Correo : false ]
+
+
+
+[2021-06-17 17:23:22] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:23:24] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:23:26] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:23:28] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:23:30] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:23:32] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-17 17:25:20] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:25:22] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:25:24] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:25:26] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:25:28] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-17 17:25:30] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+

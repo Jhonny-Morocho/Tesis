@@ -140,7 +140,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     });
   }
 
-
   cargarDatosFormulario(){
     this.servicioPostulante_.listarFormPostulante().subscribe(
       siHacesBien=>{
@@ -197,7 +196,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   //creacion usuario estudiante
   registrarPostulante(){
-    console.log(this.formRegistroPostulante);
     if(this.formRegistroPostulante.invalid){
       const toast = Swal.mixin({
         toast: true,
