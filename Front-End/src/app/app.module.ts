@@ -49,7 +49,7 @@ import {PostularOfertaLaboralComponent} from 'src/app/Front-end/componentes/ofer
 import { PostulantesOfertaComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
 import {VerOfertaLaboralComponent} from 'src/app/Front-end/componentes/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
-import {NavbarComponent} from 'src/app/Front-end/componentes/navbar/navbar.component';
+import {NavbarComponent} from 'src/app/Backend/componentes/navbar/navbar.component';
 import { OfertasPostuladasComponent } from 'src/app/Backend/panel-postulante/pages/ofertas-postuladas/ofertas-postuladas.component';
 import {TablaTitulosAcademicosComponent} from 'src/app/Front-end/tabla-titulos-academicos/tabla-titulos-academicos.component';
 import { TablaCursosCapacitacionesComponent } from 'src/app/Front-end/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
@@ -59,7 +59,7 @@ import { TablaUsuariosAdminComponent } from 'src/app/Backend/panel-admin/compone
 import { RegistarAdminComponent } from 'src/app/Backend/panel-admin/pages/registar-admin/form-registar-admin.component';
 import { FormEditarAdminComponent } from 'src/app/Backend/panel-admin/pages/editar-admin/form-editar-admin.component';
 import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';
-import {BrandLogoPanelComponent} from 'src/app/Front-end/brand-logo-panel/brand-logo-panel.component';
+import {BrandLogoPanelComponent} from 'src/app/Backend/componentes/brand-logo-panel/brand-logo-panel.component';
 import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
 import { FormMiPerfilComponent } from 'src/app/Backend/componentes/form-mi-perfil/form-mi-perfil.component';
 import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
