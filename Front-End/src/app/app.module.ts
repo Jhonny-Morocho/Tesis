@@ -10,9 +10,9 @@ import { HomeComponent } from 'src/app/Front-end/pages/home/home.component';
 // modulos siempre van en los import
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { LoginAdminComponent } from 'src/app/Front-end/pages/form-registro-login/form-login/login.component';
-import { RegistroPostulanteComponent } from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
-import { RegistroEmpleadorComponent } from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
+import { LoginAdminComponent } from 'src/app/Front-end/pages/form-login/login.component';
+import { RegistroPostulanteComponent } from 'src/app/Front-end/pages/form-registro/registro-postulante/registro-postulante.component';
+import { RegistroEmpleadorComponent } from 'src/app/Front-end/pages/form-registro/registro-empleador/registro-empleador.component';
 import { HeaderComponent } from 'src/app/Front-end/componentes/header-home/header.component';
 
 import {PanelAdminComponent} from 'src/app/Backend/panel-admin/componentes/nav/navTab-admin.component';
@@ -65,6 +65,7 @@ import { FormMiPerfilComponent } from 'src/app/Backend/componentes/form-mi-perfi
 import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
 import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';
+import { FooterComponent } from './Backend/componentes/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { RatingModule } from 'ng-starrating';
     FormMiPerfilComponent,
     MiPerfilPostulanteComponent,
     MiPerfilEmpleadorComponent,
+    FooterComponent,
   ],
 
   imports: [

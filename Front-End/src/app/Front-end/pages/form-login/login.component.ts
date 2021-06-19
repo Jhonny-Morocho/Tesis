@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 // importo mi modelo
-import {UsuarioModel} from '../../../../models/usuario.model';
+import {UsuarioModel} from '../../../models/usuario.model';
 // importa utomaticamente el ingForm
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 // llamo la libreria de switch alert
 import Swal from 'sweetalert2';
 //importamos el servicio
-import {AutenticacionUserService} from '../../../../servicios/autenticacion-usuario.service';
+import {AutenticacionUserService} from '../../../servicios/autenticacion-usuario.service';
 import { Router } from '@angular/router';
 declare var $:any;
 import{environment} from 'src/environments/environment.prod';

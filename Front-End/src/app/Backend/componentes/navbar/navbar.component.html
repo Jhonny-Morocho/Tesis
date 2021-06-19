@@ -9,17 +9,20 @@
             <a [routerLink]="['/home']" class="nav-link text-white"><b>Inicio</b></a>
         </li>
     </ul>
+
+
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto list-group">
         <!-- Navbar Search -->
         <li class="nav-item d-none d-sm-inline-block">
           <a  class="nav-link text-white"> {{ usuario }}</a>
         </li>
+
         <li class="nav-item dropdown float-right btnConfigPanel ">
             <a class="nav-link text-white" data-toggle="dropdown" href="#" aria-expanded="false" title="Configuraciones">
                 <i class="fas fa-cog"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right ">
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
                 <a [routerLink]="['/panel-admin/gestionar-usuarios-admin'] "
@@ -36,11 +39,13 @@
                 </a>
                 <a class="dropdown-item dropdown-footer"
                     [routerLink]="['/panel-postulante/mi-perfil']"
+                    routerLinkActive="active"
                     *ngIf="tipoUsuarioPostulante==true"
                     style="cursor: pointer;">
                     <i class="fas fa-user"></i> Usuario <span class="badge badge-info">{{ rolUsuario }}</span>
                 </a>
                 <a class="dropdown-item dropdown-footer"
+                  routerLinkActive="active"
                   [routerLink]="['/panel-empleador/mi-perfil']"
                   *ngIf="tiposUsuarioEmpleador==true"
                   style="cursor: pointer;">

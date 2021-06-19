@@ -211,7 +211,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
 
 /* ================ DIBUJAR ESTRELLAS ============== */
 
-p.clasificacion {
+/* p.clasificacion {
     position: relative;
     overflow: hidden;
     display: inline-block;
@@ -235,11 +235,11 @@ p.clasificacion input:checked~label {
 
 .clasificacion label {
     font-size: 50px;
-}
+} */
 
 
 /* //estrellas 2 */
-p.clasificacion2 {
+/* p.clasificacion2 {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -263,7 +263,7 @@ p.clasificacion2 input:checked~label {
 
 .clasificacion2 label {
   font-size: 20px;
-}
+} */
 
 /* Extra small devices (phones, 600px and down) */
 

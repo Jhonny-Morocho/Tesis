@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import {HomeComponent} from 'src/app/Front-end/pages/home/home.component';
-import {RegistroPostulanteComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-postulante/registro-postulante.component';
-import {LoginAdminComponent} from 'src/app/Front-end/pages/form-registro-login/form-login/login.component';
+import {RegistroPostulanteComponent} from 'src/app/Front-end/pages/form-registro/registro-postulante/registro-postulante.component';
+import {LoginAdminComponent} from 'src/app/Front-end/pages/form-login/login.component';
 import {AutentificacionGuard} from './guards/autentificacion.guard';
 import {MiPerfilComponent} from 'src/app/Backend/panel-admin/pages/mi-perfil-admin/mi-perfil-admin.component';
 import { MiPerfilEmpleadorComponent} from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
 import {TareaValiar} from 'src/app/Backend/panel-admin/componentes/tablas-validacion-cuentas/tablas-validar.component';
-import {RegistroEmpleadorComponent} from 'src/app/Front-end/pages/form-registro-login/form-registro/registro-empleador/registro-empleador.component';
+import {RegistroEmpleadorComponent} from 'src/app/Front-end/pages/form-registro/registro-empleador/registro-empleador.component';
 //panel administrador
 import {MiPerfilPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
 import {PostulanteOfertas} from 'src/app/Backend/panel-admin/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
