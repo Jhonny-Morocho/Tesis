@@ -22,6 +22,7 @@ export class PanelPostulanteComponent implements OnInit {
     this.comprobarSession();
     this.comprobarPostulanteFormValidado();
   }
+
   // si el postulante esta su formulario validado tiene accesso a las ofertas laborales y a llenar su hoja de vida
   comprobarPostulanteFormValidado(){
     //obtener el external_usuario
