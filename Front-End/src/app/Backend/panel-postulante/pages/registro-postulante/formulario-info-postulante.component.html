@@ -150,7 +150,7 @@
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
 <!-- ============= SI NO LLENA EL FORMUALRIO ENTONCES SE PRESENTA EL FORMULARIO VACIO PARA QUE LO REGISTRE =========== -->
-<div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado && !obervaciones && !formValidado || !booleanFormularioCompletado ">
+<div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==true && obervaciones==true && formValidado==true || booleanFormularioCompletado==false ">
   <div class="card">
     <article class="card-body">
             <div class="alert simple-primary" *ngIf="!booleanFormularioCompletado">

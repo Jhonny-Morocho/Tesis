@@ -36,8 +36,14 @@ export class LoginAdminComponent implements OnInit {
   get correoNoValido(){
     return this.formLogin.get('correo').invalid && this.formLogin.get('correo').touched;
   }
+  get correoVacio(){
+    return this.formLogin.get('correo').value;
+  }
   get passwordNoValido(){
     return this.formLogin.get('password').invalid && this.formLogin.get('password').touched;
+  }
+  get passwordVacio(){
+    return this.formLogin.get('password').value;
   }
 
   crearFormulario(){
@@ -94,7 +100,6 @@ export class LoginAdminComponent implements OnInit {
   }
   // Login del formulario del admistrador
   loginAdmin(){
-    console.log(this.instanciaModeloUsuarioLogin);
     console.log(this.formLogin);
     if(this.formLogin.invalid){
       const toast = Swal.mixin({
@@ -105,9 +110,11 @@ export class LoginAdminComponent implements OnInit {
       });
       toast({
         type: 'error',
-        title: 'Debe completar todos los campos'
+        title: 'Debe completar todos los campos correctamente'
       })
-      return;
+      return Object.values(this.formLogin.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
     //envios los datos ya validados
     this.instanciaModeloUsuarioLogin.correo=this.formLogin.value.correo;

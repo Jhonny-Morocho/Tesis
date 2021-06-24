@@ -61,7 +61,7 @@ import { FormEditarAdminComponent } from 'src/app/Backend/panel-admin/pages/edit
 import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';
 import {BrandLogoPanelComponent} from 'src/app/Backend/componentes/brand-logo-panel/brand-logo-panel.component';
 import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
-import { FormMiPerfilComponent } from 'src/app/Backend/componentes/form-mi-perfil/form-mi-perfil.component';
+import { FormMiPerfilComponent } from 'src/app/Backend/componentes/mi-cuenta/form-mi-perfil.component';
 import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/pages/mi-perfil-postulante/mi-perfil-postulante.component';
 import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';
@@ -75,10 +75,8 @@ import { FooterComponent } from './Backend/componentes/footer/footer.component';
     HeaderComponent,
     PanelAdminComponent,
     MiPerfilComponent,
-    //LoginPostulanteComponent,
     RegistroPostulanteComponent,
     RegistroEmpleadorComponent,
-    //LoginEmpleadorComponent,
     PanelPostulanteComponent,
     FormularioInfoPostulanteComponent,
     FormInfoPostulanteComponent,
@@ -123,7 +121,6 @@ import { FooterComponent } from './Backend/componentes/footer/footer.component';
 
   imports: [
     BrowserModule,
-    //importo mi moduilo de rutas de app-routing.module
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
@@ -131,11 +128,7 @@ import { FooterComponent } from './Backend/componentes/footer/footer.component';
     DataTablesModule,
     RatingModule,
     //FORM REACTIVOS
-    ReactiveFormsModule,
-
-
-
-    // Tostadas
+    ReactiveFormsModule
   ],
   providers: [
     DatePipe

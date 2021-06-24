@@ -7,25 +7,23 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class AutentificacionGuard implements CanActivate {
-  
+
   constructor(private authnServicioAdmin_:AutenticacionUserService,
               private router_:Router){}
 
   canActivate( ): boolean{
-    // console.log("PROBANDO CAN ACTIVARE O RESTRICION DE RUTAS");
-    // console.log(this.authnServicioAdmin_.estaAutenticado());
      if(this.authnServicioAdmin_.estaAutenticado()){
          return true;
      }else{
         Swal({
-          title:'Error al autenticar',
+          title:'Error',
           type:'error',
           text:'La session ha expirado '
-        }); 
+        });
          console.log(this.authnServicioAdmin_.estaAutenticado());
          this.router_.navigateByUrl('/home')
-        return false; 
+        return false;
      }
   }
-  
+
 }

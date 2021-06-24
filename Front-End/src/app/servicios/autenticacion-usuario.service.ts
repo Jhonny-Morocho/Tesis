@@ -32,7 +32,6 @@ export class AutenticacionUserService {
   //funciones de login
   //recibo el modelo del usuario model con los datos
   login(usuioModel_:UsuarioModel){
-    console.log(this.urlDominio_);
     //estos parametros deben ser igual a los de la tabla del BD
     //this.InstanciaDominio=new DominioWeb();
      const objetoUsuario={
@@ -52,7 +51,6 @@ export class AutenticacionUserService {
 
   }
   recuperarPassword(usuioModel_:UsuarioModel){
-    console.log(usuioModel_);
      const objetoUsuario={
        correo:usuioModel_.correo
      }
@@ -91,18 +89,16 @@ export class AutenticacionUserService {
      localStorage.setItem('expira',hoy.getTime().toString());
   }
 
-   cerrarSession(){
+  cerrarSession(){
      localStorage.clear();
-   }
+  }
 
-    leerLocalSotarage(){
+  leerLocalSotarage(){
       if(localStorage.getItem('correo')){
-
        this.correo=localStorage.getItem('correo');
        this.nombreUser=localStorage.getItem('nombe');
        this.apellido=localStorage.getItem('apellido');
        this.tipoUsuario=Number(localStorage.getItem('tipoUsuario'));
-
     }else{
       this.correo="";
        this.nombreUser="";
@@ -114,8 +110,6 @@ export class AutenticacionUserService {
 
   estaAutenticado():boolean{
     //pregunta si existe correo osea un usuario
-
-    console.log(this.correo.length);
     if(this.correo.length<5){
       return false;
     }
@@ -124,7 +118,6 @@ export class AutenticacionUserService {
      const expiraDate=new Date();
      expiraDate.setSeconds(expira);
      const tiempoHoy=new Date();
-
       if(expiraDate>tiempoHoy){
         return true;
       }else{

@@ -24,8 +24,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   formValidado:boolean;
   //tipo de genero
 
-
-
   constructor(private servicioPostulante_:SerivicioPostulanteService,
               private formulario:FormBuilder,
               private validadorPersonalizado:ValidadoresService,
@@ -183,6 +181,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             if(this.instanciaPostulante.estado==1 && this.instanciaPostulante.observaciones!=''){
               this.formValidado=true;
               this.obervaciones=true;
+              this.booleanFormularioCompletado=true;
               this.formRegistroPostulante.disable();
             }
 
@@ -246,13 +245,10 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           this.obervaciones=false;
           this.formRegistroPostulante.disable();
         }else{
-            console.warn(siHacesBien);
             Swal('Ups', siHacesBien['error'], 'info')
         }
 
       },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro['error']);
-        console.log(this.instanciaPostulante);
         Swal({
           title:'Error',
           type:'error',
@@ -281,7 +277,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
     this.servicioPostulante_.actulizarDatosPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
           const toast = Swal.mixin({
@@ -302,7 +297,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           //redirecciono a la misma pagina
           this.ruta_.navigate(['/panel-postulante/form-info-postulante']);
           }else{
-            console.log(siHacesBien);
              Swal('Info', siHacesBien['mensaje'], 'info')
           }
       },(peroSiTenemosErro)=>{

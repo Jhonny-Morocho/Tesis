@@ -18,43 +18,37 @@
               <a class="h5 text-white"><b>Iniciar Sesión</b></a>
           </div>
           <div class="form-group">
-              <label for="inputEmailAdmin" class="form-label text-white">Correo </label><br>
+              <label for="inputEmailAdmin" class="form-label text-white">Correo <span class="text-danger">*</span></label><br>
               <i class="fas fa-envelope form-control-feedback"></i>
               <input type="email"
                     formControlName="correo"
                     class="form-control"
                     placeholder="Ingrese su correo"
                     [class.is-invalid]="correoNoValido"
-                    [class.is-invalid]="fLogin.submitted==true && (formLogin.get('correo').value)==''"
                     [class.is-valid]="formLogin.get('correo').valid">
+
               <!-- mensajes de validacion -->
-              <div class="invalid-feedback"  *ngIf="formLogin.get('correo').invalid && (formLogin.get('correo').value)!='' ">
-                <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
-              </div>
-              <div class="invalid-feedback"  *ngIf="correoNoValido && (formLogin.get('correo').value)=='' || fLogin.submitted==true && (formLogin.get('correo').value)=='' ">
-                <i class="fas fa-info-circle"></i> El correo es requerido
+              <div class="invalid-feedback"  *ngIf="correoNoValido">
+                <p *ngIf="correoVacio==''"> <i class="fas fa-info-circle"></i> El correo es requerido</p>
+                <p *ngIf="correoNoValido && correoVacio!=''"> <i class="fas fa-info-circle"></i> Debe ingresar una dirección de correo válida</p>
               </div>
               <!-- end mensajes de validacion -->
           </div>
 
 
           <div class="form-group">
-              <label for="inputPasswordAdmin" class="form-label text-white">Contraseña</label><br>
+              <label for="inputPasswordAdmin" class="form-label text-white">Contraseña <span class="text-danger">*</span></label><br>
               <i class="fas fa-key form-control-feedback"></i>
               <input type="password"
                     formControlName="password"
                     class="form-control"
                     [class.is-invalid]="passwordNoValido"
-                    [class.is-invalid]="fLogin.submitted==true && (formLogin.get('password').value)==''"
                     [class.is-valid]="formLogin.get('password').valid"
                     placeholder="Ingrese su contraseña"
                     maxlength="10">
               <!-- mensajes de validacion -->
-              <div class="invalid-feedback" *ngIf="passwordNoValido && (formLogin.get('password').value)=='' || fLogin.submitted==true && (formLogin.get('password').value)=='' ">
-                Contraseña requerida
-              </div>
-              <div class="invalid-feedback"  *ngIf="formLogin.get('correo').invalid && (formLogin.get('correo').value)!='' ">
-                <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
+              <div class="invalid-feedback"  *ngIf="passwordNoValido">
+                <p *ngIf="passwordVacio==''"> <i class="fas fa-info-circle"></i> La contraseña es requerida</p>
               </div>
               <!-- end mensajes de validacion -->
           </div>

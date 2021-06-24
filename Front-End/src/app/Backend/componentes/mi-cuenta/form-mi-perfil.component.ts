@@ -16,6 +16,7 @@ export class FormMiPerfilComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.servicioUsuario.estaAutenticado();
     this.instanciaUsuario=new UsuarioModel();
     this.cargarDatosFormulario();
   }
