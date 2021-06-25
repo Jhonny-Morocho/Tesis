@@ -18,7 +18,7 @@ class TitulosAcademicosController extends Controller
     //ssubir achivo
     private  $ruta= '../../Archivos/Titulos';
     public  function subirArchivo(Request $request){
-       
+
         $archivoSubido=false;
         try {
             //code...
@@ -29,16 +29,16 @@ class TitulosAcademicosController extends Controller
             }
             return response()->json([   "nombreArchivo"=> $archivoNombre,
                                         "estadoArchivo"=>$archivoSubido,
-                                        "mensaje"=>"Operacion existosa",
+                                        "mensaje"=>"Operación exitosa",
                                         "Siglas"=>"OE"], 200);
         } catch (\Throwable $th) {
             return response()->json([
                                         "archivoSubido"=>$archivoSubido,
-                                        "mensaje"=>"Operacion No Exitosa",
-                                        "Siglas"=>"ONE","error"=>$th]);
+                                        "mensaje"=>$th->getMessage(),
+                                        "Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
     }
-    
+
     public function RegistrarTitulo(Request $request,$external_id){
 
         if($request->json()){
@@ -48,7 +48,7 @@ class TitulosAcademicosController extends Controller
             try {
                 //buscar si existe el usuario que realiza la peticion
                 $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-                //busco si ese usuario es un estudiante 
+                //busco si ese usuario es un estudiante
                 $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
                 //die(json_encode($datos));
                 $ObjTituloAcademico=new TitulosAcademicos();
@@ -63,14 +63,14 @@ class TitulosAcademicosController extends Controller
                 $ObjTituloAcademico->external_ti="Ti".Utilidades\UUID::v4();
                 $ObjTituloAcademico->save();
                 //respuesta exitoso o no en la inserrccion
-                return response()->json(["mensaje"=>"Operacion Exitosa","Siglas"=>"OE",200,]);
+                return response()->json(["mensaje"=>"Operación Exitosa","Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>$datos,"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
         }
- 
+
     }
     public function actulizarTitulo(Request $request,$external_id){
         if($request->json()){
@@ -81,7 +81,7 @@ class TitulosAcademicosController extends Controller
                     $actulizoArchivo=true;
                     $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
                                                                             array(
-                                                                            'titulo_obtenido'=>$request['titulo_obtenido'], 
+                                                                            'titulo_obtenido'=>$request['titulo_obtenido'],
                                                                             'numero_registro'=>$request['numero_registro'],
                                                                             'tipo_titulo'=>$request['tipo_titulo'],
                                                                             'nivel_instruccion'=>$request['nivel_instruccion'],
@@ -89,12 +89,12 @@ class TitulosAcademicosController extends Controller
                                                                             'evidencias_url'=>$request['evidencias_url']
                                                                     ));
                 }
-                //solo actualizo la data 
+                //solo actualizo la data
                 else{
-       
+
                     $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $external_id)->update(
                         array(
-                        'titulo_obtenido'=>$request['titulo_obtenido'], 
+                        'titulo_obtenido'=>$request['titulo_obtenido'],
                         'numero_registro'=>$request['numero_registro'],
                         'tipo_titulo'=>$request['tipo_titulo'],
                         'nivel_instruccion'=>$request['nivel_instruccion'],
@@ -104,7 +104,7 @@ class TitulosAcademicosController extends Controller
                 return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjTituloAcademico,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjTituloAcademico,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operacion No Exitosa","resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th]);
+                return response()->json(["mensaje"=>$th->getMessage(),"resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
@@ -114,23 +114,23 @@ class TitulosAcademicosController extends Controller
     //terminar de hacer
     public function eliminarTitulo(Request $request){
         try {
-            //actualizo el texto plano 
+            //actualizo el texto plano
             $ObjTituloAcademico=TitulosAcademicos::where("external_ti","=", $request['external_ti'])->update(array('estado'=>$request['estado']));
             //borro el archivo
             $bandera_borrar=false;
             $UbicacionArchivo=$this->ruta."/".$request['evidencias_url'];
-            if(file_exists($UbicacionArchivo)){ 
-                if(unlink($UbicacionArchivo)) 
-                $bandera_borrar=true; 
+            if(file_exists($UbicacionArchivo)){
+                if(unlink($UbicacionArchivo))
+                $bandera_borrar=true;
             }
             return response()->json(["mensaje"=>"Operacion Exitosa",
                                      "Siglas"=>"OE","banderaBorrar"=>$bandera_borrar,
                                      "Respuesta"=>$ObjTituloAcademico,200]);
-        
+
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa","Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th]);
         }
-     
+
     }
     // Listar todos los titulos estado cero y no cero//con sus datos de formulario
     public function listarTituloEstudiante( $external_id){
@@ -139,13 +139,13 @@ class TitulosAcademicosController extends Controller
         try {
             //buscar si existe el usuario que realiza la peticion
             $ObjUsuario=Usuario::where("external_us",$external_id)->first();
-            //busco si ese usuario es un estudiante 
+            //busco si ese usuario es un estudiante
             $Objestudiante=Estudiante::where("fk_usuario","=",$ObjUsuario->id)->first();
             $titulosAcademicos=TitulosAcademicos::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=",1)->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$titulosAcademicos,
-                                    "Siglas"=>"ONE","error"=>$th,"external"=>$external_id,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),
+                                    "Siglas"=>"ONE","error"=>$th->getMessage(),"external"=>$external_id,400]);
         }
     }
     //obtener tutlo por url //external_ti
@@ -155,7 +155,7 @@ class TitulosAcademicosController extends Controller
             $ObjTitulo=TitulosAcademicos::where("external_ti","=",$external_id)->first();
             return $this->retornarTituloEncontrado($ObjTitulo);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>"Operacion No Exitosa, no se encontro el registro "+$external_id,"Siglas"=>"ONE","error"=>$th]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th]);
         }
     }
 
@@ -166,5 +166,5 @@ class TitulosAcademicosController extends Controller
             return response()->json(["mensaje"=>$ObjTitulo,"Siglas"=>"ONE","respuesta"=>"Operacion No Exitosa, no se encontro el titulo"]);
         }
     }
-    
+
 }

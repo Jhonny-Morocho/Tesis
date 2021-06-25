@@ -10,6 +10,8 @@
           <i class="fas fa-times-circle"></i> La validación de su información no ha sido exitosa.
           <p><i class="fas fa-info-circle"></i> Observaciones : {{ instanciaPostulante.observaciones }}</p>
         </div>
+          <h3><i class="fas fa-address-card"></i> Registro de postulante</h3>
+          <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 200px;">
           <form class="row g-2" (ngSubmit)="editarPostulante()" [formGroup]="formRegistroPostulante" >
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombres Completos <span class="text-danger">*</span></label><br>
@@ -153,6 +155,7 @@
 <div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado==true && obervaciones==true && formValidado==true || booleanFormularioCompletado==false ">
   <div class="card">
     <article class="card-body">
+
             <div class="alert simple-primary" *ngIf="!booleanFormularioCompletado">
               <i class="fas fa-info-circle"></i> Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
             </div>
@@ -162,6 +165,8 @@
             <div class="alert simple-succes" *ngIf="booleanFormularioCompletado && formValidado && obervaciones">
               <i class="fas fa-check-circle"></i> La validación de su información ha sido aprobado, ahora ya puedes postular a todas las ofertas disponibles en la plataforma.
             </div>
+            <h3><i class="fas fa-address-card"></i> Registro de postulante</h3>
+            <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 200px;">
             <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" >
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombres Completos  <span class="text-danger">*</span></label><br>

@@ -30,8 +30,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item has-treeview" *ngIf="estadoValidacionForm==true">
-                      <a href="#" class="nav-link"  >
+                    <li class="nav-item has-treeview menu-is-opening menu-open"  *ngIf="estadoValidacionForm==true" >
+                      <a  class="nav-link " routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
                         <i class="fas fa-folder mr-1"></i>
                         <p>
                           Hoja de vida

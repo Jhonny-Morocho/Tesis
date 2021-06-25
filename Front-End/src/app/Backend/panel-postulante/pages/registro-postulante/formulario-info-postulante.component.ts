@@ -207,7 +207,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         title: 'Debe llenar todos los campos correctamente'
       })
       return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
-        console.log(contol);
         contol.markAsTouched();
       });
     }
