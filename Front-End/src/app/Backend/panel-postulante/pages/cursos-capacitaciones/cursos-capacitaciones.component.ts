@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import {environment} from 'src/environments/environment.prod';
 import { PaisesModel } from 'src/app/models/paises.models';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
+import { FormBuilder } from '@angular/forms';
 declare var $:any;
 @Component({
   selector: 'app-cursos-capacitaciones',
@@ -18,6 +19,7 @@ export class CursosCapacitacionesComponent implements OnInit {
   frameLimpio:any;
   ubicacionArchivo:String="";
   dominio=environment;
+  formRegistroTitulo:FormGroup;
   //tabla data que consumo del servicio
   paises:PaisesModel[]=[];
   rutaArchivoPdf:string="";
@@ -26,7 +28,9 @@ export class CursosCapacitacionesComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,
+              private formBuilder:FormBuilder,
               private servicioPaises:PaisesService) {
+
 
   }
 
@@ -35,6 +39,7 @@ export class CursosCapacitacionesComponent implements OnInit {
     this.cargarTabla();
     this.cargarPaises();
   }
+
 
   cargarTabla(){
     //listamos los cursos academicos
@@ -45,8 +50,7 @@ export class CursosCapacitacionesComponent implements OnInit {
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
+        Swal('Error',peroSiTenemosErro['mensaje'], 'error');
       }
     );
    }
@@ -62,31 +66,24 @@ export class CursosCapacitacionesComponent implements OnInit {
     return nombrePais;
    }
    mostrarPdf(urlEvidencias){
-    console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
-    console.log(this.ubicacionArchivo);
     $('#mostrarPDF').modal('show');
   }
    cargarPaises(){
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        //console.log(siHacesBien);
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
 
       },
       (peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
+        Swal('Error',peroSiTenemosErro['mensaje'], 'error');
       }
     );
    }
    eliminarCursosCapacitaciones(external_cu:string,nombreTitulo:string,nombreArchivoPDF:string,index:number){
-    console.log(nombreArchivoPDF);
-    console.log(external_cu);
     // ocupo el servicio
-
      Swal({
        title: 'Esta seguro?',
        text: "Se eliminara "+nombreTitulo,
@@ -103,16 +100,12 @@ export class CursosCapacitacionesComponent implements OnInit {
          this.instanciaCursosCapacitaciones.external_cu=external_cu;
          this.servicioCursosCapacitacione.eliminarCursoCapacitacion(this.instanciaCursosCapacitaciones).subscribe(
            siHaceBien=>{
-             console.log("tpdp bnien");
-             console.log(index);
              //elimino visualmente
              this.cursosCapacitaciones.splice(index,1); //desde la posición 2, eliminamos 1 elemento
              Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
-             console.log(siHaceBien);
            },(peroSiTenemosErro)=>{
-             console.warn("TODO MAL");
-             console.log(peroSiTenemosErro);
-             Swal('Ups, No se puede realizar el registro'+peroSiTenemosErro['mensaje'], 'info')
+
+             Swal('Ups',peroSiTenemosErro['mensaje'], 'info')
            }
          );
        }

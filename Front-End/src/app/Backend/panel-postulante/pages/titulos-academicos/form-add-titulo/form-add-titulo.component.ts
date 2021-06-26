@@ -79,10 +79,10 @@ export class FormAddTituloComponent implements OnInit {
                 ],
     });
   }
-    // =================== subir archivo ======================
-    fileEvent(fileInput:Event){
-      this.file=(<HTMLInputElement>fileInput.target).files[0] ;
-    }
+  // =================== subir archivo ======================
+  fileEvent(fileInput:Event){
+    this.file=(<HTMLInputElement>fileInput.target).files[0] ;
+  }
     // =================== archivo ======================
     //=======================================
     onSubMitRegistroTitulo(formRegistroTitulo:NgForm ){

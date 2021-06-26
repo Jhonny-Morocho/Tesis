@@ -2,11 +2,13 @@
 
 <div class="content-wrapper">
     <div class="card">
-        <h4 class="container mt-4">Cursos y capacitaciones</h4>
-        <hr>
-        <div class="col-2 mt-1">
-            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/add-curso-capacitacion']">
-                <i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+        <div class="col-6 mt-2 ml-3">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> Cursos y Capacitaciones</h3>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+          <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-postulante/add-curso-capacitacion']">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Agregar
+          </a>
         </div>
         <article class="card-body animated animate__animated fadeIn">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">

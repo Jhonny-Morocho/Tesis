@@ -34,31 +34,24 @@ export class TitulosAcademicosComponent implements OnInit {
     this.cargarTabla();
   }
   mostrarPdf(urlEvidencias){
-    console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
-    console.log(this.ubicacionArchivo);
     $('#mostrarPDF').modal('show');
   }
   cargarTabla(){
     //listamos los titulos academicos
     this.servicioTitulo.listarTitulos().subscribe(
       siHacesBien=>{
-        console.warn("TODO BIEN");
         this.tituloAcademico =siHacesBien;
-        console.log(this.tituloAcademico);
         //data table
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn("TODO MAL");
+        Swal('Error',peroSiTenemosErro['mensaje'], 'info');
       }
     );
   }
    eliminarTitulo(external_ti:string,nombreTitulo:string,nombreArchivoPDF:string,index:number){
-     console.log(nombreArchivoPDF);
-     console.log(external_ti);
      // ocupo el servicio
-
       Swal({
         title: '¿ Esta seguro ?',
         text: "Se elimara el registro "+nombreTitulo,
@@ -89,7 +82,7 @@ export class TitulosAcademicosComponent implements OnInit {
                 title: 'El registro ha sido eliminado'
               })
             },(peroSiTenemosErro)=>{
-              Swal('Ups',peroSiTenemosErro['mensaje'], 'info')
+              Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
             }
           );
         }

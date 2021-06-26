@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.models';
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
@@ -15,20 +15,94 @@ export class FormAddCursoComponent implements OnInit {
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
   paises:PaisesModel[]=[];
   tipoCursoCapcitacion:string[]=["Curso","Capacitacion"];
+  formRegistroCurso:FormGroup;
 
   constructor(private servicioCursoCapacitacion:CursosCapacitacionesService,
+              private formBuilder:FormBuilder,
               private servicioPaises:PaisesService) { }
 
   ngOnInit() {
     this.instanciaCursosCapacitaciones=new CursosCapacitacionesModel();
     this.instanciaCursosCapacitaciones.estado=1;
     this.cargarPaises();
+    this.crearFormulario();
+  }
+  get nomEventoNoValido(){
+    return this.formRegistroCurso.get('nom_evento').invalid && this.formRegistroCurso.get('nom_evento').touched ;
+  }
+  get auspicianteNoValido(){
+    return this.formRegistroCurso.get('auspiciante').invalid && this.formRegistroCurso.get('auspiciante').touched ;
+  }
+  get numHorasNoValido(){
+    return this.formRegistroCurso.get('horas').invalid && this.formRegistroCurso.get('horas').touched ;
+  }
+  get fechaInicioNoValido(){
+    return this.formRegistroCurso.get('fecha_inicio').invalid && this.formRegistroCurso.get('fecha_inicio').touched ;
+  }
+  get fechaFinalizacionNoValido(){
+    return this.formRegistroCurso.get('fecha_culminacion').invalid && this.formRegistroCurso.get('fecha_culminacion').touched ;
+  }
+  get tipoEventoNoValido(){
+    return this.formRegistroCurso.get('tipo_evento').invalid && this.formRegistroCurso.get('tipo_evento').touched ;
+  }
+  get paisNoValido(){
+    return this.formRegistroCurso.get('pais').invalid && this.formRegistroCurso.get('pais').touched ;
+  }
+  get evidenciasNoValido(){
+    return this.formRegistroCurso.get('evidencias').invalid && this.formRegistroCurso.get('evidencias').touched ;
+  }
+
+  crearFormulario(){
+    this.formRegistroCurso=this.formBuilder.group({
+      nom_evento:['',
+                  [
+                    Validators.required,
+                    Validators.maxLength(40)
+
+                  ]
+              ],
+      auspiciante:['',
+                   [
+                      Validators.required,
+                      Validators.maxLength(40)
+                   ]
+               ],
+      horas:['',
+                    [
+                      Validators.required
+
+                    ]
+                  ],
+      fecha_inicio:['',
+                  [
+                    Validators.required
+                  ]
+                ],
+      fecha_culminacion:[''],
+
+      tipo_evento:['',
+                  [
+                    Validators.required
+                  ]
+                ],
+      pais:['',
+                [
+                  Validators.required
+                ]
+              ],
+
+      evidencias:['',
+              [
+                Validators.required
+              ]
+            ],
+    });
   }
   // =================== subir archivo ======================
   fileEvent(fileInput:Event){
     this.file=(<HTMLInputElement>fileInput.target).files[0] ;
   }
-  onSubMitRegistrarCursoCapacitacion(formRegistroTitulo:NgForm ){
+  registrarCursoCapacitacion( ){
     //prepara el archivo para enviar
     let form=new FormData();
     //falta llenar el input file//valdiar si tenemos archivo
@@ -39,8 +113,7 @@ export class FormAddCursoComponent implements OnInit {
     this.validarInputFile=true;
     form.append('file',this.file);
     //reviso si los datos del formulario han sido llenados
-    console.log(formRegistroTitulo);
-    if(formRegistroTitulo.invalid){
+    if(formRegistroCurso.invalid){
 
       return;
      }
@@ -55,25 +128,19 @@ export class FormAddCursoComponent implements OnInit {
     this.servicioCursoCapacitacion.subirArchivoPDF(form).subscribe(
       siHacesBienFormData=>{
          if(siHacesBienFormData['Siglas']=="OE"){
-          console.log(siHacesBienFormData);
           //recupero el nombre del documento subido al host
           this.instanciaCursosCapacitaciones.evidencia_url=siHacesBienFormData['nombreArchivo'];
           //estado del registro es 1
                   this.servicioCursoCapacitacion.crearCursoCapacitaciones(this.instanciaCursosCapacitaciones).subscribe(
                     siHacesBienJson=>{
                       Swal.close();
-                      console.log(siHacesBienJson);
                       if(siHacesBienJson['Siglas']=="OE"){
-                        console.log(siHacesBienJson);
                         Swal('Registrado', 'Información registrada con exito', 'success');
 
                       }else{
-                        console.warn(siHacesBienJson);
                         Swal('Ups',siHacesBienJson['mensaje'], 'info')
                       }
                     },(erroSubirJson)=>{
-                      console.error(erroSubirJson);
-
                        Swal({
                          title:'Error',
                          type:'error',
@@ -81,12 +148,11 @@ export class FormAddCursoComponent implements OnInit {
                        });
                   });
            }else{
-             console.warn(siHacesBienFormData);
-             console.warn(siHacesBienFormData['archivoSubido']);
+
              Swal('Ups, No se puede subir el  el registro','Debe subir en formato PDF', 'info')
           }
       },(erroSubirFormData)=>{
-        console.error(erroSubirFormData);
+
     });
     //2.guardamos la data
   }
@@ -94,17 +160,12 @@ export class FormAddCursoComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
-        console.warn("TODO BIEN");
         //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
-        //console.log( this.paises);
       },
       (peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
       }
     );
-   }
+  }
 
 }
