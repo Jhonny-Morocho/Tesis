@@ -85,7 +85,6 @@ export class LoginAdminComponent implements OnInit {
         this.instanciaModeloUsuarioLogin.correo=result.value;
         this._servicioAdmin.recuperarPassword(this.instanciaModeloUsuarioLogin).subscribe(
            siHaceBien=>{
-             console.log(siHaceBien);
              if (siHaceBien['Siglas']=="OE") {
                 Swal('Contraseña actualizada','Se ha enviado la nueva contraseña a su correo','success')
              }else{
@@ -100,7 +99,6 @@ export class LoginAdminComponent implements OnInit {
   }
   // Login del formulario del admistrador
   loginAdmin(){
-    console.log(this.formLogin);
     if(this.formLogin.invalid){
       const toast = Swal.mixin({
         toast: true,
@@ -132,9 +130,6 @@ export class LoginAdminComponent implements OnInit {
     //========== ocupo el servicio =============
     this._servicioAdmin.login(this.instanciaModeloUsuarioLogin).subscribe(
       (siHacesBien)=>{
-        console.log("siHacesBien");
-        console.log(siHacesBien);
-        console.log(siHacesBien['Siglas']);
         Swal.close();
         //verifico si encontro el usurio
         if(siHacesBien['Siglas']=="OE"){
@@ -181,10 +176,8 @@ export class LoginAdminComponent implements OnInit {
               text:siHacesBien['mensaje']
             });
         }
-        console.log("pase al url");
-        console.log(siHacesBien);
+
       },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
         Swal({
           title:'Error',
           type:'error',

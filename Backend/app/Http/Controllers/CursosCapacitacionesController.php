@@ -35,8 +35,8 @@ class CursosCapacitacionesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                                         "archivoSubido"=>$archivoSubido,
-                                        "mensaje"=>"Operacion No Exitosa",
-                                        "Siglas"=>"ONE","error"=>$th]);
+                                        "mensaje"=>$th->getMessage(),
+                                        "Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
     }
     //registrar curso y capacitaciones

@@ -5,6 +5,7 @@ import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.mo
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
 import {PaisesService} from 'src/app/servicios/paises.service';
 import {PaisesModel} from 'src/app/models/paises.models';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-form-add-curso',
   templateUrl: './form-add-curso.component.html'
@@ -19,6 +20,7 @@ export class FormAddCursoComponent implements OnInit {
 
   constructor(private servicioCursoCapacitacion:CursosCapacitacionesService,
               private formBuilder:FormBuilder,
+              private router:Router,
               private servicioPaises:PaisesService) { }
 
   ngOnInit() {
@@ -78,7 +80,11 @@ export class FormAddCursoComponent implements OnInit {
                     Validators.required
                   ]
                 ],
-      fecha_culminacion:[''],
+      fecha_culminacion:['',
+                          [
+                          Validators.required
+                          ]
+                        ],
 
       tipo_evento:['',
                   [
@@ -103,20 +109,21 @@ export class FormAddCursoComponent implements OnInit {
     this.file=(<HTMLInputElement>fileInput.target).files[0] ;
   }
   registrarCursoCapacitacion( ){
-    //prepara el archivo para enviar
-    let form=new FormData();
-    //falta llenar el input file//valdiar si tenemos archivo
-    if(this.file==null){
-       this.validarInputFile=false;
-       return;
-     }
-    this.validarInputFile=true;
-    form.append('file',this.file);
-    //reviso si los datos del formulario han sido llenados
-    if(formRegistroCurso.invalid){
-
-      return;
-     }
+    if(this.formRegistroCurso.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar los campos requeridos correctamente'
+      })
+      return Object.values(this.formRegistroCurso.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
+    }
      Swal({
       allowOutsideClick:false,
       type:'info',
@@ -124,7 +131,21 @@ export class FormAddCursoComponent implements OnInit {
     });
 
     Swal.showLoading();
+    //preparo el archivo para enviar
+    let form=new FormData();
+    form.append('file',this.file);
     //tengo que guardar dos datos 1=== texto plano; 2== archivo
+    //envio los datos del formulario
+    this.instanciaCursosCapacitaciones.estado=1;
+    this.instanciaCursosCapacitaciones.nom_evento=this.formRegistroCurso.value.nom_evento;
+    this.instanciaCursosCapacitaciones.auspiciante=this.formRegistroCurso.value.auspiciante;
+    this.instanciaCursosCapacitaciones.horas=this.formRegistroCurso.value.horas;
+    this.instanciaCursosCapacitaciones.tipo_evento=this.formRegistroCurso.value.tipo_evento;
+    this.instanciaCursosCapacitaciones.fecha_inicio=this.formRegistroCurso.value.fecha_inicio;
+    this.instanciaCursosCapacitaciones.fecha_culminacion=this.formRegistroCurso.value.fecha_culminacion;
+    this.instanciaCursosCapacitaciones.fk_pais=this.formRegistroCurso.value.pais;
+    this.instanciaCursosCapacitaciones.evidencia_url=this.formRegistroCurso.value.evidencias;
+
     this.servicioCursoCapacitacion.subirArchivoPDF(form).subscribe(
       siHacesBienFormData=>{
          if(siHacesBienFormData['Siglas']=="OE"){
@@ -135,7 +156,17 @@ export class FormAddCursoComponent implements OnInit {
                     siHacesBienJson=>{
                       Swal.close();
                       if(siHacesBienJson['Siglas']=="OE"){
-                        Swal('Registrado', 'Información registrada con exito', 'success');
+                        const toast = Swal.mixin({
+                          toast: true,
+                          position: 'top-end',
+                          showConfirmButton: false,
+                          timer: 5000
+                        });
+                        toast({
+                          type: 'success',
+                          title: 'Registrado'
+                        })
+                        this.router.navigateByUrl('/panel-postulante/cursos-capacitaciones');
 
                       }else{
                         Swal('Ups',siHacesBienJson['mensaje'], 'info')
@@ -144,15 +175,14 @@ export class FormAddCursoComponent implements OnInit {
                        Swal({
                          title:'Error',
                          type:'error',
-                         text:erroSubirJson['archivoSubido']
+                         text:erroSubirJson['mensaje']
                        });
                   });
            }else{
-
-             Swal('Ups, No se puede subir el  el registro','Debe subir en formato PDF', 'info')
+             Swal('Ups', siHacesBienFormData['mensaje'], 'info')
           }
       },(erroSubirFormData)=>{
-
+        Swal('Error',erroSubirFormData['mensaje'], 'error')
     });
     //2.guardamos la data
   }
@@ -160,10 +190,10 @@ export class FormAddCursoComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
       },
       (peroSiTenemosErro)=>{
+        Swal('Error',peroSiTenemosErro['mensaje'], 'error')
       }
     );
   }

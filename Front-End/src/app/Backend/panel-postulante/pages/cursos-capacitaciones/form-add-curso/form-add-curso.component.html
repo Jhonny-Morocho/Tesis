@@ -17,27 +17,32 @@
                            class="form-control"
                            formControlName="nom_evento"
                            placeholder="Ingrese el nombre del evento que asistio"
-                           maxlength="100"
+                           maxlength="40"
                            [class.is-invalid]="nomEventoNoValido"
                            [class.is-valid]="formRegistroCurso.get('nom_evento').valid"
                            >
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['nom_evento'].errors">
-                      El campo nombre del evento es obligatorio
-                    </div> -->
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="nomEventoNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo nombre del evento es obligatorio</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
                     <i class="fa fa-briefcase form-control-feedback" aria-hidden="true"></i>
                     <input type="text"
                            formControlName="auspiciante"
-                           maxlength="100"
+                           maxlength="40"
                            [class.is-invalid]="auspicianteNoValido"
                            [class.is-valid]="formRegistroCurso.get('auspiciante').valid"
                            placeholder="Ingrese el auspiciante del evento que asistio"
                            class="form-control">
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['auspiciante'].errors">
-                      El campo auspiciante del evento es obligatorio
-                    </div> -->
+
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="auspicianteNoValido">
+                    <p> <i class="fas fa-info-circle"></i> El campo auspiciante del evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
@@ -48,9 +53,28 @@
                           [class.is-invalid]="numHorasNoValido"
                           [class.is-valid]="formRegistroCurso.get('horas').valid"
                           class="form-control">
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['horas'].errors">
-                      El campo número de horas del evento es obligatorio
-                    </div> -->
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="numHorasNoValido">
+                      <p> <i class="fas fa-info-circle"></i>  El campo número de horas del evento es obligatorio</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
+                  <i class="fa fa-list-ol form-control-feedback" aria-hidden="true"></i>
+                  <select class="form-control"
+                          formControlName="tipo_evento"
+                          [class.is-invalid]="tipoEventoNoValido"
+                          [class.is-valid]="formRegistroCurso.get('tipo_evento').valid"
+                          >
+                    <option [value]="i+1"*ngFor="let item of tipoCursoCapcitacion;let i=index">{{item}}</option>
+                  </select>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="tipoEventoNoValido">
+                    <p> <i class="fas fa-info-circle"></i>  El campo tipo de evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
 
                 <div class="col-md-6">
@@ -61,9 +85,11 @@
                            [class.is-valid]="formRegistroCurso.get('fecha_inicio').valid"
                            class="form-control"
                             >
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_inicio'].errors">
-                      El campo fecha inicio  del evento es obligatorio
-                    </div> -->
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="fechaInicioNoValido">
+                    <p> <i class="fas fa-info-circle"></i>   El campo fecha inicio  del evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación</label><br>
@@ -72,24 +98,12 @@
                            [class.is-invalid]="fechaFinalizacionNoValido"
                            [class.is-valid]="formRegistroCurso.get('fecha_culminacion').valid"
                            class="form-control">
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['fecha_culminacion'].errors">
-                      El campo fecha  de culminación del evento es obligatorio
-                    </div> -->
+                  <div class="invalid-feedback"  *ngIf="fechaFinalizacionNoValido">
+                    <p> <i class="fas fa-info-circle"></i>   El campo fecha  de culminación del evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
-                <div class="col-md-6">
-                    <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
-                    <i class="fa fa-list-ol form-control-feedback" aria-hidden="true"></i>
-                    <select class="form-control"
-                            formControlName="tipo_evento"
-                            [class.is-invalid]="tipoEventoNoValido"
-                            [class.is-valid]="formRegistroCurso.get('tipo_evento').valid"
-                            >
-                      <option [value]="i+1"*ngFor="let item of tipoCursoCapcitacion;let i=index">{{item}}</option>
-                    </select>
-                    <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['tipo_evento'].errors">
-                      El campo tipo de evento es obligatorio
-                    </div> -->
-                </div>
+
                 <div class="col-md-6">
                     <label for="inputPais" class="form-label">País</label><br>
                     <i class="fa fa-globe form-control-feedback" aria-hidden="true"></i>
@@ -100,9 +114,11 @@
                              >
                     <option [value]="i+1"*ngFor="let item of paises;let i=index">{{item.nombre}}</option>
                   </select>
-                  <!-- <div class="invalid-feedback" *ngIf="fRegistrarCursoCapacitacion.submitted && fRegistrarCursoCapacitacion.controls['pais'].errors">
-                    El campo país es obligatorio
-                  </div> -->
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="paisNoValido">
+                    <p> <i class="fas fa-info-circle"></i>  El campo país es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
                     <label for="inputEvidencias" class="form-label">Evidencias</label><br>
@@ -114,12 +130,15 @@
                           [class.is-invalid]="evidenciasNoValido"
                           [class.is-valid]="formRegistroCurso.get('evidencias').valid"
                           accept="application/pdf">
-                    <!-- <div class="invalid-feedback" *ngIf="validarInputFile==false">
-                      El campo evidencias es obligatorio
-                    </div> -->
+
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="evidenciasNoValido">
+                      <p> <i class="fas fa-info-circle"></i>  El campo evidencias es obligatorio</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Registtrar</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>
                 </div>
             </form>
         </article>

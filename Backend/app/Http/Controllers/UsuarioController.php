@@ -39,7 +39,7 @@ class UsuarioController extends Controller
                 //respuesta exitoso o no en la inserrccion
                 return response()->json(["mensaje"=>$ObjUsuario,"Siglas"=>"OE",200,]);
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>"Operación No Exitosa ,El correo ya existe","Siglas"=>"ONE","error"=>$th->getMessage()]);
+                return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);
