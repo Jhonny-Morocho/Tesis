@@ -38,6 +38,15 @@ class TitulosAcademicosController extends Controller
                                         "Siglas"=>"ONE","error"=>$th->getMessage()]);
         }
     }
+    public function eliminarArchivo($nombreArchivo){
+        $archivoUbicacion=$this->ruta."/".$nombreArchivo;
+        //eliminar archivo
+        if(unlink($archivoUbicacion)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public function RegistrarTitulo(Request $request,$external_id){
 
@@ -75,6 +84,7 @@ class TitulosAcademicosController extends Controller
     public function actulizarTitulo(Request $request,$external_id){
         if($request->json()){
             $actulizoArchivo=false;
+            $archivoEliminado=null;
             try {
                 //actulizo el archivo , por lo cual actulizo la evidencias_url
                 if($request['evidencias_url']!=null){
@@ -88,6 +98,8 @@ class TitulosAcademicosController extends Controller
                                                                             'detalles_adiciones'=>$request['detalles_adiciones'],
                                                                             'evidencias_url'=>$request['evidencias_url']
                                                                     ));
+                    //eliminar el archivo anterior
+                    $archivoEliminado=$this->eliminarArchivo($request['evidencias_url_antiguo']);
                 }
                 //solo actualizo la data
                 else{
@@ -101,10 +113,19 @@ class TitulosAcademicosController extends Controller
                         'detalles_adiciones'=>$request['detalles_adiciones']
                     ));
                 }
-                return response()->json(["mensaje"=>"Operacion Exitosa","Objeto"=>$ObjTituloAcademico,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjTituloAcademico,"Siglas"=>"OE",200]);
+                return response()->json(["mensaje"=>
+                                         "Operacion Exitosa",
+                                         "Objeto"=>$ObjTituloAcademico,
+                                         "archivoEliminado"=>$archivoEliminado,
+                                         "actulizoArchivo"=>$actulizoArchivo,
+                                         "resques"=>$request->json()->all(),
+                                         "respuesta"=>$ObjTituloAcademico,"Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>$th->getMessage(),"resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
+                return response()->json(["mensaje"=>$th->getMessage(),
+                                            "resques"=>$request->json()->all(),
+                                            "Siglas"=>"ONE",
+                                            "error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);

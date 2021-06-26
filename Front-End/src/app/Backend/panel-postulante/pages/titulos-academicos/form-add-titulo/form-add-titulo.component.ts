@@ -26,9 +26,7 @@ export class FormAddTituloComponent implements OnInit {
    }
 
   ngOnInit() {
-
     this.instanciaTituloAcademico=new TituloModel();
-
   }
 
   get tituloNoValido(){

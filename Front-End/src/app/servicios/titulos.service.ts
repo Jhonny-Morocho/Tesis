@@ -22,7 +22,6 @@ export class TituloService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -35,7 +34,6 @@ export class TituloService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -45,13 +43,11 @@ export class TituloService {
   listarTitulos(){
 
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`);
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarTitulo}${localStorage.getItem("external_us")}`
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloTitulo(respuestaBackend['mensaje']);
         })
     );
@@ -63,7 +59,6 @@ export class TituloService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloTitulo(respuestaBackend['mensaje']);
         })
     );
@@ -93,7 +88,7 @@ export class TituloService {
           return respuestaBackend;
         })
     );
- 
+
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
@@ -101,10 +96,7 @@ export class TituloService {
     const autenficacionDatos={
       ...modeloTitulo
     }
-    console.log(modeloTitulo);
-      console.log(modeloTitulo.external_ti);
-    //retorna la respuesata
-        console.log(`${this.urlDominio_}${this.urlEditarTitulo}${modeloTitulo.external_ti}`);
+
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlEditarTitulo}${autenficacionDatos.external_ti}`,autenficacionDatos
       ).pipe(
@@ -120,17 +112,14 @@ export class TituloService {
     const autenficacionDatos={
       ...modeloTitulo
     }
-      console.log(modeloTitulo);
-    //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlELiminarTitulo}`);
-      return this._httCliente.post(
-        `${this.urlDominio_}${this.urlELiminarTitulo}`,autenficacionDatos
-      ).pipe(
-        map(
-          respuestaBackend=>{
-            return respuestaBackend;
-          })
-      );
+    return this._httCliente.post(
+      `${this.urlDominio_}${this.urlELiminarTitulo}`,autenficacionDatos
+    ).pipe(
+      map(
+        respuestaBackend=>{
+          return respuestaBackend;
+        })
+    );
   }
 }
 

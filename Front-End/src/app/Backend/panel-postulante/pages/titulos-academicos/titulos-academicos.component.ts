@@ -60,8 +60,8 @@ export class TitulosAcademicosComponent implements OnInit {
      // ocupo el servicio
 
       Swal({
-        title: 'Esta seguro ?',
-        text: "Se elimara  "+nombreTitulo,
+        title: '¿ Esta seguro ?',
+        text: "Se elimara el registro "+nombreTitulo,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -75,16 +75,21 @@ export class TitulosAcademicosComponent implements OnInit {
           this.instanciaTituloAcademico.external_ti=external_ti;
           this.servicioTitulo.eliminarTitulo(this.instanciaTituloAcademico).subscribe(
             siHaceBien=>{
-              console.log("tpdp bnien");
-              console.log(index);
               //elimino visualmente
               this.tituloAcademico.splice(index,1); //desde la posición 2, eliminamos 1 elemento
-              Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
-              console.log(siHaceBien);
+              const toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 6000,
+
+              });
+              toast({
+                type: 'success',
+                title: 'El registro ha sido eliminado'
+              })
             },(peroSiTenemosErro)=>{
-              console.warn("TODO MAL");
-              console.log(peroSiTenemosErro);
-              Swal('Ups, No se puede realizar el registro'+peroSiTenemosErro['mensaje'], 'info')
+              Swal('Ups',peroSiTenemosErro['mensaje'], 'info')
             }
           );
         }
@@ -97,7 +102,7 @@ export class TitulosAcademicosComponent implements OnInit {
         this.dtTrigger.unsubscribe();
       } catch (error) {
         //le puse x q no uso suscripcion/mas info:/https://l-lin.github.io/angular-datatables/#/basic/angular-way
-        console.warn(error);
+
       }
     }
 

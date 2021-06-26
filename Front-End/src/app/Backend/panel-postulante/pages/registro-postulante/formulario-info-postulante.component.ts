@@ -164,8 +164,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               genero:this.instanciaPostulante.genero,
               direccionDomicilio:this.instanciaPostulante.direccion_domicilio
             });
-            console.log(this.instanciaPostulante);
-
             //ahun no lo revisan al formulario
             if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones===''){
               this.formValidado=false;
@@ -187,8 +185,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
           }
       },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
+        Swal('Error', peroSiTenemosErro['error'], 'error')
     });
 
   }
@@ -299,7 +296,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
              Swal('Info', siHacesBien['mensaje'], 'info')
           }
       },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
          Swal({
           title:'Error',
           type:'error',

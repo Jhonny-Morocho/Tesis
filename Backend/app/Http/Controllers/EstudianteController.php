@@ -37,12 +37,12 @@ class EstudianteController extends Controller
                 return response()->json(["mensaje"=>"No existe formulario del estudiante","Siglas"=>"ONE"]);
                 }
 
-        }else{
-            return response()->json(["mensaje"=>"No se encontro el usuario external_us","Siglas"=>"ONE"]);
-        }
+            }else{
+                return response()->json(["mensaje"=>"No se encontro el usuario external_us","Siglas"=>"ONE"]);
+            }
 
         }else{
-        return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
+            return response()->json(["mensaje"=>"La data no tiene formato deseado","Siglas"=>"DNF",400]);
         }
     }
      //actulizar dato de postulante//estudainte
