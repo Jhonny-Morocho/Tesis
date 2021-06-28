@@ -2,7 +2,7 @@
 <div class="content-wrapper animated fadeIn">
     <div class="card">
         <div class="col-12 mt-2 ml-3">
-          <h3><i class="fas fa-graduation-cap"></i>Registrar Curso o Capacitación</h3>
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i>Registrar Curso o Capacitación</h3>
           <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
             <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
@@ -87,10 +87,11 @@
                             >
                   <!-- mensajes de validacion -->
                   <div class="invalid-feedback"  *ngIf="fechaInicioNoValido">
-                    <p> <i class="fas fa-info-circle"></i>   El campo fecha inicio  del evento es obligatorio</p>
+                    <p > <i class="fas fa-info-circle"></i>   El campo fecha inicio  del evento es obligatorio</p>
                   </div>
                   <!-- end mensajes de validacion -->
                 </div>
+
                 <div class="col-md-6">
                     <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación</label><br>
                     <input type="date"
@@ -99,7 +100,8 @@
                            [class.is-valid]="formRegistroCurso.get('fecha_culminacion').valid"
                            class="form-control">
                   <div class="invalid-feedback"  *ngIf="fechaFinalizacionNoValido">
-                    <p> <i class="fas fa-info-circle"></i>   El campo fecha  de culminación del evento es obligatorio</p>
+                    <p *ngIf="fechaFinalizacionVacia"> <i class="fas fa-info-circle"></i>   El campo fecha  de culminación del evento es obligatorio</p>
+                    <p *ngIf="!fechaFinalMayorInicialNoValido && !fechaFinalizacionVacia"> <i class="fas fa-info-circle"></i> La fecha de finalizacion debe ser mayor a la fecha de inicio</p>
                   </div>
                   <!-- end mensajes de validacion -->
                 </div>

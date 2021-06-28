@@ -6,6 +6,8 @@ import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitacion
 import {PaisesService} from 'src/app/servicios/paises.service';
 import {PaisesModel} from 'src/app/models/paises.models';
 import { Router } from '@angular/router';
+import {ValidadoresService} from 'src/app/servicios/validadores.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-form-add-curso',
   templateUrl: './form-add-curso.component.html'
@@ -20,6 +22,7 @@ export class FormAddCursoComponent implements OnInit {
 
   constructor(private servicioCursoCapacitacion:CursosCapacitacionesService,
               private formBuilder:FormBuilder,
+              private validadorPersonalizado:ValidadoresService,
               private router:Router,
               private servicioPaises:PaisesService) { }
 
@@ -44,6 +47,18 @@ export class FormAddCursoComponent implements OnInit {
   get fechaFinalizacionNoValido(){
     return this.formRegistroCurso.get('fecha_culminacion').invalid && this.formRegistroCurso.get('fecha_culminacion').touched ;
   }
+
+  // la fecha de finalizacion debe ser mayo a la fecha de inicio
+  get fechaFinalMayorInicialNoValido(){
+    const dateInicio=this.formRegistroCurso.get('fecha_inicio');
+    const dateFinalalizacion=this.formRegistroCurso.get('fecha_culminacion');
+    return (dateFinalalizacion>dateInicio)?true:false;
+  }
+  get fechaFinalizacionVacia(){
+    return this.formRegistroCurso.get('fecha_culminacion').value==''?true:false;
+  }
+
+
   get tipoEventoNoValido(){
     return this.formRegistroCurso.get('tipo_evento').invalid && this.formRegistroCurso.get('tipo_evento').touched ;
   }
@@ -77,12 +92,14 @@ export class FormAddCursoComponent implements OnInit {
                   ],
       fecha_inicio:['',
                   [
-                    Validators.required
+                    Validators.required,
+
                   ]
                 ],
       fecha_culminacion:['',
                           [
-                          Validators.required
+                          Validators.required,
+
                           ]
                         ],
 
@@ -102,6 +119,8 @@ export class FormAddCursoComponent implements OnInit {
                 Validators.required
               ]
             ],
+    },{
+      validators: this.validadorPersonalizado.validarFechasInicioFinalizacion('fecha_inicio','fecha_culminacion')
     });
   }
   // =================== subir archivo ======================
@@ -109,6 +128,8 @@ export class FormAddCursoComponent implements OnInit {
     this.file=(<HTMLInputElement>fileInput.target).files[0] ;
   }
   registrarCursoCapacitacion( ){
+    console.log(this.formRegistroCurso);
+
     if(this.formRegistroCurso.invalid){
       const toast = Swal.mixin({
         toast: true,

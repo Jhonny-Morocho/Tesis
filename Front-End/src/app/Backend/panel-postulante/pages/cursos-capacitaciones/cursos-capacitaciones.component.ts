@@ -19,7 +19,6 @@ export class CursosCapacitacionesComponent implements OnInit {
   frameLimpio:any;
   ubicacionArchivo:String="";
   dominio=environment;
-  formRegistroTitulo:FormGroup;
   //tabla data que consumo del servicio
   paises:PaisesModel[]=[];
   rutaArchivoPdf:string="";

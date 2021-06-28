@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 //importo libreria para poder jugar con las fechas
 import * as moment from 'moment';
 @Injectable({
@@ -9,15 +9,6 @@ export class ValidadoresService {
 
   constructor() { }
 
-  noHerrera(control: FormControl):{[s:string]:boolean}{
-
-    if(control.value.toLowerCase()==='herrera'){
-      return{
-        noHerrera:true
-      }
-    }
-    return null;
-  }
   noFechaMayorActualPostulante(control: FormControl):{[s:string]:boolean}{
     let fechaActual=moment().format("YYYY-MM-DD");
     let fechaMinima='1905-01-01';
@@ -27,6 +18,17 @@ export class ValidadoresService {
       }
     }else{
       return null;
+    }
+  }
+  validarFechasInicioFinalizacion(fecha_inicio:string,fecha_culminacion:string){
+    return (formGroup:FormGroup)=>{
+      const dateInicio=formGroup.controls[fecha_inicio];
+      const dateFinal=formGroup.controls[fecha_culminacion];
+      if(dateFinal.value>dateInicio.value){
+        dateFinal.setErrors(null);
+      }else{
+        dateFinal.setErrors({DateNoEsMayor:true});
+      }
     }
   }
   soloTexto(control: FormControl):{[s:string]:boolean}{
