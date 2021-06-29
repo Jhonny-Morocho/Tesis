@@ -84,8 +84,8 @@ export class CursosCapacitacionesComponent implements OnInit {
    eliminarCursosCapacitaciones(external_cu:string,nombreTitulo:string,nombreArchivoPDF:string,index:number){
     // ocupo el servicio
      Swal({
-       title: 'Esta seguro?',
-       text: "Se eliminara "+nombreTitulo,
+       title: '¿ Esta seguro?',
+       text: "Se eliminara el registro "+nombreTitulo,
        type: 'warning',
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
@@ -101,9 +101,17 @@ export class CursosCapacitacionesComponent implements OnInit {
            siHaceBien=>{
              //elimino visualmente
              this.cursosCapacitaciones.splice(index,1); //desde la posición 2, eliminamos 1 elemento
-             Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
+              const toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+              });
+              toast({
+                type: 'success',
+                title: 'Registro eliminado'
+              })
            },(peroSiTenemosErro)=>{
-
              Swal('Ups',peroSiTenemosErro['mensaje'], 'info')
            }
          );

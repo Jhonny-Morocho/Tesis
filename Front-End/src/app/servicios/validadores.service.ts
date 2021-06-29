@@ -24,7 +24,7 @@ export class ValidadoresService {
     return (formGroup:FormGroup)=>{
       const dateInicio=formGroup.controls[fecha_inicio];
       const dateFinal=formGroup.controls[fecha_culminacion];
-      if(dateFinal.value>dateInicio.value){
+      if(dateFinal.value>=dateInicio.value){
         dateFinal.setErrors(null);
       }else{
         dateFinal.setErrors({DateNoEsMayor:true});

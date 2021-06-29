@@ -45,7 +45,7 @@ export class FormAddCursoComponent implements OnInit {
     return this.formRegistroCurso.get('fecha_inicio').invalid && this.formRegistroCurso.get('fecha_inicio').touched ;
   }
   get fechaFinalizacionNoValido(){
-    return this.formRegistroCurso.get('fecha_culminacion').invalid && this.formRegistroCurso.get('fecha_culminacion').touched ;
+    return this.formRegistroCurso.get('fecha_culminacion').invalid && this.formRegistroCurso.get('fecha_culminacion').touched  ;
   }
 
   // la fecha de finalizacion debe ser mayo a la fecha de inicio
@@ -128,7 +128,7 @@ export class FormAddCursoComponent implements OnInit {
     this.file=(<HTMLInputElement>fileInput.target).files[0] ;
   }
   registrarCursoCapacitacion( ){
-    console.log(this.formRegistroCurso);
+
 
     if(this.formRegistroCurso.invalid){
       const toast = Swal.mixin({

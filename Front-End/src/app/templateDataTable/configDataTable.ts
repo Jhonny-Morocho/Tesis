@@ -16,10 +16,10 @@ export const dataTable=
     zeroRecords: "No se encontraron registros",
     emptyTable: "No hay datos disponibles en la tabla",
     paginate: {
-      first: "<i class='fas fa-chevron-left'></i>",
-      previous: "<i class='fas fa-angle-double-left'></i>",
-      next: "<i class='fas fa-angle-double-right'></i>",
-      last: "<i class='fas fa-chevron-right'></i>"
+      first: "Primero",
+      previous: "Siguiente",
+      next: "Anterior",
+      last: "Último"
     },
     aria: {
       sortAscending: ": Activar para ordenar la tabla en orden ascendente",

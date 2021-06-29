@@ -97,7 +97,7 @@
                     <input type="date"
                            formControlName="fecha_culminacion"
                            [class.is-invalid]="fechaFinalizacionNoValido"
-                           [class.is-valid]="formRegistroCurso.get('fecha_culminacion').valid"
+                           [class.is-valid]="formRegistroCurso.get('fecha_culminacion').valid && !fechaFinalizacionVacia"
                            class="form-control">
                   <div class="invalid-feedback"  *ngIf="fechaFinalizacionNoValido">
                     <p *ngIf="fechaFinalizacionVacia"> <i class="fas fa-info-circle"></i>   El campo fecha  de culminación del evento es obligatorio</p>

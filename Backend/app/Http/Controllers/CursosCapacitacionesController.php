@@ -54,7 +54,7 @@ class CursosCapacitacionesController extends Controller
                 //code...
                 $ObjCusosCapacitaciones=new CursosCapacitaciones();
                 $ObjCusosCapacitaciones->fk_estudiante=$Objestudiante->id;
-                $ObjCusosCapacitaciones->fk_pais=1;
+                $ObjCusosCapacitaciones->fk_pais=$datos["fk_pais"];
                 $ObjCusosCapacitaciones->nom_evento=$datos["nom_evento"];
                 $ObjCusosCapacitaciones->tipo_evento=$datos["tipo_evento"];
                 $ObjCusosCapacitaciones->auspiciante=$datos["auspiciante"];
