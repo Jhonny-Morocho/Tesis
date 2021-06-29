@@ -43,7 +43,6 @@ export class AutenticacionUserService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend;
         }
       )
@@ -141,9 +140,6 @@ export class AutenticacionUserService {
     ).pipe(
       map(
         obtengoRespuesBackend=>{
-          console.log("Entro en el mapa del RKJS");
-          console.log(obtengoRespuesBackend);
-          console.log(obtengoRespuesBackend['mensaje']);
           //this.guarUsuarioTempLocalSotarage();
           //this.guardarToken(obtengoRespuesBackend['idToken']);
           this.guarUsuarioTempLocalSotarage(obtengoRespuesBackend['mensaje']);

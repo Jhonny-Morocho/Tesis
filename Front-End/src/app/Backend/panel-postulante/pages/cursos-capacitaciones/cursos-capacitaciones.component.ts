@@ -27,7 +27,6 @@ export class CursosCapacitacionesComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
     dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioCursosCapacitacione:CursosCapacitacionesService,
-              private formBuilder:FormBuilder,
               private servicioPaises:PaisesService) {
 
 
@@ -45,7 +44,6 @@ export class CursosCapacitacionesComponent implements OnInit {
     this.servicioCursosCapacitacione.listarCursosCapacitacionesExternal_us().subscribe(
       siHacesBien=>{
         this.cursosCapacitaciones =siHacesBien;
-        console.log(this.cursosCapacitaciones);
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
@@ -58,7 +56,6 @@ export class CursosCapacitacionesComponent implements OnInit {
     let nombrePais="";
     this.paises.forEach(element => {
       if(element.id==parseInt(idPais)){
-        console.log(element.nombre);
         nombrePais=element.nombre;
       }
     });

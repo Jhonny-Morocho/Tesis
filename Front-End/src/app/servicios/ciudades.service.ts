@@ -21,7 +21,6 @@ export class ServicioCiudades {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloCiudades(respuestaBackend['mensaje']);
         })
     );

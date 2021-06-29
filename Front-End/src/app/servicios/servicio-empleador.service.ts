@@ -19,21 +19,17 @@ export class SerivicioEmpleadorService {
   constructor(private _httCliente:HttpClient) { }
 
   crearEmpleador(modeloEmpleador:EmpleadorModel){
-    console.log(modeloEmpleador);
     ReturnStatement;
     const autenficacionDatos={
       ...modeloEmpleador
 
     }
-    console.log(autenficacionDatos);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlBackendCrearEmpleador}${localStorage.getItem("external_us")}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlBackendCrearEmpleador}${localStorage.getItem("external_us")}`,autenficacionDatos
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );
@@ -55,7 +51,6 @@ export class SerivicioEmpleadorService {
   }
   //listammos postulantes activos /no activos / depende del estado
   listarEmpleadores(){
-
     //retorna la respuesata
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlListarEmpleadores}`
@@ -86,7 +81,6 @@ export class SerivicioEmpleadorService {
     const autenficacionDatos={
       external_em:external_em
     }
-    console.log(autenficacionDatos);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlObtenerEmpleadorExternal_em}`,autenficacionDatos
     ).pipe(
@@ -99,7 +93,6 @@ export class SerivicioEmpleadorService {
   }
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarAprobacionEmpleador(estado:Number,external_es:string,observaciones:string){
-    console.log("Xxx");
     const autenficacionDatos={
       estado:estado,
       observaciones:observaciones
@@ -109,7 +102,6 @@ export class SerivicioEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );
@@ -119,7 +111,6 @@ export class SerivicioEmpleadorService {
       const autenficacionDatos={
         ...modeloEmpleador
       }
-      console.log(autenficacionDatos);
     //retorna la respuesata
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlEditarFormEmpleador}${localStorage.getItem("external_us")}`,autenficacionDatos

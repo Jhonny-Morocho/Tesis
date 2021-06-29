@@ -34,7 +34,6 @@ export class OfertaLaboralEstudianteService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -63,26 +62,22 @@ export class OfertaLaboralEstudianteService {
     );
   }
   listTodasEstudiantePostulanOfertaExternal_of_encargado(external_Of:String){
-    console.log(external_Of);
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of_encargado}${external_Of}`
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloOfertaEstudiante_ModelPostulante(respuestaBackend['mensaje']);
         })
     );
 
   }
   listTodasEstudiantePostulanOfertaExternal_of_empleador(external_Of:String){
-    console.log(external_Of);
     return this._httCliente.get(
       `${this.urlDominio_}${this.urlBackendListTodasEstudiantePostulanOfertaExternal_of_empleador}${external_Of}`
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloOfertaEstudiante_ModelPostulante(respuestaBackend['mensaje']);
         })
     );
@@ -130,10 +125,6 @@ export class OfertaLaboralEstudianteService {
 
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   eliminarPostulanteOfertaLaboral(array:any){
-      let  autenficacionDatos;
-      array.forEach(elemento=>{
-      console.log(elemento);
-      });
       return this._httCliente.post(`${this.urlDominio_}${this.urlELiminarPostulanteOfertaLaboral}`,array).pipe(
         map(
           respuestaBackend=>{
@@ -143,9 +134,6 @@ export class OfertaLaboralEstudianteService {
   }
     //actulizar estado de validacion del postulante//aprobado y no aprobado
   finalizarOfertaLaboralEstudiante(array:any){
-    array.forEach(elemento=>{
-    console.log(elemento);
-    });
     return this._httCliente.post(`${this.urlDominio_}${this.urlFinalizarOfertaLaboralEstudiante}`,array).pipe(
       map(
         respuestaBackend=>{

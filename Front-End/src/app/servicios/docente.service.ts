@@ -20,8 +20,6 @@ export class SerivicioDocente {
     const autenficacionDatos={
       ...modeloDocente
     }
-    //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlBackendCrearDocente}${localStorage.getItem("external_us")}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlBackendCrearDocente}${localStorage.getItem("external_us")}`,autenficacionDatos
     ).pipe(
@@ -31,7 +29,7 @@ export class SerivicioDocente {
         })
     );
   }
-  
+
   //listammos postulantes activos /no activos / depende del estado
   listarDocentes(){
     //retorna la respuesata
@@ -68,7 +66,7 @@ export class SerivicioDocente {
           return respuestaBackend;
         })
     );
- 
+
   }
 
   //actulizar docente

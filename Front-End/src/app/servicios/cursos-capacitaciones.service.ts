@@ -22,7 +22,6 @@ export class CursosCapacitacionesService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -35,7 +34,6 @@ export class CursosCapacitacionesService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -90,7 +88,7 @@ export class CursosCapacitacionesService {
           return respuestaBackend;
         })
     );
- 
+
   }
 
     //actulizar estado de validacion del postulante//aprobado y no aprobado
@@ -98,10 +96,8 @@ export class CursosCapacitacionesService {
     const autenficacionDatos={
       ...modeloCursosCapacitaciones
     }
-    console.log(modeloCursosCapacitaciones);
-    console.log(modeloCursosCapacitaciones.external_cu);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlEditarCursoCapacitacion}${modeloCursosCapacitaciones.external_cu}`);
+
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlEditarCursoCapacitacion}${autenficacionDatos.external_cu}`,autenficacionDatos
     ).pipe(
@@ -117,9 +113,7 @@ export class CursosCapacitacionesService {
     const autenficacionDatos={
       ...modeloCursosCapacitaciones
     }
-      console.log(modeloCursosCapacitaciones);
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlELiminarCursoCapacitacion}`);
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlELiminarCursoCapacitacion}`,autenficacionDatos
       ).pipe(

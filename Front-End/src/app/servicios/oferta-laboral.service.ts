@@ -26,12 +26,10 @@ export class OfertasLaboralesService {
     const autenficacionDatos={
        ...modeloOfertasLaborales
      }
-     //console.log(modeloOfertasLaborales);
      return this._httCliente.post(`${this.urlDominio_}${this.urlCrearOfertaLaboral}${localStorage.getItem("external_us")}`,autenficacionDatos
      ).pipe(
        map(
          respuestaBackend=>{
-         //console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
@@ -57,7 +55,6 @@ export class OfertasLaboralesService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
         })
     );
@@ -70,7 +67,6 @@ export class OfertasLaboralesService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
         })
     );
@@ -83,7 +79,6 @@ export class OfertasLaboralesService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return this.crearArregloOfertasLaborales(respuestaBackend['mensaje']);
         })
     );
@@ -120,8 +115,6 @@ export class OfertasLaboralesService {
       const autenficacionDatos={
         ...modeloOfertasLaborales
       }
-      console.log(modeloOfertasLaborales);
-      console.log(modeloOfertasLaborales.external_of);
       //retorna la respuesata
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlEditarOfertaLaboral}${autenficacionDatos.external_of}`,autenficacionDatos
@@ -152,9 +145,7 @@ export class OfertasLaboralesService {
       const autenficacionDatos={
         ...modeloOfertasLaborales
       }
-      console.log(modeloOfertasLaborales);
       //retorna la respuesata
-      console.log(`${this.urlDominio_}${this.urlEditarOfertaLaboral}${modeloOfertasLaborales.external_of}`);
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlFinalizarOfertaLaboral}${external_ofert}`,autenficacionDatos
       ).pipe(
@@ -169,9 +160,6 @@ export class OfertasLaboralesService {
     const autenficacionDatos={
       ...modeloOfertasLaborales
     }
-      console.log(modeloOfertasLaborales);
-    //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlELiminarOfertaLaboral}`);
       return this._httCliente.post(
         `${this.urlDominio_}${this.urlELiminarOfertaLaboral}`,autenficacionDatos
       ).pipe(

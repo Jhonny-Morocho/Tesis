@@ -23,7 +23,6 @@ export class SerivicioPostulanteService {
       //external_es:localStorage.getItem("external_us")
     }
     //retorna la respuesata
-    console.log(`${this.urlDominio_}${this.urlBackendCrearPostulante}${localStorage.getItem("external_us")}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlBackendCrearPostulante}${localStorage.getItem("external_us")}`,autenficacionDatos
     ).pipe(
@@ -33,14 +32,13 @@ export class SerivicioPostulanteService {
         })
     );
   }
-  
+
   //el postulante en su session puede ver sus datos registrados
   listarFormPostulante(){
     const autenficacionDatos={
       external_us:localStorage.getItem("external_us")
     }
     //retorna la respuesata
-    //console.log(`${this.urlDominio_}${this.urlListarFormPostulante}`);
     return this._httCliente.post(
       `${this.urlDominio_}${this.urlListarFormPostulante}`,autenficacionDatos
     ).pipe(
@@ -91,11 +89,10 @@ export class SerivicioPostulanteService {
           return respuestaBackend;
         })
     );
- 
+
   }
   //actulizar estado de validacion del postulante//aprobado y no aprobado
   actulizarAprobacionPostulante(estado:Number,external_es:string,observaciones:string){
-    console.log("Xxx");
     const autenficacionDatos={
       estado:estado,
       observaciones:observaciones
@@ -105,7 +102,6 @@ export class SerivicioPostulanteService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend;
         })
     );

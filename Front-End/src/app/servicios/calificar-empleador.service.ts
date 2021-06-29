@@ -22,7 +22,6 @@ export class CalificarEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend['mensaje'];
         })
     );
@@ -34,11 +33,10 @@ export class CalificarEmpleadorService {
     ).pipe(
       map(
         respuestaBackend=>{
-          console.log(respuestaBackend);
           return respuestaBackend['mensaje'];
         })
     );
-  
+
   }
   registrarCalificacion(modeloCalificarEmpleador:CalificarEmpleadorModel){
     const autenficacionDatos={
@@ -48,24 +46,10 @@ export class CalificarEmpleadorService {
      ).pipe(
        map(
          respuestaBackend=>{
-         console.log(respuestaBackend);
            return respuestaBackend;
          })
      );
   }
 
-//   private crearArregloPaises(ObjTitulos:object){
-//      const titulos:PaisesModel[]=[];
-//      //validamos si el objeto tiene informaicon
-//      if(ObjTitulos===null){
-//          return [];
-//      }else{
-//        Object.keys(ObjTitulos).forEach(key=>{
-//          const titulo:PaisesModel=ObjTitulos[key];
-//          titulos.push(titulo);
-//        })
-//        return titulos;
-//      }
-//   }
 }
 

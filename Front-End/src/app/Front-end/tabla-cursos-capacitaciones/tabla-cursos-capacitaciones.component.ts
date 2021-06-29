@@ -34,11 +34,9 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
     );
   }
   buscarPais(idPais){
-    console.log(idPais);
     let nombrePais="";
     this.paises.forEach(element => {
       if(element.id==parseInt(idPais)){
-        console.log(element.nombre);
         nombrePais=element.nombre;
       }
     });
@@ -46,13 +44,10 @@ export class TablaCursosCapacitacionesComponent implements OnInit {
    }
 
   mostrarPdf(urlEvidencias){
-    console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Cursos/"+urlEvidencias;
-    console.log(this.ubicacionArchivo);
     $('#mostrarCursos').modal('show');
   }
   carrarModal(){
     $('#mostrarCursos').modal('hide');
-    console.log('cerrarModalX');
   }
 }
