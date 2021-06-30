@@ -17,7 +17,7 @@ import { HeaderComponent } from 'src/app/Front-end/componentes/header-home/heade
 
 import {PanelAdminComponent} from 'src/app/Backend/panel-admin/componentes/nav/navTab-admin.component';
 import { MiPerfilComponent } from 'src/app/Backend/panel-admin/pages/mi-perfil-admin/mi-perfil-admin.component';
-import {TareaValiar} from 'src/app/Backend/panel-admin/componentes/tablas-validacion-cuentas/tablas-validar.component';
+import {TareaValiar} from 'src/app/Backend/panel-admin/pages/tablas-validacion-cuentas/tablas-validar.component';
 import {PanelPostulanteComponent} from 'src/app/Backend/panel-postulante/componentes/nav/navTab-postulante.component';
 
 import { from } from 'rxjs';

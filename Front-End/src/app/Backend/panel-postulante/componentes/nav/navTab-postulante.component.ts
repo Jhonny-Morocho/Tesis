@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // importa utomaticamente el ingForm
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import {environment} from 'src/environments/environment';
 import { UsuarioModel } from 'src/app/models/usuario.model';
@@ -28,14 +29,13 @@ export class PanelPostulanteComponent implements OnInit {
     //obtener el external_usuario
     this.servicioEstudiante.listarFormPostulante().subscribe(
       sihacesBien=>{
-        console.log(sihacesBien);
         if(sihacesBien['Siglas']=="OE" && parseInt(sihacesBien['mensaje']['estado'])==1){
           this.estadoValidacionForm=true;
         }else{
           this.estadoValidacionForm=false;
         }
       },siHacesMal=>{
-
+        Swal('Error',siHacesMal['mensaje'], 'error');
       }
 
     );

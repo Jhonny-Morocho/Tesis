@@ -165,9 +165,10 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               direccionDomicilio:this.instanciaPostulante.direccion_domicilio
             });
             //ahun no lo revisan al formulario
-            if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones===''){
+            if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones==''){
               this.formValidado=false;
               this.obervaciones=false;
+
               this.formRegistroPostulante.disable();
             }
             //ya lo revisaron al formulaorio,pero no fue validado
@@ -179,7 +180,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
             if(this.instanciaPostulante.estado==1 && this.instanciaPostulante.observaciones!=''){
               this.formValidado=true;
               this.obervaciones=true;
-              this.booleanFormularioCompletado=true;
+              //this.booleanFormularioCompletado=true;
+
               this.formRegistroPostulante.disable();
             }
 
@@ -255,6 +257,21 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   //editar
   editarPostulante(){
+    if(this.formRegistroPostulante.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
+      return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
+    }
     this.instanciaPostulante.estado=0;
     this.instanciaPostulante.observaciones="";
     this.instanciaPostulante.nombre=this.formRegistroPostulante.value.nombresCompleto;

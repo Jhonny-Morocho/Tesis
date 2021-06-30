@@ -57,7 +57,6 @@ export class TareaValiar implements OnInit {
       this.intanciaEmpleadorCalificar.num_ruc=this.empleador[indice]['num_ruc'];
       this.intanciaEmpleadorCalificar.razon_empresa=this.empleador[indice]['razon_empresa'];
       this.intanciaEmpleadorCalificar.telefono=this.empleador[indice]['telefono'];
-      console.log(this.intanciaEmpleadorCalificar);
 
       //$('#CalificarEmpleador').modal('show');
       Swal({
@@ -80,11 +79,9 @@ export class TareaValiar implements OnInit {
   obtenerCalificacionesTodosEmpleadores(){
     this.servicioCalificarEmpleador.obtenerCalificacionTodosEmpleadores().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         this.arrayCalificacionesEmpleadores=siHacesBien;
-        console.log(this.arrayCalificacionesEmpleadores);
       },siHacesMal=>{
-        console.warn(siHacesMal);
+        Swal('Info',siHacesMal['mensaje'], 'info');
       }
     );
   }
@@ -107,14 +104,12 @@ export class TareaValiar implements OnInit {
       this.tipoUsuarioSecretaria=true;
       this.servicioPostulante_.listarPostulantes().subscribe(
         siHacesBien=>{
-          console.warn("TODO BIEN");
           this.estudiante =siHacesBien;
-          console.log(this.estudiante);
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
         (peroSiTenemosErro)=>{
-           console.warn("TODO MAL");
+           Swal('Info',peroSiTenemosErro['mensaje'], 'info');
          }
       );
     }
@@ -124,14 +119,13 @@ export class TareaValiar implements OnInit {
       //listo todos los empleadores
       this.servicioEmpleador_.listarEmpleadores().subscribe(
         siHacesBien=>{
-          console.log(siHacesBien);
           //asginamos el array que viene del servicio
           this.empleador =siHacesBien;
           // Calling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
         (peroSiTenemosErro)=>{
-          console.warn("TODO MAL");
+          Swal('Info',peroSiTenemosErro['mensaje'], 'info');
         }
       );
     }
@@ -144,17 +138,14 @@ export class TareaValiar implements OnInit {
     this.intanciaCalifarEmpleador.fk_empleador= this.intanciaEmpleadorCalificar.id;
     this.servicioCalificarEmpleador.registrarCalificacion(this.intanciaCalifarEmpleador).subscribe(
       siHaceBien=>{
-        console.log(siHaceBien);
           //consulto de nuevo las nuevas calificaiones de los emepleadores
-          if(siHaceBien['Siglas']=='OE'){
-            Swal('Registrado', siHaceBien['mensaje'], 'success');
-
+        if(siHaceBien['Siglas']=='OE'){
+          Swal('Registrado', siHaceBien['mensaje'], 'success');
 
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
         }
       },error=>{
-        console.log(error);
         Swal('Error', error['mensaje'], 'error');
       });
   }

@@ -2438,3 +2438,83 @@ Stack trace:
 
 
 
+[2021-06-30 14:10:24] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:13:10] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:14:36] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:16:52] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:16:54] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:16:56] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:16:58] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:17:00] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:17:02] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:22:07] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:31:00] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:31:22] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:31:59] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:32:01] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:32:03] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:32:05] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:32:07] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:32:09] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:38:52] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:39:06] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:39:23] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:39:25] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:39:27] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:39:29] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:39:31] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:39:33] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:40:44] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:40:58] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:42:58] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:43:00] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:43:02] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:43:04] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:43:06] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:43:08] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:45:42] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+
+[2021-06-30 14:47:48] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:48:17] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:48:19] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:48:21] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:48:23] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:48:25] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:48:27] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:49:34] Registro Postulante informacion no validada Correo por parte de la secrataria : false ]
+
+
+
+[2021-06-30 14:50:00] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:50:02] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:50:04] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:50:06] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:50:08] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ][2021-06-30 14:50:10] Reenviando Formulario a la secretaria con los datos corregidos Correo  : false ]
+
+
+
+[2021-06-30 14:51:10] Aprobar validacion de formulario de estudiante notficar al estudiante y al encargado Correo  : false El correo del encargado es : encargado.unl@gmail.com  ]
+
+
+

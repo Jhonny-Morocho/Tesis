@@ -3,10 +3,8 @@ import {PostulanteModel} from 'src/app/models/postulante.models';
 import {SerivicioPostulanteService} from 'src/app/servicios/serivicio-postulante.service';
 import Swal from 'sweetalert2';
 // obtener el parametro q viene x la url
-
-
-import  {ActivatedRoute} from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-form-info-postulante',
   templateUrl: './form-validacion-postulante.component.html'
@@ -14,27 +12,44 @@ import { NgForm } from '@angular/forms';
 export class FormInfoPostulanteComponent implements OnInit {
   instanciaPostulante:PostulanteModel;
   externalEst:string;
+  formPosutalnte:FormGroup;
   //mensaje de alerta si el usuario no se encunetrta
-  encontrado:boolean=false;
-  constructor(private servicioPostulante_:SerivicioPostulanteService,private _activateRoute:ActivatedRoute) {
+  encontrado:boolean;
+  constructor(private servicioPostulante_:SerivicioPostulanteService,
+              private formBulder:FormBuilder,
+              private router:Router,
+              private _activateRoute:ActivatedRoute) {
     this.instanciaPostulante=new PostulanteModel();
     //ontengo el paremtro de la url pára tarer los datos des estudiante
-    this.formEstudiante();
+    this.crearFormularioPostulante();
    }
   ngOnInit() {
-
+    this.cargarDatosFormPostulante();
+  }
+  get observacionesNoValida(){
+    return this.formPosutalnte.get('observaciones').invalid &&  this.formPosutalnte.get('observaciones').touched;
+  }
+  crearFormularioPostulante(){
+    this.formPosutalnte=this.formBulder.group({
+      nombresCompleto:['',],
+      apellidosCompleto:[''],
+      documentoIndentidad:[''],
+      telefono:[''],
+      fechaNacimiento:[''],
+      genero:[''],
+      observaciones:['',[Validators.required,Validators.maxLength(100)]],
+      direccionDomicilio:[''],
+    });
   }
 
-  formEstudiante(){
+  cargarDatosFormPostulante(){
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.externalEst=params['external_es'];
       this.servicioPostulante_.obtenerPostulanteExternal_es(params['external_es']).subscribe(
         suHacesBien=>{
-          console.log(suHacesBien);
           //encontro estudiante estado==0
           if(suHacesBien["Siglas"]=="OE"){
-            console.log( suHacesBien['Siglas']);
             this.instanciaPostulante.nombre=suHacesBien['mensaje']['nombre'];
             this.instanciaPostulante.apellido=suHacesBien['mensaje']['apellido'];
             this.instanciaPostulante.cedula=suHacesBien['mensaje']['cedula'];
@@ -44,43 +59,72 @@ export class FormInfoPostulanteComponent implements OnInit {
             this.instanciaPostulante.telefono=suHacesBien['mensaje']['telefono'];
             this.instanciaPostulante.estado=suHacesBien['mensaje']['estado'];
             this.instanciaPostulante.observaciones=suHacesBien['mensaje']['observaciones'];
-            console.log(this.instanciaPostulante.estado);
             this.encontrado=true;
+            //cargo los datos al formulario
+            this.formPosutalnte.reset({
+              nombresCompleto:this.instanciaPostulante.nombre,
+              apellidosCompleto:this.instanciaPostulante.apellido,
+              documentoIndentidad:this.instanciaPostulante.cedula,
+              telefono:this.instanciaPostulante.telefono,
+              fechaNacimiento:this.instanciaPostulante.fecha_nacimiento,
+              genero:this.instanciaPostulante.genero,
+              direccionDomicilio:this.instanciaPostulante.direccion_domicilio,
+              observaciones:this.instanciaPostulante.observaciones
+            });
+            this.formPosutalnte.disable();
+            this.formPosutalnte.controls['observaciones'].enable();
           }
           //no encontro estudiantes que tengan estado ==1
           else{
             this.encontrado=false;
           }
         },peroSiTenemosErro=>{
-
-          console.log(peroSiTenemosErro);
+          Swal('Ups', peroSiTenemosErro['mensaje'], 'info')
         }
       );
     });
   }
   //aprobar postulante //y tambien no aprobar estudiante
-  onSubmitForPostulanteAprobacion(formularioAprobacion:NgForm){
-    if(formularioAprobacion.invalid){
-      return;
+  validarInfoPostulante(){
+    if(this.formPosutalnte.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe completar los campos requeridos'
+      })
+      return Object.values(this.formPosutalnte.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
-    console.log(formularioAprobacion.invalid);
     Swal({
       allowOutsideClick:false,
       type:'info',
       text:'Espere por favor'
     });
     Swal.showLoading();
-    this.servicioPostulante_.actulizarAprobacionPostulante(
-                  Number(this.instanciaPostulante.estado),
-                  this.externalEst,
-                  this.instanciaPostulante.observaciones
+    this.instanciaPostulante.observaciones=this.formPosutalnte.value.observaciones;
+    this.servicioPostulante_.actulizarAprobacionPostulante(Number(this.instanciaPostulante.estado),this.externalEst,this.instanciaPostulante.observaciones
     ).subscribe(
       siHacesBien=>{
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
+            const toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000
+            });
+            toast({
+              type: 'success',
+              title: 'Registrado'
+            })
+            this.router.navigateByUrl('/panel-admin/tareas');
           }else{
-            console.log(siHacesBien);
             Swal('Ups', siHacesBien['mensaje'], 'info')
           }
 

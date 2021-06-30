@@ -20,9 +20,7 @@ export class PanelAdminComponent implements OnInit {
   constructor(private _router:Router,private servicioUsuario:AutenticacionUserService) { }
 
   ngOnInit() {
-
     this.verificarDireccionarTipoUsuario();
-
   }
 
   verificarDireccionarTipoUsuario(){
@@ -41,7 +39,7 @@ export class PanelAdminComponent implements OnInit {
           this.tipoUsuarioGestor=true;
           break;
         default:
-          console.log("tipo de usuario para nav item no encontrado");
+          Swal('Error','Rol de usuario no encontrado', 'error');
           break;
       }
 
