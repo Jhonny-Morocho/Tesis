@@ -43,7 +43,22 @@ export class TareaValiar implements OnInit {
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaEmpleadorCalificar=new EmpleadorModel();
-    //this.calificarEstrellas();
+     //filtro en la data table
+    //  $(document).ready(function() {
+    //      $('#dateadded1 thead tr').clone(true).appendTo('#dateadded1 thead' );
+    //      $('#dateadded1 thead tr:eq(1) th').each( function (i) {
+    //          var title = $(this).text();
+    //          $(this).html( '<input type="text" placeholder="'+title+'"/>');
+    //          $( 'input', this ).on( 'keyup change', function () {
+    //               if ( $('#dateadded1').DataTable().columns(i).search() !== this.value ) {
+    //                  $('#dateadded1').DataTable()
+    //                   .column(i)
+    //                   .search( this.value )
+    //                   .draw();
+    //               }
+    //          });
+    //      } );
+    //   } );
   }
   onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent},indice) {
       this.intanciaEmpleadorCalificar.actividad_ruc=this.empleador[0]['actividad_ruc'];

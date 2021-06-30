@@ -86,7 +86,6 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
           if (settings.nTable.id !== 'myTarget'){
               return true;
           }
-
           var min = parseInt( $('#min').val(), 10 );
           var max = parseInt( $('#max').val(), 10 );
           var age = parseFloat( searchData[3] ) || 0; // using the data from the 4th column
