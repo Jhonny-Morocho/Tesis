@@ -70,9 +70,7 @@ export class FormEditarTituloComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.cargarDatosFormulario();
-
   }
   cargarDatosFormulario(){
     this.instanciaTituloAcademico=new TituloModel;
@@ -116,7 +114,6 @@ export class FormEditarTituloComponent implements OnInit {
   // =================== archivo ======================
   //=======================================
   onSubMitActualizarTitulo( ){
-
     //1 Validar data //texto planos son boligatorios
     if(this.formEditarTitulo.invalid){
       const toast = Swal.mixin({

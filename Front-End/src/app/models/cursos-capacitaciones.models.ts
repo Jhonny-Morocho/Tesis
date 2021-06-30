@@ -9,5 +9,6 @@ export class CursosCapacitacionesModel{
     fecha_culminacion:string;
     evidencia_url:string;
     estado:Number;
+    evidencias_url_antiguo?:string;
     external_cu:string;
 }

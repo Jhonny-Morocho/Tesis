@@ -40,7 +40,6 @@ class TitulosAcademicosController extends Controller
     }
     public function eliminarArchivo($nombreArchivo){
         $archivoUbicacion=$this->ruta."/".$nombreArchivo;
-        //eliminar archivo
         if(unlink($archivoUbicacion)){
             return true;
         }else{

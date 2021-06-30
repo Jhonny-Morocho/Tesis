@@ -11,7 +11,7 @@
             <form class="row g-3" (ngSubmit)="registrarCursoCapacitacion()" [formGroup]="formRegistroCurso" enctype="multipart/form-data">
 
                 <div class="col-md-6">
-                    <label for="inputNombre del evento" class="form-label">Nombre del evento</label><br>
+                    <label for="inputNombre del evento" class="form-label">Nombre del evento <span class="text-danger">*</span></label><br>
                     <i class="fas fa-id-card form-control-feedback"></i>
                     <input type="text"
                            class="form-control"
@@ -28,7 +28,7 @@
                     <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
+                    <label for="inputAuspiciante" class="form-label">Auspiciante <span class="text-danger">*</span></label><br>
                     <i class="fa fa-briefcase form-control-feedback" aria-hidden="true"></i>
                     <input type="text"
                            formControlName="auspiciante"
@@ -45,7 +45,7 @@
                   <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
+                    <label for="inputNumeroHoras" class="form-label">Número de horas <span class="text-danger">*</span></label><br>
                     <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
                     <input type="number"
                           formControlName="horas"
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="col-md-6">
-                  <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
+                  <label for="inputTipoEvento" class="form-label">Tipo de evento <span class="text-danger">*</span></label><br>
                   <i class="fa fa-list-ol form-control-feedback" aria-hidden="true"></i>
                   <select class="form-control"
                           formControlName="tipo_evento"
@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="inputFechaInicio" class="form-label">Fecha Inicio</label><br>
+                    <label for="inputFechaInicio" class="form-label">Fecha Inicio <span class="text-danger">*</span></label><br>
                     <input type="date"
                            formControlName="fecha_inicio"
                            [class.is-invalid]="fechaInicioNoValido"
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación</label><br>
+                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación <span class="text-danger">*</span></label><br>
                     <input type="date"
                            formControlName="fecha_culminacion"
                            [class.is-invalid]="fechaFinalizacionNoValido"
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="inputPais" class="form-label">País</label><br>
+                    <label for="inputPais" class="form-label">País <span class="text-danger">*</span></label><br>
                     <i class="fa fa-globe form-control-feedback" aria-hidden="true"></i>
                     <select class="form-control"
                              formControlName="pais"
@@ -123,7 +123,7 @@
                   <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEvidencias" class="form-label">Evidencias</label><br>
+                    <label for="inputEvidencias" class="form-label">Evidencias <span class="text-danger">*</span></label><br>
                     <i class="fas fa-file-pdf form-control-feedback"></i>
                     <input type="file"
                           (change)="fileEvent($event)"

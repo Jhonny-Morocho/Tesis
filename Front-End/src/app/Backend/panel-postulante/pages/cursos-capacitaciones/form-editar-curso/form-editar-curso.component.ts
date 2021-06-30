@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {CursosCapacitacionesModel} from 'src/app/models/cursos-capacitaciones.models';
 import { PaisesModel } from 'src/app/models/paises.models';
 import {PaisesService} from 'src/app/servicios/paises.service';
 import {CursosCapacitacionesService} from 'src/app/servicios/cursos-capacitaciones.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import {ValidadoresService} from 'src/app/servicios/validadores.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-form-editar-curso',
@@ -14,42 +15,108 @@ export class FormEditarCursoComponent implements OnInit {
   file;
   instanciaCursosCapacitaciones:CursosCapacitacionesModel;
   paises:PaisesModel[]=[];
+  formEditarCurso:FormGroup;
   tipoCursoCapcitacion:string[]=["Curso","Capacitacion"];
 
-  constructor(private servicioPaises:PaisesService, private _activateRoute:ActivatedRoute,private servicioCursosCapacitaciones:CursosCapacitacionesService) { }
+  constructor(private servicioPaises:PaisesService,
+              private _activateRoute:ActivatedRoute,
+              private formBuilder:FormBuilder,
+              private router:Router,
+              private validadorPersonalizado:ValidadoresService,
+              private servicioCursosCapacitaciones:CursosCapacitacionesService) {
+  this.crearFormulario();
+  }
 
   ngOnInit() {
-    this.cargarDatosCursosCapacitaciones();
+    this.cargarDatosFormulario();
     this.cargarPaises();
   }
 
-  cargarDatosCursosCapacitaciones(){
+
+  get nomEventoNoValido(){
+    return this.formEditarCurso.get('nom_evento').invalid && this.formEditarCurso.get('nom_evento').touched ;
+  }
+  get auspicianteNoValido(){
+    return this.formEditarCurso.get('auspiciante').invalid && this.formEditarCurso.get('auspiciante').touched ;
+  }
+  get numHorasNoValido(){
+    return this.formEditarCurso.get('horas').invalid && this.formEditarCurso.get('horas').touched ;
+  }
+  get fechaInicioNoValido(){
+    return this.formEditarCurso.get('fecha_inicio').invalid && this.formEditarCurso.get('fecha_inicio').touched ;
+  }
+  get fechaFinalizacionNoValido(){
+    return this.formEditarCurso.get('fecha_culminacion').invalid && this.formEditarCurso.get('fecha_culminacion').touched  ;
+  }
+
+  // la fecha de finalizacion debe ser mayo a la fecha de inicio
+  get fechaFinalMayorInicialNoValido(){
+    const dateInicio=this.formEditarCurso.get('fecha_inicio');
+    const dateFinalalizacion=this.formEditarCurso.get('fecha_culminacion');
+    return (dateFinalalizacion>dateInicio)?true:false;
+  }
+  get fechaFinalizacionVacia(){
+    return this.formEditarCurso.get('fecha_culminacion').value==''?true:false;
+  }
+
+
+  get tipoEventoNoValido(){
+    return this.formEditarCurso.get('tipo_evento').invalid && this.formEditarCurso.get('tipo_evento').touched ;
+  }
+  get paisNoValido(){
+    return this.formEditarCurso.get('pais').invalid && this.formEditarCurso.get('pais').touched ;
+  }
+
+
+  crearFormulario(){
+    this.formEditarCurso=this.formBuilder.group({
+      nom_evento:['',[Validators.required,Validators.maxLength(40)]],
+      auspiciante:['',[Validators.required,Validators.maxLength(40)]],
+      horas:['',[Validators.required]],
+      fecha_inicio:['',[Validators.required,]],
+      fecha_culminacion:['',[Validators.required,]],
+      tipo_evento:['',[Validators.required]],
+      pais:['',[Validators.required]],
+      evidencias:[''],
+    },{
+      validators: this.validadorPersonalizado.validarFechasInicioFinalizacion('fecha_inicio','fecha_culminacion')
+    });
+  }
+  cargarDatosFormulario(){
     this.instanciaCursosCapacitaciones=new CursosCapacitacionesModel();
     //obtener los parametros de la ulr para tener los datos del empleador
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.servicioCursosCapacitaciones.obtenerCursoCapacitacionExternal_es(params['external_cu']).subscribe(
-        suHacesBien=>{
-            console.log(suHacesBien);
+        siHacesBien=>{
             //encontro estudiante estado==0
-            if(suHacesBien["Siglas"]=="OE"){
+            if(siHacesBien["Siglas"]=="OE"){
               this.instanciaCursosCapacitaciones.estado=1;
-              this.instanciaCursosCapacitaciones.nom_evento=suHacesBien["mensaje"]['nom_evento'];
-              this.instanciaCursosCapacitaciones.auspiciante=suHacesBien["mensaje"]['auspiciante'];
-              this.instanciaCursosCapacitaciones.horas=suHacesBien["mensaje"]['horas'];
-              this.instanciaCursosCapacitaciones.fecha_inicio=suHacesBien["mensaje"]['fecha_inicio'];
-              this.instanciaCursosCapacitaciones.fecha_culminacion=suHacesBien["mensaje"]['fecha_culminacion'];
-              this.instanciaCursosCapacitaciones.tipo_evento=suHacesBien["mensaje"]['tipo_evento'];
-              this.instanciaCursosCapacitaciones.fk_pais=suHacesBien["mensaje"]['fk_pais'];
-              this.instanciaCursosCapacitaciones.external_cu=suHacesBien["mensaje"]['external_cu'];
+              this.instanciaCursosCapacitaciones.nom_evento=siHacesBien["mensaje"]['nom_evento'];
+              this.instanciaCursosCapacitaciones.auspiciante=siHacesBien["mensaje"]['auspiciante'];
+              this.instanciaCursosCapacitaciones.horas=siHacesBien["mensaje"]['horas'];
+              this.instanciaCursosCapacitaciones.fecha_inicio=siHacesBien["mensaje"]['fecha_inicio'];
+              this.instanciaCursosCapacitaciones.fecha_culminacion=siHacesBien["mensaje"]['fecha_culminacion'];
+              this.instanciaCursosCapacitaciones.tipo_evento=siHacesBien["mensaje"]['tipo_evento'];
+              this.instanciaCursosCapacitaciones.fk_pais=siHacesBien["mensaje"]['fk_pais'];
+              this.instanciaCursosCapacitaciones.external_cu=siHacesBien["mensaje"]['external_cu'];
+              this.instanciaCursosCapacitaciones.evidencia_url=siHacesBien["mensaje"]['evidencia_url'];
+
               //console.warn(this.CursosCapacitacionesModel.external_ti);
+              this.formEditarCurso.reset({
+                nom_evento:this.instanciaCursosCapacitaciones.nom_evento,
+                auspiciante:this.instanciaCursosCapacitaciones.auspiciante,
+                horas:this.instanciaCursosCapacitaciones.horas,
+                fecha_inicio:this.instanciaCursosCapacitaciones.fecha_inicio,
+                fecha_culminacion:this.instanciaCursosCapacitaciones.fecha_culminacion,
+                tipo_evento:this.instanciaCursosCapacitaciones.tipo_evento,
+                pais:this.instanciaCursosCapacitaciones.fk_pais
+              });
             }else{
-              console.log("no encontrado");
-              //this.encontrado=false;
+              Swal('Info',siHacesBien['mensaje'], 'info');
             }
         },peroSiTenemosErro=>{
-     
-          console.log(peroSiTenemosErro);
+          Swal('Error',peroSiTenemosErro['mensaje'], 'error');
         }
       )
     });
@@ -58,18 +125,13 @@ export class FormEditarCursoComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioPaises.listarPaises().subscribe(
       siHacesBien=>{
-        //console.log(siHacesBien);
-        console.warn("TODO BIEN");
-        //cargo array con la data para imprimir en la tabañ
         this.paises =siHacesBien;
-        //console.log( this.paises);
       },
       (peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
+        Swal('Error',peroSiTenemosErro['mensaje'], 'error');
       }
     );
-   }
+  }
 
   // =================== subir archivo ======================
   fileEvent(fileInput:Event){
@@ -77,12 +139,22 @@ export class FormEditarCursoComponent implements OnInit {
   }
   // =================== archivo ======================
   //=======================================
-  onSubMitActualizarCursoCapacitacion(formEditarTitulo:NgForm ){
-    //prepara el archivo para enviar
+  editarCursoCapacitacion( ){
     let form=new FormData();
-    //1 Validar data //texto planos son boligatorios
-    if(formEditarTitulo.invalid){
-      return;
+    if(this.formEditarCurso.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar los campos requeridos correctamente'
+      })
+      return Object.values(this.formEditarCurso.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
     Swal({
       allowOutsideClick:false,
@@ -96,49 +168,57 @@ export class FormEditarCursoComponent implements OnInit {
       this.servicioCursosCapacitaciones.subirArchivoPDF(form).subscribe(
         siHacesBienFormData=>{
            if(siHacesBienFormData['Siglas']=="OE"){
-            console.log(siHacesBienFormData);
             //actualizo el
+            this.instanciaCursosCapacitaciones.evidencias_url_antiguo=this.instanciaCursosCapacitaciones.evidencia_url;
             this.instanciaCursosCapacitaciones.evidencia_url=siHacesBienFormData['nombreArchivo'];
-            console.log(siHacesBienFormData['nombreArchivo']);
             this.guardatosPlano();
             //estado del registro es 1
             }else{
-              console.warn(siHacesBienFormData);
-              console.warn(siHacesBienFormData['archivoSubido']);
-                //Swal('Ups, No se puede subir el  el registro','Debe subir en formato PDF', 'info')
+              Swal('Info', siHacesBienFormData['mensaje'], 'info');
             }
         },(erroSubirFormData)=>{
-        console.error(erroSubirFormData);
+          Swal('Error', erroSubirFormData['mensaje'], 'error');
       });
-    }
-    //caso contrario solo actualizo  los datos de texto plano
-    else{
+    }else{
+        this.instanciaCursosCapacitaciones.evidencia_url=null;
         this.guardatosPlano();
     }
 
   }
 
   guardatosPlano(){
+    this.instanciaCursosCapacitaciones.estado=1;
+    this.instanciaCursosCapacitaciones.nom_evento=this.formEditarCurso.value.nom_evento;
+    this.instanciaCursosCapacitaciones.auspiciante=this.formEditarCurso.value.auspiciante;
+    this.instanciaCursosCapacitaciones.horas=this.formEditarCurso.value.horas;
+    this.instanciaCursosCapacitaciones.tipo_evento=this.formEditarCurso.value.tipo_evento;
+    this.instanciaCursosCapacitaciones.fecha_inicio=this.formEditarCurso.value.fecha_inicio;
+    this.instanciaCursosCapacitaciones.fecha_culminacion=this.formEditarCurso.value.fecha_culminacion;
+    this.instanciaCursosCapacitaciones.fk_pais=this.formEditarCurso.value.pais;
     this.servicioCursosCapacitaciones.actulizarDatosCursosCapacitaciones(this.instanciaCursosCapacitaciones).subscribe(
       siHacesBienJson=>{
         Swal.close();
-        console.log(siHacesBienJson);
         if(siHacesBienJson['Siglas']=="OE"){
-          console.log(siHacesBienJson);
-          Swal('Registrado', 'Informacion Registrada con Exito', 'success');
-          
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+          });
+          toast({
+            type: 'success',
+            title: 'Actualizado'
+          })
+          this.router.navigateByUrl('/panel-postulante/cursos-capacitaciones');
         }else{
-          console.warn(siHacesBienJson);
-          Swal('Ups, No se puede realizar el registro'+siHacesBienJson['mensaje'], 'info')
+          Swal('Ups',siHacesBienJson['mensaje'], 'info')
         }
       },(erroSubirJson)=>{
-        console.error(erroSubirJson);
-
           Swal({
-            title:'Error al registrar informacion',
+            title:'Error',
             type:'error',
-            text:erroSubirJson['archivoSubido']
-          }); 
+            text:erroSubirJson['mensaje']
+          });
     });
   }
 }

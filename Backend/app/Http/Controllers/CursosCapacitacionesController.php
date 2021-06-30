@@ -18,6 +18,16 @@ class CursosCapacitacionesController extends Controller
 
     //ssubir achivo
     private  $ruta= '../../Archivos/Cursos';
+
+    public function eliminarArchivo($nombreArchivo){
+        $archivoUbicacion=$this->ruta."/".$nombreArchivo;
+        //eliminar archivo
+        if(unlink($archivoUbicacion)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public  function subirArchivo(Request $request){
 
         $archivoSubido=false;
@@ -88,16 +98,17 @@ class CursosCapacitacionesController extends Controller
             $titulosAcademicos=CursosCapacitaciones::where("fk_estudiante","=",$Objestudiante->id)->where("estado","=","1")->orderBy('id', 'DESC')->get();
             return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"OE",200]);
         } catch (\Throwable $th) {
-            return response()->json(["mensaje"=>$titulosAcademicos,"Siglas"=>"ONE","error"=>$th,400]);
+            return response()->json(["mensaje"=>$th->getMessage(),"Siglas"=>"ONE","error"=>$th,400]);
         }
     }
     public function actulizarCursoCapacitaciones(Request $request,$external_id){
         //die(json_encode($request->json()->all()));
         if($request->json()){
             $actulizoArchivo=false;
+            $archivoEliminado=null;
             try {
                 //actulizo el archivo , por lo cual actulizo la evidencias_url
-                if($request['evidencias_url']!=null){
+                if($request['evidencia_url']!=null){
                     $actulizoArchivo=true;
                     $ObjCursosCapacitaciones=CursosCapacitaciones::where("external_cu","=", $external_id)->update(
                                                                             array(
@@ -112,6 +123,7 @@ class CursosCapacitacionesController extends Controller
 
 
                                                                     ));
+                    $archivoEliminado=$this->eliminarArchivo($request['evidencias_url_antiguo']);
                 }
                 //solo actualizo la data
                 else{
@@ -127,10 +139,19 @@ class CursosCapacitacionesController extends Controller
                             'fecha_culminacion'=>$request['fecha_culminacion']
                     ));
                 }
-                return response()->json(["mensaje"=>"Operación Exitosa","Objeto"=>$ObjCursosCapacitaciones,"actulizoArchivo"=>$actulizoArchivo,"resques"=>$request->json()->all(),"respuesta"=>$ObjCursosCapacitaciones,"Siglas"=>"OE",200]);
+                return response()->json(["mensaje"=>"Operación Exitosa",
+                                         "Objeto"=>$ObjCursosCapacitaciones,
+                                         "actulizoArchivo"=>$actulizoArchivo,
+                                         "resques"=>$request->json()->all(),
+                                         "archivoEliminado"=>$archivoEliminado,
+                                         "respuesta"=>$ObjCursosCapacitaciones,
+                                         "Siglas"=>"OE",200]);
                 //respuesta exitoso o no en la inserrccion
             } catch (\Throwable $th) {
-                return response()->json(["mensaje"=>$th->getMessage(),"resques"=>$request->json()->all(),"Siglas"=>"ONE","error"=>$th->getMessage()]);
+                return response()->json(["mensaje"=>$th->getMessage(),
+                                         "resques"=>$request->json()->all(),
+                                         "Siglas"=>"ONE",
+                                         "error"=>$th->getMessage()]);
             }
         }else{
             return response()->json(["mensaje"=>"Los datos no tienene el formato deseado","Siglas"=>"DNF",400]);

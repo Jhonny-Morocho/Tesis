@@ -23,11 +23,8 @@ class EstudianteController extends Controller
         if($request->json()){
             //validar si el usuario existe
             $ObjUsuario = usuario::where("external_us",$request['external_us'])->first();
-
             if($ObjUsuario!=null){
-
                 $ObjEstudiante = estudiante::where("fk_usuario","=", $ObjUsuario->id)->first();
-
                 if($ObjEstudiante !=null){
 
                     return response()->json(["mensaje"=> $ObjEstudiante,
@@ -59,7 +56,6 @@ class EstudianteController extends Controller
                  ->where("usuario.tipoUsuario",2)
                  ->where("external_es",$external_id)
                  ->first();
-
                 // la secretaria notifca al postulante que su informacion no ha sido validada
                 if($request['estado']==0 ){
                     $parrafoMensaje="Su información tiene algunas inconsistencias,

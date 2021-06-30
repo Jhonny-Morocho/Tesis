@@ -1,88 +1,149 @@
-<div class="container mt-5">
+<navTab-postulante></navTab-postulante>
+<div class="content-wrapper animated fadeIn">
     <div class="card">
-        <article class="card-body animated animate__animated animate__slideInRight">
-            <form class="row g-3" (ngSubmit)="onSubMitActualizarCursoCapacitacion(fActualizarCursoCapacitacion)" #fActualizarCursoCapacitacion="ngForm" enctype="multipart/form-data">
-                <h4>Editar curso o capacitacion</h4>
+        <div class="col-12 mt-2 ml-3">
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i>Editar Curso o Capacitación</h3>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+            <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+        </div>
+        <article class="card-body ">
+            <form class="row g-3" (ngSubmit)="editarCursoCapacitacion()" [formGroup]="formEditarCurso" enctype="multipart/form-data">
 
-                <div class="col-sm-3">
-                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-postulante/cursos-capacitaciones']">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
-                </div>
-                <hr>
                 <div class="col-md-6">
-                    <label for="inputNombre del evento" class="form-label">Nombre del evento</label><br>
+                    <label for="inputNombre del evento" class="form-label">Nombre del evento <span class="text-danger">*</span></label><br>
+                    <i class="fas fa-id-card form-control-feedback"></i>
                     <input type="text"
-                          [(ngModel)]="instanciaCursosCapacitaciones.nom_evento"
-                          name="nom_evento"
-                          maxlength="100"
-                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['nom_evento'].errors }"
-                          class="form-control"
-                          required>
-                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['nom_evento'].errors">
-                      El campo nombre del evento es obligatorio
+                           class="form-control"
+                           formControlName="nom_evento"
+                           placeholder="Ingrese el nombre del evento que asistio"
+                           maxlength="40"
+                           [class.is-invalid]="nomEventoNoValido"
+                           [class.is-valid]="formEditarCurso.get('nom_evento').valid"
+                           >
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="nomEventoNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo nombre del evento es obligatorio</p>
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputAuspiciante" class="form-label">Auspiciante</label><br>
+                    <label for="inputAuspiciante" class="form-label">Auspiciante <span class="text-danger">*</span></label><br>
+                    <i class="fa fa-briefcase form-control-feedback" aria-hidden="true"></i>
                     <input type="text"
-                          [(ngModel)]="instanciaCursosCapacitaciones.auspiciante"
-                          name="auspiciante"
-                          maxlength="100"
-                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['auspiciante'].errors }"
-                          class="form-control"
-                          required>
-                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['auspiciante'].errors">
-                      El campo auspiciante del evento es obligatorio
-                    </div>
+                           formControlName="auspiciante"
+                           maxlength="40"
+                           [class.is-invalid]="auspicianteNoValido"
+                           [class.is-valid]="formEditarCurso.get('auspiciante').valid"
+                           placeholder="Ingrese el auspiciante del evento que asistio"
+                           class="form-control">
+
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="auspicianteNoValido">
+                    <p> <i class="fas fa-info-circle"></i> El campo auspiciante del evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputNumeroHoras" class="form-label">Número de horas</label><br>
+                    <label for="inputNumeroHoras" class="form-label">Número de horas <span class="text-danger">*</span></label><br>
+                    <i class="fa fa-clock-o form-control-feedback" aria-hidden="true"></i>
                     <input type="number"
-                          [(ngModel)]="instanciaCursosCapacitaciones.horas"
-                          name="horas"
-                          [ngClass]="{'is-invalid': fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors }"
-                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                          class="form-control"
-                          min="1"
-                          required>
-                    <div class="invalid-feedback" *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['horas'].errors">
-                      El campo número de horas del evento es obligatorio
+                          formControlName="horas"
+                          placeholder="Ingrese el número de horas del evento que asistio"
+                          [class.is-invalid]="numHorasNoValido"
+                          [class.is-valid]="formEditarCurso.get('horas').valid"
+                          class="form-control">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="numHorasNoValido">
+                      <p> <i class="fas fa-info-circle"></i>  El campo número de horas del evento es obligatorio</p>
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
 
                 <div class="col-md-6">
-                    <label for="inputFechaInicio" class="form-label">Fecha Inicio</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['fecha_inicio'].errors">La Fecha Inicio es obligatorio</span>
-                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_inicio" name="fecha_inicio" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminacion</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['fecha_culminacion'].errors">La Fecha de culminacion es obligatorio</span>
-                    <input type="date" [(ngModel)]="instanciaCursosCapacitaciones.fecha_culminacion" name="fecha_culminacion" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputTipoEvento" class="form-label">Tipo de evento</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['tipo_evento'].errors">El Tipo de evento es obligatorio</span>
-                    <select class="form-control" name="tipo_evento" [(ngModel)]="instanciaCursosCapacitaciones.tipo_evento" required>
+                  <label for="inputTipoEvento" class="form-label">Tipo de evento <span class="text-danger">*</span></label><br>
+                  <i class="fa fa-list-ol form-control-feedback" aria-hidden="true"></i>
+                  <select class="form-control"
+                          formControlName="tipo_evento"
+                          [class.is-invalid]="tipoEventoNoValido"
+                          [class.is-valid]="formEditarCurso.get('tipo_evento').valid"
+                          >
                     <option [value]="i+1"*ngFor="let item of tipoCursoCapcitacion;let i=index">{{item}}</option>
-                    </select>
+                  </select>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="tipoEventoNoValido">
+                    <p> <i class="fas fa-info-circle"></i>  El campo tipo de evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputFechaInicio" class="form-label">Fecha Inicio <span class="text-danger">*</span></label><br>
+                    <input type="date"
+                           formControlName="fecha_inicio"
+                           [class.is-invalid]="fechaInicioNoValido"
+                           [class.is-valid]="formEditarCurso.get('fecha_inicio').valid"
+                           class="form-control"
+                            >
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="fechaInicioNoValido">
+                    <p > <i class="fas fa-info-circle"></i>   El campo fecha inicio  del evento es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputFechaCUlminacion" class="form-label">Fecha de culminación <span class="text-danger">*</span></label><br>
+                    <input type="date"
+                           formControlName="fecha_culminacion"
+                           [class.is-invalid]="fechaFinalizacionNoValido"
+                           [class.is-valid]="formEditarCurso.get('fecha_culminacion').valid && !fechaFinalizacionVacia"
+                           class="form-control">
+                  <div class="invalid-feedback"  *ngIf="fechaFinalizacionNoValido">
+                    <p *ngIf="fechaFinalizacionVacia"> <i class="fas fa-info-circle"></i>   El campo fecha  de culminación del evento es obligatorio</p>
+                    <p *ngIf="!fechaFinalMayorInicialNoValido && !fechaFinalizacionVacia"> <i class="fas fa-info-circle"></i> La fecha de finalizacion debe ser mayor a la fecha de inicio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputPais" class="form-label">País <span class="text-danger">*</span></label><br>
+                    <i class="fa fa-globe form-control-feedback" aria-hidden="true"></i>
+                    <select class="form-control"
+                             formControlName="pais"
+                             [class.is-invalid]="paisNoValido"
+                             [class.is-valid]="formEditarCurso.get('pais').valid"
+                             >
+                    <option [value]="i+1"*ngFor="let item of paises;let i=index">{{item.nombre}}</option>
+                  </select>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="paisNoValido">
+                    <p> <i class="fas fa-info-circle"></i>  El campo país es obligatorio</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6">
-                    <label for="inputPais" class="form-label">País</label><br>
-                    <span class="text-danger " *ngIf="fActualizarCursoCapacitacion.submitted && fActualizarCursoCapacitacion.controls['pais'].errors">El País es obligatorio</span>
-                    <select class="form-control" name="pais" [(ngModel)]="instanciaCursosCapacitaciones.fk_pais" required>
-                  <option [value]="i+1"*ngFor="let item of paises;let i=index">{{item.nombre}}</option>
-                </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputEvidencias" class="form-label">Evidencias</label><br>
-                    <input type="file" (change)="fileEvent($event)" class="form-control" required accept="application/pdf">
+                    <label for="inputEvidencias" class="form-label">Evidencias </label><br>
+                    <i class="fas fa-file-pdf form-control-feedback"></i>
+                    <input type="file"
+                          (change)="fileEvent($event)"
+                          class="form-control"
+                          formControlName="evidencias"
+                          [class.is-valid]="formEditarCurso.get('evidencias').value"
+                          accept="application/pdf">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="evidenciasNoValido">
+                      <p> <i class="fas fa-info-circle"></i>  El campo evidencias es obligatorio</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>
                 </div>
             </form>
         </article>
     </div>
-
 </div>
+<!--============================= FOOOTER  ============================-->
+<!--============================= FOOOTER  ============================-->
+<app-footer></app-footer>
