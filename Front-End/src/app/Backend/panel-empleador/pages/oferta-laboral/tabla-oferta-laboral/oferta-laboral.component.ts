@@ -70,7 +70,6 @@ export class OfertaLaboralComponent implements OnInit {
   }
 
   verOfertaModal(id:Number){
-    console.log("click");
     //necesito converitr o typescrip me da error
     var index=parseInt((id).toString(), 10);
     this.instanciaOfertaVer.puesto=this.ofertasLaborales[index]['puesto'];

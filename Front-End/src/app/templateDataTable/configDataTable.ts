@@ -2,7 +2,7 @@ export const dataTable=
   {
   pagingType: 'full_numbers',
   pageLength: 10,
-  responsive: true,
+
     /* below is the relevant part, e.g. translated to spanish */
   language: {
     processing: "Procesando...",
@@ -24,6 +24,7 @@ export const dataTable=
     aria: {
       sortAscending: ": Activar para ordenar la tabla en orden ascendente",
       sortDescending: ": Activar para ordenar la tabla en orden descendente"
-    }
+    },
+    responsive: true
   }
 };
