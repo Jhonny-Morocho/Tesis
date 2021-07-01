@@ -35,19 +35,8 @@ export class RegistroPostulanteComponent implements OnInit {
   }
   crearFormulario(){
     this.formRegistroPostulante=this.formulario.group({
-      correo:['',
-                  [
-                    Validators.required,
-                    Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')
-
-                  ]
-              ],
-      password:['',
-                   [
-                      Validators.required,
-                      Validators.maxLength(10)
-                   ]
-               ]
+      correo:['',[Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      password:['',[Validators.required,Validators.maxLength(10)]]
     });
   }
   registroPostulante(){
@@ -63,7 +52,13 @@ export class RegistroPostulanteComponent implements OnInit {
         type: 'error',
         title: 'Debe completar todos los campos'
       })
-      return;
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
+      return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
 
     }
     //mensaje de alerta usuario

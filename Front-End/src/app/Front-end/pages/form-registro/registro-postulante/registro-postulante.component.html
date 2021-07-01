@@ -15,7 +15,7 @@
               <a class="h5 text-white"><b>Registro de Postulante</b></a>
             </div>
             <div class="form-group">
-                <label for="inputEmail4" class="form-label text-white">Correo </label><br>
+                <label for="inputEmail4" class="form-label text-white">Correo <span class="text-danger">*</span></label><br>
                 <i class="fas fa-envelope form-control-feedback"></i>
                 <!-- <span class="text-danger " *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['correo'].errors">El correo es obligatorio</span> -->
                 <input type="email"
@@ -34,7 +34,7 @@
                 <!-- end mensajes de validacion -->
             </div>
             <div class="form-group">
-                <label for="inputPassword4" class="form-label text-white">Contraseña</label><br>
+                <label for="inputPassword4" class="form-label text-white">Contraseña <span class="text-danger">*</span></label><br>
                 <i class="fas fa-key form-control-feedback"></i>
                 <input type="password"
                       formControlName="password"
@@ -45,7 +45,7 @@
                       maxlength="10">
                 <!-- mensajes de validacion -->
                 <div class="invalid-feedback" *ngIf="passwordNoValido && (formRegistroPostulante.get('password').value)=='' ">
-                  Contraseña requerida
+                  <i class="fas fa-info-circle"></i> Contraseña requerida
                 </div>
                 <!-- end mensajes de validacion -->
             </div>

@@ -6,7 +6,7 @@ import {ProvinciasModels} from 'src/app/models/provincias.models';
 import {CiudadesModel} from 'src/app/models/ciudades.models';
 import {ServicioCiudades} from 'src/app/servicios/ciudades.service';
 import Swal from 'sweetalert2';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -21,44 +21,88 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   booleanFormRegistro=false;
   arrayProvincias:ProvinciasModels []=[];
   arrayCiudad:CiudadesModel []=[];
+  formEmpleador:FormGroup;
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
   obervaciones=false;
   //validacion de formulario true/false
   formValidado=false;
   constructor(private servicioEmpleador_:SerivicioEmpleadorService,
               private servicioCiudades:ServicioCiudades,
+              private formBuilder:FormBuilder,
               private servicioProvincias:ServicioProvincias,
-              private ruta_:Router) { }
+              private ruta_:Router) {
+  this.crearFormulario();
+  this.provincias();
+  }
 
   ngOnInit() {
     this.instanciaEmpleadorRegistrar=new EmpleadorModel();
     this.instanciaEmpleadorLlenarForm=new EmpleadorModel();
-    this.provincias();
-    this.formEmpleador();
-
   }
+  get razonSocialNoValido(){
+    return this.formEmpleador.get('razonSocial').invalid &&  this.formEmpleador.get('razonSocial').touched;
+  }
+  get tipoEmpresaNoValido(){
+    return this.formEmpleador.get('tipoEmpresa').invalid &&  this.formEmpleador.get('tipoEmpresa').touched;
+  }
+  get actividadEconomica(){
+    return this.formEmpleador.get('actividadEconomica').invalid &&  this.formEmpleador.get('actividadEconomica').touched;
+  }
+  get numRucNoValido(){
+    return this.formEmpleador.get('numeroRuc').invalid &&  this.formEmpleador.get('numeroRuc').touched;
+  }
+  get cedulaNoValida(){
+    return this.formEmpleador.get('cedula').invalid &&  this.formEmpleador.get('cedula').touched;
+  }
+  get nombreRepresentanteNoValido(){
+    return this.formEmpleador.get('nomRepresentanteLegal').invalid &&  this.formEmpleador.get('nomRepresentanteLegal').touched;
+  }
+  get telefonoNoValido(){
+    return this.formEmpleador.get('telefono').invalid &&  this.formEmpleador.get('telefono').touched;
+  }
+  get provinciaNoValido(){
+    return this.formEmpleador.get('provincia').invalid &&  this.formEmpleador.get('provincia').touched;
+  }
+  get ciudadNoValido(){
+    return this.formEmpleador.get('ciudad').invalid &&  this.formEmpleador.get('ciudad').touched;
+  }
+  get direccionNoValido(){
+    return this.formEmpleador.get('direcionDomicilio').invalid &&  this.formEmpleador.get('direcionDomicilio').touched;
+  }
+  crearFormulario(){
+    this.formEmpleador=this.formBuilder.group({
+      razonSocial:['',[Validators.required,Validators.maxLength(20)]],
+      tipoEmpresa:['',[Validators.required,Validators.maxLength(20)]],
+      actividadEconomica:['',[Validators.required,Validators.maxLength(20)]],
+      numeroRuc:['',[Validators.required,Validators.maxLength(15)]],
+      cedula:['',[Validators.required,]],
+      nomRepresentanteLegal:['',[Validators.required,]],
+      telefono:['',[Validators.required,]],
+      provincia:['',[Validators.required,]],
+      ciudad:['',[Validators.required,]],
+      direcionDomicilio:['',[Validators.required,]]
+    });
+  }
+
   escucharSelectProvincia(idProvincia){
-    console.log(idProvincia);
     this.servicioCiudades.listarCiudades(idProvincia).subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           this.arrayCiudad=siHaceBien;
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Error', siHaceMal['mensaje'], 'error');
       }
     );
   }
   provincias(){
     this.servicioProvincias.listarProvincias().subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           this.arrayProvincias=siHaceBien;
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Error', siHaceMal['mensaje'], 'error');
       }
     );
   }
-  formEmpleador(){
+  cargarDatosForm(){
    //consultar si el postulante ha llenado el formulario
      this.servicioEmpleador_.listarFormEmpleador().subscribe(
       siHacesBien=>{
@@ -92,7 +136,7 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
 
   }
   //creacion del empleador
-  onSubmitFormularioEmpledor(formRegistroEmpleador:NgForm){
+  registrarEmpledor(formRegistroEmpleador:NgForm){
     console.log(formRegistroEmpleador);
     if(formRegistroEmpleador.invalid){
       const toast = Swal.mixin({

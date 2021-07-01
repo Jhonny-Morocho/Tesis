@@ -14,7 +14,7 @@ import * as moment from 'moment';
 export class FormularioInfoPostulanteComponent implements OnInit {
   instanciaPostulante:PostulanteModel;
   //creo una referencia
-  formRegistroPostulante:FormGroup;
+  formPostulante:FormGroup;
   fechaActual:string;
   fechaMinima:string='1905-12-31';
   booleanFormularioCompletado:boolean;
@@ -39,57 +39,57 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   // ==== para hacer validacion y activar la clase en css ====//
   get generoNoValido(){
-    return this.formRegistroPostulante.get('genero').invalid   && this.formRegistroPostulante.get('genero').touched ;
+    return this.formPostulante.get('genero').invalid   && this.formPostulante.get('genero').touched ;
   }
   get fechaNacimientoNoValido(){
-    return this.formRegistroPostulante.get('fechaNacimiento').invalid && this.formRegistroPostulante.get('fechaNacimiento').touched ;
+    return this.formPostulante.get('fechaNacimiento').invalid && this.formPostulante.get('fechaNacimiento').touched ;
   }
   get documentoIdentidadNoValido(){
-    return this.formRegistroPostulante.get('documentoIndentidad').invalid && this.formRegistroPostulante.get('documentoIndentidad').touched;
+    return this.formPostulante.get('documentoIndentidad').invalid && this.formPostulante.get('documentoIndentidad').touched;
   }
   // input nombre
   get nombreNoValido(){
-    return this.formRegistroPostulante.get('nombresCompleto').invalid && this.formRegistroPostulante.get('nombresCompleto').touched;
+    return this.formPostulante.get('nombresCompleto').invalid && this.formPostulante.get('nombresCompleto').touched;
   }
   get nombreValido(){
-    return this.formRegistroPostulante.get('nombresCompleto').invalid &&  this.formRegistroPostulante.get('nombresCompleto').touched;
+    return this.formPostulante.get('nombresCompleto').invalid &&  this.formPostulante.get('nombresCompleto').touched;
   }
   get soloTextoNombre(){
-    return this.formRegistroPostulante.controls['nombresCompleto'].errors['soloTexto'] ;
+    return this.formPostulante.controls['nombresCompleto'].errors['soloTexto'] ;
   }
   get nombreVacio(){
-    return this.formRegistroPostulante.get('nombresCompleto').value;
+    return this.formPostulante.get('nombresCompleto').value;
   }
   // input apellido
   get apellidoNoValido(){
-    return this.formRegistroPostulante.get('apellidosCompleto').invalid && this.formRegistroPostulante.get('apellidosCompleto').touched;
+    return this.formPostulante.get('apellidosCompleto').invalid && this.formPostulante.get('apellidosCompleto').touched;
   }
   get apellidoValido(){
-    return this.formRegistroPostulante.get('apellidosCompleto').invalid &&  this.formRegistroPostulante.get('apellidosCompleto').touched;
+    return this.formPostulante.get('apellidosCompleto').invalid &&  this.formPostulante.get('apellidosCompleto').touched;
   }
   get soloTextoApellido(){
-    return this.formRegistroPostulante.controls['apellidosCompleto'].errors['soloTexto'] ;
+    return this.formPostulante.controls['apellidosCompleto'].errors['soloTexto'] ;
   }
   get apellidoVacio(){
-    return this.formRegistroPostulante.get('apellidosCompleto').value;
+    return this.formPostulante.get('apellidosCompleto').value;
   }
   //input telefono
   get telefonoNoValido(){
-    return this.formRegistroPostulante.get('telefono').invalid && this.formRegistroPostulante.get('telefono').touched;
+    return this.formPostulante.get('telefono').invalid && this.formPostulante.get('telefono').touched;
   }
   get soloNumerosTelefono(){
-    return this.formRegistroPostulante.controls['telefono'].errors['soloNumeros'] ;
+    return this.formPostulante.controls['telefono'].errors['soloNumeros'] ;
   }
   get telefonoVacio(){
-    return this.formRegistroPostulante.get('telefono').value;
+    return this.formPostulante.get('telefono').value;
   }
 
   //input direccion de domicilio
   get direccionNoValida(){
-    return this.formRegistroPostulante.get('direccionDomicilio').invalid && this.formRegistroPostulante.get('direccionDomicilio').touched;
+    return this.formPostulante.get('direccionDomicilio').invalid && this.formPostulante.get('direccionDomicilio').touched;
   }
   crearFormulario(){
-    this.formRegistroPostulante=this.formulario.group({
+    this.formPostulante=this.formulario.group({
       nombresCompleto:['',
                   [
                     Validators.required,
@@ -155,7 +155,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               this.instanciaPostulante.direccion_domicilio=siHacesBien['mensaje']['direccion_domicilio'];
 
               //cargo los datos al formulario
-              this.formRegistroPostulante.setValue({
+              this.formPostulante.setValue({
               nombresCompleto:this.instanciaPostulante.nombre,
               apellidosCompleto:this.instanciaPostulante.apellido,
               documentoIndentidad:this.instanciaPostulante.cedula,
@@ -169,7 +169,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               this.formValidado=false;
               this.obervaciones=false;
 
-              this.formRegistroPostulante.disable();
+              this.formPostulante.disable();
             }
             //ya lo revisaron al formulaorio,pero no fue validado
             if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones!=''){
@@ -182,7 +182,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               this.obervaciones=true;
               //this.booleanFormularioCompletado=true;
 
-              this.formRegistroPostulante.disable();
+              this.formPostulante.disable();
             }
 
           }
@@ -194,7 +194,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   //creacion usuario estudiante
   registrarPostulante(){
-    if(this.formRegistroPostulante.invalid){
+    if(this.formPostulante.invalid){
       const toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -205,7 +205,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         type: 'error',
         title: 'Debe llenar todos los campos correctamente'
       })
-      return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
+      return Object.values(this.formPostulante.controls).forEach(contol=>{
         contol.markAsTouched();
       });
     }
@@ -217,13 +217,13 @@ export class FormularioInfoPostulanteComponent implements OnInit {
     Swal.showLoading();
     this.instanciaPostulante.estado=0;
     this.instanciaPostulante.observaciones="";
-    this.instanciaPostulante.nombre=this.formRegistroPostulante.value.nombresCompleto;
-    this.instanciaPostulante.apellido=this.formRegistroPostulante.value.apellidosCompleto;
-    this.instanciaPostulante.cedula=this.formRegistroPostulante.value.documentoIndentidad;
-    this.instanciaPostulante.fecha_nacimiento=this.formRegistroPostulante.value.fechaNacimiento;
-    this.instanciaPostulante.telefono=this.formRegistroPostulante.value.telefono;
-    this.instanciaPostulante.genero=this.formRegistroPostulante.value.genero;
-    this.instanciaPostulante.direccion_domicilio=this.formRegistroPostulante.value.direccionDomicilio;
+    this.instanciaPostulante.nombre=this.formPostulante.value.nombresCompleto;
+    this.instanciaPostulante.apellido=this.formPostulante.value.apellidosCompleto;
+    this.instanciaPostulante.cedula=this.formPostulante.value.documentoIndentidad;
+    this.instanciaPostulante.fecha_nacimiento=this.formPostulante.value.fechaNacimiento;
+    this.instanciaPostulante.telefono=this.formPostulante.value.telefono;
+    this.instanciaPostulante.genero=this.formPostulante.value.genero;
+    this.instanciaPostulante.direccion_domicilio=this.formPostulante.value.direccionDomicilio;
     this.servicioPostulante_.crearPostulante(this.instanciaPostulante).subscribe(
       siHacesBien=>{
         Swal.close();
@@ -241,7 +241,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           this.booleanFormularioCompletado=true;
           this.formValidado=false;
           this.obervaciones=false;
-          this.formRegistroPostulante.disable();
+          this.formPostulante.disable();
         }else{
             Swal('Ups', siHacesBien['error'], 'info')
         }
@@ -257,7 +257,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
 
   //editar
   editarPostulante(){
-    if(this.formRegistroPostulante.invalid){
+    if(this.formPostulante.invalid){
       const toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -268,19 +268,19 @@ export class FormularioInfoPostulanteComponent implements OnInit {
         type: 'error',
         title: 'Debe llenar todos los campos correctamente'
       })
-      return Object.values(this.formRegistroPostulante.controls).forEach(contol=>{
+      return Object.values(this.formPostulante.controls).forEach(contol=>{
         contol.markAsTouched();
       });
     }
     this.instanciaPostulante.estado=0;
     this.instanciaPostulante.observaciones="";
-    this.instanciaPostulante.nombre=this.formRegistroPostulante.value.nombresCompleto;
-    this.instanciaPostulante.apellido=this.formRegistroPostulante.value.apellidosCompleto;
-    this.instanciaPostulante.cedula=this.formRegistroPostulante.value.documentoIndentidad;
-    this.instanciaPostulante.fecha_nacimiento=this.formRegistroPostulante.value.fechaNacimiento;
-    this.instanciaPostulante.telefono=this.formRegistroPostulante.value.telefono;
-    this.instanciaPostulante.genero=this.formRegistroPostulante.value.genero;
-    this.instanciaPostulante.direccion_domicilio=this.formRegistroPostulante.value.direccionDomicilio;
+    this.instanciaPostulante.nombre=this.formPostulante.value.nombresCompleto;
+    this.instanciaPostulante.apellido=this.formPostulante.value.apellidosCompleto;
+    this.instanciaPostulante.cedula=this.formPostulante.value.documentoIndentidad;
+    this.instanciaPostulante.fecha_nacimiento=this.formPostulante.value.fechaNacimiento;
+    this.instanciaPostulante.telefono=this.formPostulante.value.telefono;
+    this.instanciaPostulante.genero=this.formPostulante.value.genero;
+    this.instanciaPostulante.direccion_domicilio=this.formPostulante.value.direccionDomicilio;
      Swal({
       allowOutsideClick:false,
       type:'info',
@@ -306,7 +306,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           this.obervaciones=false;
           //si el usuario esta el estado en 1// estado cero
           this.formValidado=false;
-          this.formRegistroPostulante.disable();
+          this.formPostulante.disable();
           //redirecciono a la misma pagina
           this.ruta_.navigate(['/panel-postulante/form-info-postulante']);
           }else{

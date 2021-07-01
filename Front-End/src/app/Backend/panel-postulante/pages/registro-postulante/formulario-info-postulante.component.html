@@ -155,8 +155,7 @@
 <div class="content-wrapper animated fadeIn" *ngIf="obervaciones && formValidado || !formValidado && !obervaciones">
   <div class="card">
     <article class="card-body">
-
-            <div class="alert simple-primary" *ngIf="!booleanFormularioCompletado">
+            <div class="alert alert-primary" *ngIf="!booleanFormularioCompletado">
               <i class="fas fa-info-circle"></i> Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
             </div>
             <div class="alert simple-warning" *ngIf="booleanFormularioCompletado && !obervaciones">

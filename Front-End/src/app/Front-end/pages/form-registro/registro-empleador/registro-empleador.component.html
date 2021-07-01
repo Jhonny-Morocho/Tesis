@@ -2,8 +2,7 @@
     <div class="centrarFormularioLoginRegistro container animate__animated    fadeIn">
         <!-- /.login-logo -->
         <div class="container col-sm-8">
-          <form class="row g-3 formRegistroLogin pl-3 pr-3 pb-4" (ngSubmit)="onSubmitRegistroEmpleador(fRegistroEmpleador)" #fRegistroEmpleador="ngForm">
-
+          <form class="row g-3 formRegistroLogin pl-3 pr-3 pb-4" (ngSubmit)="registarEmpleador()" [formGroup]="formEmpleador">
               <div class="text-center">
                 <img src="{{ dominio }}/Archivos/images/sistemasUNL_blanco.png" class="rounded mx-auto d-block" alt="logo-carerara-ing-sistemas" width="400" height="100" >
               </div>
@@ -16,33 +15,38 @@
                 <a class="h5 text-white"><b>Registro de Empleador </b></a>
               </div>
               <div class="form-group">
-                  <label for="inputEmail4" class="form-label text-white">Correo </label><br>
+                  <label for="inputEmail4" class="form-label text-white">Correo <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-envelope form-control-feedback"></i>
                   <input type="email"
-                         [(ngModel)]="usuarioModel.correo"
-                         name="correo"
+                         formControlName="correo"
                          class="form-control"
-                         placeholder="Ingrese un correo electrónico"
-                         [ngClass]="{'is-invalid': fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].errors}"
-                         required email>
-                  <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && (fRegistroEmpleador.controls['correo'].value)==null">
-                    El campo correo es requerido
-                  </div>
-                  <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['correo'].invalid==true && (fRegistroEmpleador.controls['correo'].value)!=null">
-                    El correo ingresado no es valido debe tener el siguiente formato micorreo@dominio.com
-                  </div>
+                         [class.is-invalid]="correoNoValido"
+                        [class.is-valid]="formEmpleador.get('correo').valid"
+                        placeholder="Ingrese su correo">
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback"  *ngIf="formEmpleador.get('correo').invalid && (formEmpleador.get('correo').value)!='' ">
+                  <i class="fas fa-info-circle"></i> El correo debe tener el siguiente formato :<strong> micorreo@dominio.com</strong>
+                </div>
+                <div class="invalid-feedback"  *ngIf="correoNoValido && (formEmpleador.get('correo').value)=='' ">
+                  <i class="fas fa-info-circle"></i> El correo es requerido
+                </div>
+                <!-- end mensajes de validacion -->
               </div>
               <div class="form-group">
-                  <label for="inputPassword4" class="form-label text-white">Contraseña</label><br>
+                  <label for="inputPassword4" class="form-label text-white">Contraseña <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-key form-control-feedback"></i>
                   <input type="password"
-                         [(ngModel)]="usuarioModel.password"
-                         name="password"
+                         formControlName="password"
                          class="form-control"
-                         placeholder="Ingrese una contraseña"
-                         [ngClass]="{'is-invalid': fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors }"
-                         required maxlength="10">
-                    <div class="invalid-feedback" *ngIf="fRegistroEmpleador.submitted && fRegistroEmpleador.controls['password'].errors">
-                      La contraseña es requerida
-                    </div>
+                         [class.is-invalid]="passwordNoValido"
+                         [class.is-valid]="formEmpleador.get('password').valid"
+                         placeholder="Ingrese su contraseña"
+                         maxlength="10">
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback" *ngIf="passwordNoValido && (formEmpleador.get('password').value)=='' ">
+                  <i class="fas fa-info-circle"></i> Contraseña requerida
+                </div>
+                <!-- end mensajes de validacion -->
               </div>
               <div class="form-group">
                   <button type="submit" class="btn btn-success">Ingresar</button>
