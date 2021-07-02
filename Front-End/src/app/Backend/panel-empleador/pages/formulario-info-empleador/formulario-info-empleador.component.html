@@ -19,7 +19,14 @@
                             [class.is-valid]="formEmpleador.get('razonSocial').valid"
                             placeholder="Ingrese la Razón social de la empresa"
                             maxlength="30">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="razonSocialNoValido">
+                      <p *ngIf="razonSocialVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                   </div>
+
+
                   <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">Tipo de institución o empresa <span class="text-danger">*</span></label><br>
                       <i class="fas fa-building form-control-feedback"></i>
@@ -29,21 +36,32 @@
                             [class.is-invalid]="tipoEmpresaNoValido"
                             [class.is-valid]="formEmpleador.get('tipoEmpresa').valid"
                             placeholder="Ingrese el tipo de institución o empresa"
-                            class="form-control"
-                          >
+                            class="form-control">
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="tipoEmpresaNoValido">
+                        <p *ngIf="tipoEmpresaVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
                   </div>
+
                   <div class="col-md-6">
                     <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC <span class="text-danger">*</span></label><br>
                     <i class="fa fa-money form-control-feedback"></i>
                     <textarea class="form-control"
                             formControlName="actividadEconomica"
                             rows="3"
-                            [class.is-invalid]="actividadEconomica"
+                            [class.is-invalid]="actividadEconomicaNoValido"
                             [class.is-valid]="formEmpleador.get('actividadEconomica').valid"
                             placeholder="Ingrese la actividad económica inscrita en el RUC"
-                            maxlength="50">
+                            maxlength="100">
                     </textarea>
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="actividadEconomica">
+                      <p *ngIf="actividadEconomicaVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                   </div>
+
                   <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">Número de RUC <span class="text-danger">*</span></label><br>
                       <i class="fas fa-id-card form-control-feedback"></i>
@@ -53,9 +71,14 @@
                               [class.is-invalid]="numRucNoValido"
                               [class.is-valid]="formEmpleador.get('numeroRuc').valid"
                               placeholder="Ingrese el número de RUC"
-                              maxlength="13"
-                              >
+                              maxlength="13">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="numRucNoValido">
+                      <p *ngIf="numRucVacia==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                   </div>
+
                   <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">Documento de identidad del representante legal <span class="text-danger">*</span></label><br>
                       <i class="fas fa-id-card form-control-feedback"></i>
@@ -65,8 +88,12 @@
                             [class.is-invalid]="cedulaNoValida"
                             [class.is-valid]="formEmpleador.get('cedula').valid"
                             placeholder="Ingrese la cédula de identidad del representante legal"
-                            maxlength="10"
-                            >
+                            maxlength="20">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="cedulaNoValida">
+                      <p *ngIf="cedulaVacia==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                   </div>
                   <div class="col-md-6">
                       <label for="inputEmail4" class="form-label">Nombre del representante legal <span class="text-danger">*</span></label><br>
@@ -77,9 +104,15 @@
                               [class.is-invalid]="nombreRepresentanteNoValido"
                               [class.is-valid]="formEmpleador.get('nomRepresentanteLegal').valid"
                               placeholder="Ingrese el nombre del representante legal"
-                              maxlength="25"
-                              >
+                              maxlength="30">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="nombreRepresentanteNoValido">
+                      <p *ngIf="telefonoVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                   </div>
+
+
                   <div class="col-md-6">
                     <label for="inputPais " class="form-label ">Provincia <span class="text-danger">*</span></label><br>
                     <i class="fas fa-clipboard-list form-control-feedback"></i>
@@ -87,23 +120,33 @@
                             class="form-control"
                             [class.is-invalid]="provinciaNoValido"
                             [class.is-valid]="formEmpleador.get('provincia').valid"
-                            formControlName="provincia"
-                          >
+                            formControlName="provincia">
                     <option [value]="item.id "*ngFor="let item of arrayProvincias;let i=index ">{{item.nombre}}</option>
                   </select>
-
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="provinciaNoValido">
+                    <p *ngIf="provinciaVacia==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
+
                 <div class="col-md-6">
                     <label for="inputPais " class="form-label ">Ciudad <span class="text-danger">*</span></label><br>
                     <i class="fas fa-clipboard-list form-control-feedback"></i>
                     <select class="form-control "
                             formControlName="ciudad"
                             [class.is-invalid]="ciudadNoValido"
-                            [class.is-valid]="formEmpleador.get('ciudad').valid"
-                          >
+                            [class.is-valid]="formEmpleador.get('ciudad').valid">
                     <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
                   </select>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="ciudadNoValido">
+                    <p *ngIf="ciudadVacia==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
+
+
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Teléfono <span class="text-danger">*</span></label><br>
                     <i class="fas fa-phone form-control-feedback"></i>
@@ -112,8 +155,14 @@
                             class="form-control"
                             [class.is-invalid]="telefonoNoValido"
                             [class.is-valid]="formEmpleador.get('telefono').valid"
-                            maxlength="10"
+                            maxlength="15"
                             placeholder="Ingrese el número de teléfono">
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="telefonoNoValido">
+                    <p *ngIf="telefonoVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    <p *ngIf="soloNumerosTelefono && telefonoVacio!=''"> <i class="fas fa-info-circle"></i> Ingrese solo numero</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
 
                 <div class="col-12">
@@ -124,12 +173,18 @@
                             [class.is-invalid]="direccionNoValido"
                             [class.is-valid]="formEmpleador.get('direcionDomicilio').valid"
                             placeholder="Ingrese la dirección de domicilio o laboral"
-                            maxlength="40"
+                            maxlength="50"
                            >
                   </textarea>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="direccionNoValido">
+                    <p *ngIf="direccionVacia==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
                 </div>
+
                 <div class="col-12">
-                    <button type="submit " class="btn btn-success">
+                    <button type="submit" class="btn btn-success" [disabled]="booleanFormRegistro">
                       <i class="fas fa-save"></i> Registrar
                     </button>
                 </div>

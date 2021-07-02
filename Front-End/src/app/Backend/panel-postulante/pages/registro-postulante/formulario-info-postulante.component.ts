@@ -307,8 +307,6 @@ export class FormularioInfoPostulanteComponent implements OnInit {
           //si el usuario esta el estado en 1// estado cero
           this.formValidado=false;
           this.formPostulante.disable();
-          //redirecciono a la misma pagina
-          this.ruta_.navigate(['/panel-postulante/form-info-postulante']);
           }else{
              Swal('Info', siHacesBien['mensaje'], 'info')
           }
