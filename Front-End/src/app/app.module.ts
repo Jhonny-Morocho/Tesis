@@ -67,6 +67,7 @@ import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/page
 import { RatingModule } from 'ng-starrating';
 import { FooterComponent } from './Backend/componentes/footer/footer.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

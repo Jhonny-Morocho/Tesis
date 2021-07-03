@@ -1,73 +1,68 @@
-<div class="container mt-5">
+<navTab-empleador></navTab-empleador>
+<div class="content-wrapper animated fadeIn">
     <div class="card">
-        <article class="card-body animated animate__animated animate__slideInRight">
-            <form class="row g-3" (ngSubmit)="onSubMitRegistroOfertaLaboral(fRegistrarOfertaLaboral)" #fRegistrarOfertaLaboral="ngForm" enctype="multipart/form-data">
-                <h6>Registrar Oferta Laboral</h6>
-                <div class="col-2">
-                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    <label for="inputPuesto" class="form-label">Puesto</label><br>
-                    <input type="text"
-                          [(ngModel)]="instanciaOfertaLaboral.puesto"
-                          name="puesto"
-                          maxlength="50"
-                          placeholder="Ingrese el puesto de la oferta"
-                          [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['puesto'].errors }"
-                          class="form-control"
-                          required>
-                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['puesto'].errors">
-                      El campo puesto es obligatorio
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label for="inputDescripcion" class="form-label">Descripción </label><br>
-                    <textarea class="form-control"
-                              [(ngModel)]="instanciaOfertaLaboral.descripcion"
-                              name="descripcion"
-                              [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors }"
-                              placeholder="Ingrese la descripción de la oferta"
-                              maxlength="200"
-                              required>
-                    </textarea>
-                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['descripcion'].errors">
-                      El campo descripción es obligatorio
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label for="inputLugar" class="form-label">Lugar</label><br>
-                    <textarea class="form-control"
-                              [(ngModel)]="instanciaOfertaLaboral.lugar"
-                              name="lugar"
-                              [ngClass]="{'is-invalid': fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['lugar'].errors }"
-                              placeholder="Ingrese el lugar de la oferta"
-                              maxlength="100"
-                              required>
-                    </textarea>
-                    <div class="invalid-feedback" *ngIf="fRegistrarOfertaLaboral.submitted && fRegistrarOfertaLaboral.controls['lugar'].errors">
-                      El campo lugar es obligatorio
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <label for="inputEmail4" class="form-label">Requisito </label><br>
-                    <textarea id="compose-textarea" class="form-control" style="height: 300px" name="requisitos" required maxlength="200">
-                    <ul>
-                      <li>Primer requisito</li>
-                      <li>Segundo requisito</li>
-                      <li>Tercer requisito</li>
-                      <li>Cuarto Requisito</li>
-                    </ul>
+        <div class="col-12 mt-2 ml-3 mb-4">
+          <h3>Registrar Oferta Laboral</h3>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 300px;">
+          <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+        </div>
+        <article class="card-body">
+          <form class="row g-3" (ngSubmit)="onSubMitRegistroOfertaLaboral()" [formGroup]="formOfertaLaboral">
+              <div class="col-md-12">
+                  <label for="inputPuesto" class="form-label">Puesto <span class="text-danger">*</span></label><br>
+                  <input type="text"
+                        formControlName="puesto"
+                        maxlength="50"
+                        [class.is-invalid]="puestoNoValido"
+                        [class.is-valid]="formOfertaLaboral.get('puesto').valid"
+                        placeholder="Ingrese el puesto de la oferta"
+                        class="form-control">
+              </div>
+              <div class="col-md-12">
+                  <label for="inputDescripcion" class="form-label">Descripción <span class="text-danger">*</span></label><br>
+                  <textarea class="form-control"
+                            formControlName="descripcion"
+                            [class.is-invalid]="descripcionNoValido"
+                            [class.is-valid]="formOfertaLaboral.get('descripcion').valid"
+                            placeholder="Ingrese la descripción de la oferta"
+                            maxlength="200">
                   </textarea>
-                </div>
+              </div>
+              <div class="col-md-12">
+                  <label for="inputLugar" class="form-label">Lugar <span class="text-danger">*</span></label><br>
+                  <textarea class="form-control"
+                            formControlName="lugar"
+                            [class.is-invalid]="lugarNoValido"
+                            [class.is-valid]="formOfertaLaboral.get('lugar').valid"
+                            placeholder="Ingrese el lugar de la oferta"
+                            maxlength="100">
+                  </textarea>
+              </div>
 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
+              <div class="col-md-12">
+                  <label for="inputEmail4" class="form-label">Requisitos <span class="text-danger">*</span></label><br>
+                  <textarea id="compose-textarea"
+                            class="form-control"
+                            formControlName="requisitos"
+                            [class.is-invalid]="requisitosNoValido"
+                            [class.is-valid]="formOfertaLaboral.get('requisitos').valid"
+                            maxlength="200">
+
+                </textarea>
+              <!-- mensajes de validacion -->
+              <div class="invalid-feedback"  *ngIf="requisitosNoValido">
+                <p *ngIf="requisitosVacio==''"> <i class="fas fa-info-circle"></i> El campo requisitos es requerido</p>
+              </div>
+              <!-- end mensajes de validacion -->
+              </div>
+              <div class="col-12">
+                  <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>
+              </div>
+          </form>
         </article>
     </div>
-
 </div>
+<!-- ========= FOOTER =========== -->
+<!-- ========= FOOTER =========== -->
+<app-footer></app-footer>

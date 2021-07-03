@@ -1,49 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import { OfertasLaboralesService } from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
  declare var JQuery:any;
  declare var $:any;
+
 @Component({
   selector: 'app-add-oferta',
   templateUrl: './add-oferta.component.html'
 })
 export class AddOfertaComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
+  formOfertaLaboral:FormGroup;
   constructor(private servicioOfertaLaboral:OfertasLaboralesService,
-    private router:Router) { }
+              private formBuilder:FormBuilder,
+              private router:Router) {
+    this.crearFormulario();
+
+  }
 
   ngOnInit() {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     $(function() {
       //Add text editor
       $('#compose-textarea').summernote({
-          placeholder: 'Hello stand alone ui',
+          placeholder: '<ul>'+
+          '<li>Primer requisito</li>'+
+          '<li>Segundo requisito</li>'+
+          '<li>Tercer requisito</li>'+
+          '<li>Cuarto Requisito</li>'+
+        '</ul>',
           tabsize: 2,
+          height: 200,
           toolbar: [
               ['style', [false]],
-              ['font', [false, false, false]],
-              ['color', [false]],
+              ['font', ['bold', 'underline', false]],
+              ['fontsize', [false]],
               ['para', ['ul', false, false]],
               ['table', [false]],
-              ['insert', [false, false, false]],
-              ['view', [false, false, false]]
+              ['height', [false]],
+              ['insert', [false, false, false]]
           ]
       })
     })
     //reiniciio siempre el script
   }
-
-  onSubMitRegistroOfertaLaboral(formRegistroTitulo:NgForm){
-    console.log(formRegistroTitulo.value);
+  crearFormulario(){
+    this.formOfertaLaboral=this.formBuilder.group({
+      puesto:['',[Validators.required,Validators.maxLength(50)]],
+      descripcion:['',[Validators.required,Validators.maxLength(200)]],
+      lugar:['',[Validators.required,Validators.maxLength(100)]],
+      requisitos:['',[Validators.required,Validators.maxLength(100)]]
+    });
+  }
+  onSubMitRegistroOfertaLaboral(){
     //var textAreaRequisitos = $('#compose-textarea').val();
     this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
     this.instanciaOfertaLaboral.estado=1;
     this.instanciaOfertaLaboral.obervaciones="";
     //console.log(textAreaRequisitos);
-    if(formRegistroTitulo.invalid){
+    console.log(this.formOfertaLaboral);
+    console.log(this.instanciaOfertaLaboral);
+    if(this.formOfertaLaboral.invalid){
       const toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -51,10 +71,12 @@ export class AddOfertaComponent implements OnInit {
         timer: 3000
       });
       toast({
-        type: 'info',
-        title: 'Debe completar todos los campos'
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
       })
-      return;
+      return Object.values(this.formOfertaLaboral.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
      }
      Swal({
       allowOutsideClick:false,
@@ -77,6 +99,37 @@ export class AddOfertaComponent implements OnInit {
          console.log(error);
        }
      );
+  }
+  get puestoNoValido(){
+    return this.formOfertaLaboral.get('puesto').invalid &&  this.formOfertaLaboral.get('puesto').touched;
+  }
+  get puestoVacio(){
+    return this.formOfertaLaboral.get('puesto').value;
+  }
+
+
+
+  get descripcionNoValido(){
+    return this.formOfertaLaboral.get('descripcion').invalid &&  this.formOfertaLaboral.get('descripcion').touched;
+  }
+  get descripcionVacio(){
+    return this.formOfertaLaboral.get('descripcion').value;
+  }
+
+
+  get lugarNoValido(){
+    return this.formOfertaLaboral.get('lugar').invalid &&  this.formOfertaLaboral.get('lugar').touched;
+  }
+  get lugarVacio(){
+    return this.formOfertaLaboral.get('lugar').value;
+  }
+
+
+  get requisitosNoValido(){
+    return this.formOfertaLaboral.get('requisitos').invalid &&  this.formOfertaLaboral.get('requisitos').touched;
+  }
+  get requisitosVacio(){
+    return this.formOfertaLaboral.get('requisitos').value;
   }
 
 }
