@@ -1,22 +1,24 @@
-<!-- <app-template-hoja-vida>
-</app-template-hoja-vida> -->
-
-<div class="container mt-5">
-    <div class="card animated animate__animated animate__slideInRight">
-        <h6 class="container text-center">Seleccionar Postulantes </h6>
-        <hr>
-        <div class="alert alert-warning text-center" role="alert" *ngIf="estadoOfertaLaboralFinalizada==false && existeRegistros">
+<navTab-empleador></navTab-empleador>
+<div class="content-wrapper animated fadeIn">
+    <div class="card ">
+      <article class="card-body ">
+        <div class="col-12 mt-2">
+          <h3>Seleccionar Postulantes </h3>
+          <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 300px;">
+        </div>
+        <div class="col-2   mb-5">
+          <a class="btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+        </div>
+        <div class="alert simple-primary" role="alert" *ngIf="!estadoOfertaLaboralFinalizada && existeRegistros">
             <i class="fas fa-exclamation-triangle"></i> Debe señalar los postulantes que desea contratar, caso contrario si no seleccionada ningún postulante puede finalizar la publicación de la oferta laboral dando clic en el boton de Contratar y Finalizar
             oferta o esperar mas postulantes para que se inscriban
         </div>
-        <div class="alert alert-light text-center" role="alert" *ngIf="estadoOfertaLaboralFinalizada==true">
+        <div class="alert simple-succes" role="alert" *ngIf="estadoOfertaLaboralFinalizada">
             <i class="fas fa-exclamation-triangle"></i> Oferta laboral finalizada
         </div>
-        <div class="col-2 mt-3 mb-3">
-            <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-empleador/oferta-laboral']">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
-        </div>
-        <div class="alert alert-light text-center" role="alert" *ngIf="!existeRegistros">
+
+        <div class="alert simple-warning" role="alert" *ngIf="!existeRegistros">
             <i class="fas fa-exclamation-triangle"></i> No existe registros para mostrar
         </div>
         <div *ngIf="existeRegistros">
@@ -52,6 +54,7 @@
                 <button type="button" class="btn btn-primary" (click)="contrarFinalizarOfertaLaboral()" [disabled]="estadoOfertaLaboralFinalizada==true">Finalizar oferta</button>
             </div>
         </div>
+      </article>
     </div>
 </div>
 
@@ -102,3 +105,6 @@
         </div>
     </div>
 </div>
+<!-- ============== FOOTER  ============== -->
+<!-- ============== FOOTER  ============== -->
+<app-footer></app-footer>

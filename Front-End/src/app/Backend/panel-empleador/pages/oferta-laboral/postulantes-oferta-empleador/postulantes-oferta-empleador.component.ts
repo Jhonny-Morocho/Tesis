@@ -39,16 +39,13 @@ export class PostulantesOfertaComponent implements OnInit {
 
   }
   ofertaLaboralFinalizar(external_of:string){
-    console.log(this.externalOferta);
     this.servicioOfertaLabotal.obtenerOfertaLaboralExternal_of(external_of).subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           if(parseInt(siHaceBien['mensaje']['estado'])==4){
             this.estadoOfertaLaboralFinalizada=true;
-            console.log(siHaceBien['mensaje']['estado']);
           }
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Ups', siHaceMal['mensaje'], 'info');
       }
     );
   }
@@ -62,20 +59,18 @@ export class PostulantesOfertaComponent implements OnInit {
             //guardo el external oferta para poder enviarlo para cambiar de estado a la oferta
             this.externalOferta=params['external_of'];
             this.ofertaLaboralFinalizar(this.externalOferta);
-            console.log(this.externalOferta);
             this.arrayPostulante=siHaceBien;
             if(this.arrayPostulante.length>0){
               this.existeRegistros=true;
             }
           },error=>{
-            console.log(error);
+            Swal('Info',error['mensaje'], 'info');
           }
         );
     });
 
   }
   verHojaVidaModal(id:Number){
-    console.log("click");
     var index=parseInt((id).toString(), 10);
     $('#motrarHojaVidaGeneral').modal('show');
     //============= mostamos la informacion personal ========================
@@ -87,9 +82,7 @@ export class PostulantesOfertaComponent implements OnInit {
     this.instanciaVerPostulante.fecha_nacimiento=this.arrayPostulante[index]['fecha_nacimiento'];
     this.instanciaVerPostulante.direccion_domicilio=this.arrayPostulante[index]['direccion_domicilio'];
     this.instanciaVerPostulante.correo=this.arrayPostulante[index]['correo'];
-    console.log(this.instanciaVerPostulante);
     //============= mostras los curso y capacitaciones ===============
-    console.log(this.arrayPostulante[index]['external_us']);
     this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
      //============= mostras los titulos   ===============
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
@@ -98,23 +91,20 @@ export class PostulantesOfertaComponent implements OnInit {
     this.servicioTitulosAcademicos.listarTitulosExternal_usConParametro(exteneral_us).subscribe(
       siHaceBien=>{
         this.arrayTitulosAcademicos=siHaceBien;
-        console.log(this.arrayTitulosAcademicos);
       },error=>{
-        console.log(error);
+        Swal('Info',error['mensaje'], 'info');
       }
     );
   }
   carrarModalX(){
     $('#motrarHojaVidaGeneral').modal('hide');
-    console.log('cerrarModalX');
   }
   cursosCapacitaciones(exteneral_us:string){
     this.servicioCursosCapacitaciones.listarCursosCapacitacionesExternal_usConParametro(exteneral_us).subscribe(
       siHaceBien=>{
         this.arrayCursosCapacitaciones=siHaceBien;
-        console.log(this.arrayCursosCapacitaciones);
       },error=>{
-        console.log(error);
+        Swal('Info',error['mensaje'], 'info');
       }
     );
   }
@@ -134,13 +124,9 @@ export class PostulantesOfertaComponent implements OnInit {
             if (result.value) {
               let estadoActualizarDato=true;
               Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
-
-              console.log(this.instanciaOfertaLaboral);
               //primero la finalizado a la oferta laboral
-              console.log(this.externalOferta);
               this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
                 siHaceBien=>{
-                    console.log(siHaceBien);
                     Swal.close();
                     if(siHaceBien['Siglas']=='OE'){
                       //si se subio
@@ -148,21 +134,20 @@ export class PostulantesOfertaComponent implements OnInit {
                       //desactivo el boton de guardar y finalizar
                       this.estadoOfertaLaboralFinalizada=true;
                     }else{
-                      Swal('Error', siHaceBien['error'], 'error');
+                      Swal('Info', siHaceBien['error'], 'info');
                     }
                 },siHaceMal=>{
-                  console.warn(siHaceMal);
+                  Swal('Error',siHaceMal['mensaje'], 'error');
                 }
               );
               //actualizo el estado de los postulantes
               this.servicioOfertaEstudiante.finalizarOfertaLaboralEstudiante(this.arrayAux).subscribe(
                 siHaceBien =>{
-                    console.log(siHaceBien);
                     if(siHaceBien['Siglas']=='OE'){
                      //si se subio
                      estadoActualizarDato=true;
                     }else{
-                      Swal('Error', siHaceBien['error'], 'error');
+                      Swal('Info', siHaceBien['error'], 'info');
                     }
                 },siHceMal=>{
                   Swal('Error', siHceMal['error'], 'error');
@@ -171,7 +156,16 @@ export class PostulantesOfertaComponent implements OnInit {
               //finalizado la animacion
               Swal.showLoading();
               if(estadoActualizarDato==true){
-                Swal('Registrado', 'Información Registrada con éxito', 'success');
+                const toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+                toast({
+                  type: 'success',
+                  title: 'Registrado'
+                })
               }
             }
           })
@@ -190,16 +184,23 @@ export class PostulantesOfertaComponent implements OnInit {
           if (result.value) {
             Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
             Swal.showLoading();
-            console.log(this.instanciaOfertaLaboral);
             this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
               siHaceBien=>{
-                  console.log(siHaceBien);
                   Swal.close();
-                  Swal('Registrado', 'Información Registrada con éxito', 'success');
+                  const toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });
+                  toast({
+                    type: 'success',
+                    title: 'Registrado'
+                  })
                   //desactivo el boton de guardar y finalizar
                   this.estadoOfertaLaboralFinalizada=true;
               },siHaceMal=>{
-                console.warn(siHaceMal);
+                Swal('Ups', siHaceMal['mensaje'], 'info')
               }
             );
           }
@@ -220,15 +221,13 @@ export class PostulantesOfertaComponent implements OnInit {
         if (result.value) {
           Swal({allowOutsideClick: false,type: 'info',text: 'Espere por favor...'});
           Swal.showLoading();
-          console.log(this.instanciaOfertaLaboral);
           this.servicioOfertaLabotal.actulizarEstadoOfertaLaboralFinalizado(this.instanciaOfertaLaboral,this.externalOferta).subscribe(
             siHaceBien=>{
-                console.log(siHaceBien);
                 Swal.close();
                 Swal('Registrado', 'Información Registrada con éxito', 'success');
                 this.estadoOfertaLaboralFinalizada=true;
             },siHaceMal=>{
-              console.warn(siHaceMal);
+              Swal('Ups', siHaceMal['mensaje'], 'info')
             }
           );
         }
@@ -237,10 +236,8 @@ export class PostulantesOfertaComponent implements OnInit {
   }
 
   check(i:Event,fk_postulante,fk_ofertaLaboral,exteral_of,external_es) {
-    console.log(fk_ofertaLaboral);
     let estadoActual=(i.target as HTMLInputElement).value;
     this.existeAlgunPostulanteChechado=(i.target as HTMLInputElement).checked;
-    console.log(this.existeAlgunPostulanteChechado);
     let estadoActualAux=null;
     var banderaRepetido=false;
     //verificar que valor me trae el value del input
@@ -269,11 +266,10 @@ export class PostulantesOfertaComponent implements OnInit {
       //antes de guardarlo en el array debemos comprobar si esta ya ingresado
       if(this.arrayAux.length==0 ){
         this.arrayAux.push(aux);
-        console.log("cerop");
+        //cero
       }else{
         this.arrayAux.forEach(element => {
           if(element['fk_estudiante']===fk_postulante){
-            console.log(element['fk_estudiante']);
             //entonce debeo actualizar el estado del arreglo en donde estaba guarado
             if(element['estado']==2){
               element['estado']=1;
@@ -288,7 +284,6 @@ export class PostulantesOfertaComponent implements OnInit {
           this.arrayAux.push(aux);
         }
       }
-    console.log(this.arrayAux);
     }else{
       alert("el estado es nullo");
     }
