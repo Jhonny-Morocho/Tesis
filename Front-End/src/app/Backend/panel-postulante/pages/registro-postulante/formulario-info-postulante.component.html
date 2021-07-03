@@ -158,13 +158,16 @@
             <div class="alert alert-primary" *ngIf="!booleanFormularioCompletado">
               <i class="fas fa-info-circle"></i> Por favor complete el formulario para tener acceso a las ofertas laborales disponibles en la plataforma
             </div>
+
             <div class="alert simple-warning" *ngIf="booleanFormularioCompletado && !obervaciones">
               <i class="fas fa-info-circle"></i> Su registro está en proceso de validación, en las próximas 48 horas se notificará la validación de su información a su correo electrónico.
             </div>
+
             <div class="alert simple-succes" *ngIf="booleanFormularioCompletado && formValidado && obervaciones">
               <i class="fas fa-check-circle"></i> La validación de su información ha sido aprobado, ahora ya puedes postular a todas las ofertas disponibles en la plataforma.
               <p  *ngIf="instanciaPostulante.observaciones"><i class="fas fa-info-circle"></i> Observaciones : {{ instanciaPostulante.observaciones }}</p>
             </div>
+
             <h3><i class="fas fa-address-card"></i> Registro de postulante</h3>
             <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 200px;">
             <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" >

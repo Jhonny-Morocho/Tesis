@@ -163,7 +163,7 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               fechaNacimiento:this.instanciaPostulante.fecha_nacimiento,
               genero:this.instanciaPostulante.genero,
               direccionDomicilio:this.instanciaPostulante.direccion_domicilio
-            });
+              });
             //ahun no lo revisan al formulario
             if(this.instanciaPostulante.estado==0 && this.instanciaPostulante.observaciones==''){
               this.formValidado=false;
@@ -185,6 +185,8 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               this.formPostulante.disable();
             }
 
+          }else{
+            this.booleanFormularioCompletado=false;
           }
       },(peroSiTenemosErro)=>{
         Swal('Error', peroSiTenemosErro['error'], 'error')

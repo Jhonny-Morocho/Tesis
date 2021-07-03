@@ -15,30 +15,254 @@ import {ValidadoresService} from 'src/app/servicios/validadores.service';
   templateUrl: './formulario-info-empleador.component.html'
 })
 export class FormularioInfoEmpleadorComponent implements OnInit {
-  instanciaEmpleadorLlenarForm:EmpleadorModel;
   instanciaEmpleador:EmpleadorModel;
-  booleanFormularioCompletado=false;
-  booleanFormRegistro=false;
+  booleanFormularioCompletado:boolean;
   arrayProvincias:ProvinciasModels []=[];
   arrayCiudad:CiudadesModel []=[];
   formEmpleador:FormGroup;
   //reviso si existe una obervacion si existe entonces en formulario si ha sido revisadop
-  obervaciones=false;
+  obervaciones:boolean;
   //validacion de formulario true/false
-  formValidado=false;
+  formValidado:boolean;
   constructor(private servicioEmpleador_:SerivicioEmpleadorService,
               private servicioCiudades:ServicioCiudades,
               private formBuilder:FormBuilder,
               private validacionPersonalizada:ValidadoresService,
               private servicioProvincias:ServicioProvincias,
               private ruta_:Router) {
+  this.instanciaEmpleador=new EmpleadorModel();
   this.crearFormulario();
   this.provincias();
   }
 
   ngOnInit() {
+    this.cargarDatosForm();
+  }
+
+  crearFormulario(){
+    this.formEmpleador=this.formBuilder.group({
+      razonSocial:['',[Validators.required,Validators.maxLength(30)]],
+      tipoEmpresa:['',[Validators.required,Validators.maxLength(30)]],
+      actividadEconomica:['',[Validators.required,Validators.maxLength(100)]],
+      numeroRuc:['',[Validators.required,Validators.maxLength(13)]],
+      cedula:['',[Validators.required,Validators.maxLength(20)]],
+      nomRepresentanteLegal:['',[Validators.required,Validators.maxLength(30)]],
+      telefono:['',[Validators.required,Validators.maxLength(15),this.validacionPersonalizada.soloNumeros]],
+      provincia:['',[Validators.required,]],
+      ciudad:['',[Validators.required,]],
+      direcionDomicilio:['',[Validators.required,Validators.maxLength(50)]]
+    });
+  }
+
+  escucharSelectProvincia(idProvincia){
+    this.servicioCiudades.listarCiudades(idProvincia).subscribe(
+      siHaceBien=>{
+          this.arrayCiudad=siHaceBien;
+      },siHaceMal=>{
+        Swal('Error', siHaceMal['mensaje'], 'error');
+      }
+    );
+  }
+  provincias(){
+    this.servicioProvincias.listarProvincias().subscribe(
+      siHaceBien=>{
+          this.arrayProvincias=siHaceBien;
+      },siHaceMal=>{
+        Swal('Error', siHaceMal['mensaje'], 'error');
+      }
+    );
+  }
+  cargarDatosForm(){
+   //consultar si el postulante ha llenado el formulario
+     this.servicioEmpleador_.listarFormEmpleador().subscribe(
+      siHacesBien=>{
+            // si esta registradoo en la BD el formulario completo entonces presento los datos
+          if(siHacesBien['Siglas']=="OE"){
+            // por lo tanto formulario completo ==true
+            this.booleanFormularioCompletado=true;
+            //registro de empleador encontrado, ya esta creado el empleador en el BD
+            this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
+            this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
+            this.instanciaEmpleador.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
+            this.escucharSelectProvincia(this.instanciaEmpleador.fk_provincia);
+            this.instanciaEmpleador.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
+            this.instanciaEmpleador.direccion=siHacesBien['mensaje']['direccion'];
+            this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
+            this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
+            this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
+            this.instanciaEmpleador.telefono=siHacesBien['mensaje']['telefono'];
+            this.instanciaEmpleador.tipo_empresa=siHacesBien['mensaje']['tipo_empresa'];
+            this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
+            this.instanciaEmpleador.estado=siHacesBien['mensaje']['estado'];
+            //cargo los datos al formulario
+            this.formEmpleador.setValue({
+              razonSocial:this.instanciaEmpleador.razon_empresa,
+              tipoEmpresa:this.instanciaEmpleador.tipo_empresa,
+              actividadEconomica:this.instanciaEmpleador.actividad_ruc,
+              numeroRuc:this.instanciaEmpleador.num_ruc,
+              cedula:this.instanciaEmpleador.cedula,
+              nomRepresentanteLegal:this.instanciaEmpleador.nom_representante_legal,
+              telefono:this.instanciaEmpleador.telefono,
+              provincia:this.instanciaEmpleador.fk_provincia,
+              ciudad:this.instanciaEmpleador.fk_ciudad,
+              direcionDomicilio:this.instanciaEmpleador.direccion,
+            });
+              //ahun no lo revisan al formulario
+              if(this.instanciaEmpleador.estado==0 && this.instanciaEmpleador.observaciones==''){
+                this.formValidado=false;
+                this.obervaciones=false;
+
+                this.formEmpleador.disable();
+              }
+              //ya lo revisaron al formulaorio,pero no fue validado
+              if(this.instanciaEmpleador.estado==0 && this.instanciaEmpleador.observaciones!=''){
+                this.formValidado=false;
+                this.obervaciones=true;
+              }
+              //lo revisaron y lo validaron
+              if(this.instanciaEmpleador.estado==1 && this.instanciaEmpleador.observaciones!=''){
+                this.formValidado=true;
+                this.obervaciones=true;
+                this.formEmpleador.disable();
+              }
+          }else{
+            this.booleanFormularioCompletado=false;
+          }
+      },(peroSiTenemosErro)=>{
+        Swal('Ups', peroSiTenemosErro['mensaje'], 'info')
+    });
 
   }
+  //creacion del empleador
+  registrarEmpledor(){
+    if(this.formEmpleador.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
+      return Object.values(this.formEmpleador.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
+     }
+
+     Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    Swal.showLoading();
+    this.instanciaEmpleador.razon_empresa=this.formEmpleador.value.razonSocial;
+    this.instanciaEmpleador.tipo_empresa=this.formEmpleador.value.tipoEmpresa;
+    this.instanciaEmpleador.actividad_ruc=this.formEmpleador.value.actividadEconomica;
+    this.instanciaEmpleador.num_ruc=this.formEmpleador.value.numeroRuc;
+    this.instanciaEmpleador.cedula=this.formEmpleador.value.cedula;
+    this.instanciaEmpleador.nom_representante_legal=this.formEmpleador.value.nomRepresentanteLegal;
+    this.instanciaEmpleador.fk_provincia=this.formEmpleador.value.provincia;
+    this.instanciaEmpleador.fk_ciudad=this.formEmpleador.value.ciudad;
+    this.instanciaEmpleador.telefono=this.formEmpleador.value.telefono;
+    this.instanciaEmpleador.direccion=this.formEmpleador.value.direcionDomicilio;
+    this.instanciaEmpleador.estado=0;
+    this.instanciaEmpleador.observaciones="";
+
+    this.servicioEmpleador_.crearEmpleador(this.instanciaEmpleador).subscribe(
+      siHacesBien=>{
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
+          //bloqueo el formulario
+          this.booleanFormularioCompletado=true;
+          this.formEmpleador.disable();
+          }else{
+            Swal('Ups', siHacesBien['error'], 'info')
+          }
+
+      },(peroSiTenemosErro)=>{
+        Swal({
+          title:'Error',
+          type:'error',
+          text:peroSiTenemosErro['mensaje']
+        });
+    });
+
+  }
+
+  //editar form de empleador
+  editarEmpleador(){
+    if(this.formEmpleador.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
+      return Object.values(this.formEmpleador.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
+    }
+    Swal({
+      allowOutsideClick:false,
+      type:'info',
+      text:'Espere por favor'
+    });
+    Swal.showLoading();
+    //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
+    this.instanciaEmpleador.observaciones="";
+    this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleador).subscribe(
+      siHacesBien=>{
+        Swal.close();
+        if(siHacesBien['Siglas']=="OE"){
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
+          //desactivar los campos
+          this.formEmpleador.disable();
+          //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
+          this.obervaciones=false;
+          //si el usuario esta el estado en 1// estado cero
+          this.formValidado=false;
+          }else{
+             Swal('Ups', siHacesBien['mensaje'], 'info')
+          }
+      },(peroSiTenemosErro)=>{
+         Swal({
+          title:'Error',
+          type:'error',
+          text:peroSiTenemosErro['mensaje']
+         });
+    });
+  }
+
+
+
+
+
   get razonSocialNoValido(){
     return this.formEmpleador.get('razonSocial').invalid &&  this.formEmpleador.get('razonSocial').touched;
   }
@@ -122,188 +346,6 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
   }
   get direccionVacia(){
     return this.formEmpleador.get('direcionDomicilio').value;
-  }
-  crearFormulario(){
-    this.formEmpleador=this.formBuilder.group({
-      razonSocial:['',[Validators.required,Validators.maxLength(30)]],
-      tipoEmpresa:['',[Validators.required,Validators.maxLength(30)]],
-      actividadEconomica:['',[Validators.required,Validators.maxLength(100)]],
-      numeroRuc:['',[Validators.required,Validators.maxLength(13)]],
-      cedula:['',[Validators.required,Validators.maxLength(20)]],
-      nomRepresentanteLegal:['',[Validators.required,Validators.maxLength(30)]],
-      telefono:['',[Validators.required,Validators.maxLength(15),this.validacionPersonalizada.soloNumeros]],
-      provincia:['',[Validators.required,]],
-      ciudad:['',[Validators.required,]],
-      direcionDomicilio:['',[Validators.required,Validators.maxLength(50)]]
-    });
-  }
-
-  escucharSelectProvincia(idProvincia){
-    this.servicioCiudades.listarCiudades(idProvincia).subscribe(
-      siHaceBien=>{
-          this.arrayCiudad=siHaceBien;
-      },siHaceMal=>{
-        Swal('Error', siHaceMal['mensaje'], 'error');
-      }
-    );
-  }
-  provincias(){
-    this.servicioProvincias.listarProvincias().subscribe(
-      siHaceBien=>{
-          this.arrayProvincias=siHaceBien;
-      },siHaceMal=>{
-        Swal('Error', siHaceMal['mensaje'], 'error');
-      }
-    );
-  }
-  cargarDatosForm(){
-   //consultar si el postulante ha llenado el formulario
-     this.servicioEmpleador_.listarFormEmpleador().subscribe(
-      siHacesBien=>{
-            // si esta registradoo en la BD el formulario completo entonces presento los datos
-          if(siHacesBien['Siglas']=="OE"){
-            // por lo tanto formulario completo ==true
-            this.booleanFormularioCompletado=true;
-            //registro de empleador encontrado, ya esta creado el empleador en el BD
-            this.instanciaEmpleadorLlenarForm.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
-            this.instanciaEmpleadorLlenarForm.cedula=siHacesBien['mensaje']['cedula'];
-            this.instanciaEmpleadorLlenarForm.fk_provincia=siHacesBien['mensaje']['fk_provincia'];
-            this.escucharSelectProvincia(this.instanciaEmpleadorLlenarForm.fk_provincia);
-            this.instanciaEmpleadorLlenarForm.fk_ciudad=siHacesBien['mensaje']['fk_ciudad'];
-            this.instanciaEmpleadorLlenarForm.direccion=siHacesBien['mensaje']['direccion'];
-            this.instanciaEmpleadorLlenarForm.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
-            this.instanciaEmpleadorLlenarForm.num_ruc=siHacesBien['mensaje']['num_ruc'];
-            this.instanciaEmpleadorLlenarForm.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
-            this.instanciaEmpleadorLlenarForm.telefono=siHacesBien['mensaje']['telefono'];
-            this.instanciaEmpleadorLlenarForm.tipo_empresa=siHacesBien['mensaje']['tipo_empresa'];
-            this.instanciaEmpleadorLlenarForm.observaciones=siHacesBien['mensaje']['observaciones'];
-            this.instanciaEmpleadorLlenarForm.estado=siHacesBien['mensaje']['estado'];
-            //si es mayor a cero es q si ha revisado y si ha visto el formulario
-            this.obervaciones = ( this.instanciaEmpleadorLlenarForm.observaciones.length>0)?true:false;
-            this.formValidado = ( this.instanciaEmpleadorLlenarForm.estado==1)?true:false;
-            }
-      },(peroSiTenemosErro)=>{
-        console.log(peroSiTenemosErro);
-        console.warn("TODO MAL");
-    });
-
-  }
-  //creacion del empleador
-  registrarEmpledor(){
-    if(this.formEmpleador.invalid){
-      const toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      toast({
-        type: 'error',
-        title: 'Debe llenar todos los campos correctamente'
-      })
-      return Object.values(this.formEmpleador.controls).forEach(contol=>{
-        contol.markAsTouched();
-      });
-     }
-
-     Swal({
-      allowOutsideClick:false,
-      type:'info',
-      text:'Espere por favor'
-    });
-    Swal.showLoading();
-    this.instanciaEmpleador=new EmpleadorModel();
-    this.instanciaEmpleador.razon_empresa=this.formEmpleador.value.razonSocial;
-    this.instanciaEmpleador.tipo_empresa=this.formEmpleador.value.tipoEmpresa;
-    this.instanciaEmpleador.actividad_ruc=this.formEmpleador.value.actividadEconomica;
-    this.instanciaEmpleador.num_ruc=this.formEmpleador.value.numeroRuc;
-    this.instanciaEmpleador.cedula=this.formEmpleador.value.cedula;
-    this.instanciaEmpleador.nom_representante_legal=this.formEmpleador.value.nomRepresentanteLegal;
-    this.instanciaEmpleador.fk_provincia=this.formEmpleador.value.provincia;
-    this.instanciaEmpleador.fk_ciudad=this.formEmpleador.value.ciudad;
-    this.instanciaEmpleador.telefono=this.formEmpleador.value.telefono;
-    this.instanciaEmpleador.direccion=this.formEmpleador.value.direcionDomicilio;
-    this.instanciaEmpleador.estado=0;
-    this.instanciaEmpleador.observaciones="";
-
-    this.servicioEmpleador_.crearEmpleador(this.instanciaEmpleador).subscribe(
-      siHacesBien=>{
-        Swal.close();
-        if(siHacesBien['Siglas']=="OE"){
-          const toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-          });
-          toast({
-            type: 'success',
-            title: 'Registrado'
-          })
-          //bloqueo el formulario
-          this.booleanFormRegistro=true;
-          this.formEmpleador.disable();
-          }else{
-            Swal('Ups', siHacesBien['error'], 'info')
-          }
-
-      },(peroSiTenemosErro)=>{
-        Swal({
-          title:'Error',
-          type:'error',
-          text:peroSiTenemosErro['mensaje']
-        });
-    });
-
-  }
-
-  //editar form de empleador
-  onSubmitFormularioEmpleadorEditar(formRegistroEmpleadorEditar:NgForm){
-    console.log("Editar formRegistroEmpleadorEditar");
-    if(formRegistroEmpleadorEditar.invalid){
-      const toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-      });
-      toast({
-        type: 'info',
-        title: 'Debe completar todos los campos'
-      })
-      return;
-    }
-    Swal({
-      allowOutsideClick:false,
-      type:'info',
-      text:'Espere por favor'
-    });
-    //LAS OBERSIACIONE LE BORRO O LE PONGO EN VACIO POR QUE SE SUPONE QUE VUELVE A INTENTAR
-    this.instanciaEmpleadorLlenarForm.observaciones="";
-    console.log(this.instanciaEmpleadorLlenarForm);
-    this.servicioEmpleador_.actulizarDatosEmpleador(this.instanciaEmpleadorLlenarForm).subscribe(
-      siHacesBien=>{
-        console.log(siHacesBien);
-        console.log(siHacesBien['Siglas']);
-        Swal.close();
-        if(siHacesBien['Siglas']=="OE"){
-          Swal('Actualizado', 'Información Registrada con éxito', 'success');
-          //descativamos el formulario//si no existe observaciones el formualrio no ha sido revisado
-          this.obervaciones=false;
-          //si el usuario esta el estado en 1// estado cero
-          this.formValidado=false;
-          }else{
-            console.log(siHacesBien);
-             Swal('Ups', siHacesBien['mensaje'], 'info')
-          }
-      },(peroSiTenemosErro)=>{
-         Swal({
-          title:'Error',
-          type:'error',
-          text:peroSiTenemosErro['mensaje']
-         });
-    });
   }
 
 }

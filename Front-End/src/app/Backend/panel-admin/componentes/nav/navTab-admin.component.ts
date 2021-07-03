@@ -30,7 +30,6 @@ export class PanelAdminComponent implements OnInit {
       switch (parseInt(localStorage.getItem('tipoUsuario'))) {
         case 5:
           this.tipoUsuarioEncargado=true;
-          console.log(this.tipoUsuarioEncargado);
           break;
         case 3:
           this.tipoUsuarioSecretaria=true;

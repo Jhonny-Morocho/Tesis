@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { EmpleadorModel } from '../../../../models/empleador.models';
-import { ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import {CiudadesModel} from 'src/app/models/ciudades.models';
 import {ServicioCiudades} from 'src/app/servicios/ciudades.service';
 import {ServicioProvincias} from 'src/app/servicios/provincias.service';
@@ -16,35 +16,54 @@ export class FormValidacionEmpleadorComponent implements OnInit {
   instanciaEmpleador:EmpleadorModel;
   externalEmpleador:string;
   //si existe el usuario o no
-  encontrado:boolean=false;
+  encontrado:boolean;
+  formEmpleador:FormGroup;
   arrayProvincias:ProvinciasModels []=[];
   arrayCiudad:CiudadesModel []=[];
 
   constructor(private servicioEmpleador:SerivicioEmpleadorService,
               private servicioCiudades:ServicioCiudades,
+              private formBuilder:FormBuilder,
               private servicioProvincias:ServicioProvincias,
+              private router:Router,
               private _activateRoute:ActivatedRoute) {
-                //obtener los parametros de la ulr para tener los datos del empleador
-
-
+    //obtener los parametros de la ulr para tener los datos del empleador
+    this.crearFormulario();
   }
 
   ngOnInit() {
     this.instanciaEmpleador=new EmpleadorModel;
     this.provincias();
-    this.formValidarEmpleador();
+    this.cargarDataFormulario();
+  }
+  crearFormulario(){
+    this.formEmpleador=this.formBuilder.group({
+      razonSocial:[''],
+      tipoEmpresa:[''],
+      actividadEconomica:[''],
+      numeroRuc:[''],
+      cedula:[''],
+      nomRepresentanteLegal:[''],
+      telefono:[''],
+      provincia:[''],
+      ciudad:[''],
+      direcionDomicilio:[''],
+      observaciones:['',[Validators.required,Validators.maxLength(100)]],
+    });
+  }
+  get observacionesNoValida(){
+    return this.formEmpleador.get('observaciones').invalid &&  this.formEmpleador.get('observaciones').touched;
   }
 
-  formValidarEmpleador(){
+  cargarDataFormulario(){
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.externalEmpleador=params['external_em'];
       this.servicioEmpleador.obtenerEmpleadorExternal_em(params['external_em']).subscribe(
         siHacesBien=>{
-          console.log(siHacesBien);
           //encontro estudiante estado==0
           if(siHacesBien["Siglas"]=="OE"){
-            console.log( siHacesBien['Siglas']);
+            console.log(this.instanciaEmpleador);
             this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
             this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
@@ -58,44 +77,56 @@ export class FormValidacionEmpleadorComponent implements OnInit {
             this.instanciaEmpleador.nom_representante_legal=siHacesBien['mensaje']['nom_representante_legal'];
             this.instanciaEmpleador.num_ruc=siHacesBien['mensaje']['num_ruc'];
             this.instanciaEmpleador.observaciones=siHacesBien['mensaje']['observaciones'];
-            console.log(this.instanciaEmpleador.estado);
             this.encontrado=true;
+            //cargo los datos al formulario
+            this.formEmpleador.reset({
+              razonSocial:this.instanciaEmpleador.razon_empresa,
+              tipoEmpresa:this.instanciaEmpleador.tipo_empresa,
+              actividadEconomica:this.instanciaEmpleador.actividad_ruc,
+              numeroRuc:this.instanciaEmpleador.num_ruc,
+              cedula:this.instanciaEmpleador.cedula,
+              nomRepresentanteLegal:this.instanciaEmpleador.nom_representante_legal,
+              telefono:this.instanciaEmpleador.telefono,
+              provincia:this.instanciaEmpleador.fk_provincia,
+              ciudad:this.instanciaEmpleador.fk_ciudad,
+              direcionDomicilio:this.instanciaEmpleador.direccion,
+              observaciones:this.instanciaEmpleador.observaciones
+            });
+            this.formEmpleador.disable();
+            this.formEmpleador.controls['observaciones'].enable();
           }
           //no encontro estudiantes que tengan estado ==1
           else{
             this.encontrado=false;
           }
         },peroSiTenemosErro=>{
-
-          console.log(peroSiTenemosErro);
+          Swal('Ups', peroSiTenemosErro['mensaje'], 'info')
         }
       );
     });
   }
   escucharSelectProvincia(idProvincia){
-    console.log(idProvincia);
     this.servicioCiudades.listarCiudades(idProvincia).subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           this.arrayCiudad=siHaceBien;
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Ups', siHaceMal['mensaje'], 'info')
       }
     );
   }
   provincias(){
     this.servicioProvincias.listarProvincias().subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           this.arrayProvincias=siHaceBien;
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Ups', siHaceMal['mensaje'], 'info')
       }
     );
   }
  //aprobar postulante //y tambien no aprobar estudiante
- onSubmitForEmpleadorAprobacion(formularioAprobacion:NgForm){
-  if(formularioAprobacion.invalid){
+ onSubmitForEmpleadorAprobacion(){
+  if(this.formEmpleador.invalid){
+
     const toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -103,10 +134,12 @@ export class FormValidacionEmpleadorComponent implements OnInit {
       timer: 3000
     });
     toast({
-      type: 'info',
-      title: 'Debe poner un comentario'
+      type: 'error',
+      title: 'Debe completar los campos requeridos'
     })
-    return;
+    return Object.values(this.formEmpleador.controls).forEach(contol=>{
+      contol.markAsTouched();
+    });
   }
 
   Swal({
@@ -123,9 +156,18 @@ export class FormValidacionEmpleadorComponent implements OnInit {
     siHacesBien=>{
       Swal.close();
       if(siHacesBien['Siglas']=="OE"){
-        Swal('Registrado', 'Información registrada con éxito', 'success');
+        const toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        toast({
+          type: 'success',
+          title: 'Registrado'
+        })
+        this.router.navigateByUrl('/panel-admin/tareas');
         }else{
-          console.log(siHacesBien);
           Swal('Ups', siHacesBien['mensaje'], 'info')
         }
 
