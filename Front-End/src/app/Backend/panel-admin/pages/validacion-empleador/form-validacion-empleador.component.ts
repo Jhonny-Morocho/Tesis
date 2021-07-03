@@ -63,7 +63,6 @@ export class FormValidacionEmpleadorComponent implements OnInit {
         siHacesBien=>{
           //encontro estudiante estado==0
           if(siHacesBien["Siglas"]=="OE"){
-            console.log(this.instanciaEmpleador);
             this.instanciaEmpleador.razon_empresa=siHacesBien['mensaje']['razon_empresa'];
             this.instanciaEmpleador.actividad_ruc=siHacesBien['mensaje']['actividad_ruc'];
             this.instanciaEmpleador.cedula=siHacesBien['mensaje']['cedula'];
@@ -126,7 +125,6 @@ export class FormValidacionEmpleadorComponent implements OnInit {
  //aprobar postulante //y tambien no aprobar estudiante
  onSubmitForEmpleadorAprobacion(){
   if(this.formEmpleador.invalid){
-
     const toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -148,6 +146,7 @@ export class FormValidacionEmpleadorComponent implements OnInit {
     text:'Espere por favor'
   });
   Swal.showLoading();
+  this.instanciaEmpleador.observaciones=this.formEmpleador.value.observaciones;
   this.servicioEmpleador.actulizarAprobacionEmpleador(
                 Number(this.instanciaEmpleador.estado),
                 this.externalEmpleador,

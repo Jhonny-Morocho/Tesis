@@ -1,7 +1,7 @@
 <navTab-empleador></navTab-empleador>
 <!-- ============= YA LLENO EL FORMULARIO PUEDE EDITARLO =========== -->
 <!-- ============= YA LLENO EL FORMULARIO PUEDE EDITARLO =========== -->
-<div class="content-wrapper animated fadeIn" *ngIf="booleanFormularioCompletado && obervaciones" >
+<div class="content-wrapper animated fadeIn" *ngIf="!formValidado && obervaciones" >
   <div class="card">
       <article class="card-body">
           <div class="alert simple-danger" >
@@ -186,7 +186,7 @@
               </div>
 
               <div class="col-12">
-                  <button type="submit" class="btn btn-success" [disabled]="booleanFormRegistro">
+                  <button type="submit" class="btn btn-success" [disabled]="booleanFormularioCompletado">
                     <i class="fas fa-save"></i> Reenviar
                   </button>
               </div>

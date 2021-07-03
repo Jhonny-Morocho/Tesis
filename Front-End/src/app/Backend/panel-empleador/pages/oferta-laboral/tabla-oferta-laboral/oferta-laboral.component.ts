@@ -42,9 +42,7 @@ export class OfertaLaboralComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioOferta.listarOfertasLaboralesExternal_us().subscribe(
       siHacesBien=>{
-        console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
-        console.log(this.ofertasLaborales);
         //data table
         //cargamos los items o los requisitos
 
@@ -55,7 +53,7 @@ export class OfertaLaboralComponent implements OnInit {
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn(peroSiTenemosErro);
+        Swal('Ups', peroSiTenemosErro['mensaje'], 'info')
       }
     );
    }
@@ -80,7 +78,6 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaVer.correo=localStorage.getItem("correo");
 
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
-    console.log(this.instanciaOfertaVer);
     $('#exampleModal').modal('show');
 
   }
@@ -89,9 +86,7 @@ export class OfertaLaboralComponent implements OnInit {
   }
   eliminarOfertaLaboral(external_of:string,nombreTitulo:string,index:number){
 
-    console.log(external_of);
     // ocupo el servicio
-
      Swal({
        title: '¿Esta seguro?',
        text: "Se eliminara  "+nombreTitulo,
@@ -106,16 +101,13 @@ export class OfertaLaboralComponent implements OnInit {
          this.instanciaOfertaLaboralActualizar.external_of=external_of;
          this.servicioOferta.eliminarOfertaLaboral(this.instanciaOfertaLaboralActualizar).subscribe(
            siHaceBien=>{
-             console.log("tpdp bnien");
-             console.log(index);
              //elimino visualmente
              this.ofertasLaborales.splice(index,1); //desde la posición 2, eliminamos 1 elemento
              Swal('Eliminado', 'El registro ha sido eliminada con Exito', 'success');
-             console.log(siHaceBien);
+
            },(peroSiTenemosErro)=>{
-             console.warn("TODO MAL");
-             console.log(peroSiTenemosErro);
-             Swal('Ups, No se puede realizar el registro'+peroSiTenemosErro['mensaje'], 'info')
+
+             Swal('Ups',peroSiTenemosErro['mensaje'], 'info')
            }
          );
        }

@@ -134,3 +134,19 @@
 
 
 
+[2021-07-03 00:50:46] Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador@hotmail.com ]
+
+
+
+[2021-07-03 00:51:33] Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador@hotmail.com ]
+
+
+
+[2021-07-03 00:53:08] Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador@hotmail.com ]
+
+
+
+[2021-07-03 00:53:21] Registro Formulario Empleador:: Estado de correo enviado al empleador : false::: Correo del encargado  es: encargado.unl@gmail.com Correo del empleador es :empleador@hotmail.com ]
+
+
+

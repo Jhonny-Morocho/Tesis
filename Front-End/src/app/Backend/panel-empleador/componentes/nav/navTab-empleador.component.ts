@@ -15,7 +15,7 @@ declare var $:any;
 export class NabPanelEmpleador implements OnInit {
   instanciaUsuario:UsuarioModel=new UsuarioModel;
   dominio=environment;
-  estadoValidacion=false;
+  estadoValidacion:boolean;
   //puede visualizar la opcion de ofertas laborale cuandoe ste validado
   constructor(private _router:Router,
             private servicioEmpleador:SerivicioEmpleadorService,
@@ -39,12 +39,14 @@ export class NabPanelEmpleador implements OnInit {
    empleadorValidadoForm(){
     this.servicioEmpleador.listarFormEmpleador().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         if(siHacesBien['mensaje']['estado']==1){
           this.estadoValidacion=true;
+        }else{
+          this.estadoValidacion=false;
         }
       },siHaceMal=>{
-        console.warn(siHaceMal);
+        Swal('Error', siHaceMal['mensaje'], 'error');
+
       }
     );
    }

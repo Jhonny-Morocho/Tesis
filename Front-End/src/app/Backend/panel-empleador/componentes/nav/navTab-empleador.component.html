@@ -3,7 +3,7 @@
     <!-- Navbar -->
     <app-navbar [usuario]="instanciaUsuario.correo"></app-navbar>
 
-    
+
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -19,7 +19,7 @@
                             <i class="far fa-circle nav-icon"></i>
                             <p>Formulario de registro</p>
                         </a>
-                        <a *ngIf="estadoValidacion==true" routerLinkActive="active" [routerLink]="['/panel-empleador/oferta-laboral']" class="nav-link ">
+                        <a *ngIf="estadoValidacion" routerLinkActive="active" [routerLink]="['/panel-empleador/oferta-laboral']" class="nav-link ">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Ofertas Laborales</p>
                         </a>
