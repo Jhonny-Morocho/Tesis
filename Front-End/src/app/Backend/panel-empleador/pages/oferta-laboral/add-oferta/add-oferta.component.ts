@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import { OfertasLaboralesService } from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
- declare var JQuery:any;
+import {summernoteConfig} from 'src/app/templateSumerNote/configSumerNote';
+declare var JQuery:any;
  declare var $:any;
 
 @Component({
@@ -25,28 +26,8 @@ export class AddOfertaComponent implements OnInit {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     //inicializo por que el formulario por template no funcion con esta extencion
     $(function() {
-      //Add text editor
-      $('#compose-textarea').summernote({
-          placeholder: '<ul>'+
-          '<li>Primer requisito</li>'+
-          '<li>Segundo requisito</li>'+
-          '<li>Tercer requisito</li>'+
-          '<li>Cuarto Requisito</li>'+
-        '</ul>',
-          tabsize: 0,
-          height: 200,
-          toolbar: [
-              ['style', [false]],
-              ['font', ['bold', 'underline', false]],
-              ['fontsize', [false]],
-              ['para', ['ul', false, false]],
-              ['table', [false]],
-              ['height', [false]],
-              ['insert', [false, false, false]]
-          ]
-      })
+      $('#compose-textarea').summernote(summernoteConfig);
     })
-    //reiniciio siempre el script
   }
   crearFormulario(){
     this.formOfertaLaboral=this.formBuilder.group({
@@ -99,7 +80,7 @@ export class AddOfertaComponent implements OnInit {
               type: 'success',
               title: 'Registrado'
             })
-            this.router.navigateByUrl('/panel-empleador/oferta-laboral');
+            this.router.navigateByUrl('panel-admin/validar-oferta-laboral');
           }else{
             Swal('Ups', siHaceBien['mensaje'], 'info')
           }

@@ -29,6 +29,7 @@
         "moment": "^2.29.1",
         "ng-starrating": "^1.0.7",
         "ng2-pdf-viewer": "^6.1.2",
+        "ngx-ui-switch": "^8.0.0",
         "pdfmake": "^0.1.71",
         "rxjs": "~6.3.3",
         "sweetalert2": "^7.0.0",

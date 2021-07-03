@@ -111,6 +111,7 @@ class OfertaLaboralController extends Controller
                     )
             ->where("oferta_laboral.estado",">=",1)
             ->where("oferta_laboral.estado","<=",4)
+            ->orderBy('oferta_laboral.id', 'DESC')
             ->get();
             return response()->json(["mensaje"=>$ObjOfertasLaborales,
                                         "Siglas"=>"OE",200]);

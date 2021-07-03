@@ -66,7 +66,7 @@ import { MiPerfilPostulanteComponent } from 'src/app/Backend/panel-postulante/pa
 import { MiPerfilEmpleadorComponent } from 'src/app/Backend/panel-empleador/pages/mi-perfil-empleador/mi-perfil-empleador.component';
 import { RatingModule } from 'ng-starrating';
 import { FooterComponent } from './Backend/componentes/footer/footer.component';
-
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 @NgModule({
   declarations: [
@@ -129,7 +129,16 @@ import { FooterComponent } from './Backend/componentes/footer/footer.component';
     DataTablesModule,
     RatingModule,
     //FORM REACTIVOS
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UiSwitchModule.forRoot({
+      size: 'large',
+      color: 'rgb(0, 189, 99)',
+      switchColor: '#80FFA2',
+      defaultBgColor: '#00ACFF',
+      defaultBoColor : '#476EFF',
+      checkedLabel: 'Aprobado',
+      uncheckedLabel: 'No aprobado'
+    })
   ],
   providers: [
     DatePipe

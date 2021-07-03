@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { summernoteConfig } from 'src/app/templateSumerNote/configSumerNote';
 declare var JQuery:any;
 declare var $:any;
 @Component({
@@ -13,8 +15,10 @@ declare var $:any;
 export class FormValidarOfertaLaboralComponent implements OnInit {
   instanciaOfertaLaboral:OfertaLaboralModel;
   desactivarBotonGuardar=false;
+  encontrado:boolean;
   constructor(private _activateRoute:ActivatedRoute,
-    private servicioOfertaLaboral:OfertasLaboralesService) { }
+              private router:Router,
+              private servicioOfertaLaboral:OfertasLaboralesService) { }
 
   ngOnInit() {
     this.cargarDatosOfertaLaboral();
@@ -29,6 +33,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
             console.log(suHacesBien);
             //encontro estudiante estado==0
             if(suHacesBien["Siglas"]=="OE"){
+              this.encontrado=true;
               this.instanciaOfertaLaboral.puesto=suHacesBien["mensaje"]['puesto'];
               this.instanciaOfertaLaboral.descripcion=suHacesBien["mensaje"]['descripcion'];
               this.instanciaOfertaLaboral.lugar=suHacesBien["mensaje"]['lugar'];
@@ -36,38 +41,20 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
               this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
               this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
               this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
-
               $(function() {
-                //Add text editor
-                $('#compose-textarea').summernote({
-                    placeholder: 'Ingresa los items de requisitos',
-                    tabsize: 2,
-                    toolbar: [
-                        ['style', [false]],
-                        ['font', [false, false, false]],
-                        ['color', [false]],
-                        ['para', ['ul', false, false]],
-                        ['table', [false]],
-                        ['insert', [false, false, false]],
-                        ['view', [false, false, false]]
-                    ]
-                })
+                $('#compose-textarea').summernote(summernoteConfig);
                 $('#compose-textarea').summernote('disable');
               })
-
             }else{
-              console.log("no encontrado");
-              //this.encontrado=false;
+              this.encontrado=false;
             }
         },peroSiTenemosErro=>{
-
-          console.log(peroSiTenemosErro);
+          Swal('Error', peroSiTenemosErro['mensaje'], 'error')
         }
       )
     });
   }
   onSubMitEditarOfertaLaboral(formValidarOfertaLaboral:NgForm){
-    console.log(formValidarOfertaLaboral);
     if(formValidarOfertaLaboral.invalid){
       return;
     }
@@ -83,7 +70,17 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
         console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Información registrada con éxito', 'success');
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
+          this.router.navigateByUrl('/panel-admin/validar-oferta-laboral');
         }else{
           Swal('Ups', siHacesBien['mensaje'], 'info')
         }
@@ -96,21 +93,20 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
 
 
   }
-  //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
-  estadoAprobado(estado:Number){
-    //console.log(estado);
-
-    if(estado==1){
-      this.instanciaOfertaLaboral.estado=1;
+  estadoOferta(){
+    if(this.instanciaOfertaLaboral.estado==1){
       return false;
     }
-    if(estado==2){
-      this.instanciaOfertaLaboral.estado=2;
+    if(this.instanciaOfertaLaboral.estado==2){
       return true;
     }
-    if(estado==3 || estado==4 ){
-      this.desactivarBotonGuardar=true;
+  }
+  onChangeOferta(event){
+    if(event==true){
+      this.instanciaOfertaLaboral.estado=2;
     }
-
+    if(event==false){
+      this.instanciaOfertaLaboral.estado=1;
+    }
   }
 }

@@ -4,7 +4,8 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { summernoteConfig } from 'src/app/templateSumerNote/configSumerNote';
 declare var JQuery:any;
 declare var $:any;
 @Component({
@@ -12,98 +13,101 @@ declare var $:any;
   templateUrl: './edit-oferta.component.html'
 })
 export class EditOfertaComponent implements OnInit {
-  estadoRevisionform:boolean=false;
+  formOfertaLaboral:FormGroup;
+  ofertaRevisad:boolean;
   instanciaOfertaLaboral:OfertaLaboralModel;
-  constructor(private _activateRoute:ActivatedRoute,private router:Router,
-    private servicioOfertaLaboral:OfertasLaboralesService) { }
-
-  ngOnInit() {
-    //inicializo el formulario con los datos de la oferta laboral
-    this.cargarDatosOfertaLaboral();
-
-
+  constructor(private _activateRoute:ActivatedRoute,
+              private router:Router,
+              private formBuilder:FormBuilder,
+              private servicioOfertaLaboral:OfertasLaboralesService) {
+    this.crearFormulario();
   }
 
+  ngOnInit() {
+    this.instanciaOfertaLaboral=new OfertaLaboralModel();
+    //inicializo el formulario con los datos de la oferta laboral
+    this.cargarDatosOfertaLaboral();
+  }
+  crearFormulario(){
+    this.formOfertaLaboral=this.formBuilder.group({
+      puesto:['',[Validators.required,Validators.maxLength(50)]],
+      descripcion:['',[Validators.required,Validators.maxLength(200)]],
+      lugar:['',[Validators.required,Validators.maxLength(100)]],
+      requisitos:['',[Validators.required,Validators.maxLength(100)]],
+    });
+  }
   textAreaEditor(estado:boolean){
-    if(estado==true){
+    if(estado){
       $(function() {
-        //Add text editor
-        $('#compose-textarea').summernote({
-            placeholder: 'Ingresa los items de requisitos',
-            tabsize: 2,
-            toolbar: [
-                ['style', [false]],
-                ['font', [false, false, false]],
-                ['color', [false]],
-                ['para', ['ul', false, false]],
-                ['table', [false]],
-                ['insert', [false, false, false]],
-                ['view', [false, false, false]]
-            ]
-        })
-       })
+        $('#compose-textarea').summernote(summernoteConfig);
+      })
     }else{
       $(function() {
-        //Add text editor
-        $('#compose-textarea').summernote({
-            placeholder: 'Ingresa los items de requisitos',
-            tabsize: 2,
-            toolbar: [
-                ['style', [false]],
-                ['font', [false, false, false]],
-                ['color', [false]],
-                ['para', ['ul', false, false]],
-                ['table', [false]],
-                ['insert', [false, false, false]],
-                ['view', [false, false, false]]
-            ]
-        })
-        $('#compose-textarea').summernote('disable');
-       })
+        $('#compose-textarea').summernote(summernoteConfig);
+      })
+      $('#compose-textarea').summernote('disable');
     }
   }
   cargarDatosOfertaLaboral(){
-    this.instanciaOfertaLaboral=new OfertaLaboralModel();
     //obtener los parametros de la ulr para tener los datos del empleador
     this._activateRoute.params.subscribe(params=>{
       //consumir el servicio
       this.servicioOfertaLaboral.obtenerOfertaLaboralExternal_of(params['external_of']).subscribe(
-        suHacesBien=>{
-            console.log(suHacesBien);
-            //encontro estudiante estado==0
-            if(suHacesBien["Siglas"]=="OE"){
+        siHacesBien=>{
+            if(siHacesBien["Siglas"]=="OE"){
               this.instanciaOfertaLaboral.estado=1;
               this.instanciaOfertaLaboral.obervaciones="";
-              this.instanciaOfertaLaboral.puesto=suHacesBien["mensaje"]['puesto'];
-              this.instanciaOfertaLaboral.descripcion=suHacesBien["mensaje"]['descripcion'];
-              this.instanciaOfertaLaboral.lugar=suHacesBien["mensaje"]['lugar'];
-              this.instanciaOfertaLaboral.requisitos=suHacesBien["mensaje"]['requisitos'];
-              this.instanciaOfertaLaboral.external_of=suHacesBien["mensaje"]['external_of'];
-              this.instanciaOfertaLaboral.obervaciones=suHacesBien["mensaje"]['obervaciones'];
-              this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
-               // si ahun no esta validada la oferta laboral entonces se pone en disable
-               if(this.instanciaOfertaLaboral.obervaciones.length>0 &&  this.instanciaOfertaLaboral.estado==1){
-                this.estadoRevisionform=true;
-                this.textAreaEditor(this.estadoRevisionform);
-                }else{
-                  this.textAreaEditor(this.estadoRevisionform);
+              this.instanciaOfertaLaboral.puesto=siHacesBien["mensaje"]['puesto'];
+              this.instanciaOfertaLaboral.descripcion=siHacesBien["mensaje"]['descripcion'];
+              this.instanciaOfertaLaboral.lugar=siHacesBien["mensaje"]['lugar'];
+              this.instanciaOfertaLaboral.requisitos=siHacesBien["mensaje"]['requisitos'];
+              this.instanciaOfertaLaboral.external_of=siHacesBien["mensaje"]['external_of'];
+              this.instanciaOfertaLaboral.obervaciones=siHacesBien["mensaje"]['obervaciones'];
+              this.instanciaOfertaLaboral.estado=siHacesBien["mensaje"]['estado'];
+              //cargamos los datos en el formulario
+              this.formOfertaLaboral.setValue(
+                {
+                puesto:this.instanciaOfertaLaboral.puesto,
+                descripcion:this.instanciaOfertaLaboral.descripcion,
+                lugar:this.instanciaOfertaLaboral.lugar,
+                requisitos:this.instanciaOfertaLaboral.requisitos
                 }
-              
+              );
+              // si ahun no esta validada la oferta laboral entonces se pone en disable
+              if(this.instanciaOfertaLaboral.obervaciones.length>0 &&  this.instanciaOfertaLaboral.estado==1){
+                this.ofertaRevisad=true;
+                this.textAreaEditor(this.ofertaRevisad);
+                //this.formOfertaLaboral.disable();
+              }else{
+                this.ofertaRevisad=false;
+                this.textAreaEditor(this.ofertaRevisad);
+                this.formOfertaLaboral.disable();
+              }
             }else{
-              console.log("no encontrado");
-              //this.encontrado=false;
+              Swal('Ups', siHacesBien['mensaje'], 'info')
             }
         },peroSiTenemosErro=>{
-     
-          console.log(peroSiTenemosErro);
+          Swal('Error', peroSiTenemosErro['mensaje'], 'error')
         }
       )
     });
   }
-  onSubMitEditarOfertaLaboral(formEditarOfertaLaboral:NgForm){
-    console.log(formEditarOfertaLaboral);
-    if(formEditarOfertaLaboral.invalid){
-      return;
+  onSubMitEditarOfertaLaboral(){
+    this.formOfertaLaboral.get('requisitos').setValue($('#compose-textarea').val());
+    if(this.formOfertaLaboral.invalid){
+      const toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      toast({
+        type: 'error',
+        title: 'Debe llenar todos los campos correctamente'
+      })
+      return Object.values(this.formOfertaLaboral.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
     Swal({
       allowOutsideClick:false,
@@ -111,26 +115,56 @@ export class EditOfertaComponent implements OnInit {
       text:'Espere por favor'
     });
     Swal.showLoading();
-
+    this.instanciaOfertaLaboral.estado=1;
     this.instanciaOfertaLaboral.obervaciones="";
-    this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
+    this.instanciaOfertaLaboral.puesto=this.formOfertaLaboral.value.puesto;
+    this.instanciaOfertaLaboral.descripcion=this.formOfertaLaboral.value.descripcion;
+    this.instanciaOfertaLaboral.lugar=this.formOfertaLaboral.value.lugar;
+    this.instanciaOfertaLaboral.requisitos=this.formOfertaLaboral.value.requisitos;
+
     this.servicioOfertaLaboral.actulizarDatosOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
-          Swal('Registrado', 'Información Registrada con Éxito', 'success');
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+          });
+          toast({
+            type: 'success',
+            title: 'Actualizado'
+          })
           this.router.navigateByUrl("/panel-empleador/oferta-laboral");
         }else{
-          Swal('Ups, No se puede realizar el registro'+siHacesBien['mensaje'], 'info')
+          Swal('Ups', siHacesBien['mensaje'], 'info')
         }
 
       },error=>{
-        console.log(error);
+        Swal('Error', error['mensaje'], 'error')
       }
 
     );
-    
+  }
 
+  get puestoNoValido(){
+    return this.formOfertaLaboral.get('puesto').invalid &&  this.formOfertaLaboral.get('puesto').touched;
+  }
+
+
+
+  get descripcionNoValido(){
+    return this.formOfertaLaboral.get('descripcion').invalid &&  this.formOfertaLaboral.get('descripcion').touched;
+  }
+
+
+
+  get lugarNoValido(){
+    return this.formOfertaLaboral.get('lugar').invalid &&  this.formOfertaLaboral.get('lugar').touched;
+  }
+
+  get requisitosNoValido(){
+    return this.formOfertaLaboral.get('requisitos').invalid &&  this.formOfertaLaboral.get('requisitos').touched;
   }
 }

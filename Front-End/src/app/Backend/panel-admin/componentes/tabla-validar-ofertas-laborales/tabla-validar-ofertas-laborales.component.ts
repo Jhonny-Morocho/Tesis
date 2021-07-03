@@ -11,7 +11,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { DatePipe } from '@angular/common';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
-
+import Swal from 'sweetalert2';
 declare var JQuery:any;
 declare var $:any;
 @Component({
@@ -63,29 +63,24 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
 
 
   filtrarOfertas(formFiltro:NgForm){
-    console.log(formFiltro);
     if(formFiltro.invalid){
-
       return;
     }
     this.filtrarDatosFecha(this.instanciaFiltro.de,
     this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
   }
   cargarTodasOfertas(){
-  //listamos todas las ofertas
-  this.servicioOferta.listarTodasLasOfertas().subscribe(
-    siHacesBien=>{
-      console.log("TODO BIEN");
-      this.ofertasLaborales =siHacesBien;
-      console.log(this.ofertasLaborales);
-        //reportes
-      this.dtTrigger.next();
-    },
-    (peroSiTenemosErro)=>{
-      console.warn(peroSiTenemosErro);
-    }
-  );
-  console.log(this.itemTabla);
+    //listamos todas las ofertas
+    this.servicioOferta.listarTodasLasOfertas().subscribe(
+      siHacesBien=>{
+        this.ofertasLaborales =siHacesBien;
+          //reportes
+        this.dtTrigger.next();
+      },
+      (peroSiTenemosErro)=>{
+        Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
+      }
+    );
   }
 
   verOfertaModal(id:Number){
@@ -102,7 +97,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     //obtengo todos los usuarios
     this.servicioEmpleador.listarEmpleadores().subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           siHaceBien.forEach(element => {
             //comparo el fk_empleador con el id de usuario
             if(element['id']== this.instanciaOfertaVer.fk_empleador){
@@ -116,7 +110,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
             }
           });
       },error=>{
-        console.log(error);
+        Swal('Error',error['mensaje'], 'error');
       });
 
     $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
@@ -133,9 +127,6 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
   }
 
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
-    console.log(fechade);
-    console.log(fechaHasta);
-    console.log(estado);
     this.servicioOferta.listarTodasLasOfertas().subscribe(
       siHacesBien=>{
         //creamos una arreglo auxiliar
@@ -146,21 +137,18 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
               fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
               estado==element['estado'] && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
-              console.log("xx");
             }
             //los que no estan validado no validado
             if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
             fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
              estado==9 && (element['obervaciones']).length==0){
             aux.push(element);
-            console.log("xx");
             }
             //ver todos
             if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
                 fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
                  estado==0 ){
             aux.push(element);
-            console.log("xx");
             }
         });
         this.ofertasLaborales=aux;
@@ -172,7 +160,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn(peroSiTenemosErro);
+        Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
       }
     );
   }
@@ -207,3 +195,5 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.dtTrigger.unsubscribe();
   }
 }
+
+
