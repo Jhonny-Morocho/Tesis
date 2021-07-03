@@ -23,6 +23,7 @@ export class AddOfertaComponent implements OnInit {
 
   ngOnInit() {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
+    //inicializo por que el formulario por template no funcion con esta extencion
     $(function() {
       //Add text editor
       $('#compose-textarea').summernote({
@@ -32,7 +33,7 @@ export class AddOfertaComponent implements OnInit {
           '<li>Tercer requisito</li>'+
           '<li>Cuarto Requisito</li>'+
         '</ul>',
-          tabsize: 2,
+          tabsize: 0,
           height: 200,
           toolbar: [
               ['style', [false]],
@@ -52,18 +53,12 @@ export class AddOfertaComponent implements OnInit {
       puesto:['',[Validators.required,Validators.maxLength(50)]],
       descripcion:['',[Validators.required,Validators.maxLength(200)]],
       lugar:['',[Validators.required,Validators.maxLength(100)]],
-      requisitos:['',[Validators.required,Validators.maxLength(100)]]
+      requisitos:['',[Validators.required,Validators.maxLength(100)]],
     });
   }
   onSubMitRegistroOfertaLaboral(){
-    //var textAreaRequisitos = $('#compose-textarea').val();
-    this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
-    this.instanciaOfertaLaboral.estado=1;
-    this.instanciaOfertaLaboral.obervaciones="";
-    //console.log(textAreaRequisitos);
-    console.log(this.formOfertaLaboral);
-    console.log(this.instanciaOfertaLaboral);
-    if(this.formOfertaLaboral.invalid){
+    this.formOfertaLaboral.get('requisitos').setValue($('#compose-textarea').val());
+    if(this.formOfertaLaboral.invalid ){
       const toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -84,27 +79,37 @@ export class AddOfertaComponent implements OnInit {
       text:'Espere por favor'
       });
       Swal.showLoading();
-     this.servicioOfertaLaboral.crearOfertasLaborales(this.instanciaOfertaLaboral).subscribe(
+      this.instanciaOfertaLaboral.estado=1;
+      this.instanciaOfertaLaboral.obervaciones="";
+      this.instanciaOfertaLaboral.puesto=this.formOfertaLaboral.value.puesto;
+      this.instanciaOfertaLaboral.descripcion=this.formOfertaLaboral.value.descripcion;
+      this.instanciaOfertaLaboral.lugar=this.formOfertaLaboral.value.lugar;
+      this.instanciaOfertaLaboral.requisitos=this.formOfertaLaboral.value.requisitos;
+      this.servicioOfertaLaboral.crearOfertasLaborales(this.instanciaOfertaLaboral).subscribe(
        siHaceBien=>{
           console.log(siHaceBien);
           if(siHaceBien['Siglas']=="OE"){
-            console.log(siHaceBien);
-            Swal('Registrado', 'Información registrada con éxito', 'success');
+            const toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 5000
+            });
+            toast({
+              type: 'success',
+              title: 'Registrado'
+            })
             this.router.navigateByUrl('/panel-empleador/oferta-laboral');
           }else{
-            console.warn(siHaceBien);
             Swal('Ups', siHaceBien['mensaje'], 'info')
           }
        },error=>{
-         console.log(error);
+         Swal('Error', error['mensaje'], 'error')
        }
      );
   }
   get puestoNoValido(){
     return this.formOfertaLaboral.get('puesto').invalid &&  this.formOfertaLaboral.get('puesto').touched;
-  }
-  get puestoVacio(){
-    return this.formOfertaLaboral.get('puesto').value;
   }
 
 
@@ -112,24 +117,15 @@ export class AddOfertaComponent implements OnInit {
   get descripcionNoValido(){
     return this.formOfertaLaboral.get('descripcion').invalid &&  this.formOfertaLaboral.get('descripcion').touched;
   }
-  get descripcionVacio(){
-    return this.formOfertaLaboral.get('descripcion').value;
-  }
+
 
 
   get lugarNoValido(){
     return this.formOfertaLaboral.get('lugar').invalid &&  this.formOfertaLaboral.get('lugar').touched;
   }
-  get lugarVacio(){
-    return this.formOfertaLaboral.get('lugar').value;
-  }
-
 
   get requisitosNoValido(){
     return this.formOfertaLaboral.get('requisitos').invalid &&  this.formOfertaLaboral.get('requisitos').touched;
-  }
-  get requisitosVacio(){
-    return this.formOfertaLaboral.get('requisitos').value;
   }
 
 }

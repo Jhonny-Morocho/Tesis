@@ -11,6 +11,7 @@
           <form class="row g-3" (ngSubmit)="onSubMitRegistroOfertaLaboral()" [formGroup]="formOfertaLaboral">
               <div class="col-md-12">
                   <label for="inputPuesto" class="form-label">Puesto <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-user form-control-feedback"></i>
                   <input type="text"
                         formControlName="puesto"
                         maxlength="50"
@@ -18,9 +19,15 @@
                         [class.is-valid]="formOfertaLaboral.get('puesto').valid"
                         placeholder="Ingrese el puesto de la oferta"
                         class="form-control">
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback"  *ngIf="puestoNoValido">
+                  <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                </div>
+                <!-- end mensajes de validacion -->
               </div>
-              <div class="col-md-12">
+              <div class="col-md-6">
                   <label for="inputDescripcion" class="form-label">Descripción <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-briefcase form-control-feedback"></i>
                   <textarea class="form-control"
                             formControlName="descripcion"
                             [class.is-invalid]="descripcionNoValido"
@@ -28,9 +35,15 @@
                             placeholder="Ingrese la descripción de la oferta"
                             maxlength="200">
                   </textarea>
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback"  *ngIf="descripcionNoValido">
+                  <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                </div>
+                <!-- end mensajes de validacion -->
               </div>
-              <div class="col-md-12">
+              <div class="col-md-6">
                   <label for="inputLugar" class="form-label">Lugar <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-map-marker-alt form-control-feedback"></i>
                   <textarea class="form-control"
                             formControlName="lugar"
                             [class.is-invalid]="lugarNoValido"
@@ -38,6 +51,11 @@
                             placeholder="Ingrese el lugar de la oferta"
                             maxlength="100">
                   </textarea>
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback"  *ngIf="lugarNoValido">
+                  <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                </div>
+                <!-- end mensajes de validacion -->
               </div>
 
               <div class="col-md-12">
@@ -47,12 +65,12 @@
                             formControlName="requisitos"
                             [class.is-invalid]="requisitosNoValido"
                             [class.is-valid]="formOfertaLaboral.get('requisitos').valid"
+                            [value]=""
                             maxlength="200">
-
-                </textarea>
+                  </textarea>
               <!-- mensajes de validacion -->
-              <div class="invalid-feedback"  *ngIf="requisitosNoValido">
-                <p *ngIf="requisitosVacio==''"> <i class="fas fa-info-circle"></i> El campo requisitos es requerido</p>
+               <div class="invalid-feedback" *ngIf="requisitosNoValido" >
+                <p > <i class="fas fa-info-circle"></i> El campo requisitos es requerido</p>
               </div>
               <!-- end mensajes de validacion -->
               </div>
