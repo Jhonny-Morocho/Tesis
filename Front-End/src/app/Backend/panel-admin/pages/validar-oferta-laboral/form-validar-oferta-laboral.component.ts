@@ -84,7 +84,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
         }
 
       },error=>{
-        console.log(error);
+        Swal('Error', error['mensaje'], 'error')
       }
 
     );

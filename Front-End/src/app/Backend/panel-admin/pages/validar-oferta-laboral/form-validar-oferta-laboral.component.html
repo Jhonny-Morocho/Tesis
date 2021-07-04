@@ -17,25 +17,25 @@
                 <div class="col-md-12">
                     <label for="inputPuesto" class="form-label">Puesto</label><br>
                     <i class="fas fa-user form-control-feedback"></i>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['puesto'].errors">El Puesto es obligatorio</span>
+
                     <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required disabled>
                 </div>
                 <div class="col-md-6">
                     <label for="inputDescripcion" class="form-label">Descripción </label><br>
                     <i class="fas fa-briefcase form-control-feedback"></i>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
+
                     <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required disabled></textarea>
                 </div>
                 <div class="col-md-6">
                     <label for="inputLugar" class="form-label">Lugar</label><br>
                     <i class="fas fa-map-marker-alt form-control-feedback"></i>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['lugar'].errors">El Lugar es obligatorio</span>
+
                     <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required disabled></textarea>
                 </div>
 
                 <div class="col-md-12">
                     <label for="inputRequisitos" class="form-label">Requisitos </label><br>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['requisitos'].errors">El Numero de registro es obligatorio</span>
+
                     <textarea id="compose-textarea" class="form-control " style="height: 300px" name="requisitos" [(ngModel)]="instanciaOfertaLaboral.requisitos"></textarea>
                 </div>
                 <div class="col-md-12">
@@ -52,9 +52,6 @@
                                     [ngClass]="{'is-invalid': fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors }"
                                     required>
                         </textarea>
-                      <div class="invalid-feedback" *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">
-                        <i class="fas fa-info-circle"></i> Campo requerido
-                      </div>
                     </div>
                 </div>
                 <div class=" col-md-6 ">
@@ -63,7 +60,6 @@
                         <ui-switch (change)="onChangeOferta($event)" [disabled]="instanciaOfertaLaboral.estado>2"  [checked]="estadoOferta()"></ui-switch>
                     </div>
                 </div>
-
 
                 <div class="col-12 d-flex justify-content-center ">
                     <button type="submit "

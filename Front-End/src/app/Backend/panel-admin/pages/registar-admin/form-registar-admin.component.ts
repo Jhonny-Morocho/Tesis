@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {DocenteModel} from 'src/app/models/docente.models';
 import {SerivicioDocente} from 'src/app/servicios/docente.service';
@@ -10,51 +10,108 @@ import { Router } from '@angular/router';
 })
 export class RegistarAdminComponent implements OnInit {
   instanciaDocente:DocenteModel;
-  estadoAcestadoUsuariotivo:boolean=true;
-  constructor(private servicioDocente:SerivicioDocente,private servicioRouter:Router) { }
+  formAdmin:FormGroup;
+  constructor(private servicioDocente:SerivicioDocente,
+              private formBuilder:FormBuilder,
+              private servicioRouter:Router) {
+    this.crearFormulario();
+  }
 
   ngOnInit() {
     this.instanciaDocente=new DocenteModel();
-    this.estadoUsuarioAdmin(1);
+    //inicializo el estado activo
+    this.instanciaDocente.estado=1;
   }
-  onSubmitRegistrarAdmin(form:NgForm){
-    if(form.invalid){
-      return;
+  crearFormulario(){
+    this.formAdmin=this.formBuilder.group({
+      nombre:['',[Validators.required,Validators.maxLength(20)]],
+      apellido:['',[Validators.required,Validators.maxLength(20)]],
+      correo:['',[Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      password:['',[Validators.required,Validators.maxLength(10)]],
+      tipoUsuario:['',[Validators.required]]
+    });
+  }
+  onSubmitRegistrarAdmin(){
+    if(this.formAdmin.invalid){
+      return Object.values(this.formAdmin.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
     Swal({
       allowOutsideClick:false,
       type:'info',
       text:'Espere por favor'
     });
-
+    //envios los datos ya validados
+    this.instanciaDocente.nombre=this.formAdmin.value.nombre;
+    this.instanciaDocente.apellido=this.formAdmin.value.apellido;
+    this.instanciaDocente.correo=this.formAdmin.value.correo;
+    this.instanciaDocente.password=this.formAdmin.value.password;
+    this.instanciaDocente.tipoUsuario=this.formAdmin.value.tipoUsuario;
     Swal.showLoading();
     //this.instanciaDocente.estado=1;
     this.servicioDocente.crearDocente(this.instanciaDocente).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         if(siHacesBien['Siglas']=="OE"){
-          Swal({position: 'center',type: 'success',title: 'Registro éxitoso',showConfirmButton: false,timer: 1500})
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
           this.servicioRouter.navigateByUrl('/panel-admin/gestionar-usuarios-admin');
         }else{
-          Swal({title:'Error',type:'error',text:siHacesBien['mensaje']}); 
+          Swal({title:'Error',type:'error',text:siHacesBien['mensaje']});
         }
       },siHacesMal=>{
-        console.log(siHacesMal);
+        Swal('Error',siHacesMal['mensaje'], 'error');
       }
     );
-    
+
 
   }
 
-  estadoUsuarioAdmin(estado:Number){
-    if(estado==1){
-      this.instanciaDocente.estado=1;
-     return this.estadoAcestadoUsuariotivo=true;
+  estadoOferta(){
+    if(this.instanciaDocente.estado==1){
+      return true;
     }
-    if(estado==0){
+    if(this.instanciaDocente.estado==0){
+      return false;
+    }
+  }
+  onChangeOferta(event){
+    if(event==true){
+      this.instanciaDocente.estado=1;
+    }
+    if(event==false){
       this.instanciaDocente.estado=0;
-      return this.estadoAcestadoUsuariotivo=false;
-     }
+    }
+  }
+
+
+  get nomNoValido(){
+    return this.formAdmin.get('nombre').invalid && this.formAdmin.get('nombre').touched ;
+  }
+  get apellidoNoValido(){
+    return this.formAdmin.get('apellido').invalid && this.formAdmin.get('apellido').touched ;
+  }
+
+  get correoNoValido(){
+    return this.formAdmin.get('correo').invalid && this.formAdmin.get('correo').touched ;
+  }
+  get correoVacio(){
+    return this.formAdmin.get('correo').value ;
+  }
+
+  get passwordNoValido(){
+    return this.formAdmin.get('password').invalid && this.formAdmin.get('password').touched ;
+  }
+  get tipoUsuarioNoValido(){
+    return this.formAdmin.get('tipoUsuario').invalid && this.formAdmin.get('tipoUsuario').touched  ;
   }
 
 }

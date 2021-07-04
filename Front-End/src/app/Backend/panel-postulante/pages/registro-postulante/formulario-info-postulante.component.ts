@@ -28,9 +28,9 @@ export class FormularioInfoPostulanteComponent implements OnInit {
               private formulario:FormBuilder,
               private validadorPersonalizado:ValidadoresService,
               private ruta_:Router) {
-  this.instanciaPostulante=new PostulanteModel();
-  this.fechaActual=moment().format("YYYY-MM-DD");
-  this.crearFormulario();
+    this.crearFormulario();
+    this.instanciaPostulante=new PostulanteModel();
+    this.fechaActual=moment().format("YYYY-MM-DD");
   }
   ngOnInit() {
     //consultar si el postulante ha llenado el formulario

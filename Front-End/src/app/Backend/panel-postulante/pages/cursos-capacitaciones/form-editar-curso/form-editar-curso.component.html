@@ -19,8 +19,7 @@
                            placeholder="Ingrese el nombre del evento que asistio"
                            maxlength="40"
                            [class.is-invalid]="nomEventoNoValido"
-                           [class.is-valid]="formEditarCurso.get('nom_evento').valid"
-                           >
+                           [class.is-valid]="formEditarCurso.get('nom_evento').valid">
                     <!-- mensajes de validacion -->
                     <div class="invalid-feedback"  *ngIf="nomEventoNoValido">
                       <p> <i class="fas fa-info-circle"></i> El campo nombre del evento es obligatorio</p>

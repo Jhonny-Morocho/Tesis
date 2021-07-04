@@ -3,7 +3,7 @@ import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Est
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import { Subject } from 'rxjs';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-ofertas-postuladas',
   templateUrl: './ofertas-postuladas.component.html'
@@ -22,17 +22,15 @@ export class OfertasPostuladasComponent implements OnInit {
   }
 
   obtenrOfertasLaboralesEstudiante(){
-    console.log(this.servicioOfertaLaboralPostulante.listarTodasOfertaEstudianteExternal_us());
     this.servicioOfertaLaboralPostulante.listarTodasOfertaEstudianteExternal_us().subscribe(
       siHaceBien=>{
-        console.log((siHaceBien));
         this.ofertaLaboralPostulante=siHaceBien;
         this.dtTrigger.next();
         siHaceBien.forEach(element => {
           element.estado;
         });
       },siHaceMal=>{
-        console.log(siHaceMal);
+        Swal('Ups',siHaceMal['mensaje'], 'info');
       }
     );
   }

@@ -1,60 +1,61 @@
-<div class="container mt-5">
-    <div class="card">
-        <article class="card-body animated animate__animated animate__slideInRight">
-            <form class="row g-3" (ngSubmit)="onSubMitEditarOfertaLaboral(fValidarOfertaLaboral)" #fValidarOfertaLaboral="ngForm" enctype="multipart/form-data">
-                <h6>Publicar Oferta Laboral</h6>
 
-                <div class="col-2">
-                    <a class="float-right btn btn-outline-primary" [routerLink]="['/panel-admin/publicar-oferta-gestor']">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
-                </div>
-
-                <hr>
-                <div class="col-md-12">
-                    <label for="inputPuesto" class="form-label">Puesto</label><br>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['puesto'].errors">El Puesto es obligatorio</span>
-                    <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required disabled>
-                </div>
-                <div class="col-md-12">
-                    <label for="inputDescripcion" class="form-label">Descripción </label><br>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['descripcion'].errors">La Descripcion es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required disabled></textarea>
-                </div>
-                <div class="col-md-12">
-                    <label for="inputLugar" class="form-label">Lugar</label><br>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['lugar'].errors">El Lugar es obligatorio</span>
-                    <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required disabled></textarea>
-                </div>
-
-                <div class="col-md-12">
-                    <label for="inputRequisitos" class="form-label">Requisitos </label><br>
-                    <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['requisitos'].errors">El Numero de registro es obligatorio</span>
-                    <textarea id="compose-textarea" class="form-control " style="height: 300px" name="requisitos" [(ngModel)]="instanciaOfertaLaboral.requisitos"></textarea>
-                </div>
-                <div class="col-md-6">
+<navTab-admin></navTab-admin>
+  <div class="content-wrapper  animated animate__animated fadeIn" style="padding-bottom: 100px;">
+      <div class="card">
+          <div class="col-12 mt-2 ml-3 mb-2">
+            <h3>Publicar Oferta Laboral</h3>
+              <a class="float-left btn btn-outline-primary mt-3" [routerLink]="['/panel-admin/publicar-oferta-gestor']">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                Regresar
+              </a>
+            <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+          </div>
+          <article class="card-body">
+              <form class="row g-3" (ngSubmit)="onSubMitEditarOfertaLaboral(fValidarOfertaLaboral)" #fValidarOfertaLaboral="ngForm" enctype="multipart/form-data">
+                  <div class="col-md-12">
+                      <label for="inputPuesto" class="form-label">Puesto</label><br>
+                      <i class="fas fa-user form-control-feedback"></i>
+                      <input type="text" [(ngModel)]="instanciaOfertaLaboral.puesto" name="puesto" class="form-control" required disabled>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputDescripcion" class="form-label">Descripción </label><br>
+                      <i class="fas fa-briefcase form-control-feedback"></i>
+                      <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.descripcion" name="descripcion" required disabled></textarea>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputLugar" class="form-label">Lugar</label><br>
+                      <i class="fas fa-map-marker-alt form-control-feedback"></i>
+                      <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.lugar" name="lugar" required disabled></textarea>
+                  </div>
+                  
+                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Observaciones del encargado</label><br>
-                        <span class="text-danger " *ngIf="fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors">Debe poner un comentario</span>
                         <textarea class="form-control" [(ngModel)]="instanciaOfertaLaboral.obervaciones" name="observaciones" required disabled></textarea>
                     </div>
-                </div>
-                <div class=" col-md-6 ">
+                  </div>
+
+                  <div class="col-md-6">
+                      <label for="inputRequisitos" class="form-label">Requisitos </label><br>
+
+                      <textarea id="compose-textarea" class="form-control " style="height: 300px" name="requisitos" [(ngModel)]="instanciaOfertaLaboral.requisitos"></textarea>
+                  </div>
+
+                  <div class=" col-md-12 ">
                     <div class="form-group ">
-                        <label for="exampleFormControlTextarea1 ">Estado de publicación de oferta laboral</label><br>
-                        <button type="button " class="btn btn-outline-danger " *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==false " (click)="estadoAprobado(3) ">
-                          <i class="fas fa-times-circle "></i>No activo
-                      </button>
-                        <button type="button " class="btn btn-outline-success " *ngIf="estadoAprobado(instanciaOfertaLaboral.estado)==true " (click)="estadoAprobado(2) ">
-                          <i class="fas fa-check "></i>  Activo
-                      </button>
+                      <label for="exampleFormControlTextarea1">Estado de validación</label><br>
+                        <ui-switch (change)="onChangeOferta($event)"   [checked]="estadoOferta()"></ui-switch>
                     </div>
                 </div>
 
-                <div class="col-12 ">
-                    <button type="submit " class="btn btn-primary ">Guardar</button>
-                </div>
-            </form>
-        </article>
-    </div>
+                  <div class="col-12 d-flex justify-content-center  ">
+                      <button type="submit " class="btn btn-success "><i class="fas fa-save"></i> Registrar</button>
+                  </div>
+              </form>
+          </article>
+      </div>
 
-</div>
+  </div>
+<!-- ========= FOOTER =========== -->
+<!-- ========= FOOTER =========== -->
+<app-footer></app-footer>

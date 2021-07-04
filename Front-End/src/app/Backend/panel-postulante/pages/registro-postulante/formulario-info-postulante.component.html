@@ -12,7 +12,7 @@
         </div>
           <h3><i class="fas fa-address-card"></i> Registro de postulante</h3>
           <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 200px;">
-          <form class="row g-2" (ngSubmit)="editarPostulante()" [formGroup]="formRegistroPostulante" >
+          <form class="row g-2" (ngSubmit)="editarPostulante()" [formGroup]="formPostulante" >
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Nombres Completos <span class="text-danger">*</span></label><br>
                 <i class="fas fa-user form-control-feedback"></i>
@@ -20,7 +20,7 @@
                        maxlength="20"
                        formControlName="nombresCompleto"
                        [class.is-invalid]="nombreNoValido"
-                       [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
+                       [class.is-valid]="formPostulante.get('nombresCompleto').valid"
                        class="form-control"
                        placeholder="Ingrese sus nombres completos"
                        maxlength="20">
@@ -38,7 +38,7 @@
                        class="form-control"
                        formControlName="apellidosCompleto"
                        [class.is-invalid]="apellidoNoValido"
-                       [class.is-valid]="formRegistroPostulante.get('apellidosCompleto').valid"
+                       [class.is-valid]="formPostulante.get('apellidosCompleto').valid"
                        placeholder="Ingrese sus apellidos completos"
                        maxlength="20">
                 <!-- mensajes de validacion -->
@@ -56,7 +56,7 @@
                        formControlName="documentoIndentidad"
                        placeholder="Ingrese su documento de identidad"
                        [class.is-invalid]="documentoIdentidadNoValido"
-                       [class.is-valid]="formRegistroPostulante.get('documentoIndentidad').valid"
+                       [class.is-valid]="formPostulante.get('documentoIndentidad').valid"
                        maxlength="20">
                 <!-- mensajes de validacion -->
                 <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido ">
@@ -71,7 +71,7 @@
                       [max]="fechaActual"
                       [min]="fechaMinima"
                       [class.is-invalid]="fechaNacimientoNoValido"
-                      [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
+                      [class.is-valid]="formPostulante.get('fechaNacimiento').valid"
                        class="form-control ">
                 <!-- mensajes de validacion -->
                 <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido">
@@ -86,7 +86,7 @@
                        class="form-control"
                        formControlName="telefono"
                        [class.is-invalid]="telefonoNoValido"
-                       [class.is-valid]="formRegistroPostulante.get('telefono').valid"
+                       [class.is-valid]="formPostulante.get('telefono').valid"
                        placeholder="Ingrese su teléfono fijo o móvil"
                        maxlength="15">
                 <!-- mensajes de validacion -->
@@ -104,7 +104,7 @@
                           class="form-check-input"
                           formControlName="genero"
                           [class.is-invalid]="generoNoValido"
-                          [class.is-valid]="formRegistroPostulante.get('genero').valid "
+                          [class.is-valid]="formPostulante.get('genero').valid "
                           [value]="0"
                            >
                     <label class="form-check-label" for="validationFormCheck2"><i class="fas fa-venus "></i> Masculino</label>
@@ -114,7 +114,7 @@
                             class="form-check-input"
                             formControlName="genero"
                             [class.is-invalid]="generoNoValido"
-                            [class.is-valid]="formRegistroPostulante.get('genero').valid "
+                            [class.is-valid]="formPostulante.get('genero').valid "
                             [value]="1"
                             >
                     <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino</label>
@@ -131,7 +131,7 @@
                               rows="3"
                               formControlName="direccionDomicilio"
                               [class.is-invalid]="direccionNoValida"
-                              [class.is-valid]="formRegistroPostulante.get('direccionDomicilio').valid"
+                              [class.is-valid]="formPostulante.get('direccionDomicilio').valid"
                               placeholder="Ingrese su dirección de domicilio o laboral"
                               maxlength="30">
                     </textarea>
@@ -170,7 +170,7 @@
 
             <h3><i class="fas fa-address-card"></i> Registro de postulante</h3>
             <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 200px;">
-            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formRegistroPostulante" >
+            <form class="row g-2" (ngSubmit)="registrarPostulante()" [formGroup]="formPostulante" >
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Nombres Completos  <span class="text-danger">*</span></label><br>
                     <i class="fas fa-user form-control-feedback"></i>
@@ -178,7 +178,7 @@
                            maxlength="20"
                            formControlName="nombresCompleto"
                            [class.is-invalid]="nombreNoValido"
-                           [class.is-valid]="formRegistroPostulante.get('nombresCompleto').valid"
+                           [class.is-valid]="formPostulante.get('nombresCompleto').valid"
                            class="form-control"
                            placeholder="Ingrese sus nombres completos"
                            maxlength="20">
@@ -194,7 +194,7 @@
                            class="form-control"
                            formControlName="apellidosCompleto"
                            [class.is-invalid]="apellidoNoValido"
-                           [class.is-valid]="formRegistroPostulante.get('apellidosCompleto').valid"
+                           [class.is-valid]="formPostulante.get('apellidosCompleto').valid"
                            placeholder="Ingrese sus apellidos completos"
                            maxlength="20">
                     <!-- mensajes de validacion -->
@@ -212,7 +212,7 @@
                            formControlName="documentoIndentidad"
                            placeholder="Ingrese su documento de identidad"
                            [class.is-invalid]="documentoIdentidadNoValido"
-                           [class.is-valid]="formRegistroPostulante.get('documentoIndentidad').valid"
+                           [class.is-valid]="formPostulante.get('documentoIndentidad').valid"
                            maxlength="20">
                     <!-- mensajes de validacion -->
                     <div class="invalid-feedback"  *ngIf="documentoIdentidadNoValido ">
@@ -227,7 +227,7 @@
                           [max]="fechaActual"
                           [min]="fechaMinima"
                           [class.is-invalid]="fechaNacimientoNoValido"
-                          [class.is-valid]="formRegistroPostulante.get('fechaNacimiento').valid"
+                          [class.is-valid]="formPostulante.get('fechaNacimiento').valid"
                            class="form-control ">
                     <!-- mensajes de validacion -->
                     <div class="invalid-feedback"  *ngIf="fechaNacimientoNoValido">
@@ -242,7 +242,7 @@
                            class="form-control"
                            formControlName="telefono"
                            [class.is-invalid]="telefonoNoValido"
-                           [class.is-valid]="formRegistroPostulante.get('telefono').valid"
+                           [class.is-valid]="formPostulante.get('telefono').valid"
                            placeholder="Ingrese su teléfono fijo o móvil"
                            maxlength="15">
                     <!-- mensajes de validacion -->
@@ -259,7 +259,7 @@
                               class="form-check-input"
                               formControlName="genero"
                               [class.is-invalid]="generoNoValido"
-                              [class.is-valid]="formRegistroPostulante.get('genero').valid "
+                              [class.is-valid]="formPostulante.get('genero').valid "
                               [value]="0"
                                >
                         <label class="form-check-label" for="validationFormCheck2"><i class="fas fa-venus "></i> Masculino</label>
@@ -269,7 +269,7 @@
                                 class="form-check-input"
                                 formControlName="genero"
                                 [class.is-invalid]="generoNoValido"
-                                [class.is-valid]="formRegistroPostulante.get('genero').valid "
+                                [class.is-valid]="formPostulante.get('genero').valid "
                                 [value]="1"
                                 >
                         <label class="form-check-label" for="validationFormCheck3"><i class="fas fa-mars"></i> Femenino </label>
@@ -286,7 +286,7 @@
                                   rows="3"
                                   formControlName="direccionDomicilio"
                                   [class.is-invalid]="direccionNoValida"
-                                  [class.is-valid]="formRegistroPostulante.get('direccionDomicilio').valid"
+                                  [class.is-valid]="formPostulante.get('direccionDomicilio').valid"
                                   placeholder="Ingrese su dirección de domicilio o laboral"
                                   maxlength="30">
                         </textarea>

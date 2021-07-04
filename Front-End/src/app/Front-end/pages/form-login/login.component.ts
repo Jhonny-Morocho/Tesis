@@ -65,7 +65,6 @@ export class LoginAdminComponent implements OnInit {
   }
 
   recuperarPassword(){
-
     Swal({
       title: 'Recuperar mi contraseña',
       text: "Se enviara una nueva contraseña temporal a su correo",

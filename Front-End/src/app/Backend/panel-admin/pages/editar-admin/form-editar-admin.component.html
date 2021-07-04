@@ -1,83 +1,116 @@
-<div class="container mt-5 animate__animated    animate__slideInRight">
+
+<navTab-admin></navTab-admin>
+<div class="content-wrapper  animated animate__animated fadeIn" style="padding-bottom: 100px;">
     <div class="card ">
-        <div class="col-2">
-            <a [routerLink]="[ '/panel-admin/gestionar-usuarios-admin/'] " class="float-right btn btn-outline-primary ">
-                <i class="fa fa-arrow-left " aria-hidden="true "></i> Regresar</a>
+        <div class="col-12 mt-2 ml-3 mb-2">
+          <h3>Editar Administrador</h3>
+            <a class="float-left btn btn-outline-primary mt-3" [routerLink]="['/panel-admin/gestionar-usuarios-admin/']">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              Regresar
+            </a>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
         </div>
         <article class="card-body ">
-            <h3>Actualizar Administrador</h3>
-            <hr>
-            <form class="row g-3 " (ngSubmit)="onSubmitEditarAdmin(fEditarAdmin) " #fEditarAdmin="ngForm">
+            <form class="row g-3 " (ngSubmit)="onSubmitEditarAdmin()" [formGroup]="formAdmin">
                 <div class="col-md-6 ">
-                    <label for="inputEmail4 " class="form-label ">Nombre</label><br>
-                    <input type="texto"
-                          [(ngModel)]="instanciaDocente.nombre"
-                          name="nombre"
-                          maxlength="20"
-                          placeholder="Ingrese el nombre"
-                          [ngClass]="{'is-invalid': fEditarAdmin.submitted && fEditarAdmin.controls['nombre'].errors }"
-                          class="form-control"
-                          required>
-                    <div class="invalid-feedback"
-                      *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['nombre'].errors">
-                      El campo nombre es obligatorio
+                    <label for="inputEmail4 " class="form-label ">Nombre <span class="text-danger">*</span></label><br>
+                    <i class="fas fa-user form-control-feedback" aria-hidden="true"></i>
+                    <input type="text"
+                           formControlName="nombre"
+                           maxlength="20"
+                           placeholder="Ingrese el nombre"
+                           [class.is-invalid]="nomNoValido"
+                           [class.is-valid]="formAdmin.get('nombre').valid"
+                           class="form-control">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="nomNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
-                    <label for="inputEmail4 " class="form-label ">Apellido</label><br>
+                    <label for="inputEmail4 " class="form-label ">Apellido <span class="text-danger">*</span></label><br>
+                    <i class="fas fa-user form-control-feedback" aria-hidden="true"></i>
                     <input type="text"
-                           [(ngModel)]="instanciaDocente.apellido"
-                           name="apellido"
-                           maxlength="20"
-                           placeholder="Ingrese el apellido"
-                           [ngClass]="{'is-invalid': fEditarAdmin.submitted && fEditarAdmin.controls['apellido'].errors }"
-                           class="form-control "
-                           required>
-                    <div class="invalid-feedback"
-                      *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['apellido'].errors">
-                      El campo apellido es obligatorio
+                          formControlName="apellido"
+                          maxlength="20"
+                          placeholder="Ingrese el apellido"
+                          [class.is-invalid]="apellidoNoValido"
+                          [class.is-valid]="formAdmin.get('apellido').valid"
+                          class="form-control">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="apellidoNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
                     </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class="col-md-6 ">
                     <div class="form-group ">
-                        <label for="exampleFormControlTextarea1 ">Correo</label><br>
+                        <label for="exampleFormControlTextarea1 ">Correo <span class="text-danger">*</span></label><br>
+                        <i class="fas fa-envelope form-control-feedback" aria-hidden="true"></i>
                         <input type="email"
-                               [(ngModel)]="instanciaDocente.correo"
-                               name="correo"
+                               formControlName="correo"
+                               placeholder="Ingrese un correo"
                                class="form-control"
-                               disabled>
+                               [class.is-invalid]="correoNoValido"
+                               [class.is-valid]="formAdmin.get('correo').valid">
+                        <!-- mensajes de validacion -->
+                        <div class="invalid-feedback"  *ngIf="correoNoValido">
+                          <p *ngIf="correoVacio==''"> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                          <p *ngIf="correoNoValido && correoVacio!=''"> <i class="fas fa-info-circle"></i> Debe ingresar una dirección de correo válida</p>
+                        </div>
+                        <!-- end mensajes de validacion -->
                     </div>
                 </div>
                 <div class="col-md-6 ">
-                    <label for="inputEmail4 " class="form-label ">Contraseña</label><br>
+                    <label for="inputEmail4 " class="form-label ">Contraseña </label><br>
+                    <i class="fas fa-lock form-control-feedback" aria-hidden="true"></i>
                     <input type="password"
-                          [(ngModel)]="instanciaDocente.password"
-                          name="password"
-                          class="form-control"
-                          class="form-control"
-                          maxlength="10">
+                           formControlName="password"
+                           class="form-control"
+                           [class.is-invalid]="passwordNoValido"
+                           [class.is-valid]="passwordVacio"
+                           maxlength="10">
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="passwordNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
                 <div class=" col-md-6 ">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1 ">Estado</label><br>
-                        <button type="button" class="btn btn-outline-danger" *ngIf="estadoAcestadoUsuariotivo==false" (click)="estadoUsuarioAdmin(1) "><i class="fas fa-times-circle "></i>No Activo</button>
-                        <button type="button" class="btn btn-outline-success" *ngIf="estadoAcestadoUsuariotivo==true" (click)="estadoUsuarioAdmin(0) "><i class="fas fa-check "></i> Activo</button>
-                    </div>
+                  <div class="form-group ">
+                    <label for="exampleFormControlTextarea1">Estado </label><br>
+                      <ui-switch (change)="onChangeOferta($event)"
+                                 [checked]="estadoOferta()"
+                                 checkedLabel="Activo"
+                                 uncheckedLabel="No Activo">
+                      </ui-switch>
+                  </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Tipo Usuario</label><br>
-                    <span class="text-danger " *ngIf="fEditarAdmin.submitted && fEditarAdmin.controls['tipoUsuario'].errors">El titpo de usuario es obligatorio</span>
-                    <select class="form-control" name="tipoUsuario" [(ngModel)]="instanciaDocente.tipoUsuario" required>
-                      <option [value]="3" >Secretaria</option>
-                      <option [value]="4" >Administrador</option>
-                      <option [value]="5" >Encargado</option>
-                    </select>
+                    <label for="inputEmail4" class="form-label">Tipo Usuario <span class="text-danger">*</span></label><br>
+                    <i class="fa fa-users form-control-feedback" aria-hidden="true"></i>
+                    <select class="form-control"
+                            [class.is-invalid]="tipoUsuarioNoValido"
+                            [class.is-valid]="formAdmin.get('tipoUsuario').valid"
+                            formControlName="tipoUsuario">
+                        <option [value]="3" >Secretaria</option>
+                        <option [value]="4" >Administrador</option>
+                        <option [value]="5" >Encargado</option>
+                      </select>
+                    <!-- mensajes de validacion -->
+                    <div class="invalid-feedback"  *ngIf="tipoUsuarioNoValido">
+                      <p> <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                    </div>
+                    <!-- end mensajes de validacion -->
                 </div>
-                <div class="col-12 ">
-                    <button type="submit " class="btn btn-primary ">Actualizar</button>
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit " class="btn btn-success "> <i class="fas fa-save"></i> Actualizar</button>
                 </div>
             </form>
         </article>
     </div>
-
 </div>
+<!-- ========= FOOTER =========== -->
+<!-- ========= FOOTER =========== -->
+<app-footer></app-footer>

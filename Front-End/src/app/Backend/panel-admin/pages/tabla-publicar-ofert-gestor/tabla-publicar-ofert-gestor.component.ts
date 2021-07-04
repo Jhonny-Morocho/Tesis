@@ -5,6 +5,7 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
 declare var JQuery:any;
 declare var $:any;
@@ -42,15 +43,12 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
     //listamos los titulos academicos
     this.servicioOferta.listarOfertasValidadasEncargado().subscribe(
       siHacesBien=>{
-        console.warn("TODO BIEN");
         this.ofertasLaborales =siHacesBien;
-        console.log(this.ofertasLaborales);
-        //data table
         //cargamos los items o los requisitos
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn("TODO MAL",peroSiTenemosErro);
+        Swal('Info',peroSiTenemosErro['mensaje'], 'info');
       }
     );
    }
@@ -64,7 +62,6 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
       }
     }
     verOfertaModal(id:Number){
-      console.log("click");
       //necesito converitr o typescrip me da error
       var index=parseInt((id).toString(), 10);
 
@@ -74,16 +71,13 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
       this.instanciaOfertaVer.fk_empleador=this.ofertasLaborales[index]['fk_empleador'];
       this.instanciaOfertaVer.obervaciones=this.ofertasLaborales[index]['obervaciones'];
       this.instanciaOfertaVer.correo=this.ofertasLaborales[index]['correo'];
-      console.log( this.instanciaOfertaVer.descripcion);
       //obtengo todos los usuarios
       this.servicioEmpleador.listarEmpleadores().subscribe(
         siHaceBien=>{
-            console.log(siHaceBien);
 
             siHaceBien.forEach(element => {
               //comparo el fk_empleador con el id de usuario
               if(element['id']== this.instanciaOfertaVer.fk_empleador){
-                console.log(element);
                 this.instanciaEmpleadorModelVer.nom_representante_legal=element['nom_representante_legal'];
                 this.instanciaEmpleadorModelVer.direccion=element['direccion'];
                 this.instanciaEmpleadorModelVer.fk_provincia=element['fk_provincia'];
@@ -95,14 +89,11 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
 
             });
 
-            console.log(this.instanciaEmpleadorModelVer);
         },error=>{
-
-          console.log(error);
+          Swal('Info',error['mensaje'], 'info');
         });
 
       $("#itemRequisitos").html(  this.instanciaOfertaVer.requisitos);
-      console.log(this.instanciaOfertaVer.requisitos);
       $('#exampleModal').modal('show');
 
     }
