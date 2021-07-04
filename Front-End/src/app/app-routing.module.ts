@@ -14,11 +14,11 @@ import {PostulanteOfertas} from 'src/app/Backend/panel-admin/pages/postulante-of
 import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';
 import {FormEditarAdminComponent} from 'src/app/Backend/panel-admin/pages/editar-admin/form-editar-admin.component';
 import {RegistarAdminComponent} from 'src/app/Backend/panel-admin/pages/registar-admin/form-registar-admin.component';
-import {TablaUsuariosAdminComponent} from 'src/app/Backend/panel-admin/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import {TablaUsuariosAdminComponent} from 'src/app/Backend/panel-admin/pages/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import {FormPublicarOfertaGestorComponent} from 'src/app/Backend/panel-admin/pages/publicar-oferta-gestor/form-publicar-oferta-gestor.component';
-import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/panel-admin/componentes/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
+import {TablaPublicarOfertGestorComponent} from 'src/app/Backend/panel-admin/pages/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import {FormValidarOfertaLaboralComponent} from 'src/app/Backend/panel-admin/pages/validar-oferta-laboral/form-validar-oferta-laboral.component';
-import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
+import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/pages/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
 import {FormInfoPostulanteComponent} from 'src/app/Backend/panel-admin/pages/validacion-postulante/form-validacion-postulante.component';
 import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/registro-postulante/formulario-info-postulante.component';
 //empleador

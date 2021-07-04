@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 //pdf make
@@ -14,20 +14,27 @@ import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {ReporteOfertaModel} from 'src/app/models/reporteOfertas.models';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 import {OfertaLaboralEstudianteService} from 'src/app/servicios/ofertLaboral-Estudiante.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { OfertaLaboralModel } from '../../../../models/oferta-laboral.models';
 import { SerivicioEmpleadorService } from '../../../../servicios/servicio-empleador.service';
 import { OfertaLaboralEstudianteModel } from 'src/app/models/oferLaboral-Estudiante.models';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
+import { ValidadoresService } from 'src/app/servicios/validadores.service';
+import Swal from 'sweetalert2';
+import { DataTableDirective } from 'angular-datatables';
+import { ViewChild } from '@angular/core';
 declare var $:any;
 @Component({
   selector: 'app-reporte-ofertas',
   templateUrl: './reporte-ofertas.component.html'
 })
-export class ReporteOfertasComponent implements OnInit {
+export class ReporteOfertasComponent implements OnInit,OnDestroy {
+  @ViewChild(DataTableDirective)
   instanciaOfertaVer:OfertaLaboralModel;
+  dtElement: DataTableDirective;
   instanciaEmpleadorModelVer:EmpleadorModel;
   existeRegistros:boolean=false;
+  formfiltrarOfertas:FormGroup;
   arrayOfertaPostulante:OfertaLaboralEstudianteModel[]=[];
   //reporte
   rowsItemsReporteOfertas=[];
@@ -41,7 +48,11 @@ export class ReporteOfertasComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
               private servicioEmpelador:SerivicioEmpleadorService,
-              private datePipe: DatePipe) { }
+              private validadorPersonalizado:ValidadoresService,
+              private formBuilder:FormBuilder,
+              private datePipe: DatePipe) {
+    this.crearFormulario();
+  }
 
   ngOnInit() {
     this.instanciaFiltro=new OfertasFiltroModel();
@@ -49,6 +60,33 @@ export class ReporteOfertasComponent implements OnInit {
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.configurarParametrosDataTable();
     this.cargarTablaReporteOfertas();
+  }
+  crearFormulario(){
+    this.formfiltrarOfertas=this.formBuilder.group({
+      de:['',[Validators.required]],
+      hasta:['',[Validators.required]],
+      estado:['',[Validators.required]]
+    },{
+      validators: this.validadorPersonalizado.validarFechasInicioFinalizacion('de','hasta')
+    });
+  }
+  get estadoNoValido(){
+    return this.formfiltrarOfertas.get('estado').invalid && this.formfiltrarOfertas.get('estado').touched ;
+  }
+  get fechaDeNoValido(){
+    return this.formfiltrarOfertas.get('de').invalid && this.formfiltrarOfertas.get('de').touched ;
+  }
+  get fechaHastaNoValido(){
+    return this.formfiltrarOfertas.get('hasta').invalid && this.formfiltrarOfertas.get('de').touched  ;
+  }
+  // la fecha de finalizacion debe ser mayo a la fecha de inicio
+  get fechaFinalMayorInicialNoValido(){
+    const dateInicio=this.formfiltrarOfertas.get('de');
+    const dateFinalalizacion=this.formfiltrarOfertas.get('hasta');
+    return (dateFinalalizacion>dateInicio)?true:false;
+  }
+  get fechaHastaVacia(){
+    return this.formfiltrarOfertas.get('hasta').value==''?true:false;
   }
   maquetarCabezeraTablaOfertaLaboralesPdf(){
     let arrayCabezera=[
@@ -276,7 +314,6 @@ export class ReporteOfertasComponent implements OnInit {
     //obtengo todos los usuarios
     this.servicioEmpelador.listarEmpleadores().subscribe(
       siHaceBien=>{
-          console.log(siHaceBien);
           siHaceBien.forEach(element => {
             //comparo el fk_empleador con el id de usuario
             if(element['id']== this.instanciaOfertaVer.fk_empleador){
@@ -290,16 +327,21 @@ export class ReporteOfertasComponent implements OnInit {
             }
           });
       },error=>{
-        console.log(error);
+        Swal('Error',error['mensaje'], 'error');
       });
     $('#verOfertaReporte').modal('show');
 
   }
-  filtrarOfertas(formFiltro:NgForm){
-    console.log(formFiltro);
-    if(formFiltro.invalid){
-      return;
+  filtrarOfertas(){
+    if(this.formfiltrarOfertas.invalid){
+      return Object.values(this.formfiltrarOfertas.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
+    this.instanciaFiltro.de=this.formfiltrarOfertas.value.de;
+    this.instanciaFiltro.hasta=this.formfiltrarOfertas.value.hasta;
+    this.instanciaFiltro.estado=this.formfiltrarOfertas.value.estado
+
     this.filtrarDatosFecha(this.instanciaFiltro.de,
     this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
 
@@ -307,7 +349,6 @@ export class ReporteOfertasComponent implements OnInit {
   filtrarDatosFecha(fechade:String,fechaHasta:String,estado:Number){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         //creamos una arreglo auxiliar
         let aux=[];
         //recorreo todo el array y compara los datos
@@ -316,31 +357,32 @@ export class ReporteOfertasComponent implements OnInit {
               fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
               estado==element['estadoValidacionOferta'] && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
-              console.log("xx");
             }
             //no validado
             if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
             fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
              estado==9 && (element['obervaciones']).length==0){
             aux.push(element);
-            console.log("xx");
             }
             //ver todos
             if(fechade<=this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
                 fechaHasta>= this.datePipe.transform(element['updatedAtOferta'],"yyyy-MM-dd") &&
                   estado==0 ){
             aux.push(element);
-            console.log("xx");
             }
         });
         this.intanciaReporte=aux;
         //genero el reporte con el nuevo array de la busqueda
         this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
-        this.dtTrigger.unsubscribe();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          // Destroy the table first
+          dtInstance.destroy();
+        });
+
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
-        console.warn(peroSiTenemosErro);
+        Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
       }
     );
   }
@@ -374,9 +416,6 @@ export class ReporteOfertasComponent implements OnInit {
       //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
       this.rowsItemsReporteOfertas=[];
       this.rowsItemsReporteOfertas.unshift(this.maquetarCabezeraTablaOfertaLaboralesPdf());
-      console.log(this.rowsItemsReporteOfertas);
-      //return;
-      console.log(this.maquetarCabezeraTablaOfertaLaboralesPdf());
       reporteModelArray.forEach(element => {
         //cargo la tabla para generar reporte
         this.rowsItemsReporteOfertas.push([
@@ -424,9 +463,7 @@ export class ReporteOfertasComponent implements OnInit {
       //establesco la cabezerqa siempre al inicio de la tabla el primer elemento
       this.rowsItemsReporteOfertasEstudiante=[];
       this.rowsItemsReporteOfertasEstudiante.unshift(this.maquetarCabezeraTablaOfertaLaboraleEstudiantePdf());
-      console.log(this.maquetarCabezeraTablaOfertaLaboraleEstudiantePdf());
       reporteModelArray.forEach(element => {
-        console.log(element);
         //cargo la tabla para generar reporte
         if(element['estado']==0){
           estadoOferta="Rechazado";
@@ -451,12 +488,11 @@ export class ReporteOfertasComponent implements OnInit {
   cargarTablaReporteOfertas(){
     this.servicioOfertaEstudiante.reportOfertaEstudiante().subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         this.intanciaReporte=siHacesBien;
         this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
         this.dtTrigger.next();
       },siHacesMal=>{
-        console.log(siHacesMal);
+        Swal('Ups',siHacesMal['mensaje'], 'info');
       }
     );
 
@@ -465,9 +501,7 @@ export class ReporteOfertasComponent implements OnInit {
   estudiantesOfertaLaboral(external_of:string){
     this.servicioOfertaEstudiante.resumenOfertaEstudiantesFinalizada_external_of(external_of).subscribe(
       siHaceBien=>{
-        console.log(siHaceBien);
         this.arrayOfertaPostulante=siHaceBien;
-        console.log(this.arrayOfertaPostulante.length);
         //construyo la tabla con los postulantes inscritos en la oferta
         this.contruirDatosPdfReporteOfertaEstudiante(this.arrayOfertaPostulante);
 
@@ -475,7 +509,7 @@ export class ReporteOfertasComponent implements OnInit {
           this.existeRegistros=true;
         }
       },error=>{
-        console.log(error);
+        Swal('Ups',error['mensaje'], 'info');
       }
     );
   }

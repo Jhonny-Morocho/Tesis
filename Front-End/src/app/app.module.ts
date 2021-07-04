@@ -39,9 +39,9 @@ import { FormEditarCursoComponent } from 'src/app/Backend/panel-postulante/pages
 import { OfertaLaboralComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/tabla-oferta-laboral/oferta-laboral.component';
 import { AddOfertaComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/add-oferta/add-oferta.component';
 import { EditOfertaComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/edit-oferta/edit-oferta.component';
-import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/componentes/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
+import {TablaValidarOfertasLaboralesComponent} from 'src/app/Backend/panel-admin/pages/tabla-validar-ofertas-laborales/tabla-validar-ofertas-laborales.component';
 import { FormValidarOfertaLaboralComponent } from 'src/app/Backend/panel-admin/pages/validar-oferta-laboral/form-validar-oferta-laboral.component';
-import { TablaPublicarOfertGestorComponent } from 'src/app/Backend/panel-admin/componentes/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
+import { TablaPublicarOfertGestorComponent } from 'src/app/Backend/panel-admin/pages/tabla-publicar-ofert-gestor/tabla-publicar-ofert-gestor.component';
 import { FormPublicarOfertaGestorComponent } from 'src/app/Backend/panel-admin/pages/publicar-oferta-gestor/form-publicar-oferta-gestor.component';
 import {PostulanteOfertas} from 'src/app/Backend/panel-admin/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
 //FRONT END
@@ -55,7 +55,7 @@ import {TablaTitulosAcademicosComponent} from 'src/app/Front-end/tabla-titulos-a
 import { TablaCursosCapacitacionesComponent } from 'src/app/Front-end/tabla-cursos-capacitaciones/tabla-cursos-capacitaciones.component';
 import { VerHojaVidaComponent } from 'src/app/Front-end/info-detalles-postulante/info-detalles-postulante.component';
 import { DatePipe } from '@angular/common';
-import { TablaUsuariosAdminComponent } from 'src/app/Backend/panel-admin/componentes/tabla-usuarios-admin/tabla-usuarios-admin.component';
+import { TablaUsuariosAdminComponent } from 'src/app/Backend/panel-admin/pages/tabla-usuarios-admin/tabla-usuarios-admin.component';
 import { RegistarAdminComponent } from 'src/app/Backend/panel-admin/pages/registar-admin/form-registar-admin.component';
 import { FormEditarAdminComponent } from 'src/app/Backend/panel-admin/pages/editar-admin/form-editar-admin.component';
 import {ReporteOfertasComponent} from 'src/app/Backend/panel-admin/pages/reporte-ofertas/reporte-ofertas.component';

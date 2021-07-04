@@ -1,30 +1,52 @@
 <navTab-admin></navTab-admin>
 
-<div class="content-wrapper">
+<div class="content-wrapper animated animate__animated fadeIn">
     <div class="card">
-        <article class="card-body animated animate__animated fadeIn">
-            <h6>Reporte de ofertas laborales</h6>
-            <hr>
-            <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm">
+        <div class="col-12 mt-2 ml-3 mb-2">
+          <h3><i class="fas fa-file-pdf"></i> Reporte de ofertas laborales</h3>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+        </div>
+        <article class="card-body ">
+
+            <form (ngSubmit)="filtrarOfertas()" [formGroup]="formfiltrarOfertas">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputName">De </label>
-                            <input type="date" class="form-control" name="de" [(ngModel)]="instanciaFiltro.de" required>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['de'].errors">Debe seleccionar fecha</span>
+                            <input type="date"
+                                   class="form-control"
+                                   formControlName="de"
+                                   [class.is-invalid]="fechaDeNoValido"
+                                   [class.is-valid]="formfiltrarOfertas.get('de').valid">
+                            <!-- mensajes de validacion -->
+                              <div class="invalid-feedback"  *ngIf="fechaDeNoValido">
+                                <p > <i class="fas fa-info-circle"></i> La fecha es obligatoria</p>
+                              </div>
+                            <!-- end mensajes de validacion -->
+
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputName">Hasta </label>
-                            <input type="date" class="form-control" name="hasta" [(ngModel)]="instanciaFiltro.hasta" required>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['hasta'].errors">Debe seleccionar fecha</span>
+                            <input type="date"
+                                   class="form-control"
+                                   formControlName="hasta"
+                                   [class.is-invalid]="fechaHastaNoValido"
+                                   [class.is-valid]="formfiltrarOfertas.get('hasta').valid && !fechaHastaVacia">
+                            <div class="invalid-feedback"  *ngIf="fechaHastaNoValido">
+                              <p *ngIf="fechaHastaVacia"> <i class="fas fa-info-circle"></i> La fecha es obligatoria</p>
+                              <p *ngIf="!fechaDeNoValido && !fechaHastaVacia"> <i class="fas fa-info-circle"></i> La fecha  debe ser mayor a la fecha <b>de</b></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputStatus">Estado</label>
-                            <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
+                            <select class="form-control custom-select"
+                                    formControlName="estado"
+                                    [class.is-invalid]="estadoNoValido"
+                                    [class.is-valid]="formfiltrarOfertas.get('estado').valid">
                                 <option selected="" disabled></option>
                                 <option value="0">Todo</option>
                                 <option value="1">Revisado</option>
@@ -33,23 +55,27 @@
                                 <option value="3">Publicado</option>
                                 <option value="4">Finalizado</option>
                             </select>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['estado'].errors">Debe seleccionar estado</span>
+                            <!-- mensajes de validacion -->
+                              <div class="invalid-feedback"  *ngIf="estadoNoValido">
+                                <p > <i class="fas fa-info-circle"></i> El estado es obligatorio</p>
+                              </div>
+                            <!-- end mensajes de validacion -->
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1">
                         <label for="inputStatus">Filtrar</label>
                         <div class="form-group ">
                             <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
 
-                    <div class="col-1">
+                    <div class="col-md-1">
                         <label for="inputStatus">PDF</label>
                         <div class="form-group ">
                             <button type="button" class="btn btn-outline-success" (click)="generatePdfOfertas()"><i class="far fa-file-pdf"></i></button>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1">
                         <label for="inputStatus">Reiniciar</label>
                         <div class="form-group ">
                             <button type="button" class="btn btn-outline-primary" (click)="reiniciarValoresTablaOfertas()"><i class="fas fa-undo-alt"></i></button>
