@@ -138,15 +138,20 @@ export class FormInfoPostulanteComponent implements OnInit {
     );
   }
   //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
-  estadoAprobado(estado:Number):boolean{
-    if(estado==0){
-      this.instanciaPostulante.estado=0;
+  estadoOferta(){
+    if(this.instanciaPostulante.estado==0){
       return false;
     }
-    if(estado==1){
-      this.instanciaPostulante.estado=1;
+    if(this.instanciaPostulante.estado==1){
       return true;
     }
-
+  }
+  onChangeOferta(event){
+    if(event==true){
+      this.instanciaPostulante.estado=1;
+    }
+    if(event==false){
+      this.instanciaPostulante.estado=0;
+    }
   }
 }

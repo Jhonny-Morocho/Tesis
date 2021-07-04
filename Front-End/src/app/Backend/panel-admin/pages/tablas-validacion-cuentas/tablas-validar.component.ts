@@ -23,6 +23,8 @@ export class TareaValiar implements OnInit {
   //data table
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+
+  
   intanciaEmpleadorCalificar:EmpleadorModel;
   estudiante:PostulanteModel[]=[];
   empleador:EmpleadorModel[]=[];

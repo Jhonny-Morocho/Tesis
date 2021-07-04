@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewChildren  } from '@angular/core';
-
 import { Router } from '@angular/router';
 import {OfertasLaboralesService} from 'src/app/servicios/oferta-laboral.service';
 import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
@@ -61,7 +60,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.instanciaFiltro=new OfertasFiltroModel();
-    //this.configurarParametrosDataTable();
+    this.configurarParametrosDataTable();
     this.cargarTodasOfertas();
   }
   crearFormulario(){
@@ -173,7 +172,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
         siHacesBien.forEach(element => {
             if(fechade<=this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
               fechaHasta>= this.datePipe.transform(element['updated_at'],"yyyy-MM-dd") &&
-              estado==element['estado'] && estado!=9 && (element['obervaciones']).length>0){
+              estado==(element['estado']) && estado!=9 && (element['obervaciones']).length>0){
               aux.push(element);
             }
             //los que no estan validado no validado

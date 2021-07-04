@@ -23,6 +23,7 @@ import { ValidadoresService } from 'src/app/servicios/validadores.service';
 import Swal from 'sweetalert2';
 import { DataTableDirective } from 'angular-datatables';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 declare var $:any;
 @Component({
   selector: 'app-reporte-ofertas',
@@ -30,8 +31,8 @@ declare var $:any;
 })
 export class ReporteOfertasComponent implements OnInit,OnDestroy {
   @ViewChild(DataTableDirective)
-  instanciaOfertaVer:OfertaLaboralModel;
   dtElement: DataTableDirective;
+  instanciaOfertaVer:OfertaLaboralModel;
   instanciaEmpleadorModelVer:EmpleadorModel;
   existeRegistros:boolean=false;
   formfiltrarOfertas:FormGroup;
@@ -46,10 +47,12 @@ export class ReporteOfertasComponent implements OnInit,OnDestroy {
   //data table
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  datatableElement!: DataTableDirective;
   constructor(private servicioOfertaEstudiante:OfertaLaboralEstudianteService,
               private servicioEmpelador:SerivicioEmpleadorService,
               private validadorPersonalizado:ValidadoresService,
               private formBuilder:FormBuilder,
+              private ruta_:Router,
               private datePipe: DatePipe) {
     this.crearFormulario();
   }
@@ -372,14 +375,14 @@ export class ReporteOfertasComponent implements OnInit,OnDestroy {
             }
         });
         this.intanciaReporte=aux;
-        //genero el reporte con el nuevo array de la busqueda
-        this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           // Destroy the table first
           dtInstance.destroy();
         });
-
         this.dtTrigger.next();
+        //genero el reporte con el nuevo array de la busqueda
+        this.contruirDatosPdfReporteOfertas(this.intanciaReporte);
+
       },
       (peroSiTenemosErro)=>{
         Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
@@ -610,12 +613,9 @@ export class ReporteOfertasComponent implements OnInit,OnDestroy {
 
   }
   reiniciarValoresTablaOfertas(){
-    this.dtTrigger.unsubscribe();
-    this.configurarParametrosDataTable();
-    this.cargarTablaReporteOfertas();
-    this.instanciaFiltro.de='';
-    this.instanciaFiltro.hasta='';
-    this.instanciaFiltro.estado=null;
+    this.ruta_.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.ruta_.onSameUrlNavigation = 'reload';
+    this.ruta_.navigate(['/panel-admin/reporte-ofertas']);
   }
   configurarParametrosDataTable(){
     this.dtOptions = dataTable;

@@ -142,10 +142,10 @@
       <div class="modal-content">
           <app-ver-oferta-laboral [instanciaOfertaVer]="instanciaOfertaVer"></app-ver-oferta-laboral>
         <div class="container">
-          <div class="alert alert-light text-center" role="alert" *ngIf="existeRegistros==false">
-            <i class="fas fa-exclamation-triangle"></i> No existen registro para mostrar
+          <div class="alert simple-warning text-center" role="alert" *ngIf="!existeRegistros">
+            <i class="fas fa-exclamation-triangle"></i> No existen postulantes registrados en esta oferta
           </div>
-          <div class="col-1" *ngIf="existeRegistros==true">
+          <div class="col-1" *ngIf="existeRegistros">
             <label for="inputStatus">PDF</label>
             <div class="form-group ">
               <button type="button" class="btn btn-outline-success"
@@ -154,7 +154,7 @@
               </button>
             </div>
           </div>
-          <table class="table table-sm" *ngIf="existeRegistros==true">
+          <table class="table table-sm" *ngIf="existeRegistros">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -188,7 +188,6 @@
               </tr>
             </tbody>
           </table>
-
         </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

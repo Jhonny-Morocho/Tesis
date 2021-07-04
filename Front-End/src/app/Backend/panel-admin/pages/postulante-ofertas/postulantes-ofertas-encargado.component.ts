@@ -69,7 +69,6 @@ export class PostulanteOfertas implements OnInit {
 
           this.servicioOfertaEstudiante.eliminarPostulanteOfertaLaboral(this.arrayAux).subscribe(
             siHaceBien =>{
-                console.log(siHaceBien);
                 if(siHaceBien['Siglas']=='OE'){
                   Swal('Registrado', 'Información Registrada con éxito', 'success');
                 }else{
@@ -84,18 +83,15 @@ export class PostulanteOfertas implements OnInit {
     }
   }
   cursosCapacitaciones(exteneral_us:string){
-    console.log(exteneral_us);
     this.servicioCursosCapacitaciones.listarCursosCapacitacionesExternal_usConParametro(exteneral_us).subscribe(
       siHaceBien=>{
         this.arrayCursosCapacitaciones=siHaceBien;
-        console.log(this.arrayCursosCapacitaciones);
       },error=>{
-        console.log(error);
+        Swal('Error', error['mensaje'], 'error');
       }
     );
   }
   verHojaVidaModal(id:Number){
-    console.log("click");
     var index=parseInt((id).toString(), 10);
     $('#motrarHojaVidaGeneral').modal('show');
     //============= mostamos la informacion personal ========================
@@ -107,9 +103,7 @@ export class PostulanteOfertas implements OnInit {
     this.instanciaVerPostulante.fecha_nacimiento=this.arrayPostulante[index]['fecha_nacimiento'];
     this.instanciaVerPostulante.direccion_domicilio=this.arrayPostulante[index]['direccion_domicilio'];
     this.instanciaVerPostulante.correo=this.arrayPostulante[index]['correo'];
-    console.log(this.instanciaVerPostulante);
     //============= mostras los curso y capacitaciones ===============
-    console.log(this.arrayPostulante[index]['external_us']);
     this.cursosCapacitaciones(this.arrayPostulante[index]['external_us']);
      //============= mostras los titulos   ===============
      this.titulosAcademicos(this.arrayPostulante[index]['external_us']);
@@ -119,9 +113,8 @@ export class PostulanteOfertas implements OnInit {
     this.servicioTitulosAcademicos.listarTitulosExternal_usConParametro(exteneral_us).subscribe(
       siHaceBien=>{
         this.arrayTitulosAcademicos=siHaceBien;
-        console.log(this.arrayTitulosAcademicos);
       },error=>{
-        console.log(error);
+        Swal('Error', error['mensaje'], 'error');
       }
     );
   }
@@ -155,11 +148,9 @@ export class PostulanteOfertas implements OnInit {
       //antes de guardarlo en el array debemos comprobar si esta ya ingresado
       if(this.arrayAux.length==0 ){
         this.arrayAux.push(aux);
-        console.log("cerop");
       }else{
         this.arrayAux.forEach(element => {
           if(element['fk_estudiante']===fk_postulante){
-            console.log(element['fk_estudiante']);
             //entonce debeo actualizar el estado del arreglo en donde estaba guarado
             if(element['estado']==1){
               element['estado']=0;
@@ -174,7 +165,6 @@ export class PostulanteOfertas implements OnInit {
           this.arrayAux.push(aux);
         }
       }
-    console.log(this.arrayAux);
     }else{
       alert("el estado es nullo");
     }
@@ -185,7 +175,6 @@ export class PostulanteOfertas implements OnInit {
       params=>{
         this.servicioOfertaLaboral.obtenerOfertaLaboralExternal_of(params['external_of']).subscribe(
           siHaceBien=>{
-            console.log(siHaceBien);
             this.instanciaOfertaLaboral.puesto=siHaceBien['mensaje']['puesto'];
             this.instanciaOfertaLaboral.correo=siHaceBien['mensaje']['correo'];
             this.instanciaOfertaLaboral.descripcion=siHaceBien['mensaje']['descripcion'];
@@ -199,12 +188,10 @@ export class PostulanteOfertas implements OnInit {
             }
 
             $("#itemRequisitos").html(this.instanciaOfertaLaboral.requisitos);
-            console.log(this.instanciaOfertaLaboral);
 
             //obtener todos los empleadores para poder obtener los datos de los empleadores
             this.servicioEmpleador.listarEmpleadores().subscribe(
               siHaceBien=>{
-                  console.log(siHaceBien);
                   this.arrayEmpleadores
                   siHaceBien.forEach(element => {
                     //comparo el fk_empleador con el id de usuario
@@ -213,15 +200,13 @@ export class PostulanteOfertas implements OnInit {
                       this.instanciaOfertaLaboral.razon_empresa=element['razon_empresa'];
                     }
                   });
-
-                  console.log(this.instanciaEmpleador);
               },error=>{
 
-                console.log(error);
+                Swal('Info', error['mensaje'], 'info')
               });
 
           },siHaceMal=>{
-            console.warn(siHaceMal);
+            Swal('Error', siHaceMal['mensaje'], 'error')
           }
         );
 
@@ -237,20 +222,17 @@ export class PostulanteOfertas implements OnInit {
       params=>{
         this.servicioOfertaEstudiante.listTodasEstudiantePostulanOfertaExternal_of_encargado(params['external_of']).subscribe(
           siHaceBien=>{
-            console.log(siHaceBien);
             this.arrayPostulante=siHaceBien;
-            console.log(this.arrayPostulante.length);
             if(this.arrayPostulante.length>0){
               this.existeRegistros=true;
             }
           },error=>{
-            console.log(error);
+            Swal('Error', error['mensaje'], 'error')
           }
         );
     });
   }
   carrarModalX(){
     $('#motrarHojaVidaGeneral').modal('hide');
-    console.log('cerrarModalX');
   }
 }

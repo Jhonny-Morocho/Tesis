@@ -48,7 +48,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
               this.encontrado=false;
             }
         },peroSiTenemosErro=>{
-          Swal('Error', peroSiTenemosErro['mensaje'], 'error')
+          Swal('Error', peroSiTenemosErro['mensaje'], 'error');
         }
       )
     });
