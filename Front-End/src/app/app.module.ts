@@ -133,9 +133,9 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     UiSwitchModule.forRoot({
       size: 'large',
       color: 'rgb(0, 189, 99)',
-      switchColor: '#80FFA2',
-      defaultBgColor: '#00ACFF',
-      defaultBoColor : '#476EFF',
+      switchColor: '#fff',
+      defaultBgColor: '#f20707',
+      defaultBoColor : '#000',
       checkedLabel: 'Aprobado',
       uncheckedLabel: 'No aprobado'
     })

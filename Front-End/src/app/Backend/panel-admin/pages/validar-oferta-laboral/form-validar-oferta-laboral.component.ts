@@ -30,7 +30,6 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
       //consumir el servicio
       this.servicioOfertaLaboral.obtenerOfertaLaboralExternal_of(params['external_of']).subscribe(
         suHacesBien=>{
-            console.log(suHacesBien);
             //encontro estudiante estado==0
             if(suHacesBien["Siglas"]=="OE"){
               this.encontrado=true;
@@ -67,7 +66,6 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
     this.instanciaOfertaLaboral.requisitos=$('#compose-textarea').val();
     this.servicioOfertaLaboral.actulizarDatosOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
         Swal.close();
         if(siHacesBien['Siglas']=="OE"){
           const toast = Swal.mixin({
@@ -78,7 +76,7 @@ export class FormValidarOfertaLaboralComponent implements OnInit {
           });
           toast({
             type: 'success',
-            title: 'Registrado'
+            title: 'Validado'
           })
           this.router.navigateByUrl('/panel-admin/validar-oferta-laboral');
         }else{

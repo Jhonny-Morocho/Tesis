@@ -6,12 +6,13 @@ import {OfertaLaboralModel} from 'src/app/models/oferta-laboral.models';
 import {EmpleadorModel} from 'src/app/models/empleador.models';
 import {SerivicioEmpleadorService} from 'src/app/servicios/servicio-empleador.service';
 import { Subject } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { DatePipe } from '@angular/common';
 import {OfertasFiltroModel} from 'src/app/models/filtro-ofertas.models';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
 import Swal from 'sweetalert2';
+import { ValidadoresService } from 'src/app/servicios/validadores.service';
 declare var JQuery:any;
 declare var $:any;
 @Component({
@@ -22,7 +23,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
    //@ViewChild(DataTableDirective, {static: false})
    @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
-
+    formfiltrarOfertas:FormGroup;
     //visualizar informacion de empleador
     instanciaEmpleadorModelVer:EmpleadorModel;
     booleanGestor:boolean=false;
@@ -45,10 +46,13 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     //Probando nuevos codigo para renicnair dat table
 
     constructor(private servicioOferta:OfertasLaboralesService,
-    private datePipe: DatePipe,
-    private servicioEmpleador:SerivicioEmpleadorService,
-
-    private ruta_:Router) { }
+                private datePipe: DatePipe,
+                private servicioEmpleador:SerivicioEmpleadorService,
+                private validadorPersonalizado:ValidadoresService,
+                private formBuilder:FormBuilder,
+                private ruta_:Router) {
+     this.crearFormulario();
+    }
 
 
   ngOnInit() {
@@ -60,12 +64,45 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
     //this.configurarParametrosDataTable();
     this.cargarTodasOfertas();
   }
+  crearFormulario(){
+    this.formfiltrarOfertas=this.formBuilder.group({
+      de:['',[Validators.required]],
+      hasta:['',[Validators.required]],
+      estado:['',[Validators.required]]
+    },{
+      validators: this.validadorPersonalizado.validarFechasInicioFinalizacion('de','hasta')
+    });
+  }
+  get estadoNoValido(){
+    return this.formfiltrarOfertas.get('estado').invalid && this.formfiltrarOfertas.get('estado').touched ;
+  }
+  get fechaDeNoValido(){
+    return this.formfiltrarOfertas.get('de').invalid && this.formfiltrarOfertas.get('de').touched ;
+  }
+  get fechaHastaNoValido(){
+    return this.formfiltrarOfertas.get('hasta').invalid && this.formfiltrarOfertas.get('de').touched  ;
+  }
+  // la fecha de finalizacion debe ser mayo a la fecha de inicio
+  get fechaFinalMayorInicialNoValido(){
+    const dateInicio=this.formfiltrarOfertas.get('de');
+    const dateFinalalizacion=this.formfiltrarOfertas.get('hasta');
+    return (dateFinalalizacion>dateInicio)?true:false;
+  }
+  get fechaHastaVacia(){
+    return this.formfiltrarOfertas.get('hasta').value==''?true:false;
+  }
 
 
-  filtrarOfertas(formFiltro:NgForm){
-    if(formFiltro.invalid){
-      return;
+  filtrarOfertas(){
+    if(this.formfiltrarOfertas.invalid){
+      return Object.values(this.formfiltrarOfertas.controls).forEach(contol=>{
+        contol.markAsTouched();
+      });
     }
+    this.instanciaFiltro.de=this.formfiltrarOfertas.value.de;
+    this.instanciaFiltro.hasta=this.formfiltrarOfertas.value.hasta;
+    this.instanciaFiltro.estado=this.formfiltrarOfertas.value.estado;
+
     this.filtrarDatosFecha(this.instanciaFiltro.de,
     this.instanciaFiltro.hasta,this.instanciaFiltro.estado);
   }

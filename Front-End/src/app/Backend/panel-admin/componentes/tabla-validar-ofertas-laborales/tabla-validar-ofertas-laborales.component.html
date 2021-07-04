@@ -2,29 +2,50 @@
 
 <div class="content-wrapper">
     <div class="card">
+        <div class="col-12 mt-2 ml-3 mb-2">
+          <h3><i class="fas fa-briefcase"></i> Validar Oferta Laboral</h3>
+          <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+        </div>
         <article class="card-body animated animate__animated fadeIn">
-            <h6>Validar ofertas laborales</h6>
-            <hr>
-            <form (ngSubmit)="filtrarOfertas(fFiltrarOfertas)" #fFiltrarOfertas="ngForm">
+
+            <form (ngSubmit)="filtrarOfertas()" [formGroup]="formfiltrarOfertas">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputName">De </label>
-                            <input type="date" class="form-control" name="de" [(ngModel)]="instanciaFiltro.de" required>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['de'].errors">Debe seleccionar fecha</span>
+                            <input type="date"
+                                   class="form-control"
+                                   [class.is-invalid]="fechaDeNoValido"
+                                   [class.is-valid]="formfiltrarOfertas.get('de').valid"
+                                   formControlName="de" >
+                            <!-- mensajes de validacion -->
+                              <div class="invalid-feedback"  *ngIf="fechaDeNoValido">
+                                <p > <i class="fas fa-info-circle"></i>La fecha es obligatoria</p>
+                              </div>
+                            <!-- end mensajes de validacion -->
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputName">Hasta </label>
-                            <input type="date" class="form-control" name="hasta" [(ngModel)]="instanciaFiltro.hasta" required>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['hasta'].errors">Debe seleccionar fecha</span>
+                            <input type="date"
+                                   class="form-control"
+                                   [class.is-invalid]="fechaHastaNoValido"
+                                   [class.is-valid]="formfiltrarOfertas.get('hasta').valid && !fechaHastaVacia"
+                                   formControlName="hasta">
+                            <div class="invalid-feedback"  *ngIf="fechaHastaNoValido">
+                              <p *ngIf="fechaHastaVacia"> <i class="fas fa-info-circle"></i> La fecha es obligatoria</p>
+                              <p *ngIf="!fechaDeNoValido && !fechaHastaVacia"> <i class="fas fa-info-circle"></i> La fecha  debe ser mayor a la fecha <b>de</b></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="inputStatus">Estado</label>
-                            <select class="form-control custom-select" name="estado" [(ngModel)]="instanciaFiltro.estado" required>
+                            <select class="form-control custom-select"
+                                    [class.is-invalid]="estadoNoValido"
+                                    [class.is-valid]="formfiltrarOfertas.get('estado').valid"
+                                    formControlName="estado" >
                                 <option selected="" disabled></option>
                                 <option value="0">Todo</option>
                                 <option value="1">Revisado</option>
@@ -33,10 +54,15 @@
                                 <option value="3">Publicado</option>
                                 <option value="4">Finalizado</option>
                             </select>
-                            <span class="text-danger" *ngIf="fFiltrarOfertas.submitted && fFiltrarOfertas.controls['estado'].errors">Debe seleccionar estado</span>
+                            <!-- mensajes de validacion -->
+                              <div class="invalid-feedback"  *ngIf="estadoNoValido">
+                                <p > <i class="fas fa-info-circle"></i> El estado es obligatorio</p>
+                              </div>
+                            <!-- end mensajes de validacion -->
+
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1">
                         <label for="inputStatus">Filtrar</label>
                         <div class="form-group ">
                             <button type="submit" class="btn btn-outline-primary">
@@ -44,7 +70,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1">
                         <label for="inputStatus">Reiniciar</label>
                         <div class="form-group ">
                             <button type="button" class="btn btn-outline-primary"
@@ -55,68 +81,70 @@
                     </div>
                 </div>
             </form>
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 5px">#</th>
-                        <th>Fecha</th>
-                        <th>Oferta Laboral</th>
-                        <th>Estado</th>
-                        <th>Ver</th>
-                        <th>Validar Oferta</th>
-                        <th title="Preseleccionar Postulantes">
-                            Posutalantes
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ ofertaLaboral.updated_at | date: 'yyyy/MM/dd'}}</td>
-                        <td>{{ ofertaLaboral.puesto}}</td>
-                        <td>
-                            <span class=" badge badge-danger"
-                                  *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && ofertaLaboral.estado==1"
-                                  title="Tiempo máximo para validar es de 72 horas">
-                                <i class="far fa-clock"></i>
-                                No validado
-                            </span>
+            <div class="table-responsive">
+              <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th style="width: 5px">#</th>
+                          <th>Fecha</th>
+                          <th>Oferta Laboral</th>
+                          <th>Estado</th>
+                          <th>Ver</th>
+                          <th>Validar Oferta</th>
+                          <th title="Preseleccionar Postulantes">
+                              Posutalantes
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let ofertaLaboral of ofertasLaborales;let i=index">
+                          <td>{{ i+1 }}</td>
+                          <td>{{ ofertaLaboral.updated_at | date: 'yyyy/MM/dd'}}</td>
+                          <td>{{ ofertaLaboral.puesto}}</td>
+                          <td>
+                              <span class=" badge badge-danger"
+                                    *ngIf="estadoRevision(ofertaLaboral.obervaciones)==false && ofertaLaboral.estado==1"
+                                    title="Tiempo máximo para validar es de 72 horas">
+                                  <i class="far fa-clock"></i>
+                                  No validado
+                              </span>
 
-                            <span class="badge badge-warning"
-                                  *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && ofertaLaboral.estado==1">
-                              Revisado
-                            </span>
+                              <span class="badge badge-warning"
+                                    *ngIf="estadoRevision(ofertaLaboral.obervaciones)==true && ofertaLaboral.estado==1">
+                                Revisado
+                              </span>
 
-                            <span class="badge badge-success"
-                              *ngIf="ofertaLaboral.estado==2">
-                              Validado
-                            </span>
+                              <span class="badge badge-success"
+                                *ngIf="ofertaLaboral.estado==2">
+                                Validado
+                              </span>
 
-                            <span class="badge badge-primary "  *ngIf="ofertaLaboral.estado==3">
-                              Publicado
-                            </span>
+                              <span class="badge badge-primary "  *ngIf="ofertaLaboral.estado==3">
+                                Publicado
+                              </span>
 
-                            <span class="badge badge-secondary" *ngIf="ofertaLaboral.estado==4">
-                              Finalizada
-                            </span>
+                              <span class="badge badge-secondary" *ngIf="ofertaLaboral.estado==4">
+                                Finalizada
+                              </span>
 
-                        </td>
-                        <td>
-                            <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
-                        </td>
-                        <td>
-                            <a class="btn btn-light" [routerLink]="['/panel-admin/form-validar-ofertaLaboral',ofertaLaboral.external_of] ">
-                                <i class="fas fa-chevron-right "></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-light" [routerLink]="['/panel-admin/filtrar-postulantes',ofertaLaboral.external_of] ">
-                                <i class="fas fa-chevron-right "> </i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                          </td>
+                          <td>
+                              <a class="btn btn-light" (click)="verOfertaModal(i)"> <i class="fas fa-eye"></i></a>
+                          </td>
+                          <td>
+                              <a class="btn btn-light" [routerLink]="['/panel-admin/form-validar-ofertaLaboral',ofertaLaboral.external_of] ">
+                                  <i class="fas fa-chevron-right "></i>
+                              </a>
+                          </td>
+                          <td>
+                              <a class="btn btn-light" [routerLink]="['/panel-admin/filtrar-postulantes',ofertaLaboral.external_of] ">
+                                  <i class="fas fa-chevron-right "> </i>
+                              </a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
         </article>
     </div>
 </div>

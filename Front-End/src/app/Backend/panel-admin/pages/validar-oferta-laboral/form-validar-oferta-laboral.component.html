@@ -43,9 +43,11 @@
                         <label for="exampleFormControlTextarea1">Observaciones <span class="text-danger">*</span></label><br>
                         <i class="fa fa-comments form-control-feedback" aria-hidden="true"></i>
                         <textarea class="form-control"
-                                    [disabled]="desactivarBotonGuardar==true"
+                                    [disabled]="instanciaOfertaLaboral.estado>2"
                                     name="observaciones"
                                     [(ngModel)]="instanciaOfertaLaboral.obervaciones"
+                                    [class.is-valid]="fValidarOfertaLaboral.valid && fValidarOfertaLaboral.submitted"
+                                    [class.is-invalid]="fValidarOfertaLaboral.invalid && fValidarOfertaLaboral.submitted"
                                     maxlength="150"
                                     [ngClass]="{'is-invalid': fValidarOfertaLaboral.submitted && fValidarOfertaLaboral.controls['observaciones'].errors }"
                                     required>
@@ -63,11 +65,10 @@
                 </div>
 
 
-
                 <div class="col-12 d-flex justify-content-center ">
                     <button type="submit "
                             class="btn btn-success"
-                            [disabled]="desactivarBotonGuardar">
+                            [disabled]="instanciaOfertaLaboral.estado>2">
                             <i class="fas fa-save"></i>
                       Registrar
                     </button>
