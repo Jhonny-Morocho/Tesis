@@ -22,7 +22,6 @@ export class ReactivarOfertaComponent implements OnInit {
 
   ngOnInit() {
     this.cargarDatosOfertaLaboral();
-
   }
   fActualizarEstadoOferta(formuarlio:NgForm){
     Swal({
@@ -33,28 +32,16 @@ export class ReactivarOfertaComponent implements OnInit {
     Swal.showLoading();
     this.servicioOfertaLaboral.reactivarOfertaLaboral(this.instanciaOfertaLaboral).subscribe(
       siHacesBien=>{
-        console.log(siHacesBien);
           Swal.close();
           if(siHacesBien['Siglas']=="OE"){
           Swal('Registrado', 'Información Registrada con Exito', 'success');
           }else{
-            console.log(siHacesBien);
             Swal('Ups', siHacesBien['mensaje'], 'info')
           }
       },siHaceMal=>{
-        console.warn(siHaceMal);
         Swal('Error', siHaceMal['mensaje'], 'error')
       }
     );
-  }
-  estadoOferta(estado:Number):boolean{
-    if(estado==3){
-      this.instanciaOfertaLaboral.estado=estado;
-      return true;
-    }else{
-      this.instanciaOfertaLaboral.estado=estado;
-      return false;
-    }
   }
 
   cargarDatosOfertaLaboral(){
@@ -64,7 +51,6 @@ export class ReactivarOfertaComponent implements OnInit {
       //consumir el servicio
       this.servicioOfertaLaboral.obtenerOfertaLaboralExternal_of(params['external_of']).subscribe(
         suHacesBien=>{
-            console.log(suHacesBien);
             //encontro estudiante estado==0
             if(suHacesBien["Siglas"]=="OE"){
               this.ofertaEncontrada=true;
@@ -78,14 +64,33 @@ export class ReactivarOfertaComponent implements OnInit {
               this.instanciaOfertaLaboral.estado=suHacesBien["mensaje"]['estado'];
               $("#itemRequisitos").html(this.instanciaOfertaLaboral.requisitos);
             }else{
-              console.log("no encontrado");
+              Swal('Ups',suHacesBien['mensaje'], 'info');
               this.ofertaEncontrada=false;
             }
         },peroSiTenemosErro=>{
-          console.log(peroSiTenemosErro);
+          Swal('Error',peroSiTenemosErro['mensaje'], 'error');
         }
       )
     });
   }
+
+  estadoOferta(){
+    if(this.instanciaOfertaLaboral.estado==3){
+      return true;
+    }
+    //oferta finalizada
+    if(this.instanciaOfertaLaboral.estado==5){
+      return false;
+    }
+  }
+  onChangeOferta(event){
+    if(event==true){
+      this.instanciaOfertaLaboral.estado=3;
+    }
+    if(event==false){
+      this.instanciaOfertaLaboral.estado=5;
+    }
+  }
+
 
 }

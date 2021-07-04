@@ -23,7 +23,7 @@ import {FormInfoPostulanteComponent} from 'src/app/Backend/panel-admin/pages/val
 import {FormularioInfoPostulanteComponent} from 'src/app/Backend/panel-postulante/pages/registro-postulante/formulario-info-postulante.component';
 //empleador
 import {ReactivarOfertaComponent} from 'src/app/Front-end/pages/reactivar-oferta/reactivar-oferta.component';
-import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
+import {PostulantesOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador';
 import {EditOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/edit-oferta/edit-oferta.component';
 import {AddOfertaComponent} from 'src/app/Backend/panel-empleador/pages/oferta-laboral/add-oferta/add-oferta.component';
 import {FormValidacionEmpleadorComponent} from 'src/app/Backend/panel-admin/pages/validacion-empleador/form-validacion-empleador.component';

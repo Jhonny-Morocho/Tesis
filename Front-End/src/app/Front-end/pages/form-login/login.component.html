@@ -3,20 +3,20 @@
   <div class="centrarFormularioLoginRegistro animate__animated  fadeIn ">
     <div class="container col-sm-8 ">
       <form class="row g-3 formRegistroLogin pl-2 pr-2 " (ngSubmit)="loginAdmin()"  [formGroup]="formLogin" #fLogin="ngForm">
-          <div class="text-center">
-            <img src="{{ dominio }}/Archivos/images/sistemasUNL_blanco.png"
-                  class="rounded mx-auto d-block"
-                  alt="logo-carerara-ing-sistemas" width="300" height="70" >
-          </div>
-          <div class="col-5">
-            <a [routerLink]="['/home']" class="float-right btn btn-outline-light">
-              <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio
-            </a>
-          </div>
-          <hr class="text-white">
-          <div class="text-center">
-              <a class="h5 text-white"><b>Iniciar Sesión</b></a>
-          </div>
+        <div class="text-center">
+          <img src="{{ dominio }}/Archivos/images/sistemasUNL_blanco.png"
+                class="rounded mx-auto d-block"
+                alt="logo-carerara-ing-sistemas" width="300" height="70" >
+        </div>
+        <div class="col-md-3">
+          <a [routerLink]="['/home']" class="float-right btn btn-outline-light">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar al Inicio
+          </a>
+        </div>
+        <hr class="text-white">
+        <div class="text-center">
+            <a class="h5 text-white"><b>Iniciar Sesión</b></a>
+        </div>
           <div class="form-group">
               <label for="inputEmailAdmin" class="form-label text-white">Correo <span class="text-danger">*</span></label><br>
               <i class="fas fa-envelope form-control-feedback"></i>

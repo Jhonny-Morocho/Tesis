@@ -46,7 +46,7 @@ import { FormPublicarOfertaGestorComponent } from 'src/app/Backend/panel-admin/p
 import {PostulanteOfertas} from 'src/app/Backend/panel-admin/pages/postulante-ofertas/postulantes-ofertas-encargado.component';
 //FRONT END
 import {PostularOfertaLaboralComponent} from 'src/app/Front-end/componentes/ofertas-home/ofertas-laborales.component';
-import { PostulantesOfertaComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador.component';
+import { PostulantesOfertaComponent } from 'src/app/Backend/panel-empleador/pages/oferta-laboral/postulantes-oferta-empleador/postulantes-oferta-empleador';
 import {VerOfertaLaboralComponent} from 'src/app/Front-end/componentes/ver-oferta-laboral/ver-oferta-laboral.component';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
 import {NavbarComponent} from 'src/app/Backend/componentes/navbar/navbar.component';

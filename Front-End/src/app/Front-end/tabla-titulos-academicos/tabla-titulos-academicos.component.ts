@@ -18,11 +18,9 @@ export class TablaTitulosAcademicosComponent implements OnInit {
   mostrarPdf(urlEvidencias){
     console.log(urlEvidencias);
     this.ubicacionArchivo =environment.dominio+"/Archivos/Titulos/"+urlEvidencias;
-    console.log(this.ubicacionArchivo);
     $('#mostrarPDFTitulos').modal('show');
   }
   carrarModal(){
     $('#mostrarPDFTitulos').modal('hide');
-    console.log('cerrarModalX');
   }
 }
