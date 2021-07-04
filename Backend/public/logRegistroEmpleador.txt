@@ -150,3 +150,19 @@
 
 
 
+[2021-07-03 20:14:35] Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : false Correo del empleador udemy@hotmail.com ]
+
+
+
+[2021-07-03 20:14:41] Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : false Correo del empleador udemy@hotmail.com ]
+
+
+
+[2021-07-03 20:31:50] Validacion de formulario de empleador aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador1unl@gmail.com ]
+
+
+
+[2021-07-03 20:35:00] Validacion de formulario de empleador no aprobado :: Estado de correo enviado al empleador : false Correo del empleador empleador1unl@gmail.com ]
+
+
+

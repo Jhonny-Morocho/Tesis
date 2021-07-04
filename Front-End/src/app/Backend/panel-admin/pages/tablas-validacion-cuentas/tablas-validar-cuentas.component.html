@@ -83,7 +83,13 @@
                             <td>
                               <div style="text-align:center">
 
-                                <star-rating [value]="dibujarEstrellas(empleadores.external_em)" checkedcolor="yellow" uncheckedcolor="black" size="24px"    readonly="false" (rate)="onRate($event,i)"></star-rating>
+                                <star-rating [value]="dibujarEstrellas(empleadores.external_em)"
+                                              checkedcolor="yellow"
+                                              uncheckedcolor="black"
+                                              size="24px"
+                                              [readonly]="!estadoRevision(empleadores.observaciones) && !estadoConversion(empleadores.estado) "
+                                              (rate)="onRate($event,i)">
+                                </star-rating>
                               </div>
                             </td>
                         </tr>

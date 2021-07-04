@@ -10,9 +10,9 @@ import {CalificarEmpleadorModel} from 'src/app/models/calificar-empleador';
 import {CalificarEmpleadorService} from 'src/app/servicios/calificar-empleador.service';
 import { dataTable } from 'src/app/templateDataTable/configDataTable';
 import { StarRatingComponent } from 'ng-starrating';
+import { Router } from '@angular/router';
 declare var JQuery:any;
 // ========= valoracion =========
-
 declare var $:any;
 
 @Component({
@@ -34,6 +34,7 @@ export class TareaValiar implements OnInit {
 
   constructor(private servicioPostulante_:SerivicioPostulanteService,
               private servicioCalificarEmpleador:CalificarEmpleadorService,
+              private router:Router,
               private servicioEmpleador_:SerivicioEmpleadorService ) { }
 
   ngOnInit():void {
@@ -155,8 +156,20 @@ export class TareaValiar implements OnInit {
       siHaceBien=>{
           //consulto de nuevo las nuevas calificaiones de los emepleadores
         if(siHaceBien['Siglas']=='OE'){
-          Swal('Registrado', siHaceBien['mensaje'], 'success');
-
+          const toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000
+          });
+          toast({
+            type: 'success',
+            title: 'Registrado'
+          })
+            //codigo para recargar en la misma pagina
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['/panel-admin/tareas']);
         }else{
           Swal('Infor', siHaceBien['mensaje'], 'info');
         }

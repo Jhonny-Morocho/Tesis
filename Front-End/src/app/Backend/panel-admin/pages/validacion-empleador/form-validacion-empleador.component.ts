@@ -180,16 +180,33 @@ export class FormValidacionEmpleadorComponent implements OnInit {
   );
 }
   //internacion con el boton del formulario apra que cambie de color aprobado/no aprobado
-  estadoAprobado(estado:Number){
-    if(estado==0){
-      this.instanciaEmpleador.estado=0;
+  // estadoAprobado(estado:Number){
+  //   if(estado==0){
+  //     this.instanciaEmpleador.estado=0;
+  //     return false;
+  //   }
+  //   if(estado==1){
+  //     this.instanciaEmpleador.estado=1;
+  //     return true;
+  //   }
+
+  // }
+
+  estadoOferta(){
+    if(this.instanciaEmpleador.estado==0){
       return false;
     }
-    if(estado==1){
-      this.instanciaEmpleador.estado=1;
+    if(this.instanciaEmpleador.estado==1){
       return true;
     }
-
+  }
+  onChangeOferta(event){
+    if(event==true){
+      this.instanciaEmpleador.estado=1;
+    }
+    if(event==false){
+      this.instanciaEmpleador.estado=0;
+    }
   }
 
 }

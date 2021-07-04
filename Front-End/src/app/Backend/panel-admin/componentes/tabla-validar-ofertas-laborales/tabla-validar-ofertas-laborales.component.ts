@@ -157,6 +157,7 @@ export class TablaValidarOfertasLaboralesComponent implements OnDestroy,OnInit  
   cerrarModal(){
     $('#exampleModal').modal('hide');
   }
+  //codigo para recargar en la misma pagina
   reiniciarValoresTablaOfertas(){
     this.ruta_.routeReuseStrategy.shouldReuseRoute = () => false;
     this.ruta_.onSameUrlNavigation = 'reload';
