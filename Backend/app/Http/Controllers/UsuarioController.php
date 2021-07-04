@@ -24,9 +24,15 @@ class UsuarioController extends Controller
             $datos=$request->json()->all();
             //creamos un objeto de tipo usuario para enviar los datos
             try {
-                //code...
+                // ========= VALIDACION DEL USUARIO ANTES DE INICIAR EL LOGIN ====
+                //existe el usuario
                 $ObjUsuario=new Usuario();
                 $ObjUsuario->correo=$datos["correo"];
+                $usuario=Usuario::where("correo",$datos['correo'])
+                ->first();
+                if($usuario){
+                    return response()->json(["mensaje"=>"Ya existe un usuario con el mismo correo","Siglas"=>"ONE",400]);
+                }
                 //Encriptar Password
                 $opciones=array('cost'=>12);
                 $passwordCliente=$datos["password"];

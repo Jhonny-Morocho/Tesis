@@ -22,9 +22,6 @@ export class RegistroPostulanteComponent implements OnInit {
   ngOnInit() {
     this.usuarioModel=new UsuarioModel();
     this.crearFormulario();
-    //  this.usuarioModel.correo="jhonny@hotmail.com";
-    //  this.usuarioModel.password="123456";
-
   }
   // para hacer validacion y activar la clase en css
   get correoNoValido(){
@@ -75,8 +72,6 @@ export class RegistroPostulanteComponent implements OnInit {
   this.usuarioModel.estado=1;
   this.servicioUsuario_.crearNuevoUsuario(this.usuarioModel).subscribe(
     siHacesBien=>{
-      console.log(siHacesBien);
-      console.log(siHacesBien['Siglas']);
       Swal.close();
       if(siHacesBien['Siglas']=="OE"){
         const toast = Swal.mixin({

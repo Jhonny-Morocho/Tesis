@@ -17,7 +17,6 @@
             <div class="form-group">
                 <label for="inputEmail4" class="form-label text-white">Correo <span class="text-danger">*</span></label><br>
                 <i class="fas fa-envelope form-control-feedback"></i>
-                <!-- <span class="text-danger " *ngIf="fRegistroPostulante.submitted && fRegistroPostulante.controls['correo'].errors">El correo es obligatorio</span> -->
                 <input type="email"
                         formControlName="correo"
                         placeholder="Ingrese su correo"
@@ -33,6 +32,7 @@
                 </div>
                 <!-- end mensajes de validacion -->
             </div>
+
             <div class="form-group">
                 <label for="inputPassword4" class="form-label text-white">Contraseña <span class="text-danger">*</span></label><br>
                 <i class="fas fa-key form-control-feedback"></i>
@@ -59,11 +59,5 @@
             </div>
         </form>
       </div>
-        <!-- <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a class="h1"><b>Registro </b>Postulante</a>
-            </div>
-        </div> -->
     </div>
-
 </div>

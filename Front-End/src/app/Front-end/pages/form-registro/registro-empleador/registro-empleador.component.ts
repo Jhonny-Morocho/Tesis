@@ -83,7 +83,7 @@ export class RegistroEmpleadorComponent implements OnInit {
         this.router_.navigateByUrl('/panel-empleador/form-info-empleador');
        }else{
          Swal({
-           title:'Info',
+           title:'Información',
            type:'info',
            text:siHacesBien['mensaje']
          });

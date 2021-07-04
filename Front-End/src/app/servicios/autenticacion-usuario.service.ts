@@ -140,9 +140,7 @@ export class AutenticacionUserService {
     ).pipe(
       map(
         obtengoRespuesBackend=>{
-          //this.guarUsuarioTempLocalSotarage();
-          //this.guardarToken(obtengoRespuesBackend['idToken']);
-          this.guarUsuarioTempLocalSotarage(obtengoRespuesBackend['mensaje']);
+          //this.guarUsuarioTempLocalSotarage(obtengoRespuesBackend['mensaje']);
           return obtengoRespuesBackend;
         }
       )
