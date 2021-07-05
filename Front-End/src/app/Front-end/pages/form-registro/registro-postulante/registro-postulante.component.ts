@@ -84,7 +84,7 @@ export class RegistroPostulanteComponent implements OnInit {
           type: 'success',
           title: 'Su cuenta ha sido creado exitosamente'
         })
-
+        this.servicioUsuario_.guarUsuarioTempLocalSotarage(this.usuarioModel);
         this.router_.navigateByUrl('/panel-postulante/form-info-postulante');
       }else{
         Swal({

@@ -38,6 +38,8 @@ export class TablaPublicarOfertGestorComponent implements OnInit {
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.configurarParametrosDataTable();
     this.cargarTabla();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   cargarTabla(){
     //listamos los titulos academicos

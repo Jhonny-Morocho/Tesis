@@ -36,6 +36,8 @@ export class OfertaLaboralComponent implements OnInit {
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.configurarParametrosDataTable();
     this.cargarTabla();
+    //responsibo
+    $("body").removeClass("sidebar-open");
 
   }
   cargarTabla(){

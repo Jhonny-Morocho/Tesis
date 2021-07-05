@@ -51,6 +51,8 @@ export class PostulanteOfertas implements OnInit {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     this.obtenerOfertaLaboral();
     this.estudiantesOfertaLaboral();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   filtrarPostulante(){
     //verifico si el usuario ha hecho check,si no hace check entonces no puede actualizar

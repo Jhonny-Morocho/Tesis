@@ -21,6 +21,8 @@ export class RegistarAdminComponent implements OnInit {
     this.instanciaDocente=new DocenteModel();
     //inicializo el estado activo
     this.instanciaDocente.estado=1;
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   crearFormulario(){
     this.formAdmin=this.formBuilder.group({

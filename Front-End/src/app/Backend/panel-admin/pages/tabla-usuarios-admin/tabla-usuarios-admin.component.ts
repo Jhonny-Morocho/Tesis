@@ -17,6 +17,8 @@ export class TablaUsuariosAdminComponent implements OnInit {
   ngOnInit() {
     this.configurarParametrosDataTable();
     this.cargarTabla();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   configurarParametrosDataTable(){
     this.dtOptions = dataTable;

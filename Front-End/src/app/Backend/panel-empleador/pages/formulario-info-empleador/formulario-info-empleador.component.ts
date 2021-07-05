@@ -37,6 +37,8 @@ export class FormularioInfoEmpleadorComponent implements OnInit {
 
   ngOnInit() {
     this.cargarDatosForm();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
 
   crearFormulario(){

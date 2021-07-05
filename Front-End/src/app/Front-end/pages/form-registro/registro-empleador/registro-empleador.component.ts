@@ -80,6 +80,7 @@ export class RegistroEmpleadorComponent implements OnInit {
           type: 'success',
           title: 'Su cuenta ha sido creado exitosamente'
         })
+        this.servicioUsuario_.guarUsuarioTempLocalSotarage(this.usuarioModel);
         this.router_.navigateByUrl('/panel-empleador/form-info-empleador');
        }else{
          Swal({

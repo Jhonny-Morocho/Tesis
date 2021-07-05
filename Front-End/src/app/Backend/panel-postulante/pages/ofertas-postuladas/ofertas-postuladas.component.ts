@@ -19,6 +19,8 @@ export class OfertasPostuladasComponent implements OnInit {
   ngOnInit() {
     this.obtenrOfertasLaboralesEstudiante();
     this.configurarParametrosDataTable();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
 
   obtenrOfertasLaboralesEstudiante(){

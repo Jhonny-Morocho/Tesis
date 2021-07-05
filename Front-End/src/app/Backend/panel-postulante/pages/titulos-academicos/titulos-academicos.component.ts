@@ -32,6 +32,8 @@ export class TitulosAcademicosComponent implements OnInit {
   ngOnInit() {
     this.configurarParametrosDataTable();
     this.cargarTabla();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   mostrarPdf(urlEvidencias){
     this.ubicacionArchivo =environment.dominio+"/Archivos/Titulos/"+urlEvidencias;

@@ -36,6 +36,8 @@ export class CursosCapacitacionesComponent implements OnInit {
     this.configurarParametrosDataTable();
     this.cargarTabla();
     this.cargarPaises();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
 
 

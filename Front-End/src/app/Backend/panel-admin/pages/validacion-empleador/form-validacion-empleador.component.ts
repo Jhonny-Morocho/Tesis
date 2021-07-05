@@ -35,6 +35,8 @@ export class FormValidacionEmpleadorComponent implements OnInit {
     this.instanciaEmpleador=new EmpleadorModel;
     this.provincias();
     this.cargarDataFormulario();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   crearFormulario(){
     this.formEmpleador=this.formBuilder.group({

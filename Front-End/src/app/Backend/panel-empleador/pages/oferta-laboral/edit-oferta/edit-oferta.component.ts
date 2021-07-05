@@ -27,6 +27,8 @@ export class EditOfertaComponent implements OnInit {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     //inicializo el formulario con los datos de la oferta laboral
     this.cargarDatosOfertaLaboral();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   crearFormulario(){
     this.formOfertaLaboral=this.formBuilder.group({

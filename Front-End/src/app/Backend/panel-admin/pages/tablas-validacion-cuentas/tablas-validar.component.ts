@@ -24,7 +24,7 @@ export class TareaValiar implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  
+
   intanciaEmpleadorCalificar:EmpleadorModel;
   estudiante:PostulanteModel[]=[];
   empleador:EmpleadorModel[]=[];
@@ -46,6 +46,8 @@ export class TareaValiar implements OnInit {
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaCalifarEmpleador=new CalificarEmpleadorModel();
     this.intanciaEmpleadorCalificar=new EmpleadorModel();
+    //responsibo
+    $("body").removeClass("sidebar-open");
      //filtro en la data table
     //  $(document).ready(function() {
     //      $('#dateadded1 thead tr').clone(true).appendTo('#dateadded1 thead' );

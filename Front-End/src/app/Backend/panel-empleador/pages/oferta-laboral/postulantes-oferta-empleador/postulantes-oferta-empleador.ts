@@ -36,6 +36,8 @@ export class PostulantesOfertaComponent implements OnInit {
     this.instanciaOfertaLaboral=new OfertaLaboralModel();
     this.instanciaVerPostulante=new PostulanteModel();
     this.estudiantesOfertaLaboral();
+    //responsibo
+    $("body").removeClass("sidebar-open");
 
   }
   ofertaLaboralFinalizar(external_of:string){

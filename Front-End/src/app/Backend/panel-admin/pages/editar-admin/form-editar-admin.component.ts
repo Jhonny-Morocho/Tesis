@@ -23,6 +23,8 @@ export class FormEditarAdminComponent implements OnInit {
   ngOnInit() {
     this.instanciaDocente=new DocenteModel();
     this.cargarFormularioDocente();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
 
   crearFormulario(){

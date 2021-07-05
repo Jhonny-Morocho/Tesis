@@ -25,6 +25,8 @@ export class FormInfoPostulanteComponent implements OnInit {
    }
   ngOnInit() {
     this.cargarDatosFormPostulante();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   get observacionesNoValida(){
     return this.formPosutalnte.get('observaciones').invalid &&  this.formPosutalnte.get('observaciones').touched;

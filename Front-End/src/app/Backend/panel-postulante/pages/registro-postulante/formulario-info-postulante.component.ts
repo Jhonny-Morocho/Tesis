@@ -35,7 +35,12 @@ export class FormularioInfoPostulanteComponent implements OnInit {
   ngOnInit() {
     //consultar si el postulante ha llenado el formulario
     this.cargarDatosFormulario();
+    //cada vez que abra la pagina que empiece asi
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
+
+
 
   // ==== para hacer validacion y activar la clase en css ====//
   get generoNoValido(){

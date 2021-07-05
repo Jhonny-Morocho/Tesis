@@ -63,6 +63,8 @@ export class ReporteOfertasComponent implements OnInit,OnDestroy {
     this.instanciaEmpleadorModelVer=new EmpleadorModel();
     this.configurarParametrosDataTable();
     this.cargarTablaReporteOfertas();
+    //responsibo
+    $("body").removeClass("sidebar-open");
   }
   crearFormulario(){
     this.formfiltrarOfertas=this.formBuilder.group({
