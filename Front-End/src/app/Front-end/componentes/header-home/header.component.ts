@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
     if(this.servicioUsuario.estaAutenticado()==true){
       this.estadoInicioSession=true;
       this.usuario=localStorage.getItem("correo");
-      console.log(parseInt(localStorage.getItem("tipoUsuario")));
       switch (parseInt(localStorage.getItem("tipoUsuario"))) {
         case 3:
           this.rutaUsuarioPanel='/panel-admin/mi-perfil';
@@ -47,7 +46,7 @@ export class HeaderComponent implements OnInit {
 
 
 
-  
+
 
 }
 

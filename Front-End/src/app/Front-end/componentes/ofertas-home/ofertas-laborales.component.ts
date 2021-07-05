@@ -49,8 +49,7 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
   persons: any=[];
   datatableElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
-  min: number=1;
-  max: number=10;
+
   instanciaDataTable:any;
   // probnado con la data table el induo
   //dtOptions: DataTables.Settings = {};
@@ -73,8 +72,9 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     this.instanciaOfertLaboralEstudiante=new OfertaLaboralEstudianteModel();
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.configurarParametrosDataTable();
-    this.cargarTabla();
 
+    this.cargarTabla();
+    $(".x").append('<ul><li>Intelignete</li><li>COnocimien&nbsp;</li><li>fsfds</li></ul>');
   }
 
 
@@ -82,20 +82,15 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         this.ofertasLaborales =siHacesBien;
-        this.pintarRequisitos(0);
+        //this.pintarRequisitos(0);
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
         Swal('Ups',peroSiTenemosErro['mensaje'], 'info');
       }
-      );
-   }
+    );
 
-  pintarRequisitos(i){
-    $(".x").html('<h1>xxxx</h1>');
-  // $("#0").html(this.ofertasLaborales[i]['requisitos']);
-  // console.log(this.ofertasLaborales[i]['requisitos']);
-  }
+   }
 
   postular(externalOferta:string,nomOferta:string){
     let estadoAutentificado=this.servicioUsuario.estaAutenticado();
