@@ -74,6 +74,7 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     this.instanciaOfertaLaboralActualizar=new OfertaLaboralModel();
     this.configurarParametrosDataTable();
     this.cargarTabla();
+
   }
 
 
@@ -81,6 +82,7 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
     this.servicioOferta.listarOfertasValidadasGestor().subscribe(
       siHacesBien=>{
         this.ofertasLaborales =siHacesBien;
+        this.pintarRequisitos(0);
         this.dtTrigger.next();
       },
       (peroSiTenemosErro)=>{
@@ -90,8 +92,9 @@ export class PostularOfertaLaboralComponent implements OnInit,OnDestroy {
    }
 
   pintarRequisitos(i){
-  $("#"+i).html(this.ofertasLaborales[i]['requisitos']);
-  //console.log(this.ofertasLaborales[i]['requisitos']);
+    $(".x").html('<h1>xxxx</h1>');
+  // $("#0").html(this.ofertasLaborales[i]['requisitos']);
+  // console.log(this.ofertasLaborales[i]['requisitos']);
   }
 
   postular(externalOferta:string,nomOferta:string){
