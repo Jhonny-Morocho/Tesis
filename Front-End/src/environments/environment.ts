@@ -5,7 +5,7 @@
 export const environment = {
   production: true,
   versionModulo:'1.0.0',
-  dominio:"http://localhost:81/Tesis"
+  dominio:"http://ciscunl.info:8080/bolsa-empleo/Tesis"
 };
 //domio sanbox http://localhost/Tesis
 //domio produccion https://proeditsclub.com/Tesis

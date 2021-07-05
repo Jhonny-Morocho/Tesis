@@ -131,11 +131,6 @@
                             formControlName="evidencias"
                             [class.is-valid]="formEditarCurso.get('evidencias').value"
                             accept="application/pdf">
-                      <!-- mensajes de validacion -->
-                      <div class="invalid-feedback"  *ngIf="evidenciasNoValido">
-                        <p> <i class="fas fa-info-circle"></i>  El campo evidencias es obligatorio</p>
-                      </div>
-                      <!-- end mensajes de validacion -->
                   </div>
                   <div class="col-12">
                       <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>

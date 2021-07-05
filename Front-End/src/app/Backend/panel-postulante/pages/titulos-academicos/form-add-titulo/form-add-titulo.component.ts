@@ -85,7 +85,7 @@ export class FormAddTituloComponent implements OnInit {
   }
     // =================== archivo ======================
     //=======================================
-    onSubMitRegistroTitulo(formRegistroTitulo:NgForm ){
+    onSubMitRegistroTitulo( ){
       //prepara el archivo para enviar
       if(this.formRegistroTitulo.invalid){
         const toast = Swal.mixin({

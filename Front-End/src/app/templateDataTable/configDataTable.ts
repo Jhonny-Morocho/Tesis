@@ -1,7 +1,7 @@
 export const dataTable=
   {
   pagingType: 'full_numbers',
-  pageLength: 3,
+  pageLength: 10,
     /* below is the relevant part, e.g. translated to spanish */
   language: {
     processing: "Procesando...",
