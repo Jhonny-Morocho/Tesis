@@ -154,6 +154,7 @@ class UsuarioController extends Controller
 
     }
     public function RegistrarEstudiante(Request $request,$external_id){
+        $handle = fopen("logRegistroPostulante.txt", "a");
         if($request->json()){
             $datos=$request->json()->all();
             $ObjUsuario=Usuario::where("external_us",$external_id)
@@ -163,7 +164,7 @@ class UsuarioController extends Controller
             if($ObjUsuario['external_us']===$external_id){
                 //creacion de  un objeto para guardar el estudiante
                 $texto="";
-                $handle = fopen("logRegistroPostulante.txt", "a");
+
                 $ObjEstudiante=null;
                 try {
                     //code...
@@ -222,10 +223,9 @@ class UsuarioController extends Controller
                     fwrite($handle, $texto);
                     fwrite($handle, "\r\n\n\n\n");
                     fclose($handle);
-
                     return response()->json(["mensaje"=>$th->getMessage(),
-                    "request"=>$request->json()->all(),
-                    "Siglas"=>"ONE","error"=>$th->getMessage()]);
+                                            "request"=>$request->json()->all(),
+                                            "Siglas"=>"ONE","error"=>$th->getMessage()]);
                 }
 
             }else{
