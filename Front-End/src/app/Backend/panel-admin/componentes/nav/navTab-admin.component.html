@@ -1,0 +1,96 @@
+<!-- Navbar -->
+
+    <!-- Navbar -->
+    <app-navbar [usuario]="instanciaUsuario.correo"></app-navbar>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <app-brand-logo-panel></app-brand-logo-panel>
+        <!-- Sidebar -->
+        <div class="sidebar ">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2 mb-3">
+                <ul class="nav nav-pills nav-sidebar flex-column" id="acordeon" data-widget="treeview" role="menu" data-accordion="false" *ngIf="tipoUsuarioEncargado==true ">
+                    <li class=" nav-item has-treeview menu-open ">
+                        <a class="nav-link  ">
+                            <i class="nav-icon fas fa-clipboard-list "></i>
+                            <p>
+                                Reportes
+                                <i class="right fas fa-angle-left "></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <!-- <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/reporte-empleador'] " class="nav-link ">
+                                    <i class="nav-icon far fa-file-pdf "></i>
+                                    <p>Empleadores</p>
+                                </a>
+                            </li> -->
+                            <li class="nav-item ">
+                                <a routerLinkActive="active" [routerLink]="[ '/panel-admin/reporte-ofertas'] " class="nav-link ">
+                                    <i class="nav-icon far fa-file-pdf "></i>
+                                    <p>Ofertas Laborales</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview " role="menu " data-accordion="false ">
+                    <li class="nav-item ">
+                        <!-- ======================= ENCARGADO ============== -->
+                        <div *ngIf="tipoUsuarioEncargado==true ">
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/tareas'] " class="nav-link ">
+                                    <i class="far fas fa-users nav-icon "></i>
+                                    <p>Empleadores</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/validar-oferta-laboral'] " class="nav-link ">
+                                    <i class="far fas fa-briefcase nav-icon "></i>
+                                    <p>Ofertas laborales </p>
+                                </a>
+                            </li>
+                        </div>
+                        <!-- ======================= SECRETARIA ============== -->
+                        <div *ngIf="tipoUsuarioSecretaria==true ">
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/tareas'] " class="nav-link ">
+                                    <i class="far fa-circle nav-icon "></i>
+                                    <p>Validar Postulantes</p>
+                                </a>
+                            </li>
+                        </div>
+                        <!-- ======================= GESTOR ============== -->
+                        <div *ngIf="tipoUsuarioGestor==true ">
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/publicar-oferta-gestor'] " class="nav-link ">
+                                    <i class="far fa-circle nav-icon "></i>
+                                    <p>Publicar Ofertas</p>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a routerLinkActive="active " [routerLink]="[ '/panel-admin/gestionar-usuarios-admin'] " class="nav-link ">
+                                    <i class="far fa-circle nav-icon "></i>
+                                    <p>Gestionar Usuarios</p>
+                                </a>
+                            </li>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark ">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3 ">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+

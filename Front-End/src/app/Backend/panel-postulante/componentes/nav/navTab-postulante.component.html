@@ -1,0 +1,70 @@
+
+    <!-- Navbar -->
+    <app-navbar [usuario]="instanciaUsuario.correo"></app-navbar>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <app-brand-logo-panel></app-brand-logo-panel>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2 mb-3">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item has-treeview">
+                        <a routerLinkActive="active" [routerLink]="['/panel-postulante/form-info-postulante']" class="nav-link ">
+                            <i class="fas fa-address-card mr-1"></i>
+                            <p>Registro de postulante</p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview" *ngIf="estadoValidacionForm==true">
+                      <a routerLinkActive="active" [routerLink]="['/home']" class="nav-link ">
+                          <i class="fas fa-briefcase mr-1"></i>
+                          <p>Ofertas laborales </p>
+                      </a>
+                  </li>
+                    <li class="nav-item has-treeview" *ngIf="estadoValidacionForm==true">
+                        <a routerLinkActive="active" [routerLink]="['/panel-postulante/ofertas-postuladas']" class="nav-link ">
+                            <i class="fas fa-check mr-1"></i>
+                            <p>Ofertas elegidas </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item has-treeview menu-is-opening menu-open"  *ngIf="estadoValidacionForm==true" >
+                      <a  class="nav-link " routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+                        <i class="fas fa-folder mr-1"></i>
+                        <p>
+                          Hoja de vida
+                          <i class="right fas fa-angle-left"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a [routerLink]="['/panel-postulante/titulos-academicos']"  class="nav-link" routerLinkActive="active">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Títulos academicos</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a routerLinkActive="active" [routerLink]="['/panel-postulante/cursos-capacitaciones']" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Cursos y capacitaciones </p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+
+
+    </aside>
+    <!-- /.sidebar -->
+
+
+
+
+
+
+

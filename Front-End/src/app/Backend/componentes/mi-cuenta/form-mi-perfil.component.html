@@ -1,0 +1,44 @@
+<div class="content-wrapper">
+  <div class="container mt-5 animated animate__animated fadeIn">
+    <div class="card ">
+        <article class="card-body ">
+            <h3><i class="fas fa-user"></i> Mi Cuenta</h3>
+            <hr class="text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 100px;">
+            <form class="row g-3 " (ngSubmit)="actualizarCuenta()" [formGroup]="formUsuario">
+                <div class="col-md-6 ">
+                    <div class="form-group ">
+                        <label for="exampleFormControlTextarea1 ">Correo </label><br>
+                        <i class="fas fa-envelope form-control-feedback"></i>
+                        <input type="text"
+                              formControlName="correo"
+                              placeholder="Ingrese un correo"
+                              class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4 " class="form-label ">Contraseña <span class="text-danger">*</span></label><br>
+                    <i class="fas fa-key form-control-feedback"></i>
+                    <input type="password"
+                          formControlName="password"
+                          [class.is-invalid]="passwordNoValido"
+                          [class.is-valid]="formUsuario.get('password').valid"
+                          placeholder="Ingrese su contraseña"
+                          class="form-control"
+                          maxlength="10">
+                <!-- mensajes de validacion -->
+                <div class="invalid-feedback"  *ngIf="passwordNoValido">
+                  <p > <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                </div>
+                <!-- end mensajes de validacion -->
+                </div>
+                <div class="col-12 ">
+                    <button type="submit " class="btn btn-success "><i class="fas fa-save"></i> Actualizar</button>
+                </div>
+            </form>
+        </article>
+    </div>
+  </div>
+</div>
+<!-- ========= FOOTER =========== -->
+<!-- ========= FOOTER =========== -->
+<app-footer></app-footer>

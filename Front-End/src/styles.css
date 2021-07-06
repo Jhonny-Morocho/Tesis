@@ -1,0 +1,359 @@
+/* You can add global styles to this file, and also import other style files .animated */
+
+.animated {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+/* // panel de adminsitacion header nav */
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+  background: #0c2342  ;
+  height: 80px;
+}
+[class*=sidebar-dark-] {
+  background-color: #0c2342 ;
+}
+/* // end panel de adminsitacion header nav */
+
+
+/* // animacion para menu de pagina de inicio */
+header a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size .3s;
+}
+
+header a:hover, a:focus {
+  background-size: 100% 2px;
+}
+/* // end animacion para menu de pagina de inicio */
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+ /* data table estilos */
+thead {
+  background: #0c2342 !important;
+  color: white;
+}
+.dataTables_wrapper
+.dataTables_paginate
+.paginate_button.current,
+.dataTables_wrapper
+.dataTables_paginate
+.paginate_button.current:hover {
+  color: white!important;
+  border: 1px solid #0c2342 !important;
+  background: white !important;
+}
+/* // reactivar oferta laboral // */
+.ractivar-oferta h6.fw-bold {
+  color:  white;
+}
+.ractivar-oferta h5.mt-1.text-muted {
+  color:  #ffffffcc !important;
+}
+.ractivar-oferta .post {
+  border-bottom: 1px solid #adb5bd;
+  color: #ffffff;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+.ractivar-oferta #itemRequisitos {
+  color: white;
+}
+
+.ractivar-oferta  hr:not([size]) {
+    height: 1px;
+    color: #ffffff;
+
+}
+.ractivar-oferta h5.mt-1.text-muted {
+  display: none;
+}
+/* // end reactivar oferta laboral // */
+
+ /* end data table estilos */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+
+/* ========== SURVER=============== */
+
+.btn-green {
+    background-color: #1ab394;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.btn-green:hover,
+.btn-green:focus {
+    background-color: #18a689;
+    color: #fff;
+}
+
+.panel-footer {
+    padding: 0 15px;
+    border: none;
+    text-align: right;
+    background-color: #fff;
+}
+
+
+/* //Pill badges */
+
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.centrarFormularioLoginRegistro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+}
+
+.form-check-input:checked[type=checkbox] {
+    font-size: 25px;
+}
+
+
+/* ============= HOME ========================= */
+
+#header {
+    background: #fff;
+    transition: all 0.5s;
+    z-index: 997;
+    box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);
+}
+
+.bg-primary {
+    background-color: #0c2342 !important;
+}
+
+.btnConfigPanel {
+    font-size: 20px;
+}
+
+#hero {
+    width: 100%;
+    height: 100vh;
+    background: url(assets/images/maxresdefault.jpg) top left;
+    background-size: cover;
+    position: relative;
+}
+
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.pl-5 {
+    /* height: 70px; */
+    font-size: 18px;
+}
+
+
+/* =================== OLVIDE CONTRASEÑA ================ */
+
+.formRegistroLogin{
+  background-color: #0c2342;
+
+}
+.btn-link {
+  color: #fff!important;
+  text-decoration: underline;
+}
+
+
+
+/* ================ DIBUJAR ESTRELLAS ============== */
+
+/* p.clasificacion {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+p.clasificacion input {
+    position: absolute;
+    top: -100px;
+}
+
+p.clasificacion label {
+    float: right;
+    color: #333;
+}
+
+p.clasificacion label:hover,
+p.clasificacion label:hover~label,
+p.clasificacion input:checked~label {
+    color: #FFD119;
+}
+
+.clasificacion label {
+    font-size: 50px;
+} */
+
+
+/* //estrellas 2 */
+/* p.clasificacion2 {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+p.clasificacion2 input {
+  position: absolute;
+  top: -100px;
+}
+
+p.clasificacion2 label {
+  float: right;
+  color: #333;
+}
+
+p.clasificacion2 label:hover,
+p.clasificacion2 label:hover~label,
+p.clasificacion2 input:checked~label {
+  color: #FFD119;
+}
+
+.clasificacion2 label {
+  font-size: 20px;
+} */
+
+/* Extra small devices (phones, 600px and down) */
+
+@media only screen and (max-width: 600px) {
+    div.dataTables_wrapper div.dataTables_length,
+    div.dataTables_wrapper div.dataTables_paginate {
+        text-align: center;
+        font-size: 12px !important;
+    }
+    img.rounded.mx-auto.d-block {
+      width: 51vh;
+      height: auto;
+      margin-top: 14px;
+    }
+    #hero{
+      height: 125vh;
+    }
+    .carousel-inner {
+      width: 100%;
+      margin-top: 52px;
+    }
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+
+@media only screen and (min-width: 600px) {}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (min-width: 768px) {
+  #hero{
+    height: 105vh;
+    width: auto;
+  }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px) {
+    .hero {
+        height: auto;
+        padding: 120px 0 60px 0;
+    }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {}
+ /* // PONER ICONOS A LOS INPUT // */
+.form-control-feedback {
+  position: absolute;
+  padding: 2px 2px 2px 10px;
+  pointer-events: none;
+}
+
+.form-control {
+  padding-left: 30px!important;
+}
+/* ============== ALERT MODERN =================== */
+.simple-alert {
+  background-color: #ebebeb;
+  border-left: 5px solid #6c6c6c;
+}
+.simple-warning {
+  background-color: #ebebeb;
+  border-left: 5px solid yellow;
+}
+.simple-danger {
+  background-color: #ebebeb;
+  border-left: 5px solid #dc3545;
+}
+.simple-succes {
+  background-color: #ebebeb;
+  border-left: 5px solid #198754;
+}
+.simple-primary {
+  background-color: #ebebeb;
+  border-left: 5px solid #007bff;
+}
+
+
+.alert {
+width: 100%;
+margin: 20px auto;
+padding: 30px;
+position: relative;
+border-radius: 5px;
+box-shadow: 0 0 15px 5px #ccc;
+}

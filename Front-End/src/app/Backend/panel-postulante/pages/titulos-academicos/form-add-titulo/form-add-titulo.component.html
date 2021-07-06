@@ -1,0 +1,115 @@
+<div class="wrapper">
+  <navTab-postulante></navTab-postulante>
+  <div class="content-wrapper animated fadeIn">
+    <div class="card">
+          <div class="col-6 mt-2 ml-3">
+            <h3><i class="fas fa-graduation-cap"></i> Registrar Título Académico</h3>
+            <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 200px;">
+              <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-postulante/titulos-academicos']">
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</a>
+          </div>
+          <article class="card-body">
+              <form class="row g-3" (ngSubmit)="onSubMitRegistroTitulo()" [formGroup]="formRegistroTitulo"  enctype="multipart/form-data">
+                  <div class="col-md-6">
+                      <label for="inputTituloObtenido" class="form-label">Título obtenido <span class="text-danger">*</span></label><br>
+                      <i class="fas fa-graduation-cap form-control-feedback"></i>
+                      <input type="text"
+                             formControlName="titulo_obtenido"
+                             class="form-control"
+                             [class.is-invalid]="tituloNoValido"
+                             [class.is-valid]="formRegistroTitulo.get('titulo_obtenido').valid"
+                             placeholder="Ingrese su título obtenido"
+                             maxlength="40">
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="tituloNoValido">
+                        <p> <i class="fas fa-info-circle"></i>  El campo titulo obtenido es obligatorio</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Número de registro <span class="text-danger">*</span></label><br>
+                      <i class="fas fa-barcode form-control-feedback"></i>
+                      <input type="text"
+                             formControlName="num_registro"
+                             class="form-control"
+                             [class.is-invalid]="numRegistroNoValido"
+                             [class.is-valid]="formRegistroTitulo.get('num_registro').valid"
+                             placeholder="Ingrese el número de registro de su título obtenido"
+                             maxlength="40">
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="numRegistroNoValido">
+                        <p> <i class="fas fa-info-circle"></i>  El Número de registro es obligatorio</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Nivel de instrucción <span class="text-danger">*</span></label><br>
+                      <i class="fa fa-list-ol form-control-feedback"></i>
+                      <select class="form-control"
+                              formControlName="nivel_instruccion"
+                              [class.is-invalid]="nivelInstruccionNoValido"
+                              [class.is-valid]="formRegistroTitulo.get('nivel_instruccion').valid"
+                              placeholder="Ingrese el nivel de instrucción  de su título obtenido">
+                          <option [value]="i+1"*ngFor="let item of listaNivelInsturccion;let i=index">{{item}}</option>
+                        </select>
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="nivelInstruccionNoValido">
+                        <p> <i class="fas fa-info-circle"></i>  El Nivel de instrucción es obligatorio</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Tipo título <span class="text-danger">*</span></label><br>
+                      <i class="fa fa-list-ol form-control-feedback"></i>
+                      <select class="form-control"
+                              name="titulo_obtenido"
+                              formControlName="tipo_titulo"
+                              placeholder="Ingrese el tipo de título obtenido"
+                              [class.is-invalid]="tipoTituloNoValido"
+                              [class.is-valid]="formRegistroTitulo.get('tipo_titulo').valid">
+                          <option [value]="i+1"*ngFor="let item of tipoTitulo;let i=index">{{item}}</option>
+                        </select>
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="tipoTituloNoValido">
+                        <p> <i class="fas fa-info-circle"></i>  El tipo Título es obligatorio</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Detalles adicionales</label><br>
+                      <i class="fas fa-address-card form-control-feedback"></i>
+                      <textarea class="form-control"
+                                formControlName="detalles_adiciones"
+                                placeholder="Ingrese detalles adiciones si desea"
+                                maxlength="200">
+                      </textarea>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="inputEmail4" class="form-label">Evidencias (Formato PDF) <span class="text-danger">*</span></label><br>
+                      <i class="fas fa-file-pdf form-control-feedback"></i>
+                      <input type="file"
+                              (change)="fileEvent($event)"
+                              class="form-control"
+                              formControlName="evidencias"
+                              [class.is-invalid]="evidenciasNoValido"
+                              [class.is-valid]="formRegistroTitulo.get('evidencias').valid"
+                              accept="application/pdf">
+                      <!-- mensajes de validacion -->
+                      <div class="invalid-feedback"  *ngIf="evidenciasNoValido">
+                        <p> <i class="fas fa-info-circle"></i>  Debe campo Evidencias es obligatorio</p>
+                      </div>
+                      <!-- end mensajes de validacion -->
+                  </div>
+                  <div class="col-12">
+                      <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>
+                  </div>
+              </form>
+          </article>
+      </div>
+  </div>
+  <!--============================= FOOOTER  ============================-->
+  <!--============================= FOOOTER  ============================-->
+  <!--============================= FOOOTER  ============================-->
+  <app-footer></app-footer>
+
+</div>

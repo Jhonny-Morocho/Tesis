@@ -1,0 +1,30 @@
+<div class="card-header text-muted border-bottom-0">
+    Postulante
+</div>
+<div class="card-body pt-0">
+    <div class="row">
+        <div class="col-7">
+            <h2 class="lead"><b>{{ instanciaVerPostulante.nombre }} {{ instanciaVerPostulante.apellido }}</b></h2>
+
+            <ul class="ml-4 mb-0 fa-ul text-muted">
+                <li class="small" *ngIf=" instanciaVerPostulante.genero== 0 ">
+                    <span class="fa-li"><i class="fas fa-venus-mars"></i></span> Género: Hombre
+                </li>
+                <li class="small" *ngIf=" instanciaVerPostulante.genero== 1 ">
+                    <span class="fa-li"><i class="fas fa-venus-mars"></i></span> Género: Mujer
+                </li>
+                <li class="small">
+                    <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Teléfono #: {{ instanciaVerPostulante.telefono }}</li>
+                <li class="small">
+                    <span class="fa-li"><i class="fas fa-id-card"></i></span> Cédula: {{ instanciaVerPostulante.cedula }}
+                </li>
+                <li class="small">
+                    <span class="fa-li"><i class="fas fa-map-marker-alt"></i></span> Dirección de domicilio: {{ instanciaVerPostulante.direccion_domicilio }}
+                </li>
+                <li class="small">
+                    <span class="fa-li"><i class="fas fa-envelope"></i></span> Correo: {{ instanciaVerPostulante.correo }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

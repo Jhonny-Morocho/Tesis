@@ -1,0 +1,156 @@
+<div class="wrapper">
+  <navTab-admin></navTab-admin>
+  <div class="content-wrapper  animated animate__animated fadeIn" style="padding-bottom: 100px;">
+      <div class="card">
+          <div class="alert simple-warning col-12 mt-2 ml-3" role="alert" *ngIf="encontrado==false">
+            <p><i class="fas fa-exclamation-triangle"></i> Empleador no encontrado</p>
+          </div>
+          <div class="col-12 mt-2 ml-3 mb-2">
+            <h3><i class="fa fa-user" aria-hidden="true"></i> Validar registro de Empleador</h3>
+            <hr class="text-primary accent-2  mb-4 mt-0 " style="width: 250px;">
+              <a class="float-left btn btn-outline-primary" [routerLink]="['/panel-admin/tareas/']" >
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar
+              </a>
+          </div>
+          <article class="card-body" *ngIf="encontrado">
+            <form class="row g-2" (ngSubmit)="onSubmitForEmpleadorAprobacion()" [formGroup]="formEmpleador">
+              <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Razón social de la empresa <span class="text-danger">*</span></label><br>
+                  <i class="fas fa-briefcase form-control-feedback"></i>
+                  <input type="texto"
+                        formControlName="razonSocial"
+                        class="form-control"
+                        placeholder="Ingrese la Razón social de la empresa"
+                        maxlength="30">
+              </div>
+
+              <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Tipo de institución o empresa </label><br>
+                  <i class="fas fa-building form-control-feedback"></i>
+                  <input type="text"
+                        formControlName="tipoEmpresa"
+                        maxlength="30"
+                        placeholder="Ingrese el tipo de institución o empresa"
+                        class="form-control">
+              </div>
+
+              <div class="col-md-6">
+                <label for="exampleFormControlTextarea1">Actividad económica inscrita en el RUC </label><br>
+                <i class="fa fa-money form-control-feedback"></i>
+                <textarea class="form-control"
+                        formControlName="actividadEconomica"
+                        rows="3"
+                        placeholder="Ingrese la actividad económica inscrita en el RUC"
+                        maxlength="100">
+                </textarea>
+              </div>
+
+              <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Número de RUC </label><br>
+                  <i class="fas fa-id-card form-control-feedback"></i>
+                  <input type="text"
+                          formControlName="numeroRuc"
+                          class="form-control"
+                          placeholder="Ingrese el número de RUC"
+                          maxlength="13">
+              </div>
+
+              <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Documento de identidad del representante legal </label><br>
+                  <i class="fas fa-id-card form-control-feedback"></i>
+                  <input type="text"
+                        formControlName="cedula"
+                        class="form-control"
+                        placeholder="Ingrese la cédula de identidad del representante legal"
+                        maxlength="20">
+              </div>
+
+              <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Nombre del representante legal </label><br>
+                  <i class="fa fa-user form-control-feedback"></i>
+                  <input type="text"
+                          formControlName="nomRepresentanteLegal"
+                          class="form-control"
+                          placeholder="Ingrese el nombre del representante legal"
+                          maxlength="30">
+              </div>
+
+
+              <div class="col-md-6">
+                <label for="inputPais " class="form-label ">Provincia </label><br>
+                <i class="fas fa-clipboard-list form-control-feedback"></i>
+                <select (ngModelChange)="escucharSelectProvincia($event)"
+                        class="form-control"
+                        formControlName="provincia">
+                  <option [value]="item.id "*ngFor="let item of arrayProvincias;let i=index ">{{item.nombre}}</option>
+                </select>
+              </div>
+
+            <div class="col-md-6">
+                <label for="inputPais " class="form-label ">Ciudad </label><br>
+                <i class="fas fa-clipboard-list form-control-feedback"></i>
+                <select class="form-control "
+                        formControlName="ciudad">
+                  <option [value]="item.id "*ngFor="let item of arrayCiudad;let i=index ">{{item.nombre}}</option>
+                </select>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Teléfono </label><br>
+                <i class="fas fa-phone form-control-feedback"></i>
+                <input type="text"
+                        formControlName="telefono"
+                        class="form-control"
+                        maxlength="15"
+                        placeholder="Ingrese el número de teléfono">
+            </div>
+
+            <div class="col-12">
+              <label for="exampleFormControlTextarea1 ">Dirección de domicilio o laboral </label><br>
+              <i class="fas fa-map-marker-alt form-control-feedback"></i>
+              <textarea class="form-control"
+                        formControlName="direcionDomicilio"
+                        placeholder="Ingrese la dirección de domicilio o laboral"
+                        maxlength="50"
+                       >
+              </textarea>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group ">
+                  <label for="exampleFormControlTextarea1 ">Observaciones <span class="text-danger">*</span></label><br>
+                  <i class="fa fa-comments form-control-feedback" aria-hidden="true"></i>
+                  <textarea class="form-control"
+                            rows="3"
+                            maxlength="100"
+                            [class.is-invalid]="observacionesNoValida"
+                            [class.is-valid]="formEmpleador.get('observaciones').valid"
+                            formControlName="observaciones">
+                  </textarea>
+                  <!-- mensajes de validacion -->
+                  <div class="invalid-feedback"  *ngIf="observacionesNoValida">
+                    <p > <i class="fas fa-info-circle"></i> El campo es requerido</p>
+                  </div>
+                  <!-- end mensajes de validacion -->
+              </div>
+            </div>
+            <div class=" col-md-6 ">
+              <div class="form-group ">
+                <label for="exampleFormControlTextarea1">Estado de validación</label><br>
+                  <ui-switch (change)="onChangeOferta($event)"  [checked]="estadoOferta()" ></ui-switch>
+              </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center">
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Registrar</button>
+            </div>
+          </form>
+        </article>
+      </div>
+  </div>
+  <!-- ============== FOOTER  ============== -->
+  <!-- ============== FOOTER  ============== -->
+  <app-footer></app-footer>
+</div>
+
